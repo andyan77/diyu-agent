@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -233,12 +234,25 @@ def compare_typed_pair(decision: dict, closeout: dict) -> list[str]:
     return errors
 
 
-def validate_launch_record(value: dict) -> list[str]:
+def _git_ok(repo_root: Path, *args: str) -> bool:
+    return subprocess.run(["git", "-C", str(repo_root), *args],
+                          capture_output=True).returncode == 0
+
+
+def validate_launch_record(value: dict, repo_root: Path | None = None,
+                           expected_head: str | None = None) -> list[str]:
     """启动记录校验（版本分发）。
 
     v1（封存）：单文件承载 spawn 前后全部字段。
     v2：只承载 spawn 前事实；必须声明先落盘（record_written_before_spawn）、
-    原子写协议与实际 HEAD 绑定；会话结果由 validate_launch_outcome 单独校验。"""
+    原子写协议与实际 HEAD 绑定；会话结果由 validate_launch_outcome 单独校验。
+
+    HEAD 绑定不自证（Codex R4 BLOCKING 修复）：record_digest 只能证明记录
+    内部一致，不能证明 launched_at_head 是真实 HEAD——伪造者可改值后重算摘要。
+    因此：①传入 repo_root 时对仓库复核（提交存在、位于分支历史、input_commit
+    为其祖先）；②传入 expected_head（启动现场）时强制逐字相等；③启动流程另将
+    record_digest 交叉登记进哈希链 RUN_JOURNAL（git_head 由 journal 独立采集），
+    事后核验走 launcher.verify_launch_binding。"""
     schema_name = LAUNCH_RECORD_SCHEMAS.get(str(value.get("schema_version")))
     if schema_name is None:
         return [f"unknown launch record schema_version "
@@ -256,6 +270,25 @@ def validate_launch_record(value: dict) -> list[str]:
             errors.append("launch record not written before spawn")
         if value.get("write_protocol") != "ATOMIC_WRITE_TMP_FSYNC_RENAME":
             errors.append("launch record write protocol not atomic")
+        head_value = str(value.get("launched_at_head", ""))
+        if expected_head is not None and head_value != expected_head:
+            errors.append(f"launched_at_head {head_value[:12]} != actual "
+                          f"HEAD {expected_head[:12]} at validation site")
+        if repo_root is not None:
+            if not _git_ok(repo_root, "cat-file", "-e",
+                           f"{head_value}^{{commit}}"):
+                errors.append("launched_at_head unknown to repository "
+                              "(forged HEAD binding)")
+            else:
+                if not _git_ok(repo_root, "merge-base", "--is-ancestor",
+                               head_value, "HEAD"):
+                    errors.append("launched_at_head not in branch history")
+                input_value = str(value.get("input_commit", ""))
+                if input_value and not _git_ok(
+                        repo_root, "merge-base", "--is-ancestor",
+                        input_value, head_value):
+                    errors.append("input_commit not ancestor of "
+                                  "launched_at_head")
     return errors
 
 

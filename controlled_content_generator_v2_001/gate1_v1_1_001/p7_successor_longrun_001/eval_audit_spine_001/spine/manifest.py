@@ -32,7 +32,10 @@ def _files(repo_root: Path, prefixes: Iterable[str]) -> list[Path]:
             files.append(path)
         elif path.is_dir():
             files.extend(item for item in path.rglob("*") if item.is_file())
-    excluded_parts = {"__pycache__", "review", "evidence", "release"}
+    # .pytest_cache/.ruff_cache/.mypy_cache：审查者用 pytest/linter 复跑套件产生的
+    # 会话性缓存不属于候选实现（Fable R4 ADVISORY：缓存被拾取会让 A 域误 FAIL）
+    excluded_parts = {"__pycache__", "review", "evidence", "release",
+                      ".pytest_cache", ".ruff_cache", ".mypy_cache"}
     return sorted({path for path in files
                    if not excluded_parts.intersection(path.relative_to(repo_root).parts)
                    and not path.name.startswith(".env")

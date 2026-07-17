@@ -496,8 +496,7 @@ class NegativeAttackMatrix(unittest.TestCase):
 
     def test_attack_29_launcher_subagent_impersonates_session(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
-            dc = fh.build_m1_closeout_fixture(Path(tmp))
-            _git_init_commit(Path(tmp))
+            dc = fh.build_launch_fixture(Path(tmp))
             fake_subagent_spawn = lambda path: {
                 "capability": "AUTO_LAUNCHED", "session_id": "sub-1",
                 "session_kind": "SUBAGENT", "actual_model": "claude-fable-5",
@@ -673,6 +672,53 @@ class NegativeAttackMatrix(unittest.TestCase):
             errors = V25._check_milestone_exits(
                 root, "M3", closeout, receipts, [])
             self.assertTrue(any("not FROZEN" in e for e in errors), errors)
+
+    def test_attack_41_forged_head_binding_survives_digest_reclose(self) -> None:
+        """Codex R4 BLOCKING 攻击重放：改 launched_at_head 后重算 record_digest。
+
+        自证摘要必然通过——防线在①仓库态复核（假提交拒）与②哈希链 journal
+        交叉绑定（真提交伪造拒：链内独立采集的 git_head 失配）。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_root = Path(tmp)
+            dc = fh.build_launch_fixture(tmp_root)
+            spawn = lambda path: {
+                "capability": "AUTO_LAUNCHED", "session_id": "fresh-41",
+                "session_kind": "TOP_LEVEL_FRESH",
+                "actual_model": "claude-fable-5",
+                "exit_status": 0, "auto_memory_disabled": True}
+            launcher_mod.start(tmp_root, "M2", dc=dc, env={}, spawn=spawn)
+            self.assertEqual(
+                launcher_mod.verify_launch_binding(tmp_root, "M2", dc=dc), [])
+            record_path = dc / "milestones/M2/LAUNCH_RECORD.v2.json"
+            record = json.loads(record_path.read_text(encoding="utf-8"))
+            # ①假提交 + 重算摘要 → 仓库态复核拒
+            fake = receipts.close_record(
+                {k: v for k, v in record.items() if k != "record_digest"}
+                | {"launched_at_head": "0" * 40, "record_digest": ""},
+                "record_digest")
+            errors = receipts.validate_launch_record(fake, repo_root=tmp_root)
+            self.assertTrue(any("unknown to repository" in e for e in errors),
+                            errors)
+            # ②真提交伪造 + 重算摘要 → journal 交叉绑定拒
+            (tmp_root / "later.txt").write_text("x", encoding="utf-8")
+            subprocess.run(["git", "add", "-A"], cwd=tmp, capture_output=True)
+            subprocess.run(["git", "commit", "-qm", "later"], cwd=tmp,
+                           capture_output=True)
+            later = subprocess.run(["git", "rev-parse", "HEAD"], cwd=tmp,
+                                   capture_output=True,
+                                   text=True).stdout.strip()
+            forged = receipts.close_record(
+                {k: v for k, v in record.items() if k != "record_digest"}
+                | {"launched_at_head": later, "record_digest": ""},
+                "record_digest")
+            record_path.write_text(json.dumps(forged, ensure_ascii=False),
+                                   encoding="utf-8")
+            self.assertEqual(
+                receipts.validate_launch_record(forged, repo_root=tmp_root),
+                [])  # 自证面 + 仓库态均无法区分 → 必须靠链
+            binding_errors = launcher_mod.verify_launch_binding(
+                tmp_root, "M2", dc=dc)
+            self.assertTrue(binding_errors, "journal cross-binding must fire")
 
     def test_attack_30_numbered_serialism_ignores_y_graph(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

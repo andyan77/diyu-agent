@@ -182,6 +182,41 @@ def validate_entry(root: Path, milestone: str, dc: Path | None = None,
             "ready_set": rs, "checks": checks}
 
 
+def verify_launch_binding(root: Path, milestone: str,
+                          dc: Path | None = None) -> list[str]:
+    """启动记录的事后核验（HEAD 绑定不自证的补全面）：
+
+    ①validate_launch_record(repo_root=…)——提交存在 + 分支祖先关系；
+    ②哈希链 journal 交叉绑定——链内 LAUNCH_<M> 记录的独立采集 git_head
+      必须逐字等于记录的 launched_at_head，且登记同一 record_digest。
+    伪造 launched_at_head 为任何其他真实提交都会与链内 git_head 失配。"""
+    dc = dc or DC
+    record_path = dc / "milestones" / milestone / "LAUNCH_RECORD.v2.json"
+    if not record_path.is_file():
+        return [f"launch record missing: {record_path}"]
+    record = json.loads(record_path.read_text(encoding="utf-8"))
+    errors = receipts.validate_launch_record(record, repo_root=root)
+    state = journal_mod.parse_journal(dc / "journal/RUN_JOURNAL.v1.jsonl")
+    if state["status"] != "VALID":
+        return errors + [f"journal not VALID ({state['status']}) -> "
+                         "launch binding unverifiable"]
+    matches = [rec for rec in state["records"]
+               if rec.get("launch_record_digest") == record.get("record_digest")
+               and rec.get("capsule") == f"LAUNCH_{milestone}"]
+    if not matches:
+        errors.append("launch record not registered in hash-chained journal "
+                      "(pre-spawn registration missing or digest mismatch)")
+    else:
+        chained = matches[-1]
+        if chained.get("git_head") != record.get("launched_at_head"):
+            errors.append(
+                f"journal-chained git_head {str(chained.get('git_head'))[:12]}"
+                f" != record launched_at_head "
+                f"{str(record.get('launched_at_head'))[:12]} "
+                "(forged HEAD binding)")
+    return errors
+
+
 def spawn_via_claude_cli(rendered_path: Path, model: str = "fable") -> dict:
     """默认 spawn：claude CLI 全新顶层会话。返回会话身份回执（best-effort）。"""
     if shutil.which("claude") is None:
@@ -271,13 +306,38 @@ def start(root: Path, milestone: str, dc: Path | None = None,
         "record_digest": "",
     }
     record = receipts.close_record(record, "record_digest")
-    errors = receipts.validate_launch_record(record)
+    # HEAD 绑定三重锚（Codex R4 BLOCKING 修复）：
+    # ①启动现场逐字比对 expected_head；②对仓库复核存在性与祖先关系
+    errors = receipts.validate_launch_record(record, repo_root=root,
+                                             expected_head=head)
     if errors:
         raise LaunchRefused(f"launch record invalid: {errors}")
     record_path = out_dir / "LAUNCH_RECORD.v2.json"
     # 指令第 6 条：记录先于 spawn 原子落盘
     _atomic_write(record_path, json.dumps(record, ensure_ascii=False,
                                           indent=2) + "\n")
+    # ③spawn 前把记录摘要交叉登记进哈希链 journal：git_head 由 journal 独立
+    # 采集，事后改写 launched_at_head（即便重算 record_digest）也会与链内
+    # git_head 失配 → verify_launch_binding 拒绝
+    journal_mod.append_record(dc / "journal/RUN_JOURNAL.v1.jsonl", {
+        "session_id": "SESSION_EXTERNAL_SUPERVISOR",
+        "run_id": {"value": "UNAVAILABLE",
+                   "unavailable_reason": "supervisor process, not a session",
+                   "evidence_ref": str(record_path)},
+        "input_commit": bindings["INPUT_COMMIT"],
+        "dirty_tree_digest": journal_mod.git_facts(str(root))[
+            "dirty_tree_digest"],
+        "capsule": f"LAUNCH_{milestone}",
+        "state": "LAUNCH_RECORDED",
+        "requested_model": "fable",
+        "actual_model": "PENDING_SPAWN",
+        "subagent_ids": [],
+        "last_green_commit": bindings["INPUT_COMMIT"],
+        "verification_state": "ENTRY_VALIDATED",
+        "next_action": f"spawn {milestone} fresh top-level session",
+        "stop_reason": None,
+        "launch_record_digest": record["record_digest"],
+    }, str(root))
 
     spawn_result = spawn(rendered_path)
     capability = spawn_result.get("capability")
@@ -361,14 +421,7 @@ def selftest() -> int:
         assert proc.returncode == 0, (args, proc.stderr)
         return proc.stdout.strip()
 
-    def make_fixture(tmp: Path, **kwargs) -> Path:
-        dc = fh.build_m1_closeout_fixture(tmp, **kwargs)
-        _git(tmp, "init", "-q", "-b", "main")
-        _git(tmp, "config", "user.email", "t@t")
-        _git(tmp, "config", "user.name", "t")
-        _git(tmp, "add", "-A")
-        _git(tmp, "commit", "-qm", "fixture")
-        return dc
+    make_fixture = fh.build_launch_fixture
 
     def spawn_ok_factory(dc: Path, seen: dict):
         def fake_spawn_ok(path: Path) -> dict:
@@ -421,6 +474,17 @@ def selftest() -> int:
         forged["launched_at_head"] = "0" * 40
         expect("forged_head_binding_rejected",
                bool(receipts.validate_launch_record(forged)))
+        # 重算摘要的伪造（Codex R4 BLOCKING 攻击重放）→ 仓库态复核拒绝
+        reclosed = receipts.close_record(
+            {k: v for k, v in forged.items() if k != "record_digest"}
+            | {"record_digest": ""}, "record_digest")
+        expect("reclosed_forged_head_rejected_by_repo_check",
+               any("unknown to repository" in e for e in
+                   receipts.validate_launch_record(reclosed,
+                                                   repo_root=tmp_root)))
+        # 事后核验：哈希链 journal 交叉绑定通过（正常记录）
+        expect("launch_binding_journal_verified",
+               not verify_launch_binding(tmp_root, "M2", dc=dc))
 
         # 同会话启动拒绝
         try:
@@ -450,6 +514,25 @@ def selftest() -> int:
                result["outcome"]["launch_capability"]
                == "AUTO_LAUNCH_CAPABILITY_UNAVAILABLE"
                and (dc / "milestones/M2/READY_TO_START.v1.json").is_file())
+
+        # 伪造 launched_at_head 为另一真实提交 + 重算摘要
+        # → 仓库态复核无法拦（提交真实存在），必须被 journal 交叉绑定拒绝
+        (tmp_root / "later.txt").write_text("later", encoding="utf-8")
+        _git(tmp_root, "add", "-A")
+        _git(tmp_root, "commit", "-qm", "later")
+        later_head = _git(tmp_root, "rev-parse", "HEAD")
+        record_path = dc / "milestones/M2/LAUNCH_RECORD.v2.json"
+        current = json.loads(record_path.read_text(encoding="utf-8"))
+        forged_real = receipts.close_record(
+            {k: v for k, v in current.items() if k != "record_digest"}
+            | {"launched_at_head": later_head, "record_digest": ""},
+            "record_digest")
+        record_path.write_text(json.dumps(forged_real, ensure_ascii=False,
+                                          indent=2) + "\n", encoding="utf-8")
+        binding_errors = verify_launch_binding(tmp_root, "M2", dc=dc)
+        expect("forged_real_head_rejected_by_journal_chain",
+               any("journal" in e or "git_head" in e
+                   for e in binding_errors))
 
     with tempfile.TemporaryDirectory() as tmp:
         # 不合格前序（FAIL）拒绝

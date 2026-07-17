@@ -62,6 +62,18 @@ def git_init_commit(tmp: Path) -> str:
                           capture_output=True, text=True).stdout.strip()
 
 
+def build_launch_fixture(tmp: Path, **kwargs) -> Path:
+    """launcher 测试用 fixture：候选=真实首提交（launch 的 HEAD/祖先校验需要）。"""
+    (tmp / "seed.txt").write_text("seed\n", encoding="utf-8")
+    candidate = git_init_commit(tmp)
+    dc = build_m1_closeout_fixture(tmp, candidate_commit=candidate, **kwargs)
+    for args in (["git", "add", "-A"], ["git", "commit", "-qm", "fixture"]):
+        proc = subprocess.run(args, cwd=str(tmp), capture_output=True,
+                              text=True)
+        assert proc.returncode == 0, (args, proc.stderr)
+    return dc
+
+
 def build_final_fixture(tmp: Path, **kwargs) -> tuple[Path, str]:
     """FINAL 检查用完整 fixture：真实 git 仓 + DC_REL 布局 + 全绑定 v2 工件。
 
