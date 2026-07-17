@@ -131,6 +131,11 @@ RELEASE_OBJECT_SPECS: tuple[tuple[str, str, Path], ...] = (
         PACKAGE_7_ROOT / "brand_runtime_profile.v1.yaml",
     ),
     (
+        "content_capability_mapping",
+        "package10-content-capability-v1",
+        PACKAGE_7_ROOT / "content_capability_mapping.v1.yaml",
+    ),
+    (
         "dify_importer",
         "runtime-materialization-v1",
         PACKAGE_7_ROOT / "provision_dify.py",

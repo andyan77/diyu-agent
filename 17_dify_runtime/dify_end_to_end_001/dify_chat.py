@@ -33,8 +33,8 @@ class DifyChatClient:
             raise ValueError("A valid Dify service API URL is required")
         if len(app_api_token) < 20:
             raise ValueError("A valid server-side Dify app token is required")
-        if maximum_model_calls < 1 or maximum_model_calls > 100:
-            raise ValueError("The Package 7 model-call limit must be between 1 and 100")
+        if maximum_model_calls < 1:
+            raise ValueError("The model-call limit must be a positive integer")
         self.base_url = base_url.rstrip("/")
         self.app_api_token = app_api_token
         self.repository = repository

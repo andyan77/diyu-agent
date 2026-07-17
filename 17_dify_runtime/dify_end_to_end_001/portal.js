@@ -39,6 +39,10 @@ function updateRoleAndColumn() {
   const storyline = taskForm.elements.storyline_name.value;
   fillSelect("speaker_role_name", options.roles_by_account[account] || [], true);
   fillSelect("column_name", options.columns_by_storyline[storyline] || [], true);
+  const organizationLevel = options.organization_levels_by_account[account];
+  taskForm.elements.organization_level.value = organizationLevel;
+  const identities = options.content_identities_by_organization_level[organizationLevel] || [];
+  fillSelect("content_identity", identities);
 }
 
 function updateTaskMode() {
@@ -73,6 +77,12 @@ function activateWorkbench(value) {
   fillSelect("duration_label", value.durations);
   fillSelect("expression_feeling", value.feelings);
   fillSelect("content_format", value.content_formats);
+  fillSelect("organization_level", value.organization_levels);
+  fillSelect("content_identity", value.content_identities);
+  fillSelect("long_term_storyline", value.long_term_storylines);
+  fillSelect("content_direction", value.content_directions);
+  fillSelect("expression_method", value.expression_methods);
+  fillSelect("business_goal", value.business_goals);
   fillSelect("storyline_name", value.storylines, true);
   const materials = document.querySelector("#materials");
   materials.replaceChildren();

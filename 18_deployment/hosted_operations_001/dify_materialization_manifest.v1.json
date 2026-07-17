@@ -1,7 +1,7 @@
 {
   "application_definition": {
     "path": "17_dify_runtime/dify_end_to_end_001/dify_app.v1.yaml",
-    "sha256": "39734bce3ad23e1c8fd85c378cd892692d6267a4635593b5687f74c7f5d91600",
+    "sha256": "4739f284df5e99d79e657312335777faa4ecbefce02217ef43fe5d3fb3cdb25a",
     "singleton": true
   },
   "brand_import_contract": {
@@ -11,8 +11,13 @@
   },
   "bridge": {
     "path": "17_dify_runtime/dify_end_to_end_001/bridge_app.py",
-    "sha256": "311254f5aa5a775f96c78d8821d0a72d1bf71e5dd5b9498cfcece73326597a6b",
+    "sha256": "1663f722b7c976e190a3d4595a3ec3697166a6501c5917d2af45817bf6fd867b",
     "singleton": true
+  },
+  "content_capability_mapping": {
+    "path": "17_dify_runtime/dify_end_to_end_001/content_capability_mapping.v1.yaml",
+    "schema_version": "v1.0",
+    "sha256": "d3882635ffdf7140f1960102b8bee071e5b6268e86f6e3715868f1ae397445b4"
   },
   "dify_import_consumer": {
     "deployment_entrypoint_path": "17_dify_runtime/dify_end_to_end_001/deploy_remote.sh",
@@ -25,7 +30,7 @@
   "dify_platform_version": "1.15.0",
   "package7_manifest": {
     "path": "17_dify_runtime/dify_end_to_end_001/dify_end_to_end_manifest.v1.json",
-    "sha256": "1f0935727f448b7ae70167d4dd07e18f4b46e0b830b7bfcca9c3d770f39bfd2d"
+    "sha256": "b73241c7e07691c483ac76216e68922563ebc82f88a47423cc4d3b20a4e7af43"
   },
   "real_dify_import_performed": false,
   "release_recovery": {
@@ -33,7 +38,7 @@
     "backup_entrypoint_sha256": "e3fd37b73088d2171816c7af7dd2f0230ef339a512179eb025a0f8a3216a9ce1",
     "database_backup_plus_offline_release_bundle": true,
     "minimum_runtime_file_closure_included": true,
-    "offline_release_object_count": 39,
+    "offline_release_object_count": 40,
     "isolated_restore_rematerialization_required": true,
     "missing_corrupt_or_version_mismatch_fails_closed": true
   },
@@ -43,7 +48,7 @@
     "document_file": "dify_narrative_documents.v1.jsonl",
     "manifest_file": "dify_materialization_manifest.v1.json",
     "materializer_path": "18_deployment/hosted_operations_001/operations.py",
-    "materializer_sha256": "2fd21f27601186b390c403d56094ca5fcc6066782cbbed52f46cba57a05b6e1b",
+    "materializer_sha256": "ce0ae9fda3621eda30efd849b1c8204f270b4af2b1ac6e5be21b022bed14639c",
     "second_retrieval_truth_created": false,
     "source_truth": "CURRENT_RUNTIME_POSTGRESQL",
     "suppressed_states": [

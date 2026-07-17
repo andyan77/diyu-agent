@@ -55,14 +55,63 @@ PortalOperation = Literal[
     "提交反馈",
 ]
 
-ContentFormat = Literal["短视频", "图文", "陈列搭配"]
+ContentFormat = Literal[
+    "短视频",
+    "图文",
+    "直播内容包",
+    "私域沟通内容",
+    "门店线下物料",
+    "培训与门店话术",
+    "陈列搭配",
+]
+OrganizationLevel = Literal["品牌总部", "区域组织", "门店"]
+ContentIdentity = Literal[
+    "品牌价值身份",
+    "专业身份",
+    "区域经营身份",
+    "门店关系身份",
+    "商品或栏目身份",
+]
+LongTermStoryline = Literal[
+    "品牌为什么存在",
+    "衣服如何服务真实生活",
+    "商品为什么这样设计",
+    "一群人如何把品牌做好",
+]
+ContentDirection = Literal[
+    "品牌与价值叙事",
+    "商品专业解释",
+    "真实组织与幕后",
+    "消费者生活与穿搭判断",
+    "活动、交易与关系承接",
+]
+BusinessGoal = Literal[
+    "品牌认知",
+    "商品理解",
+    "建立信任",
+    "引发咨询",
+    "到店",
+    "复购",
+    "招商",
+    "招聘",
+]
+ExpressionMethod = Literal["故事", "问答", "对比", "观察", "幕后", "演示", "纪实"]
 NarrativeArchitecture = Literal[
     "EVIDENCE_FIRST",
     "QUESTION_ANSWER",
     "OBJECT_OR_TIMELINE",
 ]
 ClaimClass = Literal["SOURCE_CLAIM", "CREATIVE_DIRECTION", "DISCLOSURE"]
-DurationLabel = Literal["15秒左右", "30秒左右", "60秒左右", "1至3分钟", "由系统建议"]
+DurationLabel = Literal[
+    "15秒左右",
+    "30秒左右",
+    "60秒左右",
+    "1至3分钟",
+    "5至15分钟",
+    "15至30分钟",
+    "30至60分钟",
+    "由系统建议",
+]
 ExpressionFeeling = Literal[
     "真实记录",
     "专业讲明白",
@@ -92,6 +141,16 @@ TopicLabel = Literal[
     "商品质感与视觉审美",
     "门店运营与空间经营",
     "城市门店与本地生活",
+    "品牌和企业故事",
+    "创始人或主理人的工作日常与观点",
+    "商品为什么这样设计",
+    "穿搭、试穿和选购建议",
+    "门店日常与顾客服务",
+    "团队幕后、跨岗位协作和岗位成长",
+    "陈列调整与空间经营",
+    "城市、区域与本地生活",
+    "活动、直播、咨询、到店、私域和复购承接",
+    "招商、招聘与组织信任",
 ]
 
 
@@ -142,6 +201,12 @@ class BridgePrepareRequest(StrictModel):
     duration_label: DurationLabel = "由系统建议"
     expression_feeling: ExpressionFeeling = "由系统建议"
     content_format: ContentFormat = "短视频"
+    organization_level: OrganizationLevel | None = None
+    content_identity: ContentIdentity | None = None
+    long_term_storyline: LongTermStoryline = "品牌为什么存在"
+    content_direction: ContentDirection = "品牌与价值叙事"
+    business_goal: BusinessGoal = "品牌认知"
+    expression_method: ExpressionMethod = "纪实"
     existing_material_kinds: list[str] = Field(default_factory=list, max_length=8)
     user_material_refs: list[str] = Field(default_factory=list, max_length=20)
     precise_fact_requests: list[PreciseFactRequest] = Field(default_factory=list, max_length=10)
@@ -207,6 +272,12 @@ class PortalTaskRequest(StrictModel):
     duration_label: DurationLabel = "由系统建议"
     expression_feeling: ExpressionFeeling = "由系统建议"
     content_format: ContentFormat = "短视频"
+    organization_level: OrganizationLevel | None = None
+    content_identity: ContentIdentity | None = None
+    long_term_storyline: LongTermStoryline = "品牌为什么存在"
+    content_direction: ContentDirection = "品牌与价值叙事"
+    business_goal: BusinessGoal = "品牌认知"
+    expression_method: ExpressionMethod = "纪实"
     existing_material_kinds: list[str] = Field(default_factory=list, max_length=8)
 
     @field_validator(
@@ -291,6 +362,60 @@ class DisplayProduction(StrictModel):
     shooting_angles: list[str] = Field(min_length=1, max_length=20)
 
 
+class LiveSegment(StrictModel):
+    segment_title: str = Field(min_length=1, max_length=300)
+    duration_or_order: str = Field(min_length=1, max_length=120)
+    talking_points: list[str] = Field(min_length=1, max_length=20)
+    interaction_prompt: str = Field(min_length=1, max_length=500)
+
+
+class LiveProduction(StrictModel):
+    theme: str = Field(min_length=1, max_length=500)
+    opening: str = Field(min_length=1, max_length=1200)
+    segments: list[LiveSegment] = Field(min_length=2, max_length=20)
+    interaction_qa: list[str] = Field(min_length=1, max_length=30)
+    product_or_event_linkage: str = Field(min_length=1, max_length=1200)
+    risk_reminders: list[str] = Field(min_length=1, max_length=20)
+    closing: str = Field(min_length=1, max_length=1200)
+
+
+class PrivateMessage(StrictModel):
+    channel: Literal["朋友圈", "社群", "一对一"]
+    copy: str = Field(min_length=1, max_length=3000)
+
+
+class PrivateCommunicationProduction(StrictModel):
+    applicable_scenario: str = Field(min_length=1, max_length=800)
+    messages: list[PrivateMessage] = Field(min_length=1, max_length=6)
+    follow_up_actions: list[str] = Field(min_length=1, max_length=12)
+    communication_boundaries: list[str] = Field(min_length=1, max_length=12)
+
+
+class OfflineMaterialProduction(StrictModel):
+    core_copy: str = Field(min_length=1, max_length=2000)
+    information_hierarchy: list[str] = Field(min_length=2, max_length=12)
+    layout_or_placement_notes: list[str] = Field(min_length=1, max_length=12)
+    action_guidance: str = Field(min_length=1, max_length=800)
+    validity_boundary: str = Field(min_length=1, max_length=800)
+
+
+class SituationalQA(StrictModel):
+    question: str = Field(min_length=1, max_length=800)
+    suggested_answer: str = Field(min_length=1, max_length=1600)
+
+
+class TrainingProduction(StrictModel):
+    training_goal: str = Field(min_length=1, max_length=800)
+    audience: str = Field(min_length=1, max_length=500)
+    outline: list[str] = Field(min_length=2, max_length=20)
+    cases: list[str] = Field(min_length=1, max_length=12)
+    exercises: list[str] = Field(min_length=1, max_length=12)
+    facilitator_notes: list[str] = Field(min_length=1, max_length=20)
+    situational_qa: list[SituationalQA] = Field(min_length=1, max_length=20)
+    allowed_phrasing: list[str] = Field(min_length=1, max_length=20)
+    prohibited_phrasing: list[str] = Field(min_length=1, max_length=20)
+
+
 class ProductionPackage(StrictModel):
     production_format: ContentFormat
     task_summary: str = Field(min_length=1, max_length=1000)
@@ -306,11 +431,23 @@ class ProductionPackage(StrictModel):
     next_actions: list[str] = Field(min_length=1, max_length=12)
     video: VideoProduction | None = None
     article: ArticleProduction | None = None
+    live: LiveProduction | None = None
+    private_communication: PrivateCommunicationProduction | None = None
+    offline_material: OfflineMaterialProduction | None = None
+    training: TrainingProduction | None = None
     display: DisplayProduction | None = None
 
     @model_validator(mode="after")
     def validate_format_payload(self) -> ProductionPackage:
-        payloads = {"短视频": self.video, "图文": self.article, "陈列搭配": self.display}
+        payloads = {
+            "短视频": self.video,
+            "图文": self.article,
+            "直播内容包": self.live,
+            "私域沟通内容": self.private_communication,
+            "门店线下物料": self.offline_material,
+            "培训与门店话术": self.training,
+            "陈列搭配": self.display,
+        }
         if payloads[self.production_format] is None:
             raise ValueError("the selected content format needs its production payload")
         if sum(item is not None for item in payloads.values()) != 1:

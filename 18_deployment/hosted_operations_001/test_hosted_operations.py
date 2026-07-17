@@ -197,6 +197,9 @@ class Package8UnitTests(unittest.TestCase):
                 "index_content_sha256": hashlib.sha256(
                     "保留正文".encode("utf-8")
                 ).hexdigest(),
+                "source_upload_content_sha256": hashlib.sha256(
+                    "保留正文".encode("utf-8")
+                ).hexdigest(),
             },
             {
                 "document_id": "DOC-REPLACE",
@@ -204,11 +207,15 @@ class Package8UnitTests(unittest.TestCase):
                 "index_content_sha256": hashlib.sha256(
                     "过时正文".encode("utf-8")
                 ).hexdigest(),
+                "source_upload_content_sha256": hashlib.sha256(
+                    "过时正文".encode("utf-8")
+                ).hexdigest(),
             },
             {
                 "document_id": "DOC-STALE",
                 "name": "PKG7 REVOKED",
                 "index_content_sha256": "0" * 64,
+                "source_upload_content_sha256": "0" * 64,
             },
         ]
         plan = plan_document_reconciliation(existing, fragments)

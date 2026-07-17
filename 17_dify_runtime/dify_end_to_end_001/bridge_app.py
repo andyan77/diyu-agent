@@ -516,6 +516,12 @@ def _portal_inputs(
         "duration_label": payload.duration_label,
         "expression_feeling": payload.expression_feeling,
         "content_format": payload.content_format,
+        "organization_level": payload.organization_level,
+        "content_identity": payload.content_identity,
+        "long_term_storyline": payload.long_term_storyline,
+        "content_direction": payload.content_direction,
+        "business_goal": payload.business_goal,
+        "expression_method": payload.expression_method,
         "existing_material_kinds": payload.existing_material_kinds,
     }
 

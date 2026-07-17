@@ -51,6 +51,7 @@ from light_expression_service import (  # type: ignore[import-not-found]  # noqa
 
 TOPIC_PATH = REPOSITORY_ROOT / "11_product_foundation/public_foundation_001/taxonomy/topic_product_mapping.v1.yaml"
 ACTION_PATH = REPOSITORY_ROOT / "14_dify_shell/dify_content_shell_001/state_action_mapping.v1.json"
+CAPABILITY_PATH = PACKAGE_ROOT / "content_capability_mapping.v1.yaml"
 NARRATIVE_ARCHITECTURES = (
     "EVIDENCE_FIRST",
     "QUESTION_ANSWER",
@@ -232,6 +233,57 @@ class Package7Runtime:
             str(row["content_product_id"]): str(row["internal_label"])
             for row in topic_doc["topic_product_mapping"]["internal_products"]
         }
+        capability_doc = yaml.safe_load(CAPABILITY_PATH.read_text(encoding="utf-8"))
+        if not isinstance(capability_doc, dict):
+            raise RuntimeContractError("Content capability mapping is invalid")
+        self.capability_mapping = copy.deepcopy(capability_doc)
+        self.public_topic_labels = [
+            str(row["display_name"])
+            for row in capability_doc.get("public_topics", [])
+            if isinstance(row, dict) and isinstance(row.get("display_name"), str)
+        ]
+        for index, row in enumerate(capability_doc.get("public_topics", []), 1):
+            if not isinstance(row, dict) or not isinstance(row.get("display_name"), str):
+                raise RuntimeContractError("Public topic mapping is invalid")
+            product_ids = row.get("internal_product_ids")
+            if (
+                not isinstance(product_ids, list)
+                or not product_ids
+                or any(product_id not in self.product_labels for product_id in product_ids)
+            ):
+                raise RuntimeContractError("Public topic product mapping is invalid")
+            legacy_labels = row.get("legacy_topic_labels")
+            if (
+                not isinstance(legacy_labels, list)
+                or not legacy_labels
+                or any(label not in self.topic_by_label for label in legacy_labels)
+            ):
+                raise RuntimeContractError("Public topic legacy mapping is invalid")
+            category_by_product: dict[str, str] = {}
+            for product_id in product_ids:
+                legacy_topic = next(
+                    (
+                        self.topic_by_label[str(label)]
+                        for label in legacy_labels
+                        if product_id
+                        in self.topic_by_label[str(label)]["internal_product_ids"]
+                    ),
+                    None,
+                )
+                if not isinstance(legacy_topic, dict):
+                    raise RuntimeContractError(
+                        "Public topic product has no legacy planning route"
+                    )
+                category_by_product[str(product_id)] = str(
+                    legacy_topic["topic_category_id"]
+                )
+            self.topic_by_label[str(row["display_name"])] = {
+                "topic_category_id": f"PUBLIC-TOPIC-{index:02d}",
+                "display_name": str(row["display_name"]),
+                "internal_product_ids": list(product_ids),
+                "legacy_topic_labels": copy.deepcopy(legacy_labels),
+                "internal_topic_category_by_product": category_by_product,
+            }
         action_doc = json.loads(ACTION_PATH.read_text(encoding="utf-8"))
         self.action_cards = {str(row["action_type"]): copy.deepcopy(row) for row in action_doc["action_cards"]}
         self.unknown_action = copy.deepcopy(action_doc["unknown_action_behavior"])
@@ -460,9 +512,18 @@ class Package7Runtime:
                 ]
                 for storyline in storylines.values()
             },
-            "topics": sorted(self.topic_by_label),
+            "topics": list(self.public_topic_labels),
             "platforms": ["抖音", "视频号", "小红书", "公众号或图文", "其他"],
-            "durations": ["15秒左右", "30秒左右", "60秒左右", "1至3分钟", "由系统建议"],
+            "durations": [
+                "15秒左右",
+                "30秒左右",
+                "60秒左右",
+                "1至3分钟",
+                "5至15分钟",
+                "15至30分钟",
+                "30至60分钟",
+                "由系统建议",
+            ],
             "feelings": [
                 "真实记录",
                 "专业讲明白",
@@ -473,7 +534,37 @@ class Package7Runtime:
                 "质感画面",
                 "由系统建议",
             ],
-            "content_formats": ["短视频", "图文", "陈列搭配"],
+            "content_formats": copy.deepcopy(self.capability_mapping["content_formats"]),
+            "organization_levels": copy.deepcopy(
+                self.capability_mapping["organization_levels"]
+            ),
+            "organization_levels_by_account": {
+                account.display_name: self._public_organization_level(account.account_id)
+                for account in accounts
+            },
+            "content_identities": copy.deepcopy(
+                self.capability_mapping["content_identities"]
+            ),
+            "content_identities_by_organization_level": {
+                level: [
+                    identity
+                    for identity, allowed_levels in self.capability_mapping[
+                        "identity_allowed_organization_levels"
+                    ].items()
+                    if level in allowed_levels
+                ]
+                for level in self.capability_mapping["organization_levels"]
+            },
+            "long_term_storylines": copy.deepcopy(
+                self.capability_mapping["long_term_storylines"]
+            ),
+            "content_directions": copy.deepcopy(
+                self.capability_mapping["content_directions"]
+            ),
+            "expression_methods": copy.deepcopy(
+                self.capability_mapping["expression_methods"]
+            ),
+            "business_goals": copy.deepcopy(self.capability_mapping["business_goals"]),
             "material_kinds": ["一个想法", "一段故事或概要", "商品或活动事实", "图片或视频", "什么都没有"],
             "simulation_only": True,
             "publish_allowed": False,
@@ -543,8 +634,22 @@ class Package7Runtime:
         topic = self.topic_by_label.get(str(request.topic_label))
         product_id = str(request.selected_content_product_id)
         if topic is None or product_id not in topic["internal_product_ids"]:
-            return self._plain_action("COLLECT_MATERIAL")
+            return self._material_gap_action(request, account, reason="题材与当前任务方向尚未闭合")
         profile = self._brand_profile_for_account(str(account["brand_id"]))
+        organization_level = self._public_organization_level(str(account["account_id"]))
+        if (
+            request.organization_level is not None
+            and request.organization_level != organization_level
+        ):
+            return self._plain_action("REQUEST_AUTHORIZATION")
+        content_identity = request.content_identity or self._default_content_identity(
+            organization_level
+        )
+        allowed_levels = self.capability_mapping[
+            "identity_allowed_organization_levels"
+        ].get(content_identity, [])
+        if organization_level not in allowed_levels:
+            return self._plain_action("REQUEST_AUTHORIZATION")
         role_card = self._role_card(
             profile,
             str(account["account_id"]),
@@ -573,7 +678,9 @@ class Package7Runtime:
             "plain_language_summary": request.message,
             "tenant_id": account["tenant_id"],
             "content_account_id": account["account_id"],
-            "topic_category_id": topic["topic_category_id"],
+            "topic_category_id": topic.get(
+                "internal_topic_category_by_product", {}
+            ).get(product_id, topic["topic_category_id"]),
             "target_platform": request.target_platform,
             "confirmed_by_principal_id": principal_id,
             "confirmed_at": now,
@@ -595,6 +702,12 @@ class Package7Runtime:
             "duration_label": request.duration_label,
             "expression_feeling": request.expression_feeling,
             "content_format": request.content_format,
+            "organization_level": organization_level,
+            "content_identity": content_identity,
+            "long_term_storyline": request.long_term_storyline,
+            "content_direction": request.content_direction,
+            "business_goal": request.business_goal,
+            "expression_method": request.expression_method,
             "existing_material_kinds": list(request.existing_material_kinds),
             "user_material_refs": list(request.user_material_refs),
         }
@@ -632,17 +745,34 @@ class Package7Runtime:
         )
         result = self.adapter.prepare(task)
         if result.get("object_type") != "LIGHT_CONTENT_PLAN":
-            return self._plain_action(str(result.get("action_type", "BLOCK")))
+            action_type = str(result.get("action_type", "BLOCK"))
+            if action_type in {"COLLECT_MATERIAL", "COLLECT_FACT"}:
+                return self._material_gap_action(
+                    request,
+                    account,
+                    reason="当前任务所需资料或硬事实尚未满足",
+                )
+            return self._plain_action(action_type)
         plan_ref = str(result["composition_plan_ref"])
         materials = self.adapter.author_materials(plan_ref, self._access(principal_id, str(account["account_id"])))
         scope_identity_only = self._scope_identity_only_request(request)
         if not materials.get("scoped_retrieval_fragments") and not scope_identity_only:
-            return self._plain_action("COLLECT_MATERIAL")
+            return self._material_gap_action(
+                request,
+                account,
+                materials=materials,
+                reason="当前账号没有可用于这条内容的叙事资料",
+            )
         if scope_identity_only and not any(
             isinstance(row, dict) and row.get("fact_kind") == "AUTHORIZATION"
             for row in materials.get("verified_precise_facts", [])
         ):
-            return self._plain_action("COLLECT_FACT")
+            return self._material_gap_action(
+                request,
+                account,
+                materials=materials,
+                reason="当前账号身份与范围依据尚未闭合",
+            )
         return self._start_author_run(
             request,
             principal_id,
@@ -653,6 +783,8 @@ class Package7Runtime:
             role_card,
             storyline,
             column,
+            organization_level,
+            content_identity,
         )
 
     def _prepare_revision(
@@ -704,6 +836,8 @@ class Package7Runtime:
         role_card: JsonObject,
         storyline: JsonObject,
         column: JsonObject,
+        organization_level: str,
+        content_identity: str,
     ) -> JsonObject:
         task_brief = {
             "content_goal": request.content_goal or request.message,
@@ -727,6 +861,12 @@ class Package7Runtime:
             "duration_label": request.duration_label,
             "expression_feeling": request.expression_feeling,
             "content_format": request.content_format,
+            "organization_level": organization_level,
+            "content_identity": content_identity,
+            "long_term_storyline": request.long_term_storyline,
+            "content_direction": request.content_direction,
+            "business_goal": request.business_goal,
+            "expression_method": request.expression_method,
             "primary_audience": request.primary_audience,
             "existing_material_kinds": list(request.existing_material_kinds),
             "scope_identity_only_authoring_allowed": self._scope_identity_only_request(request),
@@ -818,7 +958,7 @@ class Package7Runtime:
                 "可拍摄、如有条件、需准备、示意画面或假设方案等清楚状态表达。"
                 "陈列资料没有明确商品颜色、厚度、尺码交集、库存或空间关系时，不得自行配对或推断；"
                 "可以用证据卡和核对清单说明方法，并把未知项明确列为待确认。"
-                "短视频、图文、陈列搭配必须分别按合同给出可直接拍摄或制作的细节。"
+                "七种成品必须分别按合同给出可直接使用、拍摄、沟通或执行的细节；不得只换成品名称。"
                 "EVIDENCE_FIRST、QUESTION_ANSWER、OBJECT_OR_TIMELINE只作为可选创作建议，不按候选顺序固定，"
                 "也不要求每份候选必须使用不同骨架；真正差异由核心创意、问题、视角、信息顺序和视听组织体现。"
                 "claim_bindings只登记明确事实主张、关键数字、授权状态或真实事件；"
@@ -854,7 +994,10 @@ class Package7Runtime:
                             "spoken_lines": ["string"],
                             "CTA": "string",
                             "execution_payload": {
-                                "production_format": "短视频|图文|陈列搭配（与任务一致）",
+                                "production_format": (
+                                    "短视频|图文|直播内容包|私域沟通内容|门店线下物料|"
+                                    "培训与门店话术|陈列搭配（与任务一致）"
+                                ),
                                 "task_summary": "string",
                                 "content_direction": "string",
                                 "core_idea": "string",
@@ -909,6 +1052,10 @@ class Package7Runtime:
                     "editing_notes": ["string"],
                 },
                 "article": None,
+                "live": None,
+                "private_communication": None,
+                "offline_material": None,
+                "training": None,
                 "display": None,
             }
         if content_format == "图文":
@@ -922,12 +1069,104 @@ class Package7Runtime:
                     "cover_brief": "string",
                     "layout_notes": ["string"],
                 },
+                "live": None,
+                "private_communication": None,
+                "offline_material": None,
+                "training": None,
+                "display": None,
+            }
+        if content_format == "直播内容包":
+            return {
+                "video": None,
+                "article": None,
+                "live": {
+                    "theme": "string",
+                    "opening": "string",
+                    "segments": [
+                        {
+                            "segment_title": "string",
+                            "duration_or_order": "string",
+                            "talking_points": ["string"],
+                            "interaction_prompt": "string",
+                        },
+                        {
+                            "segment_title": "string",
+                            "duration_or_order": "string",
+                            "talking_points": ["string"],
+                            "interaction_prompt": "string",
+                        },
+                    ],
+                    "interaction_qa": ["string"],
+                    "product_or_event_linkage": "string",
+                    "risk_reminders": ["string"],
+                    "closing": "string",
+                },
+                "private_communication": None,
+                "offline_material": None,
+                "training": None,
+                "display": None,
+            }
+        if content_format == "私域沟通内容":
+            return {
+                "video": None,
+                "article": None,
+                "live": None,
+                "private_communication": {
+                    "applicable_scenario": "string",
+                    "messages": [{"channel": "朋友圈|社群|一对一", "copy": "string"}],
+                    "follow_up_actions": ["string"],
+                    "communication_boundaries": ["string"],
+                },
+                "offline_material": None,
+                "training": None,
+                "display": None,
+            }
+        if content_format == "门店线下物料":
+            return {
+                "video": None,
+                "article": None,
+                "live": None,
+                "private_communication": None,
+                "offline_material": {
+                    "core_copy": "string",
+                    "information_hierarchy": ["string", "string"],
+                    "layout_or_placement_notes": ["string"],
+                    "action_guidance": "string",
+                    "validity_boundary": "string",
+                },
+                "training": None,
+                "display": None,
+            }
+        if content_format == "培训与门店话术":
+            return {
+                "video": None,
+                "article": None,
+                "live": None,
+                "private_communication": None,
+                "offline_material": None,
+                "training": {
+                    "training_goal": "string",
+                    "audience": "string",
+                    "outline": ["string", "string"],
+                    "cases": ["string"],
+                    "exercises": ["string"],
+                    "facilitator_notes": ["string"],
+                    "situational_qa": [
+                        {"question": "string", "suggested_answer": "string"}
+                    ],
+                    "allowed_phrasing": ["string"],
+                    "prohibited_phrasing": ["string"],
+                },
                 "display": None,
             }
         if content_format == "陈列搭配":
             return {
                 "video": None,
                 "article": None,
+                "live": None,
+                "private_communication": None,
+                "offline_material": None,
+                "training": None,
                 "display": {
                     "referenced_items_or_facts": ["allowed fact or material description"],
                     "arrangement_relationship": "string",
@@ -1147,6 +1386,10 @@ class Package7Runtime:
             "next_actions",
             "video",
             "article",
+            "live",
+            "private_communication",
+            "offline_material",
+            "training",
             "display",
         }
         for candidate in parsed["candidates"]:
@@ -1392,6 +1635,20 @@ class Package7Runtime:
             "format_payload": {
                 "video": None if production.video is None else production.video.model_dump(),
                 "article": None if production.article is None else production.article.model_dump(),
+                "live": None if production.live is None else production.live.model_dump(),
+                "private_communication": (
+                    None
+                    if production.private_communication is None
+                    else production.private_communication.model_dump()
+                ),
+                "offline_material": (
+                    None
+                    if production.offline_material is None
+                    else production.offline_material.model_dump()
+                ),
+                "training": (
+                    None if production.training is None else production.training.model_dump()
+                ),
                 "display": None if production.display is None else production.display.model_dump(),
             },
         }
@@ -1615,6 +1872,43 @@ class Package7Runtime:
                     f"{frame['order']}. {frame['image_brief']}｜{frame['accompanying_copy']}"
                 )
             return "\n".join(lines)
+        if package.get("production_format") == "直播内容包":
+            live = package.get("live", {})
+            lines = [f"直播主题：{live.get('theme', '')}", f"开场：{live.get('opening', '')}"]
+            for index, segment in enumerate(live.get("segments", []), 1):
+                points = "；".join(segment.get("talking_points", []))
+                lines.append(
+                    f"{index}. {segment.get('segment_title', '')}｜"
+                    f"{segment.get('duration_or_order', '')}｜{points}"
+                )
+            lines.append(f"收尾：{live.get('closing', '')}")
+            return "\n".join(lines)
+        if package.get("production_format") == "私域沟通内容":
+            private = package.get("private_communication", {})
+            lines = [f"适用场景：{private.get('applicable_scenario', '')}"]
+            for message in private.get("messages", []):
+                lines.append(f"{message.get('channel', '')}：{message.get('copy', '')}")
+            lines.append(
+                "后续动作：" + "；".join(private.get("follow_up_actions", []))
+            )
+            return "\n".join(lines)
+        if package.get("production_format") == "门店线下物料":
+            material = package.get("offline_material", {})
+            return (
+                f"核心文案：{material.get('core_copy', '')}\n"
+                f"信息层级：{'；'.join(material.get('information_hierarchy', []))}\n"
+                f"行动引导：{material.get('action_guidance', '')}\n"
+                f"有效期边界：{material.get('validity_boundary', '')}"
+            )
+        if package.get("production_format") == "培训与门店话术":
+            training = package.get("training", {})
+            return (
+                f"培训目标：{training.get('training_goal', '')}\n"
+                f"对象：{training.get('audience', '')}\n"
+                f"提纲：{'；'.join(training.get('outline', []))}\n"
+                f"可说边界：{'；'.join(training.get('allowed_phrasing', []))}\n"
+                f"禁说边界：{'；'.join(training.get('prohibited_phrasing', []))}"
+            )
         display = package.get("display", {})
         return (
             "陈列执行：\n"
@@ -1702,6 +1996,115 @@ class Package7Runtime:
             ),
             "action_card": True,
         }
+
+    def _material_gap_action(
+        self,
+        request: BridgePrepareRequest,
+        account: JsonObject,
+        *,
+        materials: JsonObject | None = None,
+        reason: str,
+    ) -> JsonObject:
+        """Return one executable collection card without downgrading capability."""
+
+        material_rows = [] if materials is None else materials.get(
+            "scoped_retrieval_fragments", []
+        )
+        fact_rows = [] if materials is None else materials.get(
+            "verified_precise_facts", []
+        )
+        existing = list(request.existing_material_kinds)
+        if material_rows:
+            existing.append(f"已检索到{len(material_rows)}份当前账号资料")
+        if fact_rows:
+            existing.append(f"已核到{len(fact_rows)}项范围或精确事实")
+        if not existing:
+            existing.append("当前只有任务意图，尚无足够的已授权品牌材料")
+        provider = str(
+            account.get("display_name")
+            or account.get("represented_scope")
+            or "当前账号负责人"
+        )
+        missing = [reason]
+        questions = [
+            "这条内容最希望用户记住的一个真实要点是什么？",
+            f"能否提供与“{request.message[:80]}”直接相关的现有记录或事实？",
+            "其中哪些人物、商品、门店、活动或素材已获得当前用途授权？",
+        ]
+        shots = [
+            "补拍能直接证明核心要点的环境或物件全景",
+            "补拍一段不预设结果的真实工作过程或示意操作",
+        ]
+        gap_card = {
+            "missing_items": missing,
+            "why_needed": (
+                f"要形成“{request.content_format}”，必须先闭合当前账号范围、"
+                "任务所需硬事实和可使用素材；表达方式本身已受支持。"
+            ),
+            "existing_items": existing,
+            "provider_or_confirmer": provider,
+            "questions_or_interview_outline": questions,
+            "shots_to_collect": shots,
+            "authorization_and_validity_needs": [
+                "确认人物、图片、视频和声音是否允许用于本次内部内容任务",
+                "确认价格、库存、活动、区域或门店信息的适用范围与有效时间",
+            ],
+            "existing_import_route": "沿现有品牌资料导入入口提交，经范围和授权预检后物化",
+            "regeneration_after_import": "资料通过现有入口后，使用同一任务书重新提交，无需修改代码",
+        }
+        return {
+            "response_kind": "DIRECT",
+            "user_visible_text": (
+                "这类内容系统可以制作，但当前笛语资料还不够。\n"
+                f"缺少：{reason}\n"
+                f"现有：{'；'.join(existing)}\n"
+                f"请由{provider}确认或补充。\n"
+                "可直接询问：\n- "
+                + "\n- ".join(questions)
+                + "\n建议补拍：\n- "
+                + "\n- ".join(shots)
+                + "\n补齐后沿现有品牌资料导入入口提交，即可用同一任务重新生成。"
+            ),
+            "action_card": True,
+            "system_support": "SUPPORTED",
+            "diyu_material_status": "GAP" if not material_rows else "PARTIAL",
+            "material_gap_card": gap_card,
+        }
+
+    def _public_organization_level(self, account_id: str) -> str:
+        account = next(
+            (row for row in self.repository.all_accounts() if row.account_id == account_id),
+            None,
+        )
+        if account is None:
+            raise RuntimeContractError("Content account is unavailable")
+        authority = self.repository.setting(f"identity_authority:{account.tenant_id}")
+        organization = next(
+            (
+                row
+                for row in authority.get("organizations", [])
+                if row.get("organization_id") == account.organization_id
+            ),
+            None,
+        )
+        if not isinstance(organization, dict):
+            raise RuntimeContractError("Organization scope is unavailable")
+        kind = str(organization.get("organization_kind"))
+        if kind == "BRAND_HEADQUARTERS":
+            return "品牌总部"
+        if kind == "REGIONAL_AUTHORIZED_PARTNER":
+            return "区域组织"
+        if kind in {"DIRECT_STORE", "FRANCHISE_STORE"}:
+            return "门店"
+        raise RuntimeContractError("Organization level is not mapped")
+
+    @staticmethod
+    def _default_content_identity(organization_level: str) -> str:
+        return {
+            "品牌总部": "品牌价值身份",
+            "区域组织": "区域经营身份",
+            "门店": "门店关系身份",
+        }[organization_level]
 
     @staticmethod
     def _access(principal_id: str, account_id: str) -> ServerPlanAccess:

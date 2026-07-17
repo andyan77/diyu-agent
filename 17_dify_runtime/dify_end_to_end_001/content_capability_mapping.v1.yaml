@@ -1,0 +1,74 @@
+schema_version: v1.0
+mapping_kind: ONE_TASK_BOOK_WITH_CONFIGURED_PUBLIC_DIMENSIONS
+organization_levels: [品牌总部, 区域组织, 门店]
+content_identities:
+  - 品牌价值身份
+  - 专业身份
+  - 区域经营身份
+  - 门店关系身份
+  - 商品或栏目身份
+identity_allowed_organization_levels:
+  品牌价值身份: [品牌总部]
+  专业身份: [品牌总部, 区域组织, 门店]
+  区域经营身份: [区域组织]
+  门店关系身份: [门店]
+  商品或栏目身份: [品牌总部, 区域组织, 门店]
+public_topics:
+  - display_name: 品牌和企业故事
+    legacy_topic_labels: [真实工作与人物, 产品研发与验证]
+    internal_product_ids: [CP05, CP11, CP19, CP20]
+  - display_name: 创始人或主理人的工作日常与观点
+    legacy_topic_labels: [真实工作与人物, 产品研发与验证]
+    internal_product_ids: [CP01, CP05, CP19, CP20]
+  - display_name: 商品为什么这样设计
+    legacy_topic_labels: [手艺、工艺与专业知识, 产品研发与验证]
+    internal_product_ids: [CP06, CP08, CP10, CP11, CP12]
+  - display_name: 穿搭、试穿和选购建议
+    legacy_topic_labels: [用户问题与理性选择, 穿搭与衣橱关系, 商品质感与视觉审美]
+    internal_product_ids: [CP07, CP09, CP13, CP14, CP16]
+  - display_name: 门店日常与顾客服务
+    legacy_topic_labels: [真实工作与人物, 门店运营与空间经营]
+    internal_product_ids: [CP01, CP02, CP15, CP16, CP18]
+  - display_name: 团队幕后、跨岗位协作和岗位成长
+    legacy_topic_labels: [真实工作与人物]
+    internal_product_ids: [CP01, CP04, CP05, CP15]
+  - display_name: 陈列调整与空间经营
+    legacy_topic_labels: [商品质感与视觉审美, 门店运营与空间经营]
+    internal_product_ids: [CP03, CP15, CP17]
+  - display_name: 城市、区域与本地生活
+    legacy_topic_labels: [城市门店与本地生活]
+    internal_product_ids: [CP02, CP16, CP18, CP19]
+  - display_name: 活动、直播、咨询、到店、私域和复购承接
+    legacy_topic_labels: [用户问题与理性选择, 门店运营与空间经营]
+    internal_product_ids: [CP06, CP15, CP16, CP19, CP20]
+  - display_name: 招商、招聘与组织信任
+    legacy_topic_labels: [真实工作与人物, 产品研发与验证]
+    internal_product_ids: [CP04, CP05, CP19, CP20]
+long_term_storylines:
+  - 品牌为什么存在
+  - 衣服如何服务真实生活
+  - 商品为什么这样设计
+  - 一群人如何把品牌做好
+content_directions:
+  - 品牌与价值叙事
+  - 商品专业解释
+  - 真实组织与幕后
+  - 消费者生活与穿搭判断
+  - 活动、交易与关系承接
+content_formats:
+  - 短视频
+  - 图文
+  - 直播内容包
+  - 私域沟通内容
+  - 门店线下物料
+  - 培训与门店话术
+  - 陈列搭配
+expression_methods: [故事, 问答, 对比, 观察, 幕后, 演示, 纪实]
+business_goals: [品牌认知, 商品理解, 建立信任, 引发咨询, 到店, 复购, 招商, 招聘]
+invariants:
+  one_task_book: true
+  one_generation_chain: true
+  internal_product_ids_hidden_from_users: true
+  dimensions_do_not_grant_fact_authorization_or_scope: true
+  material_gap_is_not_unsupported: true
+  production_ready: false

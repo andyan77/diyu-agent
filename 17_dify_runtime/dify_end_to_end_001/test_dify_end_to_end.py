@@ -689,7 +689,13 @@ class Package7Tests(unittest.TestCase):
         )
         self.assertEqual(
             run.payload["envelope"]["candidates"] if run else None,
-            candidates,
+            ModelEnvelope.model_validate(
+                {
+                    "kind": "CANDIDATE_SET",
+                    "reply": None,
+                    "candidates": candidates,
+                }
+            ).model_dump()["candidates"],
         )
 
     def test_video_note_relocation_is_narrow_and_audited(self) -> None:
@@ -1049,8 +1055,16 @@ class Package7Tests(unittest.TestCase):
             self.assertEqual(result["response_kind"], "DIRECT")
             self.assertTrue(result["action_card"])
 
-    def test_three_production_formats_have_closed_distinct_contracts(self) -> None:
-        for content_format in ("短视频", "图文", "陈列搭配"):
+    def test_seven_production_formats_have_closed_distinct_contracts(self) -> None:
+        for content_format in (
+            "短视频",
+            "图文",
+            "直播内容包",
+            "私域沟通内容",
+            "门店线下物料",
+            "培训与门店话术",
+            "陈列搭配",
+        ):
             prepared = self.runtime.prepare(
                 self.request(content_format=content_format),
                 self.principal_id,
@@ -1081,9 +1095,87 @@ class Package7Tests(unittest.TestCase):
             payloads = [row.surfaces.execution_payload for row in envelope.candidates]
             self.assertTrue(all(row.production_format == content_format for row in payloads))
             self.assertEqual(
-                {sum(item is not None for item in (row.video, row.article, row.display)) for row in payloads},
+                {
+                    sum(
+                        item is not None
+                        for item in (
+                            row.video,
+                            row.article,
+                            row.live,
+                            row.private_communication,
+                            row.offline_material,
+                            row.training,
+                            row.display,
+                        )
+                    )
+                    for row in payloads
+                },
                 {1},
             )
+
+    def test_public_capability_dimensions_use_one_task_book_and_server_scope(self) -> None:
+        options = self.runtime.portal_options(self.principal_id)
+        self.assertEqual(len(options["topics"]), 10)
+        self.assertEqual(len(options["content_formats"]), 7)
+        self.assertEqual(len(options["organization_levels"]), 3)
+        self.assertEqual(len(options["content_identities"]), 5)
+        self.assertEqual(len(options["long_term_storylines"]), 4)
+        self.assertEqual(len(options["content_directions"]), 5)
+        self.assertEqual(len(options["expression_methods"]), 7)
+        self.assertEqual(len(options["business_goals"]), 8)
+        self.assertEqual(
+            options["organization_levels_by_account"]["笛语童装"],
+            "品牌总部",
+        )
+        self.assertEqual(
+            options["organization_levels_by_account"]["笛语江苏"],
+            "区域组织",
+        )
+        self.assertEqual(
+            options["organization_levels_by_account"]["笛语苏州园区店"],
+            "门店",
+        )
+        prepared = self.runtime.prepare(
+            self.request(
+                topic_label="商品为什么这样设计",
+                selected_content_product_id="CP06",
+                content_identity="专业身份",
+                long_term_storyline="商品为什么这样设计",
+                content_direction="商品专业解释",
+                business_goal="商品理解",
+                expression_method="演示",
+            ),
+            self.principal_id,
+        )
+        self.assertEqual(prepared["response_kind"], "MODEL_REQUIRED")
+        task_brief = prepared["author_prompt"]["task_brief"]
+        self.assertEqual(task_brief["organization_level"], "品牌总部")
+        self.assertEqual(task_brief["content_identity"], "专业身份")
+        self.assertEqual(task_brief["business_goal"], "商品理解")
+
+    def test_material_gap_is_executable_and_never_reported_as_unsupported(self) -> None:
+        result = self.runtime.prepare(
+            self.request(
+                account_display_name="笛语苏州园区店",
+                organization_level="门店",
+                content_identity="门店关系身份",
+                topic_label="活动、直播、咨询、到店、私域和复购承接",
+                selected_content_product_id="CP16",
+                content_format="直播内容包",
+                business_goal="到店",
+                message="做一场本周到店活动直播内容包",
+            ),
+            self.principal_id,
+        )
+        self.assertEqual(result["response_kind"], "DIRECT")
+        self.assertTrue(result["action_card"])
+        self.assertEqual(result["system_support"], "SUPPORTED")
+        self.assertIn(result["diyu_material_status"], {"PARTIAL", "GAP"})
+        card = result["material_gap_card"]
+        self.assertTrue(card["questions_or_interview_outline"])
+        self.assertTrue(card["shots_to_collect"])
+        self.assertIn("无需修改代码", card["regeneration_after_import"])
+        self.assertNotIn("不支持", result["user_visible_text"])
 
     def test_same_difference_categories_allow_distinct_creative_realizations(self) -> None:
         prepared = self.runtime.prepare(
@@ -1398,26 +1490,43 @@ class Package7Tests(unittest.TestCase):
                 model_call_upper_bound=1,
             )
 
-    def test_authorized_budget_extension_is_explicit_and_capped_at_100(self) -> None:
+    def test_authorized_budget_extension_preserves_96_and_adds_exactly_1000(self) -> None:
         self.repository.reserve_dify_invocation(
-            invocation_id="DIFY-BUDGET-EXTENDED",
+            invocation_id="DIFY-BUDGET-HISTORICAL",
             principal_id=self.principal_id,
-            model_call_upper_bound=100,
-            maximum_model_calls=100,
+            model_call_upper_bound=96,
+            maximum_model_calls=1096,
+        )
+        self.repository.reserve_dify_invocation(
+            invocation_id="DIFY-BUDGET-PACKAGE10",
+            principal_id=self.principal_id,
+            model_call_upper_bound=1000,
+            maximum_model_calls=1096,
+        )
+        self.assertEqual(
+            self.repository.dify_invocation_audit()["model_call_upper_bound"],
+            1096,
         )
         with self.assertRaises(ValueError):
             self.repository.reserve_dify_invocation(
                 invocation_id="DIFY-BUDGET-EXTENDED-OVER",
                 principal_id=self.principal_id,
                 model_call_upper_bound=1,
-                maximum_model_calls=100,
+                maximum_model_calls=1096,
             )
+        client = DifyChatClient(
+            base_url="https://dify.internal/v1",
+            app_api_token="app-" + "x" * 32,
+            repository=self.repository,
+            maximum_model_calls=1096,
+        )
+        self.assertEqual(client.maximum_model_calls, 1096)
         with self.assertRaises(ValueError):
             DifyChatClient(
                 base_url="https://dify.internal/v1",
                 app_api_token="app-" + "x" * 32,
                 repository=self.repository,
-                maximum_model_calls=101,
+                maximum_model_calls=0,
             )
 
     def test_dify_conversation_is_persisted_and_reused_for_the_same_user(self) -> None:
@@ -2037,6 +2146,90 @@ class Package7Tests(unittest.TestCase):
                 },
                 "display": None,
             }
+        elif content_format == "直播内容包":
+            format_payload = {
+                "video": None,
+                "article": None,
+                "live": {
+                    "theme": "围绕当前资料讲清一个问题",
+                    "opening": body,
+                    "segments": [
+                        {
+                            "segment_title": "先讲问题",
+                            "duration_or_order": "第一段",
+                            "talking_points": [body],
+                            "interaction_prompt": "请留言说说最想确认什么。",
+                        },
+                        {
+                            "segment_title": "再讲边界",
+                            "duration_or_order": "第二段",
+                            "talking_points": ["只回答当前资料能支持的部分。"],
+                            "interaction_prompt": "未知信息先登记，不现场猜测。",
+                        },
+                    ],
+                    "interaction_qa": ["问：未知项怎么办？答：记录后由负责人确认。"],
+                    "product_or_event_linkage": "只衔接已确认的商品或活动。",
+                    "risk_reminders": ["价格、库存和时效须现场复核。"],
+                    "closing": "把未确认问题带回核实。",
+                },
+                "private_communication": None,
+                "offline_material": None,
+                "training": None,
+                "display": None,
+            }
+        elif content_format == "私域沟通内容":
+            format_payload = {
+                "video": None,
+                "article": None,
+                "live": None,
+                "private_communication": {
+                    "applicable_scenario": "用户主动咨询后的内部模拟回复",
+                    "messages": [{"channel": "一对一", "copy": body}],
+                    "follow_up_actions": ["记录待确认问题"],
+                    "communication_boundaries": ["不猜价格、库存或个人情况"],
+                },
+                "offline_material": None,
+                "training": None,
+                "display": None,
+            }
+        elif content_format == "门店线下物料":
+            format_payload = {
+                "video": None,
+                "article": None,
+                "live": None,
+                "private_communication": None,
+                "offline_material": {
+                    "core_copy": body,
+                    "information_hierarchy": ["核心要点", "确认边界"],
+                    "layout_or_placement_notes": ["主信息置于第一视线"],
+                    "action_guidance": "请向店员确认当前信息。",
+                    "validity_boundary": "内部模拟，使用前核对有效时间。",
+                },
+                "training": None,
+                "display": None,
+            }
+        elif content_format == "培训与门店话术":
+            format_payload = {
+                "video": None,
+                "article": None,
+                "live": None,
+                "private_communication": None,
+                "offline_material": None,
+                "training": {
+                    "training_goal": "让门店只在现有资料范围内回答",
+                    "audience": "内部模拟门店人员",
+                    "outline": ["识别问题", "核对事实"],
+                    "cases": [body],
+                    "exercises": ["区分已知与待确认信息"],
+                    "facilitator_notes": ["不替员工补造经历"],
+                    "situational_qa": [
+                        {"question": "资料没有写怎么办？", "suggested_answer": "先记录并确认。"}
+                    ],
+                    "allowed_phrasing": ["目前资料能确认的是"],
+                    "prohibited_phrasing": ["我保证一定有货"],
+                },
+                "display": None,
+            }
         else:
             format_payload = {
                 "video": None,
@@ -2073,7 +2266,7 @@ class Package7Tests(unittest.TestCase):
                     {"order": 1, "image_brief": "问题作为首屏。", "accompanying_copy": body},
                     {"order": 2, "image_brief": "答案和边界并列。", "accompanying_copy": "只回答已有资料支持的部分。"},
                 ]
-            else:
+            elif content_format == "陈列搭配":
                 format_payload["display"]["arrangement_relationship"] = "先列待确认问题，再按已确认事实安排可执行部分。"
                 format_payload["display"]["spatial_layers"] = "问题、证据和待确认项分成三个清楚区域。"
         elif architecture == "OBJECT_OR_TIMELINE":
@@ -2099,7 +2292,7 @@ class Package7Tests(unittest.TestCase):
                     {"order": 1, "image_brief": "同一对象的整体状态。", "accompanying_copy": body},
                     {"order": 2, "image_brief": "同一对象的证据细节。", "accompanying_copy": "停在当前可确认状态。"},
                 ]
-            else:
+            elif content_format == "陈列搭配":
                 format_payload["display"]["arrangement_relationship"] = "沿同一对象的状态证据组织，不借其他对象补足叙事。"
                 format_payload["display"]["spatial_layers"] = "整体状态、局部证据和未知项依次展开。"
         surfaces = {
