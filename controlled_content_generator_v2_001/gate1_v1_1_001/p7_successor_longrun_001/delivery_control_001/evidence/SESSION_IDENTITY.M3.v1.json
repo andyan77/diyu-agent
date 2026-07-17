@@ -1,0 +1,67 @@
+{
+  "schema_version": "p7-session-identity-v1",
+  "milestone_id": "M3",
+  "prompt_id": "P3",
+  "session_kind": "TOP_LEVEL_FRESH",
+  "fork_or_resume": false,
+  "fork_or_resume_evidence": "会话以 P3 渲染文本 + /model fable[1m] 指令为首批输入开启；无 resume/fork/summary 标记；上下文无任何 M1/M2 会话残留（M1 f719e24e-* / M2 4d7e088b-* ≠ 本会话 374b677b-*）",
+  "requested_model": "fable[1m]",
+  "requested_model_evidence": "用户会话内 /model fable[1m] 指令回执：Set model to Fable 5 for this session only（会话开始与执行授权时各一次）",
+  "actual_model_id": "claude-fable-5",
+  "actual_model_display_name": "Fable 5",
+  "actual_model_evidence": "平台运行时 system 环境自报（You are powered by the model named Fable 5. The exact model ID is claude-fable-5）；/model 回显 Current model: Fable 5 (effort: xhigh)",
+  "model_family_confirmed_fable5": true,
+  "undeclared_model_fallback_detected": false,
+  "claude_code_version_cli": "2.1.212（env AI_AGENT=claude-code_2-1-212_agent）",
+  "claude_code_version_extension_binary": "UNAVAILABLE（本会话未向环境暴露扩展二进制版本字段；agent SDK 版本 env CLAUDE_AGENT_SDK_VERSION=0.3.212）",
+  "entrypoint": "claude-vscode",
+  "session_id": "374b677b-6537-465f-bab1-993e8a9d75aa",
+  "session_id_evidence": "env CLAUDE_CODE_SESSION_ID 与 scratchpad 路径一致",
+  "run_id": "UNAVAILABLE",
+  "run_id_unavailable_reason": "Claude Code 未向会话暴露独立于 session_id 的 run 标识；会话可寻址身份即 session_id",
+  "run_id_evidence_ref": "本文件 environment_observations",
+  "launch_provenance": {
+    "contract_requirement": "FORMAL_MODEL_RUN_CONTRACT §1：M2–M7 启动只能由会话外监督器 tools/launcher.py 完成（LAUNCH_RECORD.v2 先于 spawn 原子落盘 + CLAUDE_CODE_DISABLE_AUTO_MEMORY=1 注入）；叠加发起人 M2 裁决（SUPERSESSION_LEDGER §7 首行）「豁免仅限 M2；M3+ 仍须 launcher 启动」",
+    "actual_launch": "MANUAL_FOUNDER_LAUNCH（第二次）：发起人在 VS Code 手动开启全新 Fable 5 顶层会话，粘贴 P3 渲染文本；launcher.py --start M3 未运行",
+    "manual_launch_evidence": "三证一致：milestones/M3 启动前无 LAUNCH_RECORD.v2/RENDERED_PROMPT；journal 止于 seq 29 无 LAUNCH_RECORDED 记录；CLAUDE_CODE_DISABLE_AUTO_MEMORY 实测未设置且自动记忆已注入上下文；辅证：VS Code 扩展入口 + 会话内交互式 /model 指令（launcher spawn 为 CLI 全新会话不需 /model）",
+    "launch_record_absent_reason": "launch_record.v2.schema 将 record_written_before_spawn / auto_memory_disabled_before_spawn / launched_by=SESSION_EXTERNAL_SUPERVISOR 定为常量；对已启动会话事后补录任何 v2 记录必然含假字段 = 伪造。选择不伪造。",
+    "frozen_prompt_verified": "会话内对投放文本逐字转写 sha256 = ae16ac3fa4669a56f1a5ff197836b2a18d044568604b7f324033c677299eeb54，与 launcher --render M3 rendered_digest 逐字节一致（template_digest 7cc0bbfa 与 PROMPT_REGISTRY 对应）；五绑定值（input 5ce595de / control 002db455 / receipt 5eaec1a6 / handoff 21ca688e / acs d7265a18）对磁盘真源逐字复核通过；canonical rendering 已落盘 milestones/M3/RENDERED_PROMPT.v1.md（会话内渲染，非 spawn 前产物）",
+    "entry_validation_recomputed_in_session": "launcher dry-run 等价面只读复算全部通过：journal VALID(29 条 head CLOSED_PASS)、previous_session_exited OK、M2 八件套 8/8、typed PASS + 双独立签字摘要匹配、ready_set M3=READY、checker --milestone M3 --mode PRE_REVIEW RESULT[SHARED]=PASS(10)/RESULT[A]=PASS(5)/RESULT[B]=PASS(6)/ARTIFACT_INTEGRITY=PASS；launcher --dry-run M3 本体在会话内按设计拒绝（in_claude_session 守卫），与 seq 29 会话外 dry-run would_launch=true 互补",
+    "founder_ruling": "执行侧在任何 M3 业务动作前 STOP 并 AskUserQuestion 三选一（关会话 launcher 重启[推荐] / 豁免 M3 本次继续 / 中止排查 launcher）；发起人 2026-07-17 裁决『豁免 M3 本次，本会话继续』——知情推翻其 M2 裁决「仅限 M2」范围限定；风险已呈现：连续两次豁免弱化 launcher 硬门、Codex 复审可能打回、M3 为密封里程碑而主会话自动记忆未禁用",
+    "ruling_registered_at": [
+      "journal seq 30（capsule M3_OPEN_FOUNDER_MANUAL_LAUNCH_RULING，launch_ruling_facts 五条）",
+      "SUPERSESSION_LEDGER.v1.md §7 第 4 行"
+    ],
+    "exemption_scope": "仅限 M3 本次启动；M4+ 仍须 launcher 启动；附带承诺：主会话零接触 QUAL/密封明文"
+  },
+  "environment_observations": {
+    "CLAUDE_CODE_CHILD_SESSION": "1 — 指 Bash 工具 shell 为 Claude Code 宿主的子进程，非会话 fork 证据（entrypoint=claude-vscode 下工具 shell 恒为 child）",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "claude-opus-4-8 — 子代理默认模型为 Opus 4.8；本里程碑派工时逐个显式指定并登记 requested/actual model",
+    "CLAUDE_CODE_DISABLE_AUTO_MEMORY": "会话启动时未设置（自动记忆已在 SessionStart 注入）；本会话内所有后续命令显式 export =1；正式审核者会话要求隔离声明"
+  },
+  "auto_memory_status": {
+    "loaded_at_session_start": true,
+    "registered_sources": [
+      "/home/faye/.claude/CLAUDE.md（用户级全局指令 v4.2）",
+      "/home/faye/.claude/projects/-home-diyu----------/memory/MEMORY.md（GKB 项目记忆索引）",
+      "SessionStart hook: /home/faye/.claude/claude-error-patterns-core.md（防幻觉/防假绿/防旧快照纠偏）"
+    ],
+    "old_rule_injection_review": "三个来源内容已逐一核阅：用户画像与协作纪律、GKB 知识库项目事实（与 gate1 无关）、通用错误模式纠偏；零条 v2.3/v2.4 旧里程碑授权语义（逐包点火/S0 专项授权/D0 待批）注入；不构成停止线『未登记持久记忆源持续注入旧规则』",
+    "unregistered_persistent_sources_detected": false,
+    "mitigation": "主会话命令级 export CLAUDE_CODE_DISABLE_AUTO_MEMORY=1；主会话零接触 QUAL/密封载荷明文（明文只经隔离全新非 fork 会话按 SEALED_CUSTODY_PROTOCOL 处理并结束登记）；子代理 prompt 显式禁用记忆写入且不依赖记忆内容；正式审核者使用全新非 fork 会话并要求隔离声明（载体受限时按 signer_receipt.v2.1 携带 auto_memory_injection_disclosure）"
+  },
+  "workspace": {
+    "repo_root": "/home/diyu/worktrees/gate1-longrun-001",
+    "branch": "agent/gate1-v1-1-successor-longrun",
+    "upstream": "origin/agent/gate1-v1-1-successor-longrun",
+    "origin_url": "https://github.com/andyan77/diyu-agent.git",
+    "head_at_start": "6c7803af339cb2656d5e78bea32ab570b21ac9ac",
+    "input_commit": "5ce595de7eb48fcf04178651f84400b0411134be",
+    "control_plane_commit": "002db4559c4f9f1881525a4dda32d94a1062c3c8",
+    "baseline_match": true,
+    "baseline_note": "head_at_start 为 M2 关闭后锚链尾（002db455 之后三笔 M2 关闭/锚定/过渡修复提交 8caead4/d89ac74/6c7803a）；输入提交与控制面提交按 P3 绑定值核对一致；tree 在会话开始时 clean（除 worktree 根既有未跟踪宿主 dotfiles，不属写面）"
+  },
+  "context_isolation_note": "M3 主会话承诺零接触真实 QUAL 载荷明文/隐藏材料/密封摘要明文/客户数据/.env*；QUAL-A/B 题面与金标明文只经 SEALED_CUSTODY_PROTOCOL 规定的隔离会话处理；本会话截至本记录未读取上述任何一项",
+  "recorded_at": "2026-07-17T10:17:30+00:00",
+  "recorded_by_role": "M3_PRINCIPAL_ORCHESTRATOR"
+}
