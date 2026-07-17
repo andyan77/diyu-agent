@@ -60,6 +60,28 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _atomic_write(path: Path, text: str) -> None:
+    """原子落盘协议（指令第 6 条）：同目录 tmp + fsync + rename + 目录 fsync。"""
+    tmp_path = path.with_name(path.name + ".tmp")
+    with open(tmp_path, "w", encoding="utf-8") as f:
+        f.write(text)
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp_path, path)
+    dir_fd = os.open(str(path.parent), os.O_RDONLY)
+    try:
+        os.fsync(dir_fd)
+    finally:
+        os.close(dir_fd)
+
+
+def _git_head(root: Path) -> str | None:
+    proc = subprocess.run(["git", "-C", str(root), "rev-parse", "HEAD"],
+                          capture_output=True, text=True)
+    head = proc.stdout.strip()
+    return head if proc.returncode == 0 and len(head) == 40 else None
+
+
 def in_claude_session(env: dict | None = None) -> bool:
     env = os.environ if env is None else env
     return bool(env.get("CLAUDE_CODE_SESSION_ID") or env.get("CLAUDECODE"))
@@ -74,7 +96,8 @@ def previous_session_exited(root: Path, dc: Path, predecessor: str) -> tuple[boo
     if str(head.get("state", "")).upper() == "ACTIVE":
         return False, (f"journal head still ACTIVE (capsule={head.get('capsule')}) "
                        "-> previous session may be live")
-    receipt_path = dc / "milestones" / predecessor / "CLOSEOUT_RECEIPT.v1.json"
+    receipt_path = receipts.resolve_versioned(
+        dc / "milestones" / predecessor, "CLOSEOUT_RECEIPT")
     if not receipt_path.is_file():
         return False, f"{predecessor} closeout receipt absent"
     return True, f"journal head state={head.get('state')}, closeout present"
@@ -190,6 +213,11 @@ def spawn_via_claude_cli(rendered_path: Path, model: str = "fable") -> dict:
 def start(root: Path, milestone: str, dc: Path | None = None,
           env: dict | None = None, spawn=spawn_via_claude_cli,
           author_session_ids: set[str] | None = None) -> dict:
+    """启动流程（指令第 6 条重设计）：
+
+    校验入口 → 渲染 Prompt → 绑定实际 HEAD → LAUNCH_RECORD.v2 原子落盘
+    （先于任何 spawn 动作）→ spawn → LAUNCH_OUTCOME.v1 落盘（回绑记录摘要）。
+    子代理伪装 / 会话复用在 outcome 中登记 REFUSED_* 后拒绝。"""
     dc = dc or DC
     context = validate_entry(root, milestone, dc=dc, env=env,
                              author_session_ids=author_session_ids)
@@ -201,25 +229,20 @@ def start(root: Path, milestone: str, dc: Path | None = None,
     out_dir = dc / "milestones" / milestone
     out_dir.mkdir(parents=True, exist_ok=True)
     rendered_path = out_dir / "RENDERED_PROMPT.v1.md"
-    rendered_path.write_text(rendered["text"], encoding="utf-8")
+    _atomic_write(rendered_path, rendered["text"])
 
-    spawn_result = spawn(rendered_path)
-    capability = spawn_result.get("capability")
-    if capability == "AUTO_LAUNCHED":
-        if spawn_result.get("session_kind") != "TOP_LEVEL_FRESH":
-            raise LaunchRefused(
-                f"spawn returned session_kind={spawn_result.get('session_kind')}"
-                " — subagent impersonation of a top-level session is forbidden")
-        if (author_session_ids and isinstance(spawn_result.get("session_id"), str)
-                and spawn_result["session_id"] in author_session_ids):
-            raise LaunchRefused("spawned session id equals author session id "
-                                "(reuse forbidden)")
+    head = _git_head(root)
+    if head is None:
+        raise LaunchRefused("workspace HEAD unresolvable; launch record "
+                            "must bind the actual HEAD (no repo, no launch)")
+
     record = {
-        "schema_version": "p7-launch-record-v1",
+        "schema_version": "p7-launch-record-v2",
         "prompt_id": entry["prompt_id"],
         "milestone_id": milestone,
         "workspace": str(root),
         "input_commit": bindings["INPUT_COMMIT"],
+        "launched_at_head": head,
         "rendered_prompt_path": str(rendered_path.relative_to(root))
             if rendered_path.is_relative_to(root) else str(rendered_path),
         "rendered_prompt_digest": rendered["rendered_digest"],
@@ -237,30 +260,73 @@ def start(root: Path, milestone: str, dc: Path | None = None,
             entry["roles_and_models"]["principal"],
             "matrix: " + entry["roles_and_models"]["matrix"]],
         "session_kind": "TOP_LEVEL_FRESH",
-        "session_id": spawn_result.get("session_id", {
-            "value": "UNAVAILABLE",
-            "unavailable_reason": f"capability={capability}",
-            "evidence_ref": "launcher spawn result"}),
         "requested_model": "fable (Fable 5)",
-        "actual_model": str(spawn_result.get(
-            "actual_model", "PENDING_SESSION_IDENTITY_RECEIPT")),
         "auto_memory_disabled": True,
+        "auto_memory_disabled_before_spawn": True,
+        "record_written_before_spawn": True,
+        "write_protocol": "ATOMIC_WRITE_TMP_FSYNC_RENAME",
         "launched_by": "SESSION_EXTERNAL_SUPERVISOR",
         "launched_at": _now(),
         "previous_session_exited_evidence": context["checks"][1],
-        "launch_capability": capability or "AUTO_LAUNCH_CAPABILITY_UNAVAILABLE",
-        "exit_status": spawn_result.get("exit_status"),
         "record_digest": "",
     }
     record = receipts.close_record(record, "record_digest")
     errors = receipts.validate_launch_record(record)
     if errors:
         raise LaunchRefused(f"launch record invalid: {errors}")
-    record_path = out_dir / "LAUNCH_RECORD.v1.json"
-    record_path.write_text(json.dumps(record, ensure_ascii=False, indent=2)
-                           + "\n", encoding="utf-8")
+    record_path = out_dir / "LAUNCH_RECORD.v2.json"
+    # 指令第 6 条：记录先于 spawn 原子落盘
+    _atomic_write(record_path, json.dumps(record, ensure_ascii=False,
+                                          indent=2) + "\n")
+
+    spawn_result = spawn(rendered_path)
+    capability = spawn_result.get("capability")
+    refusal: tuple[str, str] | None = None
+    if capability == "AUTO_LAUNCHED":
+        if spawn_result.get("session_kind") != "TOP_LEVEL_FRESH":
+            refusal = ("REFUSED_SUBAGENT_IMPERSONATION",
+                       f"spawn returned session_kind="
+                       f"{spawn_result.get('session_kind')} — subagent "
+                       "impersonation of a top-level session is forbidden")
+        elif (author_session_ids
+              and isinstance(spawn_result.get("session_id"), str)
+              and spawn_result["session_id"] in author_session_ids):
+            refusal = ("REFUSED_SESSION_REUSE",
+                       "spawned session id equals author session id "
+                       "(reuse forbidden)")
+
+    outcome = {
+        "schema_version": "p7-launch-outcome-v1",
+        "milestone_id": milestone,
+        "launch_record_digest": record["record_digest"],
+        "launch_capability": (refusal[0] if refusal else
+                              capability or
+                              "AUTO_LAUNCH_CAPABILITY_UNAVAILABLE"),
+        "session_id": spawn_result.get("session_id") or {
+            "value": "UNAVAILABLE",
+            "unavailable_reason": f"capability={capability}",
+            "evidence_ref": "launcher spawn result"},
+        "session_kind": spawn_result.get("session_kind", "NOT_APPLICABLE"),
+        "actual_model": str(spawn_result.get(
+            "actual_model", "PENDING_SESSION_IDENTITY_RECEIPT")),
+        "exit_status": spawn_result.get("exit_status"),
+        "auto_memory_disabled": True,
+        "completed_at": _now(),
+        "outcome_digest": "",
+    }
+    if refusal:
+        outcome["refusal_reason"] = refusal[1]
+    outcome = receipts.close_record(outcome, "outcome_digest")
+    _atomic_write(out_dir / "LAUNCH_OUTCOME.v1.json",
+                  json.dumps(outcome, ensure_ascii=False, indent=2) + "\n")
+    if refusal:
+        raise LaunchRefused(refusal[1])
+    outcome_errors = receipts.validate_launch_outcome(outcome, record)
+    if outcome_errors:
+        raise LaunchRefused(f"launch outcome invalid: {outcome_errors}")
+
     if capability != "AUTO_LAUNCHED":
-        (out_dir / "READY_TO_START.v1.json").write_text(json.dumps({
+        _atomic_write(out_dir / "READY_TO_START.v1.json", json.dumps({
             "milestone": milestone,
             "status": "READY_TO_START",
             "launch_capability": "AUTO_LAUNCH_CAPABILITY_UNAVAILABLE",
@@ -268,8 +334,8 @@ def start(root: Path, milestone: str, dc: Path | None = None,
             "frozen_prompt_path": record["rendered_prompt_path"],
             "frozen_prompt_digest": rendered["rendered_digest"],
             "instruction": "复制冻结 Prompt 到全新 Fable 5 顶层会话手动启动",
-        }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    return {"record": record, "spawn": spawn_result}
+        }, ensure_ascii=False, indent=2) + "\n")
+    return {"record": record, "outcome": outcome, "spawn": spawn_result}
 
 
 # ---------------------------------------------------------------- selftest
@@ -283,134 +349,39 @@ def selftest() -> int:
         if not cond:
             failures.append(name)
 
-    def make_fixture(tmp: Path, predecessor_result: str = "PASS",
-                     with_reviews: bool = True, journal_state: str = "CLOSED_PASS",
-                     flags: dict | None = None) -> Path:
-        dc = tmp / "delivery_control_001"
-        for sub in ("schema", "prompts", "tools", "journal",
-                    "milestones/M1", "state"):
-            (dc / sub).mkdir(parents=True, exist_ok=True)
-        for name in ("typed_receipt.v1.schema.json",
-                     "signer_receipt.v1.schema.json",
-                     "handoff.v1.schema.json", "launch_record.v1.schema.json"):
-            shutil.copy(DC / "schema" / name, dc / "schema" / name)
-        shutil.copy(DC / "PROMPT_REGISTRY.v1.json", dc / "PROMPT_REGISTRY.v1.json")
-        shutil.copy(DC / "MILESTONE_DAG.v1.json", dc / "MILESTONE_DAG.v1.json")
-        for template in (DC / "prompts").glob("P*.template.md"):
-            shutil.copy(template, dc / "prompts" / template.name)
-        # 合成签字回执
-        reviews = []
-        for i, kind in enumerate((
-                "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
-                "CODEX_GPT_EXTERNAL_REVIEW_SIGNER")):
-            signer = receipts.close_record({
-                "schema_version": "p7-signer-receipt-v1",
-                "reviewer_kind": kind, "provider": f"prov{i}",
-                "actual_model_id": f"model-{i}", "model_version": "v",
-                "task_thread_session_id": f"session-{i}",
-                "input_commit": "c" * 40, "input_manifest_digest": "d" * 64,
-                "prompt_digest": "e" * 64, "config_digest": "cfg",
-                "tool_summary": "read-only recompute",
-                "output_report_digest": "f" * 64,
-                "call_receipt": "receipt-evidence", "exit_status": 0,
-                "signed_at": "T",
-                "session_isolation_attestation": {
-                    "fresh_session_not_fork_not_resume": True,
-                    "did_not_author_reviewed_scope": True,
-                    "auto_memory_disabled_or_not_applicable": True,
-                    "isolation_evidence": "fresh"},
-                "verdict": "ACCEPT", "receipt_digest": ""},
-                "receipt_digest")
-            rp = dc / "milestones/M1" / f"review_{i}.signer_receipt.json"
-            rp.write_text(json.dumps(signer, ensure_ascii=False,
-                                     sort_keys=True, separators=(",", ":")),
-                          encoding="utf-8")
-            reviews.append({
-                "receipt_path": str(rp.relative_to(tmp)),
-                "receipt_digest": hashlib.sha256(rp.read_bytes()).hexdigest(),
-                "reviewer_kind": kind, "verdict": "ACCEPT"})
-        if not with_reviews:
-            reviews = []
-        closeout = receipts.close_record({
-            "schema_version": "p7-typed-receipt-v1",
-            "receipt_kind": "CLOSEOUT_RECEIPT", "milestone_id": "M1",
-            "product_scope": "SHARED", "result": predecessor_result,
-            "terminal": True, "qualification_flags": flags or {},
-            "candidate_commit": "c" * 40,
-            "output_manifest_digest": "d" * 64,
-            "evidence_manifest_digest": "e" * 64,
-            "review_bindings": reviews, "issued_at": "T",
-            "issued_by_role": "M1_PRINCIPAL", "receipt_digest": ""},
-            "receipt_digest")
-        decision = dict(closeout)
-        decision["receipt_kind"] = "STAGE_DECISION"
-        decision = receipts.close_record(decision, "receipt_digest")
-        mdir = dc / "milestones/M1"
+    sys.path.insert(0, str(DC / "tests"))
+    try:
+        import fixture_helpers as fh
+    finally:
+        sys.path.pop(0)
 
-        def manifest(name, entries):
-            value = receipts.close_record({
-                "schema_version": "p7-manifest-v1", "entry_count": len(entries),
-                "entries": entries, "manifest_digest": ""}, "manifest_digest")
-            (mdir / name).write_text(json.dumps(value, ensure_ascii=False),
-                                     encoding="utf-8")
-            return value
+    def _git(cwd: Path, *args: str) -> str:
+        proc = subprocess.run(["git", *args], cwd=str(cwd),
+                              capture_output=True, text=True)
+        assert proc.returncode == 0, (args, proc.stderr)
+        return proc.stdout.strip()
 
-        anchor = mdir / "MILESTONE_CONTRACT.v1.md"
-        anchor.write_text("contract", encoding="utf-8")
-        entry_row = [{"path": str(anchor.relative_to(tmp)),
-                      "sha256": hashlib.sha256(b"contract").hexdigest()}]
-        manifest("INPUT_MANIFEST.v1.json", entry_row)
-        out_manifest = manifest("OUTPUT_MANIFEST.v1.json", entry_row)
-        ev_manifest = manifest("EVIDENCE_MANIFEST.v1.json", entry_row)
-        closeout["output_manifest_digest"] = out_manifest["manifest_digest"]
-        closeout["evidence_manifest_digest"] = ev_manifest["manifest_digest"]
-        closeout = receipts.close_record(closeout, "receipt_digest")
-        decision["output_manifest_digest"] = out_manifest["manifest_digest"]
-        decision["evidence_manifest_digest"] = ev_manifest["manifest_digest"]
-        decision = receipts.close_record(decision, "receipt_digest")
-        (mdir / "CLOSEOUT_RECEIPT.v1.json").write_text(
-            json.dumps(closeout, ensure_ascii=False), encoding="utf-8")
-        (mdir / "STAGE_DECISION.v1.json").write_text(
-            json.dumps(decision, ensure_ascii=False), encoding="utf-8")
-        (mdir / "CLOSEOUT_REPORT.v1.md").write_text("report", encoding="utf-8")
-        handoff = receipts.close_record({
-            "schema_version": "p7-handoff-v1", "from_milestone": "M1",
-            "to_milestone": ["M2"],
-            "accepted_candidate_commit": "c" * 40,
-            "control_plane_commit": "b" * 40,
-            "active_contract_set_digest": "a" * 64,
-            "input_manifest_digest": "d" * 64,
-            "output_manifest_digest": out_manifest["manifest_digest"],
-            "last_green_test_summary": "all green",
-            "review_receipt_bindings": reviews or [
-                {"receipt_path": "x", "receipt_digest": "0" * 64,
-                 "reviewer_kind": "K", "verdict": "ACCEPT"},
-                {"receipt_path": "y", "receipt_digest": "0" * 64,
-                 "reviewer_kind": "K2", "verdict": "ACCEPT"}],
-            "qualification_flags": flags or {},
-            "route_binding": None,
-            "next_entry_contract": "prompts/P2.M2.template.md",
-            "next_prompt_template_digest": "1" * 64,
-            "ready_set_result_digest": "2" * 64,
-            "issued_at": "T", "handoff_digest": ""}, "handoff_digest")
-        (mdir / "HANDOFF.v1.json").write_text(
-            json.dumps(handoff, ensure_ascii=False), encoding="utf-8")
-        # journal（借用真实工具写合法链）
-        journal = dc / "journal/RUN_JOURNAL.v1.jsonl"
-        journal_mod.append_record(journal, {
-            "session_id": "author-session-M1", "run_id": "R",
-            "input_commit": "c" * 40, "dirty_tree_digest": "d" * 64,
-            "capsule": "CLOSE", "state": journal_state,
-            "requested_model": "fable", "actual_model": "claude-fable-5",
-            "subagent_ids": [], "last_green_commit": "c" * 40,
-            "verification_state": "GREEN", "next_action": "exit",
-            "stop_reason": None}, None)
+    def make_fixture(tmp: Path, **kwargs) -> Path:
+        dc = fh.build_m1_closeout_fixture(tmp, **kwargs)
+        _git(tmp, "init", "-q", "-b", "main")
+        _git(tmp, "config", "user.email", "t@t")
+        _git(tmp, "config", "user.name", "t")
+        _git(tmp, "add", "-A")
+        _git(tmp, "commit", "-qm", "fixture")
         return dc
 
-    fake_spawn_ok = lambda path: {
-        "capability": "AUTO_LAUNCHED", "session_id": "fresh-new-session-0001",
-        "session_kind": "TOP_LEVEL_FRESH", "actual_model": "claude-fable-5",
-        "exit_status": 0, "auto_memory_disabled": True}
+    def spawn_ok_factory(dc: Path, seen: dict):
+        def fake_spawn_ok(path: Path) -> dict:
+            # 指令第 6 条的顺序证明：spawn 时启动记录必须已在盘
+            seen["record_on_disk_before_spawn"] = (
+                dc / "milestones/M2/LAUNCH_RECORD.v2.json").is_file()
+            return {"capability": "AUTO_LAUNCHED",
+                    "session_id": "fresh-new-session-0001",
+                    "session_kind": "TOP_LEVEL_FRESH",
+                    "actual_model": "claude-fable-5",
+                    "exit_status": 0, "auto_memory_disabled": True}
+        return fake_spawn_ok
+
     fake_spawn_subagent = lambda path: {
         "capability": "AUTO_LAUNCHED", "session_id": "subagent-77",
         "session_kind": "SUBAGENT", "actual_model": "claude-fable-5",
@@ -422,18 +393,34 @@ def selftest() -> int:
     with tempfile.TemporaryDirectory() as tmp:
         tmp_root = Path(tmp)
         dc = make_fixture(tmp_root)
+        head = _git(tmp_root, "rev-parse", "HEAD")
         # 正常启动（外部环境 + 新会话身份）
-        result = start(tmp_root, "M2", dc=dc, env={}, spawn=fake_spawn_ok,
+        seen: dict = {}
+        result = start(tmp_root, "M2", dc=dc, env={},
+                       spawn=spawn_ok_factory(dc, seen),
                        author_session_ids={"author-session-M1"})
-        record = result["record"]
-        expect("fresh_session_identity_created",
-               record["session_id"] == "fresh-new-session-0001"
-               and record["session_kind"] == "TOP_LEVEL_FRESH"
-               and record["launch_capability"] == "AUTO_LAUNCHED")
+        record, outcome = result["record"], result["outcome"]
+        expect("record_written_before_spawn",
+               seen.get("record_on_disk_before_spawn") is True)
+        expect("record_bound_to_actual_head",
+               record["launched_at_head"] == head)
+        expect("fresh_session_identity_in_outcome",
+               outcome["session_id"] == "fresh-new-session-0001"
+               and outcome["session_kind"] == "TOP_LEVEL_FRESH"
+               and outcome["launch_capability"] == "AUTO_LAUNCHED")
+        expect("outcome_bound_to_record",
+               outcome["launch_record_digest"] == record["record_digest"]
+               and not receipts.validate_launch_outcome(outcome, record))
         expect("launch_record_schema_valid",
                not receipts.validate_launch_record(record))
         expect("rendered_prompt_digest_bound",
                len(record["rendered_prompt_digest"]) == 64)
+
+        # 篡改 HEAD 绑定 → 记录摘要复算失败
+        forged = dict(record)
+        forged["launched_at_head"] = "0" * 40
+        expect("forged_head_binding_rejected",
+               bool(receipts.validate_launch_record(forged)))
 
         # 同会话启动拒绝
         try:
@@ -443,19 +430,24 @@ def selftest() -> int:
         except LaunchRefused as exc:
             expect("same_session_refused", "same-session" in str(exc))
 
-        # 子代理伪装拒绝
+        # 子代理伪装拒绝 + 结果文件登记 REFUSED
         try:
             start(tmp_root, "M2", dc=dc, env={}, spawn=fake_spawn_subagent)
             expect("subagent_impersonation_refused", False)
         except LaunchRefused as exc:
+            outcome_file = json.loads(
+                (dc / "milestones/M2/LAUNCH_OUTCOME.v1.json").read_text(
+                    encoding="utf-8"))
             expect("subagent_impersonation_refused",
-                   "impersonation" in str(exc))
+                   "impersonation" in str(exc)
+                   and outcome_file["launch_capability"]
+                   == "REFUSED_SUBAGENT_IMPERSONATION")
 
         # spawn 能力不可用 → READY_TO_START + 诚实登记
         result = start(tmp_root, "M2", dc=dc, env={},
                        spawn=fake_spawn_unavailable)
         expect("honest_ready_to_start",
-               result["record"]["launch_capability"]
+               result["outcome"]["launch_capability"]
                == "AUTO_LAUNCH_CAPABILITY_UNAVAILABLE"
                and (dc / "milestones/M2/READY_TO_START.v1.json").is_file())
 

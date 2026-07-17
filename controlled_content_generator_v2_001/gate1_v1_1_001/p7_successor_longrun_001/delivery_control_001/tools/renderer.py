@@ -60,17 +60,34 @@ def build_bindings(root: Path, milestone: str, registry: dict,
     if receipt is None:
         raise receipts.ReceiptError(
             f"predecessor {predecessor} closeout receipt absent")
-    handoff_path = (milestones_dir or (
+    pred_dir = (milestones_dir or (
         root / "controlled_content_generator_v2_001/gate1_v1_1_001"
         "/p7_successor_longrun_001/delivery_control_001/milestones")
-    ) / predecessor / "HANDOFF.v1.json"
-    handoff = receipts.validate_handoff(handoff_path)
+    ) / predecessor
+    handoff = receipts.validate_handoff(
+        receipts.resolve_versioned(pred_dir, "HANDOFF"))
+    if handoff.get("schema_version") == "p7-handoff-v1":
+        # v1（封存）：handoff 自带 control_plane_commit
+        control_plane_commit = handoff["control_plane_commit"]
+    else:
+        # v2：提交不自指——控制面提交由前序 ORIGIN_ANCHOR.v2 锚定
+        anchor_path = pred_dir / "ORIGIN_ANCHOR.v2.json"
+        if not anchor_path.is_file():
+            raise receipts.ReceiptError(
+                f"predecessor {predecessor} origin anchor absent; cannot "
+                "bind CONTROL_PLANE_COMMIT (closure not anchored yet)")
+        anchor = json.loads(anchor_path.read_text(encoding="utf-8"))
+        if anchor.get("record_digest") != receipts.canonical_digest(
+                anchor, "record_digest"):
+            raise receipts.ReceiptError(
+                f"predecessor {predecessor} origin anchor digest mismatch")
+        control_plane_commit = anchor["closeout_commit"]
     route = receipts.route_binding(root) or "UNFROZEN"
     return {
         "MILESTONE_ID": milestone,
         "PROMPT_ID": entry["prompt_id"],
         "INPUT_COMMIT": handoff["accepted_candidate_commit"],
-        "CONTROL_PLANE_COMMIT": handoff["control_plane_commit"],
+        "CONTROL_PLANE_COMMIT": control_plane_commit,
         "PREDECESSOR_MILESTONE": predecessor,
         "PREDECESSOR_RESULT": receipt["result"],
         "PREDECESSOR_RECEIPT_DIGEST": receipt["receipt_digest"],

@@ -15,7 +15,7 @@
 
 1. 独立裁决 / 独立复算（对冻结输入从磁盘重算）；
 2. 实现与方法学复核（只读）；
-3. 审查签字（按 `schema/signer_receipt.v1.schema.json`）；
+3. 审查签字（按 `schema/signer_receipt.v2.schema.json`）；
 4. 盲锚题复核（M4 及之后，按当时里程碑合同）。
 
 ## 3. 禁止用途（denylist）
@@ -34,7 +34,7 @@
 ## 5. 回执纪律
 
 - 回执文件名含其内容 sha256 前缀，**内容寻址、禁覆盖**；同名冲突 = 停止并调查。
-- 签字回执必须满足 `signer_receipt.v1.schema.json` 全部必填字段；**缺任一必填字段 = 该签字无效（视为未签）**。
+- 签字回执必须满足 `signer_receipt.v2.schema.json` 全部必填字段；**缺任一必填字段 = 该签字无效（视为未签）**。
 - 提供方不公开的字段写 `{value: UNAVAILABLE, unavailable_reason, evidence_ref}`；**禁止伪造内部模型修订号或调用 ID**。
 - 验证方式：checker `FINAL` 模式复算回执摘要、schema 校验、绑定的 input_commit/manifest 摘要一致性、隔离声明有效性；任一不过 = 未签。
 

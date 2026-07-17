@@ -52,7 +52,7 @@
       "model": "claude-fable-5",
       "carrier": "全新、只读、非 fork、非 resume 会话/代理（非作者上下文）",
       "duties": ["M1 候选对抗审查（含 D0 章程审查）", "出具 signer_receipt"],
-      "receipt_schema": "schema/signer_receipt.v1.schema.json",
+      "receipt_schema": "schema/signer_receipt.v2.schema.json",
       "reviewer_kind": "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
       "isolation": "隔离声明必填；auto-memory 禁用；未读作者过程叙述，只读磁盘工件"
     },

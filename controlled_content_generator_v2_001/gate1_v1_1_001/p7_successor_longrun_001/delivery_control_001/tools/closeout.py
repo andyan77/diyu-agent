@@ -26,15 +26,22 @@ def _load(path: Path, name: str):
 
 receipts = _load(DC / "tools/receipts.py", "p7_receipts_closeout")
 
+# 八件套按基名登记；文件名经 receipts.resolve_versioned 解析（v2 优先，回退 v1）
 EIGHT_PIECES = (
-    "MILESTONE_CONTRACT.v1.md",
-    "INPUT_MANIFEST.v1.json",
-    "OUTPUT_MANIFEST.v1.json",
-    "EVIDENCE_MANIFEST.v1.json",
-    "STAGE_DECISION.v1.json",
-    "CLOSEOUT_REPORT.v1.md",
-    "CLOSEOUT_RECEIPT.v1.json",
-    "HANDOFF.v1.json",
+    ("MILESTONE_CONTRACT", "md"),
+    ("INPUT_MANIFEST", "json"),
+    ("OUTPUT_MANIFEST", "json"),
+    ("EVIDENCE_MANIFEST", "json"),
+    ("STAGE_DECISION", "json"),
+    ("CLOSEOUT_REPORT", "md"),
+    ("CLOSEOUT_RECEIPT", "json"),
+    ("HANDOFF", "json"),
+)
+
+# 后生成的关闭工件：不得被 manifest 递归包含（有界摘要闭包）
+LATER_GENERATED_PREFIXES = (
+    "CLOSEOUT_RECEIPT.", "STAGE_DECISION.", "HANDOFF.",
+    "MILESTONE_EXIT_EVIDENCE.", "READY_SET_RESULT.", "ORIGIN_ANCHOR.",
 )
 
 
@@ -67,8 +74,10 @@ def _verify_manifest(root: Path, path: Path, self_rel: str) -> list[str]:
         if rel == self_rel:
             errors.append(f"{path.name}: recursive self-inclusion ({rel})")
             continue
-        if rel.endswith((".signer_receipt.json", "CLOSEOUT_RECEIPT.v1.json",
-                         "STAGE_DECISION.v1.json")):
+        base_name = rel.rsplit("/", 1)[-1]
+        if rel.endswith(".signer_receipt.json") or any(
+                base_name.startswith(prefix)
+                for prefix in LATER_GENERATED_PREFIXES):
             errors.append(f"{path.name}: includes later-generated signature/"
                           f"receipt {rel} (bounded closure breach)")
             continue
@@ -107,33 +116,27 @@ def _verify_manifest(root: Path, path: Path, self_rel: str) -> list[str]:
 def validate_eight_pieces(root: Path, milestone_dir: Path) -> tuple[bool, list[str]]:
     errors: list[str] = []
     details: list[str] = []
-    missing = [name for name in EIGHT_PIECES
-               if not (milestone_dir / name).is_file()]
+    paths = {base: receipts.resolve_versioned(milestone_dir, base, ext)
+             for base, ext in EIGHT_PIECES}
+    missing = [base for base, path in paths.items() if not path.is_file()]
     if missing:
         return False, [f"eight-piece set incomplete; missing: {missing}"]
     details.append("eight_pieces_present=8/8")
 
-    for name in ("INPUT_MANIFEST.v1.json", "OUTPUT_MANIFEST.v1.json",
-                 "EVIDENCE_MANIFEST.v1.json"):
-        self_rel = str((milestone_dir / name).relative_to(root))
-        errors += _verify_manifest(root, milestone_dir / name, self_rel)
+    for base in ("INPUT_MANIFEST", "OUTPUT_MANIFEST", "EVIDENCE_MANIFEST"):
+        self_rel = str(paths[base].relative_to(root))
+        errors += _verify_manifest(root, paths[base], self_rel)
 
     try:
-        decision = receipts.load_typed_receipt(
-            milestone_dir / "STAGE_DECISION.v1.json")
-        closeout = receipts.load_typed_receipt(
-            milestone_dir / "CLOSEOUT_RECEIPT.v1.json")
-        if decision.get("result") != closeout.get("result"):
-            errors.append("STAGE_DECISION and CLOSEOUT_RECEIPT result mismatch")
-        if decision.get("candidate_commit") != closeout.get("candidate_commit"):
-            errors.append("candidate commit mismatch between typed receipts")
+        decision = receipts.load_typed_receipt(paths["STAGE_DECISION"])
+        closeout = receipts.load_typed_receipt(paths["CLOSEOUT_RECEIPT"])
+        # 指令第 4 条：两份 typed 回执强制逐字段比对（任何分叉 = 关闭无效）
+        errors += receipts.compare_typed_pair(decision, closeout)
         details.append(f"typed_result={closeout.get('result')}")
         out_manifest = json.loads(
-            (milestone_dir / "OUTPUT_MANIFEST.v1.json").read_text(
-                encoding="utf-8"))
+            paths["OUTPUT_MANIFEST"].read_text(encoding="utf-8"))
         ev_manifest = json.loads(
-            (milestone_dir / "EVIDENCE_MANIFEST.v1.json").read_text(
-                encoding="utf-8"))
+            paths["EVIDENCE_MANIFEST"].read_text(encoding="utf-8"))
         if closeout.get("output_manifest_digest") != out_manifest.get(
                 "manifest_digest"):
             errors.append("closeout not bound to OUTPUT_MANIFEST digest")
@@ -144,7 +147,7 @@ def validate_eight_pieces(root: Path, milestone_dir: Path) -> tuple[bool, list[s
         errors.append(str(exc))
 
     try:
-        handoff = receipts.validate_handoff(milestone_dir / "HANDOFF.v1.json")
+        handoff = receipts.validate_handoff(paths["HANDOFF"])
         details.append(f"handoff_to={handoff.get('to_milestone')}")
     except receipts.ReceiptError as exc:
         errors.append(str(exc))

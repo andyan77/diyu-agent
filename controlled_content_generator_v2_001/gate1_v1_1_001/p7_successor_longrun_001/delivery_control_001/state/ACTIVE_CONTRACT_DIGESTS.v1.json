@@ -1,7 +1,7 @@
 {
   "schema_version": "p7-active-contract-digests-v1",
   "contract_set_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/ACTIVE_CONTRACT_SET.v1.json",
-  "contract_set_sha256": "ae973677bccaded40ad6e409639edbb2f9a336194086877ce15a13e6c41d38d0",
+  "contract_set_sha256": "e6d6da5b598e5fcc7660619329aeeb7987e994613314ceb01cae102104b2a569",
   "members": [
     {
       "id": "ACTIVE_PLAN",
@@ -36,13 +36,13 @@
     {
       "id": "GPT_CODEX_SCOPE_CONTRACT_V1",
       "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/contracts/GPT_CODEX_SCOPE_CONTRACT.v1.md",
-      "sha256": "b0972e1b0a7eaab7ae57e70a8555aa90f291830c80ff73773010f740979214b0",
+      "sha256": "63eb328cece3e47178485a8532f19a5491efe03ed3bebda465c270a2df1badc0",
       "status": "FROZEN"
     },
     {
       "id": "ROLE_MODEL_MATRIX_V1",
       "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/ROLE_MODEL_MATRIX.v1.json",
-      "sha256": "2d33e6b722a7ef03d593e7cc62e086cd8a6f8b0a5ece4a8ac162a8cba129bc64",
+      "sha256": "de5ae0e2ac8566f2332761199caea9c76ec3a57d067095d50cd9104682c4252f",
       "status": "FROZEN"
     },
     {
@@ -58,9 +58,15 @@
       "status": "FROZEN"
     },
     {
-      "id": "SIGNER_RECEIPT_SCHEMA_V1",
-      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/schema/signer_receipt.v1.schema.json",
-      "sha256": "d30369cf8c74eecf31d54361efb7033b1ad1097c7479f5376545b743a59d07ac",
+      "id": "SIGNER_RECEIPT_SCHEMA_V2",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/schema/signer_receipt.v2.schema.json",
+      "sha256": "d7e50fe2528948e35c927b7910aa027a3dc6ab4ede2ddab4895e4a819df6931b",
+      "status": "FROZEN"
+    },
+    {
+      "id": "MILESTONE_EXIT_CONTRACT_V1",
+      "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/contracts/MILESTONE_EXIT_CONTRACT.v1.json",
+      "sha256": "e56c30cf119a7e54a354b20d1db4805da4eee0ae0d1523c929d8a40f61accd72",
       "status": "FROZEN"
     },
     {
@@ -101,6 +107,6 @@
     }
   ],
   "pending_count": 0,
-  "active_contract_set_digest": "cbe5f5f4e65a7766e328c5c676ecad2958fb4fdaacc9d17d44350a60cd46dee9",
+  "active_contract_set_digest": "d7265a1852e4b44db1fae134f5d03e404629470ee7438c36d08b1cc00d85a7e4",
   "errors": []
 }

@@ -53,6 +53,10 @@ DC_REL = ("controlled_content_generator_v2_001/gate1_v1_1_001/"
           "p7_successor_longrun_001/delivery_control_001")
 
 
+_git_init_commit = fh.git_init_commit
+_final_fixture = fh.build_final_fixture
+
+
 def _mk_receipt(milestone, result, flags=None, bindings=None):
     value = {
         "schema_version": "p7-typed-receipt-v1",
@@ -99,7 +103,7 @@ class NegativeAttackMatrix(unittest.TestCase):
     def test_attack_03_missing_eight_piece_member(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             dc = fh.build_m1_closeout_fixture(Path(tmp))
-            (dc / "milestones/M1/HANDOFF.v1.json").unlink()
+            (dc / "milestones/M1/HANDOFF.v2.json").unlink()
             ok, _ = closeout_mod.validate_eight_pieces(
                 Path(tmp), dc / "milestones/M1")
             self.assertFalse(ok)
@@ -493,6 +497,7 @@ class NegativeAttackMatrix(unittest.TestCase):
     def test_attack_29_launcher_subagent_impersonates_session(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             dc = fh.build_m1_closeout_fixture(Path(tmp))
+            _git_init_commit(Path(tmp))
             fake_subagent_spawn = lambda path: {
                 "capability": "AUTO_LAUNCHED", "session_id": "sub-1",
                 "session_kind": "SUBAGENT", "actual_model": "claude-fable-5",
@@ -501,6 +506,173 @@ class NegativeAttackMatrix(unittest.TestCase):
                 launcher_mod.start(Path(tmp), "M2", dc=dc, env={},
                                    spawn=fake_subagent_spawn)
             self.assertIn("impersonation", str(ctx.exception))
+            outcome = json.loads(
+                (dc / "milestones/M2/LAUNCH_OUTCOME.v1.json").read_text(
+                    encoding="utf-8"))
+            self.assertEqual(outcome["launch_capability"],
+                             "REFUSED_SUBAGENT_IMPERSONATION")
+
+    # ---- 指令第 3/4/5 条加固攻击面（2026-07-16 八项指令） ----
+
+    def test_attack_31_typed_pair_divergence(self) -> None:
+        """STAGE_DECISION 与 CLOSEOUT_RECEIPT 对不同候选作证 → FINAL 拒绝。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            dc, _ = _final_fixture(Path(tmp))
+            dp = dc / "milestones/M1/STAGE_DECISION.v1.json"
+            decision = json.loads(dp.read_text(encoding="utf-8"))
+            decision["candidate_commit"] = "f" * 40
+            decision = receipts.close_record(
+                {k: v for k, v in decision.items() if k != "receipt_digest"}
+                | {"receipt_digest": ""}, "receipt_digest")
+            dp.write_text(json.dumps(decision, ensure_ascii=False),
+                          encoding="utf-8")
+            ok, details = V25.check_final_receipts(Path(tmp),
+                                                   {"milestone": "M1"})
+            self.assertFalse(ok)
+            self.assertTrue(any("typed pair diverges" in d for d in details),
+                            details)
+
+    def test_attack_32_signer_v1_lacks_binding_in_final(self) -> None:
+        """v1 签字回执（无 milestone/产品域/manifest 绑定）→ FINAL 拒绝。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            dc, _ = _final_fixture(Path(tmp), signer_schema="v1")
+            ok, details = V25.check_final_receipts(Path(tmp),
+                                                   {"milestone": "M1"})
+            self.assertFalse(ok)
+            self.assertTrue(any("lacks v2" in d for d in details), details)
+
+    def test_attack_33_signer_milestone_transplant(self) -> None:
+        """签字回执 milestone_id=M2 移植进 M1 关闭 → FINAL 拒绝。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            dc, _ = _final_fixture(Path(tmp),
+                                   signer_overrides={"milestone_id": "M2"})
+            ok, details = V25.check_final_receipts(Path(tmp),
+                                                   {"milestone": "M1"})
+            self.assertFalse(ok)
+            self.assertTrue(any("transplant" in d and "milestone_id=M2" in d
+                                for d in details), details)
+
+    def test_attack_34_signer_product_scope_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            dc, _ = _final_fixture(Path(tmp),
+                                   signer_overrides={"product_scope": "A"})
+            ok, details = V25.check_final_receipts(Path(tmp),
+                                                   {"milestone": "M1"})
+            self.assertFalse(ok)
+            self.assertTrue(any("product_scope mismatch" in d
+                                for d in details), details)
+
+    def test_attack_35_signer_manifest_digest_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            dc, _ = _final_fixture(Path(tmp), signer_overrides={
+                "evidence_manifest_digest": "0" * 64})
+            ok, details = V25.check_final_receipts(Path(tmp),
+                                                   {"milestone": "M1"})
+            self.assertFalse(ok)
+            self.assertTrue(any("evidence_manifest_digest != on-disk"
+                                in d for d in details), details)
+
+    def test_attack_36_exit_key_removed(self) -> None:
+        """出口证据缺必需键 → FINAL 拒绝（即使摘要重新闭合）。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            dc, _ = _final_fixture(Path(tmp))
+            ep = dc / "milestones/M1/MILESTONE_EXIT_EVIDENCE.v1.json"
+            evidence = json.loads(ep.read_text(encoding="utf-8"))
+            evidence["exit_keys"].pop("REPOSITORY_WIDE_RESIDUAL_SCAN_PASS")
+            evidence = receipts.close_record(
+                {k: v for k, v in evidence.items() if k != "record_digest"}
+                | {"record_digest": ""}, "record_digest")
+            ep.write_text(json.dumps(evidence, ensure_ascii=False),
+                          encoding="utf-8")
+            ok, details = V25.check_final_receipts(Path(tmp),
+                                                   {"milestone": "M1"})
+            self.assertFalse(ok)
+            self.assertTrue(any("required exit key unsatisfied/absent" in d
+                                for d in details), details)
+
+    def test_attack_37_exit_evidence_file_tampered(self) -> None:
+        """出口键指向的证据文件被改写 → 字节摘要复算拒绝。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            dc, _ = _final_fixture(Path(tmp))
+            ep = dc / "milestones/M1/MILESTONE_EXIT_EVIDENCE.v1.json"
+            evidence = json.loads(ep.read_text(encoding="utf-8"))
+            victim = Path(tmp) / evidence["exit_keys"][
+                "FULL_TEST_SUITE_GREEN"]["evidence_path"]
+            victim.write_text("TAMPERED", encoding="utf-8")
+            ok, details = V25.check_final_receipts(Path(tmp),
+                                                   {"milestone": "M1"})
+            self.assertFalse(ok)
+            self.assertTrue(any("exit key evidence digest mismatch" in d
+                                for d in details), details)
+
+    def test_attack_38_m2_final_without_real_s0(self) -> None:
+        """M2 关闭却无真实 S0（未登记执行 / real_run=false）→ 机械拒绝。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / DC_REL / "contracts").mkdir(parents=True)
+            (root / DC_REL / "schema").mkdir(parents=True)
+            (root / EVAL_SPINE_REL / "contract").mkdir(parents=True)
+            (root / EVAL_SPINE_REL / "calibration").mkdir(parents=True)
+            shutil.copy(DC / "contracts/MILESTONE_EXIT_CONTRACT.v1.json",
+                        root / DC_REL / "contracts/MILESTONE_EXIT_CONTRACT.v1.json")
+            shutil.copy(DC / "schema/milestone_exit_evidence.v1.schema.json",
+                        root / DC_REL / "schema/milestone_exit_evidence.v1.schema.json")
+            shutil.copy(ES / "contract/stage_and_kill.v2.json",
+                        root / EVAL_SPINE_REL / "contract/stage_and_kill.v2.json")
+            (root / EVAL_SPINE_REL / "calibration/stage_actual_state.v1.json"
+             ).write_text(json.dumps({
+                 "schema_version": "eval-spine-stage-actual-state-v1",
+                 "executed_stages": [], "stage_receipts": {},
+                 "real_run_executed": False}), encoding="utf-8")
+            closeout = _mk_receipt("M2", "PASS")
+            errors = V25._check_milestone_exits(
+                root, "M2", closeout, receipts, [])
+            self.assertTrue(any("real_run_executed=true" in e
+                                for e in errors), errors)
+            self.assertTrue(any("never actually executed" in e
+                                for e in errors), errors)
+
+    def test_attack_39_m2_s0_mirror_drift(self) -> None:
+        """出口合同的 S0 六项镜像与阶段合同漂移 → FINAL 拒绝复制漂移。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / DC_REL / "contracts").mkdir(parents=True)
+            (root / DC_REL / "schema").mkdir(parents=True)
+            (root / EVAL_SPINE_REL / "contract").mkdir(parents=True)
+            (root / EVAL_SPINE_REL / "calibration").mkdir(parents=True)
+            shutil.copy(DC / "contracts/MILESTONE_EXIT_CONTRACT.v1.json",
+                        root / DC_REL / "contracts/MILESTONE_EXIT_CONTRACT.v1.json")
+            shutil.copy(DC / "schema/milestone_exit_evidence.v1.schema.json",
+                        root / DC_REL / "schema/milestone_exit_evidence.v1.schema.json")
+            drifted = json.loads((ES / "contract/stage_and_kill.v2.json"
+                                  ).read_text(encoding="utf-8"))
+            for stage in drifted["stages"]:
+                if stage["stage_id"] == "S0_DETERMINISTIC_HYGIENE":
+                    stage["exit_requires"] = stage["exit_requires"][:-1]
+            (root / EVAL_SPINE_REL / "contract/stage_and_kill.v2.json"
+             ).write_text(json.dumps(drifted, ensure_ascii=False),
+                          encoding="utf-8")
+            (root / EVAL_SPINE_REL / "calibration/stage_actual_state.v1.json"
+             ).write_text(json.dumps({
+                 "schema_version": "eval-spine-stage-actual-state-v1",
+                 "executed_stages": [], "stage_receipts": {},
+                 "real_run_executed": True}), encoding="utf-8")
+            closeout = _mk_receipt("M2", "PASS")
+            errors = V25._check_milestone_exits(
+                root, "M2", closeout, receipts, [])
+            self.assertTrue(any("mirror drifted" in e for e in errors), errors)
+
+    def test_attack_40_unfrozen_milestone_exit_fail_closed(self) -> None:
+        """M3 出口定义未冻结 → FINAL 不可关闭（fail-closed）。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / DC_REL / "contracts").mkdir(parents=True)
+            shutil.copy(DC / "contracts/MILESTONE_EXIT_CONTRACT.v1.json",
+                        root / DC_REL / "contracts/MILESTONE_EXIT_CONTRACT.v1.json")
+            closeout = _mk_receipt("M3", "PASS")
+            errors = V25._check_milestone_exits(
+                root, "M3", closeout, receipts, [])
+            self.assertTrue(any("not FROZEN" in e for e in errors), errors)
 
     def test_attack_30_numbered_serialism_ignores_y_graph(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

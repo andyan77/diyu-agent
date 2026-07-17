@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "p7-origin-anchor-v2",
+  "title": "起源锚 schema v2（candidate / closeout / anchor 三提交的可重建闭包载体）",
+  "description": "依发起人 2026-07-16 八项加固指令第 2 条：提交不能包含自身 SHA，故闭包规则为——锚文件由锚提交引入，锚提交的第一父提交必须等于本文件记录的 closeout_commit；closeout 提交树内含全部关闭工件（摘要逐项登记于 closeout_artifact_digests）；HANDOFF 绑定 candidate_commit 且 candidate 为 closeout 祖先。tools/closure.py verify_closure 从任意分支头零外部知识机械重建并核验全链。",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "milestone_id",
+    "remote",
+    "branch",
+    "candidate_commit",
+    "closeout_commit",
+    "anchor_rule",
+    "plan_anchors",
+    "closeout_artifact_digests",
+    "handoff_digest",
+    "closeout_receipt_digest",
+    "remote_verification",
+    "forbidden_actions_honored",
+    "record_digest"
+  ],
+  "properties": {
+    "schema_version": { "const": "p7-origin-anchor-v2" },
+    "milestone_id": { "enum": ["M1", "M2", "M3", "M4", "M5", "M6", "M7"] },
+    "remote": { "type": "string", "minLength": 1 },
+    "branch": { "type": "string", "minLength": 1 },
+    "candidate_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "closeout_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "anchor_rule": {
+      "const": "引入本文件的提交（锚提交）的第一父提交必须 == closeout_commit；closeout_commit 树内工件字节摘要必须 == closeout_artifact_digests 逐项；candidate_commit 必须为 closeout_commit 祖先且 == 该树内 HANDOFF.accepted_candidate_commit"
+    },
+    "plan_anchors": {
+      "description": "计划谱系提交锚（v2.3/v2.4/v2.5/C0 等），键名自由、值为 40 位提交 SHA 或 64 位摘要",
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "string", "pattern": "^[0-9a-f]{40}$|^[0-9a-f]{64}$" }
+    },
+    "closeout_artifact_digests": {
+      "description": "closeout 提交树内关闭工件的字节 sha256（仓根相对路径 → 摘要）；至少覆盖八件套 + 两份签字回执 + 出口证据 + ready-set 结果",
+      "type": "object",
+      "minProperties": 12,
+      "additionalProperties": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+    },
+    "handoff_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "closeout_receipt_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "remote_verification": {
+      "type": "object",
+      "required": ["method", "remote_head", "matches_closeout_commit", "verified_at"],
+      "properties": {
+        "method": { "type": "string", "minLength": 1 },
+        "remote_head": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "matches_closeout_commit": { "const": true },
+        "verified_at": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "forbidden_actions_honored": { "type": "string", "minLength": 1 },
+    "record_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  },
+  "additionalProperties": false
+}

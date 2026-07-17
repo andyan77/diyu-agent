@@ -19,9 +19,38 @@ DC = Path(__file__).resolve().parents[1]
 TERMINAL_RESULTS = {"PASS", "DIAGNOSTIC_FINAL", "FAIL", "HONEST_STOP"}
 MILESTONES = ("M1", "M2", "M3", "M4", "M5", "M6", "M7")
 
+# schema_version → schema 文件（版本分发；未知版本 = 无效）
+HANDOFF_SCHEMAS = {
+    "p7-handoff-v1": "handoff.v1.schema.json",
+    "p7-handoff-v2": "handoff.v2.schema.json",
+}
+SIGNER_SCHEMAS = {
+    "p7-signer-receipt-v1": "signer_receipt.v1.schema.json",
+    "p7-signer-receipt-v2": "signer_receipt.v2.schema.json",
+}
+LAUNCH_RECORD_SCHEMAS = {
+    "p7-launch-record-v1": "launch_record.v1.schema.json",
+    "p7-launch-record-v2": "launch_record.v2.schema.json",
+}
+# typed 回执双方在 FINAL/八件套中必须逐字段一致的比较面（指令第 4 条）
+TYPED_PAIR_COMPARED_FIELDS = (
+    "milestone_id", "product_scope", "result", "terminal",
+    "candidate_commit", "output_manifest_digest", "evidence_manifest_digest",
+    "stop_code",
+)
+
 
 class ReceiptError(ValueError):
     """回执无效（等价于回执不存在，永不满足入口）。"""
+
+
+def resolve_versioned(directory: Path, base: str, ext: str = "json") -> Path:
+    """工件版本解析：优先最新 schema 版（v2），回退 v1；均缺则返回 v2 路径供报错。"""
+    for version in ("v2", "v1"):
+        path = directory / f"{base}.{version}.{ext}"
+        if path.is_file():
+            return path
+    return directory / f"{base}.v2.{ext}"
 
 
 def canonical_digest(record: dict, digest_field: str) -> str:
@@ -82,7 +111,7 @@ def milestone_result(root: Path, milestone: str,
     """返回校验通过的关闭回执；不存在返回 None；无效回执抛 ReceiptError。"""
     if milestones_dir is None:
         milestones_dir = _milestones_dir(root)
-    path = milestones_dir / milestone / "CLOSEOUT_RECEIPT.v1.json"
+    path = resolve_versioned(milestones_dir / milestone, "CLOSEOUT_RECEIPT")
     if not path.is_file():
         return None
     receipt = load_typed_receipt(path)
@@ -130,10 +159,15 @@ def route_binding(root: Path) -> str | None:
 
 
 def validate_handoff(path: Path) -> dict:
+    """schema 级校验（按 schema_version 分发）；全引用复算见 tools/closure.py。"""
     if not path.is_file():
         raise ReceiptError(f"handoff missing: {path}")
     value = json.loads(path.read_text(encoding="utf-8"))
-    errors = _schema_validate(value, "handoff.v1.schema.json")
+    schema_name = HANDOFF_SCHEMAS.get(str(value.get("schema_version")))
+    if schema_name is None:
+        raise ReceiptError(f"{path.name}: unknown handoff schema_version "
+                           f"{value.get('schema_version')!r}")
+    errors = _schema_validate(value, schema_name)
     if value.get("handoff_digest") != canonical_digest(value, "handoff_digest"):
         errors.append("handoff_digest recompute mismatch")
     if errors:
@@ -141,8 +175,75 @@ def validate_handoff(path: Path) -> dict:
     return value
 
 
+def load_signer_receipt(path: Path) -> dict:
+    """签字回执加载与硬校验（版本分发）：schema、摘要复算、隔离声明。
+    缺任一必填字段 = 未签 → ReceiptError。"""
+    if not path.is_file():
+        raise ReceiptError(f"signer receipt missing: {path}")
+    try:
+        value = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise ReceiptError(f"signer receipt unreadable: {path}: {exc}") from exc
+    schema_name = SIGNER_SCHEMAS.get(str(value.get("schema_version")))
+    if schema_name is None:
+        raise ReceiptError(f"{path.name}: unknown signer schema_version "
+                           f"{value.get('schema_version')!r}")
+    errors = _schema_validate(value, schema_name)
+    if value.get("receipt_digest") != canonical_digest(value, "receipt_digest"):
+        errors.append("receipt_digest recompute mismatch")
+    attestation = value.get("session_isolation_attestation", {})
+    if not isinstance(attestation, dict) or not all(
+            attestation.get(key) is True for key in (
+                "fresh_session_not_fork_not_resume",
+                "did_not_author_reviewed_scope",
+                "auto_memory_disabled_or_not_applicable")):
+        errors.append("isolation attestation invalid -> unsigned")
+    if errors:
+        raise ReceiptError(f"{path.name}: " + "; ".join(errors))
+    return value
+
+
+def compare_typed_pair(decision: dict, closeout: dict) -> list[str]:
+    """STAGE_DECISION 与 CLOSEOUT_RECEIPT 的强制逐字段比对（指令第 4 条）。
+
+    两份 typed 回执必须对同一候选、同一产品域、同一结果、同一 manifest
+    摘要与同一审核绑定集合作证；任何一项分叉 = 关闭无效。"""
+    errors: list[str] = []
+    if decision.get("receipt_kind") != "STAGE_DECISION":
+        errors.append(f"first receipt kind={decision.get('receipt_kind')} "
+                      "!= STAGE_DECISION")
+    if closeout.get("receipt_kind") != "CLOSEOUT_RECEIPT":
+        errors.append(f"second receipt kind={closeout.get('receipt_kind')} "
+                      "!= CLOSEOUT_RECEIPT")
+    for field in TYPED_PAIR_COMPARED_FIELDS:
+        if decision.get(field) != closeout.get(field):
+            errors.append(f"typed pair diverges on {field}: "
+                          f"{decision.get(field)!r} != {closeout.get(field)!r}")
+    if (decision.get("qualification_flags") or {}) != (
+            closeout.get("qualification_flags") or {}):
+        errors.append("typed pair diverges on qualification_flags")
+
+    def binding_set(receipt: dict) -> set[tuple]:
+        return {(b.get("receipt_path"), b.get("receipt_digest"),
+                 b.get("reviewer_kind"), b.get("verdict"))
+                for b in receipt.get("review_bindings", [])}
+
+    if binding_set(decision) != binding_set(closeout):
+        errors.append("typed pair diverges on review_bindings")
+    return errors
+
+
 def validate_launch_record(value: dict) -> list[str]:
-    errors = _schema_validate(value, "launch_record.v1.schema.json")
+    """启动记录校验（版本分发）。
+
+    v1（封存）：单文件承载 spawn 前后全部字段。
+    v2：只承载 spawn 前事实；必须声明先落盘（record_written_before_spawn）、
+    原子写协议与实际 HEAD 绑定；会话结果由 validate_launch_outcome 单独校验。"""
+    schema_name = LAUNCH_RECORD_SCHEMAS.get(str(value.get("schema_version")))
+    if schema_name is None:
+        return [f"unknown launch record schema_version "
+                f"{value.get('schema_version')!r}"]
+    errors = _schema_validate(value, schema_name)
     if value.get("record_digest") != canonical_digest(value, "record_digest"):
         errors.append("record_digest recompute mismatch")
     if value.get("session_kind") != "TOP_LEVEL_FRESH":
@@ -150,4 +251,24 @@ def validate_launch_record(value: dict) -> list[str]:
                       "(subagent impersonation rejected)")
     if value.get("auto_memory_disabled") is not True:
         errors.append("auto memory not disabled for launched session")
+    if value.get("schema_version") == "p7-launch-record-v2":
+        if value.get("record_written_before_spawn") is not True:
+            errors.append("launch record not written before spawn")
+        if value.get("write_protocol") != "ATOMIC_WRITE_TMP_FSYNC_RENAME":
+            errors.append("launch record write protocol not atomic")
+    return errors
+
+
+def validate_launch_outcome(value: dict, record: dict | None = None) -> list[str]:
+    """启动结果校验：schema + 摘要复算 + 回绑启动记录 + 子代理伪装拒绝。"""
+    errors = _schema_validate(value, "launch_outcome.v1.schema.json")
+    if value.get("outcome_digest") != canonical_digest(value, "outcome_digest"):
+        errors.append("outcome_digest recompute mismatch")
+    if record is not None and value.get("launch_record_digest") != record.get(
+            "record_digest"):
+        errors.append("outcome not bound to launch record digest")
+    if (value.get("launch_capability") == "AUTO_LAUNCHED"
+            and value.get("session_kind") != "TOP_LEVEL_FRESH"):
+        errors.append("spawned session is not a fresh top-level session "
+                      "(subagent impersonation rejected)")
     return errors

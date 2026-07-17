@@ -39,6 +39,9 @@ def _load(path: Path, name: str):
 V25 = _load(P7 / "checker/v25_state_checks.py", "v25_future_ut")
 HEX = "ab12" * 16
 
+sys.path.insert(0, str(HERE.parent))
+import fixture_helpers as fh  # noqa: E402
+
 
 def _write(root: Path, rel: str, value: dict) -> None:
     path = root / rel
@@ -284,6 +287,99 @@ class PositiveFutureStates(unittest.TestCase):
             ok, details = self._check(root, "M6")
             self.assertFalse(ok)
             self.assertTrue(any("never executed" in d for d in details), details)
+
+    def test_m1_final_full_green(self) -> None:
+        """合法关闭形态（v2 全绑定 fixture + 真 git 闭包）→ FINAL 硬门 PASS。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            fh.build_final_fixture(Path(tmp))
+            ok, details = V25.check_final_receipts(Path(tmp),
+                                                   {"milestone": "M1"})
+            self.assertTrue(ok, details)
+            self.assertTrue(any("handoff_full_recompute=PASS" in d
+                                for d in details), details)
+            self.assertTrue(any("exit_keys_verified=8" in d
+                                for d in details), details)
+
+    def test_m2_real_s0_proof_green(self) -> None:
+        """未来 M2 合法形态：真实 S0 已执行 + 阶段回执钉死 + 全部出口键
+        证据在盘 → 里程碑出口核验零错误（合法未来状态不得失败）。"""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / DC_REL / "contracts").mkdir(parents=True)
+            (root / DC_REL / "schema").mkdir(parents=True)
+            (root / DC_REL / "milestones/M2").mkdir(parents=True)
+            (root / EVAL_SPINE_REL / "contract").mkdir(parents=True)
+            (root / EVAL_SPINE_REL / "calibration").mkdir(parents=True)
+            shutil.copy(DC / "contracts/MILESTONE_EXIT_CONTRACT.v1.json",
+                        root / DC_REL
+                        / "contracts/MILESTONE_EXIT_CONTRACT.v1.json")
+            shutil.copy(DC / "schema/milestone_exit_evidence.v1.schema.json",
+                        root / DC_REL
+                        / "schema/milestone_exit_evidence.v1.schema.json")
+            shutil.copy(ES / "contract/stage_and_kill.v2.json",
+                        root / EVAL_SPINE_REL
+                        / "contract/stage_and_kill.v2.json")
+            receipts = fh.receipts
+            candidate = "c" * 40
+            # 真实 S0 阶段回执（STAGE_DECISION / PASS / 绑定 M2 / 双审绑定）
+            stage_receipt = receipts.close_record({
+                "schema_version": "p7-typed-receipt-v1",
+                "receipt_kind": "STAGE_DECISION", "milestone_id": "M2",
+                "product_scope": "SHARED", "result": "PASS",
+                "terminal": True, "qualification_flags": {},
+                "candidate_commit": candidate,
+                "output_manifest_digest": HEX,
+                "evidence_manifest_digest": HEX,
+                "review_bindings": [
+                    {"receipt_path": "r1", "receipt_digest": "1" * 64,
+                     "reviewer_kind": "K1", "verdict": "ACCEPT"},
+                    {"receipt_path": "r2", "receipt_digest": "2" * 64,
+                     "reviewer_kind": "K2", "verdict": "ACCEPT"}],
+                "issued_at": "T", "issued_by_role": "M2_PRINCIPAL",
+                "receipt_digest": ""}, "receipt_digest")
+            srp = root / EVAL_SPINE_REL / "calibration/S0.STAGE_DECISION.json"
+            srp.write_text(json.dumps(stage_receipt, ensure_ascii=False),
+                           encoding="utf-8")
+            import hashlib as _hl
+            _write(root, f"{EVAL_SPINE_REL}/calibration/"
+                         "stage_actual_state.v1.json", {
+                "schema_version": "eval-spine-stage-actual-state-v1",
+                "executed_stages": ["S0_DETERMINISTIC_HYGIENE"],
+                "stage_receipts": {"S0_DETERMINISTIC_HYGIENE": {
+                    "receipt_path": str(srp.relative_to(root)),
+                    "receipt_digest": _hl.sha256(
+                        srp.read_bytes()).hexdigest()}},
+                "reference_implementation_selftested": True,
+                "real_run_executed": True, "notes": []})
+            # 出口证据：M2 全部 10 键，逐键真实证据文件
+            exit_contract = json.loads(
+                (DC / "contracts/MILESTONE_EXIT_CONTRACT.v1.json"
+                 ).read_text(encoding="utf-8"))
+            closeout = {"candidate_commit": candidate,
+                        "receipt_digest": HEX}
+            exit_keys = {}
+            for key in exit_contract["milestones"]["M2"][
+                    "required_exit_keys"]:
+                ev = root / DC_REL / "milestones/M2" / f"{key}.evidence.json"
+                ev.write_text(json.dumps({"key": key, "state": "PASS"}),
+                              encoding="utf-8")
+                exit_keys[key] = {
+                    "satisfied": True,
+                    "evidence_path": str(ev.relative_to(root)),
+                    "evidence_sha256": _hl.sha256(
+                        ev.read_bytes()).hexdigest()}
+            evidence = receipts.close_record({
+                "schema_version": "p7-milestone-exit-evidence-v1",
+                "milestone_id": "M2", "candidate_commit": candidate,
+                "closeout_receipt_digest": HEX,
+                "exit_keys": exit_keys, "issued_at": "T",
+                "record_digest": ""}, "record_digest")
+            (root / DC_REL / "milestones/M2/MILESTONE_EXIT_EVIDENCE.v1.json"
+             ).write_text(json.dumps(evidence, ensure_ascii=False),
+                          encoding="utf-8")
+            errors = V25._check_milestone_exits(root, "M2", closeout,
+                                                receipts, [])
+            self.assertEqual(errors, [])
 
     def test_s3_no_lift_with_safety_green_not_killed(self) -> None:
         sys.path.insert(0, str(ES))

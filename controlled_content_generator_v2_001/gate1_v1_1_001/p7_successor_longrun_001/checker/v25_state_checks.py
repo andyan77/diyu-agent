@@ -463,14 +463,24 @@ def check_run_journal(root: Path, ctx: dict) -> tuple[bool, list[str]]:
                          f"records={len(state['records'])}"] + errors)
 
 
+SIGNER_SCHEMA_FILES = {
+    "p7-signer-receipt-v1": "signer_receipt.v1.schema.json",
+    "p7-signer-receipt-v2": "signer_receipt.v2.schema.json",
+}
+
+
 def validate_signer_receipt(root: Path, receipt_path: Path) -> list[str]:
-    """签字回执复核：schema、摘要复算、隔离声明。缺任一必填字段 = 未签。"""
+    """签字回执复核（版本分发）：schema、摘要复算、隔离声明。缺任一必填字段 = 未签。"""
     errors: list[str] = []
     try:
         receipt = _j(receipt_path)
     except (OSError, ValueError):
         return ["receipt unreadable"]
-    schema_path = root / DC / "schema/signer_receipt.v1.schema.json"
+    schema_name = SIGNER_SCHEMA_FILES.get(str(receipt.get("schema_version")))
+    if schema_name is None:
+        return [f"unknown signer schema_version "
+                f"{receipt.get('schema_version')!r} -> unsigned"]
+    schema_path = root / DC / "schema" / schema_name
     try:
         from jsonschema import Draft202012Validator
         validator = Draft202012Validator(_j(schema_path))
@@ -491,35 +501,202 @@ def validate_signer_receipt(root: Path, receipt_path: Path) -> list[str]:
     return errors
 
 
-def check_final_receipts(root: Path, ctx: dict) -> tuple[bool, list[str]]:
-    """FINAL 模式硬门：typed PASS + ≥2 份有效独立签字绑定同一候选。"""
-    milestone = ctx.get("milestone", "M1")
-    mdir = root / DC / "milestones" / milestone
-    receipt_path = mdir / "CLOSEOUT_RECEIPT.v1.json"
-    decision_path = mdir / "STAGE_DECISION.v1.json"
+def _resolve_versioned(directory: Path, base: str, ext: str = "json") -> Path:
+    for version in ("v2", "v1"):
+        path = directory / f"{base}.{version}.{ext}"
+        if path.is_file():
+            return path
+    return directory / f"{base}.v2.{ext}"
+
+
+def _check_milestone_exits(root: Path, milestone: str, closeout: dict,
+                           receipts_mod, details: list[str]) -> list[str]:
+    """里程碑专属出口逐键核验 + 真实阶段执行机械证明（指令第 4/5 条）。"""
     errors: list[str] = []
-    if not receipt_path.is_file() or not decision_path.is_file():
-        return False, [f"typed receipts missing under milestones/{milestone}"]
-    schema_path = root / DC / "schema/typed_receipt.v1.schema.json"
+    contract_path = root / DC / "contracts/MILESTONE_EXIT_CONTRACT.v1.json"
+    if not contract_path.is_file():
+        return ["MILESTONE_EXIT_CONTRACT missing (fail-closed)"]
+    spec = (_j(contract_path).get("milestones") or {}).get(milestone)
+    if not isinstance(spec, dict):
+        return [f"no milestone exit definition for {milestone} (fail-closed)"]
+    if spec.get("definition_status") != "FROZEN":
+        return [f"milestone exit definition for {milestone} not FROZEN "
+                "(fail-closed: cannot FINAL-close before exit keys frozen)"]
+    required = list(spec.get("required_exit_keys") or [])
+    if not required:
+        return [f"milestone exit definition for {milestone} has empty key "
+                "list (fail-closed)"]
+
+    # S0 六项镜像必须与阶段合同逐字一致（禁复制漂移）
+    mirror = spec.get("s0_exit_keys_mirror")
+    if mirror is not None:
+        stage_contract_path = (root / EVAL_SPINE
+                               / "contract/stage_and_kill.v2.json")
+        if not stage_contract_path.is_file():
+            errors.append("stage_and_kill.v2.json missing for S0 mirror check")
+        else:
+            stages = {s["stage_id"]: s for s in
+                      _j(stage_contract_path).get("stages", [])}
+            live = stages.get("S0_DETERMINISTIC_HYGIENE", {}).get(
+                "exit_requires", [])
+            if list(mirror) != list(live):
+                errors.append(f"S0 exit key mirror drifted from stage "
+                              f"contract: {mirror} != {live}")
+            if not set(mirror) <= set(required):
+                errors.append("required_exit_keys does not cover S0 mirror keys")
+
+    # 真实阶段执行证明先行（独立于出口证据文件是否在盘）：
+    # 登记 + 摘要钉死的有效阶段回执 + real_run；文档在场 ≠ 执行
+    required_stages = list(spec.get("stage_execution_required") or [])
+    if required_stages or spec.get("real_run_required"):
+        sa_path = (root / EVAL_SPINE
+                   / "calibration/stage_actual_state.v1.json")
+        if not sa_path.is_file():
+            errors.append("stage_actual_state missing for stage execution proof")
+        else:
+            sa = _j(sa_path)
+            executed = sa.get("executed_stages", [])
+            stage_receipts = sa.get("stage_receipts", {})
+            if spec.get("real_run_required") and sa.get(
+                    "real_run_executed") is not True:
+                errors.append(f"{milestone} FINAL requires "
+                              "real_run_executed=true (document presence is "
+                              "not execution)")
+            for stage in required_stages:
+                if stage not in executed:
+                    errors.append(f"required stage never actually executed: "
+                                  f"{stage}")
+                    continue
+                row = stage_receipts.get(stage)
+                if not isinstance(row, dict):
+                    errors.append(f"executed stage lacks receipt "
+                                  f"registration: {stage}")
+                    continue
+                rp = root / str(row.get("receipt_path", ""))
+                if not rp.is_file():
+                    errors.append(f"stage receipt missing: {stage} -> "
+                                  f"{row.get('receipt_path')}")
+                    continue
+                if not _is_hex64(row.get("receipt_digest")):
+                    errors.append(f"stage receipt digest not pinned: {stage}")
+                    continue
+                if sha256_file(rp) != row.get("receipt_digest"):
+                    errors.append(f"stage receipt digest mismatch: {stage}")
+                    continue
+                try:
+                    stage_receipt = receipts_mod.load_typed_receipt(rp)
+                except receipts_mod.ReceiptError as exc:
+                    errors.append(f"stage receipt invalid ({stage}): "
+                                  f"{str(exc)[:120]}")
+                    continue
+                if stage_receipt.get("receipt_kind") != "STAGE_DECISION":
+                    errors.append(f"stage receipt kind="
+                                  f"{stage_receipt.get('receipt_kind')} "
+                                  f"!= STAGE_DECISION: {stage}")
+                if stage_receipt.get("result") != "PASS":
+                    errors.append(f"stage receipt result="
+                                  f"{stage_receipt.get('result')} != PASS: "
+                                  f"{stage}")
+                if stage_receipt.get("milestone_id") != milestone:
+                    errors.append(f"stage receipt milestone mismatch: {stage}")
+            details.append(f"stages_proven={required_stages}")
+
+    evidence_path = (root / DC / "milestones" / milestone
+                     / "MILESTONE_EXIT_EVIDENCE.v1.json")
+    if not evidence_path.is_file():
+        return errors + [f"MILESTONE_EXIT_EVIDENCE missing for {milestone}"]
+    evidence = _j(evidence_path)
+    schema_path = root / DC / "schema/milestone_exit_evidence.v1.schema.json"
     try:
         from jsonschema import Draft202012Validator
-        validator = Draft202012Validator(_j(schema_path))
+        for error in sorted(Draft202012Validator(_j(schema_path)).iter_errors(
+                evidence), key=lambda item: list(item.path)):
+            errors.append(f"exit_evidence:schema:{error.message[:80]}")
     except ImportError:
-        return False, ["jsonschema unavailable; FINAL cannot verify typed receipts"]
-    receipts = {}
-    for name, path in (("CLOSEOUT_RECEIPT", receipt_path),
-                       ("STAGE_DECISION", decision_path)):
-        value = _j(path)
-        receipts[name] = value
-        for error in sorted(validator.iter_errors(value),
-                            key=lambda item: list(item.path)):
-            errors.append(f"{name}:schema:{error.message[:80]}")
-        if value.get("receipt_digest") != _canonical_digest(value, "receipt_digest"):
-            errors.append(f"{name}: receipt_digest recompute mismatch")
-        if value.get("result") not in TERMINAL_RESULTS:
-            errors.append(f"{name}: non-terminal result {value.get('result')} "
+        errors.append("jsonschema unavailable; exit evidence unverifiable")
+    if evidence.get("record_digest") != _canonical_digest(evidence,
+                                                          "record_digest"):
+        errors.append("exit evidence record_digest recompute mismatch")
+    if evidence.get("milestone_id") != milestone:
+        errors.append("exit evidence milestone_id mismatch (transplant)")
+    if evidence.get("candidate_commit") != closeout.get("candidate_commit"):
+        errors.append("exit evidence not bound to closeout candidate commit")
+    if evidence.get("closeout_receipt_digest") != closeout.get(
+            "receipt_digest"):
+        errors.append("exit evidence not bound to closeout receipt digest")
+    keys = evidence.get("exit_keys") or {}
+    for key in required:
+        row = keys.get(key)
+        if not isinstance(row, dict) or row.get("satisfied") is not True:
+            errors.append(f"required exit key unsatisfied/absent: {key}")
+            continue
+        ev = root / str(row.get("evidence_path", ""))
+        if not ev.is_file():
+            errors.append(f"exit key evidence missing: {key} -> "
+                          f"{row.get('evidence_path')}")
+            continue
+        if sha256_file(ev) != row.get("evidence_sha256"):
+            errors.append(f"exit key evidence digest mismatch: {key}")
+    details.append(f"exit_keys_verified={len(required)}")
+    return errors
+
+
+def check_final_receipts(root: Path, ctx: dict) -> tuple[bool, list[str]]:
+    """FINAL 模式硬门（指令第 3/4/5 条强化）：
+
+    ①两份 typed 回执强制逐字段比对且绑定被关闭里程碑；
+    ②签字回执必须为 v2（绑定 milestone / 产品域 / 三 manifest 摘要）且逐项
+      与磁盘 manifest 一致；
+    ③里程碑专属出口逐键核验（未冻结出口定义 = 不可关闭）；
+    ④要求真实阶段执行的里程碑（如 M2 的 S0）须机械证明：
+      stage_actual_state 登记 + 摘要钉死的有效阶段回执 + real_run_executed；
+    ⑤HANDOFF 全部跨文件、跨提交引用复算（指令第 1 条）。"""
+    milestone = ctx.get("milestone", "M1")
+    dc = root / DC
+    mdir = dc / "milestones" / milestone
+    receipts_mod = _load_module(dc / "tools/receipts.py", "p7_receipts_final")
+    errors: list[str] = []
+    details: list[str] = [f"milestone={milestone}"]
+
+    decision_path = _resolve_versioned(mdir, "STAGE_DECISION")
+    closeout_path = _resolve_versioned(mdir, "CLOSEOUT_RECEIPT")
+    if not decision_path.is_file() or not closeout_path.is_file():
+        return False, [f"typed receipts missing under milestones/{milestone}"]
+    try:
+        decision = receipts_mod.load_typed_receipt(decision_path)
+        closeout = receipts_mod.load_typed_receipt(closeout_path)
+    except receipts_mod.ReceiptError as exc:
+        return False, details + [str(exc)[:200]]
+    details.append(f"closeout_result={closeout.get('result')}")
+    errors += receipts_mod.compare_typed_pair(decision, closeout)
+    for name, rec in (("STAGE_DECISION", decision),
+                      ("CLOSEOUT_RECEIPT", closeout)):
+        if rec.get("milestone_id") != milestone:
+            errors.append(f"{name} milestone_id={rec.get('milestone_id')} "
+                          f"transplanted into milestones/{milestone}")
+        if rec.get("result") not in TERMINAL_RESULTS:
+            errors.append(f"{name}: non-terminal result {rec.get('result')} "
                           "cannot close a milestone (REVIEW_READY is not PASS)")
-    closeout = receipts["CLOSEOUT_RECEIPT"]
+
+    manifest_digests: dict[str, str | None] = {}
+    for base, key in (("INPUT_MANIFEST", "input"),
+                      ("OUTPUT_MANIFEST", "output"),
+                      ("EVIDENCE_MANIFEST", "evidence")):
+        mpath = _resolve_versioned(mdir, base)
+        if mpath.is_file():
+            manifest_digests[key] = _j(mpath).get("manifest_digest")
+        else:
+            manifest_digests[key] = None
+            errors.append(f"{base} missing for FINAL binding checks")
+    if (manifest_digests.get("output")
+            and closeout.get("output_manifest_digest")
+            != manifest_digests["output"]):
+        errors.append("closeout output_manifest_digest != on-disk manifest")
+    if (manifest_digests.get("evidence")
+            and closeout.get("evidence_manifest_digest")
+            != manifest_digests["evidence"]):
+        errors.append("closeout evidence_manifest_digest != on-disk manifest")
+
     if closeout.get("result") == "PASS":
         bindings = closeout.get("review_bindings", [])
         if len(bindings) < 2:
@@ -530,18 +707,47 @@ def check_final_receipts(root: Path, ctx: dict) -> tuple[bool, list[str]]:
         for binding in bindings:
             rp = root / str(binding.get("receipt_path", ""))
             if not rp.is_file():
-                errors.append(f"review receipt missing: {binding.get('receipt_path')}")
+                errors.append(f"review receipt missing: "
+                              f"{binding.get('receipt_path')}")
                 continue
             if sha256_file(rp) != binding.get("receipt_digest"):
                 errors.append(f"review receipt digest mismatch: {rp.name}")
+                continue
             receipt_errors = validate_signer_receipt(root, rp)
             if receipt_errors:
-                errors.append(f"review receipt invalid ({rp.name}): {receipt_errors[:2]}")
+                errors.append(f"review receipt invalid ({rp.name}): "
+                              f"{receipt_errors[:2]}")
                 continue
             receipt = _j(rp)
+            if receipt.get("schema_version") != "p7-signer-receipt-v2":
+                errors.append(f"review receipt lacks v2 milestone/product/"
+                              f"manifest binding: {rp.name}")
+                continue
             if receipt.get("input_commit") != closeout.get("candidate_commit"):
                 errors.append(f"review not bound to candidate commit: {rp.name}")
             if receipt.get("verdict") != "ACCEPT":
                 errors.append(f"review verdict not ACCEPT: {rp.name}")
-    return not errors, ([f"milestone={milestone}",
-                         f"closeout_result={closeout.get('result')}"] + errors)
+            if receipt.get("milestone_id") != milestone:
+                errors.append(f"review receipt milestone_id="
+                              f"{receipt.get('milestone_id')} != {milestone} "
+                              f"(transplant): {rp.name}")
+            if receipt.get("product_scope") != closeout.get("product_scope"):
+                errors.append(f"review receipt product_scope mismatch: "
+                              f"{rp.name}")
+            for key, field in (("input", "input_manifest_digest"),
+                               ("output", "output_manifest_digest"),
+                               ("evidence", "evidence_manifest_digest")):
+                if (manifest_digests.get(key)
+                        and receipt.get(field) != manifest_digests[key]):
+                    errors.append(f"review receipt {field} != on-disk "
+                                  f"manifest: {rp.name}")
+
+        errors += _check_milestone_exits(root, milestone, closeout,
+                                         receipts_mod, details)
+
+        closure_mod = _load_module(dc / "tools/closure.py", "p7_closure_final")
+        handoff_errors = closure_mod.validate_handoff_full(root, milestone)
+        errors += [f"handoff_full:{e}" for e in handoff_errors]
+        details.append("handoff_full_recompute="
+                       + ("PASS" if not handoff_errors else "FAIL"))
+    return not errors, details + errors

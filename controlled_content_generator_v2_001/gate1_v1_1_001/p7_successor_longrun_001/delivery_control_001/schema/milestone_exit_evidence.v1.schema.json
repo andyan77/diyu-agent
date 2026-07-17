@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "p7-milestone-exit-evidence-v1",
+  "title": "里程碑专属出口证据 schema（FINAL 强制逐键核验；键清单由 MILESTONE_EXIT_CONTRACT 冻结）",
+  "description": "依发起人 2026-07-16 八项加固指令第 4/5 条：FINAL 模式除比较两份 typed 回执外，必须核验本里程碑专属出口键——每键都要有磁盘证据文件 + 字节摘要，checker 逐键复算。本文件经 candidate_commit 与 closeout_receipt_digest 双绑定，不可移植。",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "milestone_id",
+    "candidate_commit",
+    "closeout_receipt_digest",
+    "exit_keys",
+    "issued_at",
+    "record_digest"
+  ],
+  "properties": {
+    "schema_version": { "const": "p7-milestone-exit-evidence-v1" },
+    "milestone_id": { "enum": ["M1", "M2", "M3", "M4", "M5", "M6", "M7"] },
+    "candidate_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "closeout_receipt_digest": {
+      "description": "== 本里程碑 CLOSEOUT_RECEIPT 的 receipt_digest（回绑）",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "exit_keys": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["satisfied", "evidence_path", "evidence_sha256"],
+        "properties": {
+          "satisfied": {
+            "description": "只允许 true——不满足的键不得进入本文件（诚实缺口走 HONEST_STOP/FAIL 回执，不走出口证据）",
+            "const": true
+          },
+          "evidence_path": { "type": "string", "minLength": 1 },
+          "evidence_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "note": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "issued_at": { "type": "string", "minLength": 1 },
+    "record_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  },
+  "additionalProperties": false
+}

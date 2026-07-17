@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "p7-handoff-v2",
+  "title": "里程碑 HANDOFF schema v2（全部跨文件、跨提交引用可复算；关闭提交不自指）",
+  "description": "v2 依发起人 2026-07-16 八项加固指令第 1/2 条重设计：①每个摘要字段都有唯一确定的复算对象（tools/closure.py validate_handoff_full 逐项复算）；②删除 v1 的 control_plane_commit——提交不能包含自身 SHA，该绑定改由 ORIGIN_ANCHOR.v2 承载（锚提交的第一父提交 == 锚文件内记录的关闭提交，可从分支头零外部知识重建）。v1 封存（SUPERSESSION_LEDGER §7）。",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "from_milestone",
+    "to_milestone",
+    "accepted_candidate_commit",
+    "active_contract_set_digest",
+    "input_manifest_digest",
+    "output_manifest_digest",
+    "evidence_manifest_digest",
+    "exit_evidence_digest",
+    "last_green_test_summary",
+    "review_receipt_bindings",
+    "qualification_flags",
+    "route_binding",
+    "next_entry_contract",
+    "next_prompt_template_digest",
+    "ready_set_result_digest",
+    "closure_rule",
+    "issued_at",
+    "handoff_digest"
+  ],
+  "properties": {
+    "schema_version": { "const": "p7-handoff-v2" },
+    "from_milestone": { "enum": ["M1", "M2", "M3", "M4", "M5", "M6", "M7"] },
+    "to_milestone": {
+      "type": "array",
+      "items": { "enum": ["M2", "M3", "M4", "M5", "M6", "M7"] },
+      "minItems": 1
+    },
+    "accepted_candidate_commit": {
+      "description": "复算对象：git cat-file 存在 且 为分支头祖先；且 == 两份 typed 回执的 candidate_commit",
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "active_contract_set_digest": {
+      "description": "复算对象：state/ACTIVE_CONTRACT_DIGESTS.v1.json 的集合摘要 + contract_set.py verify PASS",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "input_manifest_digest": {
+      "description": "复算对象：本里程碑 INPUT_MANIFEST 的 manifest_digest（canonical 复算一致）",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "output_manifest_digest": {
+      "description": "复算对象：本里程碑 OUTPUT_MANIFEST 的 manifest_digest；且 == 关闭回执 output_manifest_digest",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "evidence_manifest_digest": {
+      "description": "复算对象：本里程碑 EVIDENCE_MANIFEST 的 manifest_digest；且 == 关闭回执 evidence_manifest_digest",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "exit_evidence_digest": {
+      "description": "复算对象：本里程碑 MILESTONE_EXIT_EVIDENCE.v1.json 文件字节 sha256",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "last_green_test_summary": { "type": "string", "minLength": 1 },
+    "review_receipt_bindings": {
+      "description": "复算对象：逐项文件存在、字节 sha256 == receipt_digest、回执内容 reviewer_kind/verdict 与绑定一致、回执按 signer v2 有效且 input_commit == accepted_candidate_commit；集合 == 关闭回执 review_bindings",
+      "type": "array", "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["receipt_path", "receipt_digest", "reviewer_kind", "verdict"],
+        "properties": {
+          "receipt_path": { "type": "string" },
+          "receipt_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "reviewer_kind": { "type": "string" },
+          "verdict": { "type": "string" }
+        }
+      }
+    },
+    "qualification_flags": {
+      "description": "复算对象：== 关闭回执 qualification_flags（逐键相等）",
+      "type": "object"
+    },
+    "route_binding": { "enum": ["a", "b", null] },
+    "next_entry_contract": { "type": "string", "minLength": 1 },
+    "next_prompt_template_digest": {
+      "description": "复算对象：PROMPT_REGISTRY 中 to_milestone[0] 的 template_path 文件字节 sha256",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "ready_set_result_digest": {
+      "description": "复算对象：本里程碑 READY_SET_RESULT.v2.json 文件字节 sha256",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "closure_rule": {
+      "const": "关闭提交不自指：由 ORIGIN_ANCHOR.v2 锚定——锚提交的第一父提交必须等于锚文件内记录的 closeout_commit；tools/closure.py verify_closure 从分支头零外部知识机械重建 anchor→closeout→candidate 全链"
+    },
+    "issued_at": { "type": "string", "minLength": 1 },
+    "handoff_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  },
+  "additionalProperties": false
+}

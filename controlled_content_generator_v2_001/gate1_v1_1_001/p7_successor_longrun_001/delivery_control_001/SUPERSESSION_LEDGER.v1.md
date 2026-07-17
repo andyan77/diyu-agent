@@ -33,7 +33,17 @@
 
 - V1.1 标准"人类专家复审"默认假设 → 由发起人 2026-07-16 裁决 supersede 为模型角色承担（四硬前提下）；成文见 v2.3 §壹-3。本账本转录登记，不重开。
 
-## 5. 登记纪律
+## 5. 控制面加固层（发起人 2026-07-16 八项加固指令回合）
+
+| 被取代 | 取代者 | 关键增删 | 状态 |
+|---|---|---|---|
+| `schema/signer_receipt.v1.schema.json` | `schema/signer_receipt.v2.schema.json` | 新增必填 `milestone_id` / `product_scope` / `output_manifest_digest` / `evidence_manifest_digest`；隔离声明新增必填 `auto_memory_disabled_before_launch`；可选 `d0_verdict`。FINAL 只认 v2 签字（v1 = 缺绑定 = 不满足关闭）；v1 schema 保留仅供历史回执分发校验 | 生效 |
+| `schema/handoff.v1.schema.json` | `schema/handoff.v2.schema.json` | 删不可复算的 `control_plane_commit`（提交不能自指→改由 ORIGIN_ANCHOR.v2 锚定）；增 `evidence_manifest_digest` / `exit_evidence_digest` / `closure_rule`；每个摘要字段有唯一复算对象（tools/closure.py validate_handoff_full 逐项复算） | 生效 |
+| `schema/launch_record.v1.schema.json` | `schema/launch_record.v2.schema.json` + `schema/launch_outcome.v1.schema.json` | 记录/结果分离：记录只承载 spawn 前事实，必须先于 spawn 原子落盘（tmp+fsync+rename）并绑定实际 HEAD（`launched_at_head`）；会话结果落 LAUNCH_OUTCOME 且经 `launch_record_digest` 回绑 | 生效 |
+| M1 关闭工件 R3 集（`HANDOFF.v1.json`、R3 `STAGE_DECISION`/`CLOSEOUT_RECEIPT`/`READY_SET_RESULT.v1`/`ORIGIN_ANCHOR.v1.json`、R3 两份签字回执） | R4 重生成集（HANDOFF.v2 / 新 typed 回执 / MILESTONE_EXIT_EVIDENCE.v1 / READY_SET_RESULT.v2 / ORIGIN_ANCHOR.v2 / 新签字回执 ×2） | 指令第 8 条：新候选产生 → 两份审核全部作废重跑 → PASS/HANDOFF/P2 Prompt/origin anchor 全部重生成；R3 工件封存于 git 历史（5cf3ea2/4ddbd1f），工作树留存仅作历史证据、不再满足任何入口（版本解析 v2 优先） | 生效 |
+| （新增，无被取代者）`contracts/MILESTONE_EXIT_CONTRACT.v1.json` + `schema/milestone_exit_evidence.v1.schema.json` + `schema/origin_anchor.v2.schema.json` + `tools/closure.py` | — | 里程碑专属出口逐键强制（M1/M2 冻结；M2 = S0 六项镜像 + BOUNDARY_SMOKE_PASS + 遥测模型落盘 + 双审；未冻结里程碑 FINAL fail-closed）；candidate/closeout/anchor 可重建闭包验证器 | 生效 |
+
+## 6. 登记纪律
 
 - 新增取代关系必须：新版本文件落盘 + 本账本行 + ACTIVE_CONTRACT_SET 成员更新，三者同提交。
 - 禁止：删除/改写被取代文件原文；在被取代文件内插入"已作废"标注（历史文件零改写）。

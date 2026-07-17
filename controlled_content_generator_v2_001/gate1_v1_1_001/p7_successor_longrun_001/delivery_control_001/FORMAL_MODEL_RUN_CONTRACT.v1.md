@@ -26,7 +26,7 @@
 ## 4. 正式模型运行与签字
 
 - 角色-模型分配以 `ROLE_MODEL_MATRIX` 为准；Codex-GPT 用途以 `GPT_CODEX_SCOPE_CONTRACT` 为准；DeepSeek 30 元/日窄门不变。
-- 一切签字按 `schema/signer_receipt.v1.schema.json`：**缺任一必填字段 = 未签**；提供方不公开字段写 UNAVAILABLE 三元组；禁止伪造模型修订号或调用 ID。
+- 一切签字按 `schema/signer_receipt.v2.schema.json`：**缺任一必填字段 = 未签**；提供方不公开字段写 UNAVAILABLE 三元组；禁止伪造模型修订号或调用 ID。
 - 作者不得签自身工作；正式审核 = 全新只读非 fork 会话 + 隔离声明。
 - 修复使候选提交 / 输出 manifest / 证据摘要变化 → 既有审核自动失效，两份审核对新候选重跑。
 - 外部调用先预占后结算、失败也结算留回执；成本事件全量记账（24 字段），记账缺失=停。

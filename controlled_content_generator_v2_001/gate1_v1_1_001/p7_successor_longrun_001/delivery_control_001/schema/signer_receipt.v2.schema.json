@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "p7-signer-receipt-v2",
+  "title": "通用签字回执 schema v2（绑定里程碑、产品域与三份 manifest；缺任一必填字段 = 未签）",
+  "description": "真源：v2.5 §三 3.9-2 与 P1 §十六；v2 依发起人 2026-07-16 八项加固指令第 3 条新增 milestone_id / product_scope / output_manifest_digest / evidence_manifest_digest 必填绑定，杜绝跨里程碑、跨产品域与跨 manifest 的签字移植。v1 封存（SUPERSESSION_LEDGER §7）。提供方不公开的字段必须写 {value: UNAVAILABLE, unavailable_reason, evidence_ref}，禁止伪造内部模型修订号或调用 ID。",
+  "$defs": {
+    "maybe_unavailable": {
+      "oneOf": [
+        { "type": "string", "minLength": 1, "not": { "const": "UNAVAILABLE" } },
+        {
+          "type": "object",
+          "required": ["value", "unavailable_reason", "evidence_ref"],
+          "properties": {
+            "value": { "const": "UNAVAILABLE" },
+            "unavailable_reason": { "type": "string", "minLength": 1 },
+            "evidence_ref": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "type": "object",
+  "required": [
+    "schema_version",
+    "reviewer_kind",
+    "provider",
+    "actual_model_id",
+    "model_version",
+    "task_thread_session_id",
+    "milestone_id",
+    "product_scope",
+    "input_commit",
+    "input_manifest_digest",
+    "output_manifest_digest",
+    "evidence_manifest_digest",
+    "prompt_digest",
+    "config_digest",
+    "tool_summary",
+    "output_report_digest",
+    "call_receipt",
+    "exit_status",
+    "signed_at",
+    "session_isolation_attestation",
+    "verdict",
+    "receipt_digest"
+  ],
+  "properties": {
+    "schema_version": { "const": "p7-signer-receipt-v2" },
+    "reviewer_kind": {
+      "description": "审核者种类；作者不得兼任（与作者 session/agent 同一 = 无效签字）",
+      "enum": [
+        "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
+        "CODEX_GPT_INDEPENDENT_ADJUDICATOR",
+        "CODEX_GPT_EXTERNAL_REVIEW_SIGNER",
+        "MODEL_SECONDARY_REVIEWER"
+      ]
+    },
+    "provider": { "type": "string", "minLength": 1 },
+    "actual_model_id": { "$ref": "#/$defs/maybe_unavailable" },
+    "model_version": { "$ref": "#/$defs/maybe_unavailable" },
+    "task_thread_session_id": { "$ref": "#/$defs/maybe_unavailable" },
+    "milestone_id": {
+      "description": "本签字所审核的里程碑；FINAL 校验其必须等于被关闭里程碑（移植 = 无效）",
+      "enum": ["M1", "M2", "M3", "M4", "M5", "M6", "M7"]
+    },
+    "product_scope": {
+      "description": "本签字覆盖的产品域；FINAL 校验其必须等于关闭回执 product_scope",
+      "enum": ["SHARED", "A", "B"]
+    },
+    "input_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "input_manifest_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "output_manifest_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "evidence_manifest_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "prompt_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "config_digest": { "$ref": "#/$defs/maybe_unavailable" },
+    "tool_summary": { "type": "string", "minLength": 1 },
+    "output_report_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "call_receipt": {
+      "description": "调用回执（provider 侧可核验的调用证据：CLI 退出记录/事件文件/线程 ID 等）",
+      "$ref": "#/$defs/maybe_unavailable"
+    },
+    "exit_status": { "type": ["integer", "string"] },
+    "signed_at": { "type": "string", "minLength": 1 },
+    "session_isolation_attestation": {
+      "type": "object",
+      "required": [
+        "fresh_session_not_fork_not_resume",
+        "did_not_author_reviewed_scope",
+        "auto_memory_disabled_or_not_applicable",
+        "auto_memory_disabled_before_launch",
+        "isolation_evidence"
+      ],
+      "properties": {
+        "fresh_session_not_fork_not_resume": { "const": true },
+        "did_not_author_reviewed_scope": { "const": true },
+        "auto_memory_disabled_or_not_applicable": { "const": true },
+        "auto_memory_disabled_before_launch": {
+          "description": "自动记忆在会话启动前即被关闭（发起人 2026-07-16 指令第 7 条）；启动后才关闭 = false = 未签",
+          "const": true
+        },
+        "isolation_evidence": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "verdict": {
+      "enum": ["ACCEPT", "REJECT", "CONDITIONAL_REJECT"]
+    },
+    "d0_verdict": {
+      "description": "可选：对 D0 产品解耦章程的独立裁决（仅承担 D0 独立审核职责的签字者填写）",
+      "enum": ["ACCEPT", "REJECT"]
+    },
+    "findings_summary": { "type": "array", "items": { "type": "string" } },
+    "receipt_digest": {
+      "type": "string",
+      "description": "sha256(canonical_json(去 receipt_digest 后的全对象))",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "additionalProperties": false
+}

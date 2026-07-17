@@ -23,7 +23,7 @@
   ],
   "executable_tree_definition": "除 addition_allowlist_prefixes 之外的全部路径均视为可执行代码树（含配置与依赖锁定清单）",
   "signoff_binding": {
-    "receipt_schema": "schema/signer_receipt.v1.schema.json",
+    "receipt_schema": "schema/signer_receipt.v2.schema.json",
     "must_bind": ["b_lift_commit", "b_lift_tree_digest", "b_delivery_commit", "b_delivery_tree_digest"],
     "invalid_if": "只绑定单摘要 / 绑定源仓提交 / E9 于源仓完成后搬仓沿用签字"
   },

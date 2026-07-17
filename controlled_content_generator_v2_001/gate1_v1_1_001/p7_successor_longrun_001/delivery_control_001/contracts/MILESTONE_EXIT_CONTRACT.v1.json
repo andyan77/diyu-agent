@@ -1,0 +1,78 @@
+{
+  "schema_version": "p7-milestone-exit-contract-v1",
+  "title": "里程碑专属出口合同（FINAL 模式逐键强制）",
+  "authority": "发起人 2026-07-16 八项加固指令第 4/5 条；M2 行真源：v2.4 §六 表（M2 = S0 六项冻结原样 + 两份独立审核 + BOUNDARY_SMOKE_PASS + 遥测模型落盘，@4328194 L193）+ v2.3 冻结「S0 六项出口」+ stage_and_kill.v2 S0_DETERMINISTIC_HYGIENE.exit_requires",
+  "enforcement": "checker FINAL 模式：definition_status != FROZEN 的里程碑不可 FINAL 关闭（fail-closed）；required_exit_keys 必须逐键出现在该里程碑 MILESTONE_EXIT_EVIDENCE 中且证据文件存在、字节摘要一致；stage_execution_required 的每个阶段必须在 stage_actual_state 中真实执行且带有效 typed 回执；real_run_required=true 时 real_run_executed 必须为 true；s0_exit_keys_mirror 必须与 stage_and_kill.v2 的 S0 exit_requires 逐字一致（漂移 = FAIL）",
+  "milestones": {
+    "M1": {
+      "definition_status": "FROZEN",
+      "frozen_at": "2026-07-16",
+      "authority_note": "P1 §二十四 合取条件的机器可核子集（其余条件由 checker 常规节与两份独立审核承载）",
+      "required_exit_keys": [
+        "INDEPENDENT_CLAUDE_FABLE_REVIEW_ACCEPT",
+        "CODEX_GPT_REVIEW_ACCEPT",
+        "D0_TEXT_AND_INDEPENDENT_REVIEW_VALID",
+        "M0_REMAINS_HONESTLY_NOT_QUALIFIED",
+        "V1_1_REMAINS_HONESTLY_NOT_QUALIFIED",
+        "RUN_JOURNAL_CHAIN_VALID",
+        "FULL_TEST_SUITE_GREEN",
+        "REPOSITORY_WIDE_RESIDUAL_SCAN_PASS"
+      ],
+      "stage_execution_required": [],
+      "real_run_required": false
+    },
+    "M2": {
+      "definition_status": "FROZEN",
+      "frozen_at": "2026-07-16",
+      "authority_note": "v2.4 §六 表 M2 行冻结原样；真实 S0 必须机械证明（stage_actual_state 登记 + 有效阶段回执 + real_run_executed=true），文档在场不构成阶段完成",
+      "s0_exit_keys_mirror": [
+        "SINGLE_TEST_ASSIGNMENT_SOURCE_100_PERCENT",
+        "ASSIGNMENT_MATERIAL_MISMATCH_COUNT_ZERO",
+        "WHOLE_BATCH_HARD_VETO_METRIC_PRESENT",
+        "FIRST_PROVIDER_RESPONSE_IMMUTABLY_RETAINED",
+        "CALL_AND_COST_PROVENANCE_COMPLETE",
+        "GATE1_PLAN_IMPERSONATION_COUNT_ZERO"
+      ],
+      "mirror_source": "eval_audit_spine_001/contract/stage_and_kill.v2.json#stages[S0_DETERMINISTIC_HYGIENE].exit_requires",
+      "required_exit_keys": [
+        "SINGLE_TEST_ASSIGNMENT_SOURCE_100_PERCENT",
+        "ASSIGNMENT_MATERIAL_MISMATCH_COUNT_ZERO",
+        "WHOLE_BATCH_HARD_VETO_METRIC_PRESENT",
+        "FIRST_PROVIDER_RESPONSE_IMMUTABLY_RETAINED",
+        "CALL_AND_COST_PROVENANCE_COMPLETE",
+        "GATE1_PLAN_IMPERSONATION_COUNT_ZERO",
+        "BOUNDARY_SMOKE_PASS",
+        "COST_THROUGHPUT_TELEMETRY_MODEL_ON_DISK",
+        "INDEPENDENT_CLAUDE_FABLE_REVIEW_ACCEPT",
+        "CODEX_GPT_REVIEW_ACCEPT"
+      ],
+      "stage_execution_required": ["S0_DETERMINISTIC_HYGIENE"],
+      "real_run_required": true
+    },
+    "M3": {
+      "definition_status": "TO_BE_FROZEN_AT_MILESTONE_START",
+      "provisional_source": "v2.4 §六 表 M3 行：v2.3 各步出口 + QUAL 双冻结保全回执 + LOGICAL_CORE_SEPARATED",
+      "note": "未冻结即不可 FINAL 关闭（fail-closed）；冻结动作属 M3 启动会话职责，须经两份独立审核"
+    },
+    "M4": {
+      "definition_status": "TO_BE_FROZEN_AT_MILESTONE_START",
+      "provisional_source": "v2.4 §六 表 M4 行",
+      "note": "同上"
+    },
+    "M5": {
+      "definition_status": "TO_BE_FROZEN_AT_MILESTONE_START",
+      "provisional_source": "v2.4 §六 表 M5 行：4.4-A 全链 + 三类保证分离主张 + 不导入生成器代码依赖检查 + RIGHTS_CLEARANCE",
+      "note": "同上"
+    },
+    "M6": {
+      "definition_status": "TO_BE_FROZEN_AT_MILESTONE_START",
+      "provisional_source": "v2.4 §六 表 M6 行：v2.3 E4–E7 出口；四不可逆门不合并",
+      "note": "同上"
+    },
+    "M7": {
+      "definition_status": "TO_BE_FROZEN_AT_MILESTONE_START",
+      "provisional_source": "v2.4 §六 表 M7 行 + RIGHTS_CLEARANCE + 客户数据治理模板",
+      "note": "同上"
+    }
+  }
+}
