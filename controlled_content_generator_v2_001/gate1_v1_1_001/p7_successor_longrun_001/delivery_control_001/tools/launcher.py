@@ -126,6 +126,15 @@ def validate_entry(root: Path, milestone: str, dc: Path | None = None,
             "cross-milestone continuation is a stop line")
     checks.append("OK not_inside_claude_session")
 
+    # 1b. M3-R1 恢复活动态硬门：M3 恢复未 CLOSED_PASS 时，凡以 M3 为前置者（M4）
+    #     一律 fail-closed——独立于 journal-head 启发式的显式拦截（防非 ACTIVE 头误放行）。
+    if milestone == "M3" or predecessor == "M3":
+        rec_active, rec_why = ready_set_mod.m3_recovery_active(dc / "milestones")
+        if rec_active:
+            raise LaunchRefused(
+                f"M3-R1 recovery active — {milestone} launch fail-closed: {rec_why}")
+    checks.append("OK m3_recovery_gate")
+
     # 2. 上一会话已退出
     exited, why = previous_session_exited(root, dc, predecessor)
     if not exited:

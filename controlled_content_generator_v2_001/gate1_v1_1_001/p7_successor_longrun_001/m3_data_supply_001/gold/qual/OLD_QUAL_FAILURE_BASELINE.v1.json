@@ -1,0 +1,400 @@
+{
+ "schema_version": "p7-old-qual-failure-baseline-v1",
+ "purpose": "机械证明 M3 v1 旧 QUAL-A/B 无法通过 measurement_qualification.v2 每套逐模块下限",
+ "contract_id": "EAS-M0-QUALIFICATION-V2",
+ "reads_only_public_aggregates": true,
+ "plaintext_contact": "NONE (只读 class_counts)",
+ "per_set": {
+  "A": {
+   "set": "A",
+   "gold_count": 725,
+   "rows": [
+    {
+     "key": "risk_classification_high_risk_cases",
+     "required": 300,
+     "actual_or_bound": 128,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": ""
+    },
+    {
+     "key": "high_risk_contradicted_cases",
+     "required": 300,
+     "actual_or_bound": 145,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "聚合仅总 CONTRADICTED；上界<300 已足判败"
+    },
+    {
+     "key": "high_risk_unknown_cases",
+     "required": 100,
+     "actual_or_bound": 55,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "聚合仅总 UNKNOWN；上界<100 已足判败"
+    },
+    {
+     "key": "natural_legal_supported_cases",
+     "required": 300,
+     "actual_or_bound": 525,
+     "verdict": "INDETERMINATE",
+     "note": "SUPPORTED 总数上界≥300，但缺 NATURAL∩SUPPORTED 拆分；需保全工具全量计数"
+    },
+    {
+     "key": "risk_classification_legal_controls",
+     "required": 300,
+     "actual_or_bound": 597,
+     "verdict": "INDETERMINATE",
+     "note": "LOW+MEDIUM 上界≥300，但缺 NATURAL∩(LOW/MED) 拆分；需保全工具全量计数"
+    },
+    {
+     "key": "reference_extraction_positive_cases",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "reference_extraction_negative_controls",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "claim_atomization_positive_cases",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "claim_atomization_negative_controls",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "fact_chain_high_risk_unsafe_cases",
+     "required": 300,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "fact_chain_natural_legal_cases",
+     "required": 300,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "formulaic_double_reviewed_pairs_total",
+     "required": 300,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "formulaic_positive_pairs_minimum",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "formulaic_negative_pairs_minimum",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "formulaic_necessary_grammar_pairs_minimum",
+     "required": 20,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "deterministic_disclosure_cases_total",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "deterministic_disclosure_obligation_types_required",
+     "required": 4,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "omission_misleading_high_risk_cases",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "omission_nonmisleading_controls",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "review_double_reviewed_items",
+     "required": 40,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "review_judgment_records",
+     "required": 80,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "required_content_families",
+     "required": [
+      "F1_PEOPLE_AND_REAL_SCENE",
+      "F2_PROFESSIONAL_AND_SEARCH",
+      "F3_PRODUCT_RELATION_AND_AESTHETIC",
+      "F4_STORE_LOCAL_AND_RETAIL",
+      "F5_ENTERPRISE_LONG_TERM_TRUST"
+     ],
+     "actual_or_bound": [
+      "F1_PEOPLE_AND_REAL_SCENE",
+      "F2_PROFESSIONAL_AND_SEARCH",
+      "F3_PRODUCT_RELATION_AND_AESTHETIC",
+      "F4_STORE_LOCAL_AND_RETAIL",
+      "F5_ENTERPRISE_LONG_TERM_TRUST"
+     ],
+     "verdict": "MET",
+     "note": ""
+    }
+   ],
+   "definitive_fail_keys": [
+    "risk_classification_high_risk_cases",
+    "high_risk_contradicted_cases",
+    "high_risk_unknown_cases",
+    "reference_extraction_positive_cases",
+    "reference_extraction_negative_controls",
+    "claim_atomization_positive_cases",
+    "claim_atomization_negative_controls",
+    "fact_chain_high_risk_unsafe_cases",
+    "fact_chain_natural_legal_cases",
+    "formulaic_double_reviewed_pairs_total",
+    "formulaic_positive_pairs_minimum",
+    "formulaic_negative_pairs_minimum",
+    "formulaic_necessary_grammar_pairs_minimum",
+    "deterministic_disclosure_cases_total",
+    "deterministic_disclosure_obligation_types_required",
+    "omission_misleading_high_risk_cases",
+    "omission_nonmisleading_controls",
+    "review_double_reviewed_items",
+    "review_judgment_records"
+   ],
+   "verdict": "FAIL"
+  },
+  "B": {
+   "set": "B",
+   "gold_count": 701,
+   "rows": [
+    {
+     "key": "risk_classification_high_risk_cases",
+     "required": 300,
+     "actual_or_bound": 118,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": ""
+    },
+    {
+     "key": "high_risk_contradicted_cases",
+     "required": 300,
+     "actual_or_bound": 148,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "聚合仅总 CONTRADICTED；上界<300 已足判败"
+    },
+    {
+     "key": "high_risk_unknown_cases",
+     "required": 100,
+     "actual_or_bound": 57,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "聚合仅总 UNKNOWN；上界<100 已足判败"
+    },
+    {
+     "key": "natural_legal_supported_cases",
+     "required": 300,
+     "actual_or_bound": 496,
+     "verdict": "INDETERMINATE",
+     "note": "SUPPORTED 总数上界≥300，但缺 NATURAL∩SUPPORTED 拆分；需保全工具全量计数"
+    },
+    {
+     "key": "risk_classification_legal_controls",
+     "required": 300,
+     "actual_or_bound": 583,
+     "verdict": "INDETERMINATE",
+     "note": "LOW+MEDIUM 上界≥300，但缺 NATURAL∩(LOW/MED) 拆分；需保全工具全量计数"
+    },
+    {
+     "key": "reference_extraction_positive_cases",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "reference_extraction_negative_controls",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "claim_atomization_positive_cases",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "claim_atomization_negative_controls",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "fact_chain_high_risk_unsafe_cases",
+     "required": 300,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "fact_chain_natural_legal_cases",
+     "required": 300,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "formulaic_double_reviewed_pairs_total",
+     "required": 300,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "formulaic_positive_pairs_minimum",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "formulaic_negative_pairs_minimum",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "formulaic_necessary_grammar_pairs_minimum",
+     "required": 20,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "deterministic_disclosure_cases_total",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "deterministic_disclosure_obligation_types_required",
+     "required": 4,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "omission_misleading_high_risk_cases",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "omission_nonmisleading_controls",
+     "required": 100,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "review_double_reviewed_items",
+     "required": 40,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "review_judgment_records",
+     "required": 80,
+     "actual_or_bound": 0,
+     "verdict": "DEFINITIVE_FAIL",
+     "note": "模块整段缺失，gold 字段=0"
+    },
+    {
+     "key": "required_content_families",
+     "required": [
+      "F1_PEOPLE_AND_REAL_SCENE",
+      "F2_PROFESSIONAL_AND_SEARCH",
+      "F3_PRODUCT_RELATION_AND_AESTHETIC",
+      "F4_STORE_LOCAL_AND_RETAIL",
+      "F5_ENTERPRISE_LONG_TERM_TRUST"
+     ],
+     "actual_or_bound": [
+      "F1_PEOPLE_AND_REAL_SCENE",
+      "F2_PROFESSIONAL_AND_SEARCH",
+      "F3_PRODUCT_RELATION_AND_AESTHETIC",
+      "F4_STORE_LOCAL_AND_RETAIL",
+      "F5_ENTERPRISE_LONG_TERM_TRUST"
+     ],
+     "verdict": "MET",
+     "note": ""
+    }
+   ],
+   "definitive_fail_keys": [
+    "risk_classification_high_risk_cases",
+    "high_risk_contradicted_cases",
+    "high_risk_unknown_cases",
+    "reference_extraction_positive_cases",
+    "reference_extraction_negative_controls",
+    "claim_atomization_positive_cases",
+    "claim_atomization_negative_controls",
+    "fact_chain_high_risk_unsafe_cases",
+    "fact_chain_natural_legal_cases",
+    "formulaic_double_reviewed_pairs_total",
+    "formulaic_positive_pairs_minimum",
+    "formulaic_negative_pairs_minimum",
+    "formulaic_necessary_grammar_pairs_minimum",
+    "deterministic_disclosure_cases_total",
+    "deterministic_disclosure_obligation_types_required",
+    "omission_misleading_high_risk_cases",
+    "omission_nonmisleading_controls",
+    "review_double_reviewed_items",
+    "review_judgment_records"
+   ],
+   "verdict": "FAIL"
+  }
+ },
+ "generated_at": "2026-07-18T17:39:31.920066+00:00",
+ "record_digest": "76f759c7a888cddb362033d88b7bd5c3cf9d37ef8a82f81b00fbae3ca8a81eec",
+ "overall_verdict": "OLD_QUAL_FAILS_M0_MINIMUMS"
+}

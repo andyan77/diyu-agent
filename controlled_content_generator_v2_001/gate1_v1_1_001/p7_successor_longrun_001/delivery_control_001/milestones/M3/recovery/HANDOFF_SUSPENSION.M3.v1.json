@@ -1,0 +1,11 @@
+{
+ "schema_version": "p7-handoff-suspension-v1",
+ "milestone_id": "M3",
+ "suspends_handoff": "delivery_control_001/milestones/M3/HANDOFF.v1.json",
+ "suspended_handoff_digest": "a343b7ae37b34751691b03e92fcbc28a840ee1929e6991ff55c6ad5511c11132",
+ "reason": "M3 v1 HANDOFF(→M4, LOGICAL_CORE_SEPARATED) 基于形式假绿关闭；数据不满足 M0 pre-run。追加式暂停：不修改 HANDOFF.v1.json 原文；其入口效力挂起，直至 M3-R1 恢复产出 HANDOFF.v2 并 CLOSED_PASS。",
+ "effective_interlock": "ready_set/launcher M4 fail-closed（见 M3_RECOVERY_STATUS.m4_interlock）",
+ "authorized_by": "发起人 2026-07-18 Q1/Q2 恢复授权 + M3-R1 Prompt 四(5)『原 HANDOFF 暂停生效』",
+ "suspended_at": "2026-07-18T17:31:59.818858+00:00",
+ "record_digest": "a5d5f5dacfeb360f5c84ada4a72fa153e954cb70139cd31877f18a28427e1eaa"
+}

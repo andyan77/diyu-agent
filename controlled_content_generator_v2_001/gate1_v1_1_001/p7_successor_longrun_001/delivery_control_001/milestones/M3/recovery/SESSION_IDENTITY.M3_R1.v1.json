@@ -1,0 +1,33 @@
+{
+ "schema_version": "p7-session-identity-m3r1-v1",
+ "milestone_id": "M3",
+ "capsule": "M3_R1_RECOVERY",
+ "requested_model": "fable (Fable 5) — per M3-R1 Prompt header",
+ "actual_model": "claude-opus-4-8",
+ "actual_model_series": "opus (NOT fable-5)",
+ "session_id": "374b677b-6537-465f-bab1-993e8a9d75aa",
+ "session_kind": "COMPACTED_CONTINUATION_OF_M3_CLOSE_SESSION",
+ "run_id": {
+  "value": "UNAVAILABLE",
+  "unavailable_reason": "Claude Code 未暴露独立 run 标识",
+  "evidence_ref": "本文件即会话身份证据"
+ },
+ "memory_sources_inventory": [
+  "用户级 ~/.claude/CLAUDE.md（harness SessionStart 注入，不可关闭）",
+  "项目级 MEMORY.md 索引（harness 注入）",
+  "claude-error-patterns core/review（hook 注入）",
+  "上一会话 /compact 摘要（本会话上下文起点）"
+ ],
+ "deviation_disclosure": {
+  "deviates_from": "FORMAL_MODEL_RUN_CONTRACT.v1.md §1",
+  "deviation_1_model": "主负责人实际模型=claude-opus-4-8，非 Fable 5 系列（§1 硬门 STOP_MODEL_OR_CONTEXT_IDENTITY_INVALID）",
+  "deviation_2_session": "会话=关闭 M3 那次会话经 /compact 续跑，非全新非 fork 非 resume 顶层会话",
+  "authorized_by": "发起人 2026-07-18 会话内 AskUserQuestion Q1『本会话继续(Opus，记偏差)』",
+  "recorded_in": "SUPERSESSION_LEDGER.v1.md §7（M3-R1 恢复偏差行）",
+  "carrier_precedent": "SUPERSESSION_LEDGER §8 末行已认 Fable→Opus 载体等价（EQUIVALENT_IN_ALL_VALIDITY_BEARING_PROPERTIES，自 M3-C5），本行将等价扩展至 M3-R1 恢复主负责人角色",
+  "budget_ruling": "发起人 Q2『$1,500 上限内直接开工，耗尽即 HONEST_STOP，禁伪造 PASS』"
+ },
+ "review_independence_note": "本会话仅承担 R0-R6 编排/构造/门禁角色；独立性关键角色（两标注席跨模型双盲、仲裁席、两终审 Claude 对抗+Codex 复算）全部为隔离子代理/全新会话，与本编排会话相互独立，不受本会话载体/续跑偏差影响",
+ "opened_at": "2026-07-18T17:31:59.818858+00:00",
+ "record_digest": "ffdb2194d0c40a2399e950298e5838521bf0cbded6470e8aab00b5d6dbee8987"
+}

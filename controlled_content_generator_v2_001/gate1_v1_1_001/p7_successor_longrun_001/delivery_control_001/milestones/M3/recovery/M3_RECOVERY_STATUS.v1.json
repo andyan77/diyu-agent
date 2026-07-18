@@ -1,0 +1,44 @@
+{
+ "schema_version": "p7-m3-recovery-status-v1",
+ "milestone_id": "M3",
+ "recovery_id": "M3_R1",
+ "state": "ACTIVE",
+ "opened_at": "2026-07-18T17:31:59.818858+00:00",
+ "opened_journal_seq": 45,
+ "opened_journal_record_digest": "756230ed1ab5c425ee3717601f3084de7fd5b778e8492e7f575a998c24ef54c7",
+ "reason": "M3 v1 关闭=数据层形式假绿：23 出口键 + checker FINAL + closure 机器全绿，但 checker 未逐套验证 M0 类别下限与模块覆盖。冻结 QUAL gold 仅覆盖 risk+entailment；reference/atomization/fact_chain/formulaic/disclosure/omission/review 七模块整段缺失；risk high/critical、entailment contradicted/unknown 远低于 measurement_qualification.v2 每套下限。",
+ "confirmed_gap_public_aggregates": {
+  "QUAL_A": {
+   "risk_high_critical": 128,
+   "entailment_contradicted": 145,
+   "entailment_unknown": 55,
+   "modules_present": [
+    "risk",
+    "entailment"
+   ]
+  },
+  "QUAL_B": {
+   "risk_high_critical": 118,
+   "entailment_contradicted": 148,
+   "entailment_unknown": 57,
+   "modules_present": [
+    "risk",
+    "entailment"
+   ]
+  },
+  "per_set_minimums_ref": "eval_audit_spine_001/contract/measurement_qualification.v2.json",
+  "source": "QUAL_{A,B}_GOLD_FROZEN_RECEIPT.v1.json class_counts（公开聚合，零明文）"
+ },
+ "superseded_close": {
+  "candidate_commit": "84f8fc503e487d4291411f5b9b616595467c138e",
+  "closeout_commit": "074141727ed6daf4d1adc70e6d402fca75d79eab",
+  "anchor_commit": "1fbddc4841e87b7fbfc6ad746320efb39208c90f",
+  "handoff_digest": "a343b7ae37b34751691b03e92fcbc28a840ee1929e6991ff55c6ad5511c11132",
+  "note": "v1 关闭工件全部封存不改；仅暂停其下游入口效力，待恢复 CLOSED_PASS 或 HONEST_STOP"
+ },
+ "old_qual_status": "SUPERSEDED_UNREVEALED_INSUFFICIENT_FOR_M0",
+ "m4_interlock": "凡以 M3 为前置的里程碑（M4 首当其冲）在本状态 state!=CLOSED_PASS 时一律 fail-closed；由 ready_set.m3_recovery_active + launcher.validate_entry 机械强制；record_digest 被篡改亦 fail-closed",
+ "carrier_session_deviation_ref": "milestones/M3/recovery/SESSION_IDENTITY.M3_R1.v1.json + SUPERSESSION_LEDGER §7",
+ "closes_only_when": "R6 两份新独立审核 ACCEPT + checker M3 FINAL（含新数据硬门）PASS + 新 v2 closeout + closure 复算 → 本状态改 CLOSED_PASS；容量/预算不足 → HONEST_STOP",
+ "record_digest": "f9d41ec1827ca08436e5ee2247bb1b7ce230f3bd99ecb90fdfcd67750eb781d7"
+}

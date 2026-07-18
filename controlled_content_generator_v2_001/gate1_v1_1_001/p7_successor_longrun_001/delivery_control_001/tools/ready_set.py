@@ -32,6 +32,35 @@ def _load(path: Path, name: str):
 receipts = _load(DC / "tools/receipts.py", "p7_receipts")
 
 
+def m3_recovery_active(milestones_dir: Path | None = None) -> tuple[bool, str]:
+    """M3-R1 恢复活动态硬门（fail-closed）。
+
+    读 milestones/M3/recovery/M3_RECOVERY_STATUS.v1.json：
+      - 不存在 → (False)：未处于恢复，正常行为（向后兼容既有测试）。
+      - 存在但不可读 / record_digest 被篡改 → (True)：不安全，一律 fail-closed。
+      - state != CLOSED_PASS（ACTIVE / HONEST_STOP）→ (True)：M3 v1 关闭被暂停，
+        凡以 M3 为前置的里程碑（M4 首当其冲）不得放行。
+      - state == CLOSED_PASS 且摘要自洽 → (False)：恢复已诚实关闭，正常放行。
+    """
+    if milestones_dir is None:
+        milestones_dir = DC / "milestones"
+    path = milestones_dir / "M3" / "recovery" / "M3_RECOVERY_STATUS.v1.json"
+    if not path.is_file():
+        return False, "no M3 recovery status (not in recovery)"
+    try:
+        status = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        return True, f"M3 recovery status unreadable ({exc}) -> fail-closed"
+    if status.get("record_digest") != receipts.canonical_digest(
+            status, "record_digest"):
+        return True, "M3 recovery status record_digest mismatch (tampered) -> fail-closed"
+    state = status.get("state")
+    if state != "CLOSED_PASS":
+        return True, (f"M3-R1 recovery state={state} (not CLOSED_PASS): "
+                      "M3 v1 close superseded, downstream fail-closed")
+    return False, "M3-R1 recovery CLOSED_PASS"
+
+
 def compute_ready_set(root: Path, milestones_dir: Path | None = None,
                       route: str | None = None) -> dict:
     """返回 {milestone: {status, ready, reasons}}。
@@ -52,6 +81,13 @@ def compute_ready_set(root: Path, milestones_dir: Path | None = None,
             invalid[milestone] = str(exc)
     if route is None:
         route = receipts.route_binding(root)
+
+    # M3-R1 恢复活动态硬门：恢复未 CLOSED_PASS 时，M3 v1 关闭回执不满足任何下游入口。
+    # 置 results["M3"]=None → M4 的 TYPED_RESULT M3:PASS 与 QUALIFICATION_FLAG 均 UNMET。
+    rec_active, rec_why = m3_recovery_active(
+        milestones_dir if milestones_dir is not None else DC / "milestones")
+    if rec_active:
+        results["M3"] = None
 
     def requirement_met(req: dict) -> tuple[bool, str]:
         kind = req["kind"]
@@ -112,8 +148,14 @@ def compute_ready_set(root: Path, milestones_dir: Path | None = None,
             pass  # 无效前置回执已通过 requirement_met 的 got=None 体现
         out[milestone] = {"status": "READY" if met_all else "WAITING",
                           "ready": met_all, "reasons": reasons}
+    if rec_active:
+        out["M3"] = {"status": "RECOVERY_ACTIVE", "ready": False,
+                     "reasons": [rec_why,
+                                 "M3 v1 close superseded during M3-R1 recovery; "
+                                 "downstream (M4…) fail-closed until CLOSED_PASS"]}
     out["_invalid_receipts"] = invalid
     out["_route"] = route
+    out["_m3_recovery_active"] = rec_active
     return out
 
 
