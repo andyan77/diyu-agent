@@ -413,6 +413,71 @@ def check_final_receipts(root: Path) -> tuple[bool, list[str]]:
     return v25.check_final_receipts(root, CTX)
 
 
+def check_qual_data_readiness(root: Path) -> tuple[bool, list[str]]:
+    """M3+ FINAL 硬门（M3-R1 新增，补 M3 v1 缺失的逐套逐模块 M0 下限门）。
+
+    QUAL-A/B 两份 PRE_M0 就绪回执必须：在场 + schema_version/contract_id 正确 +
+    record_digest 自洽 + verdict==PASS 且从 rows/coverage/governance 重算一致
+    （防手改 verdict:PASS 而 rows 有失败项）。任一缺失/FAIL → M3 FINAL fail-closed。
+    非 M3/M4 里程碑 pass-through（前 M3 不适用）。"""
+    milestone = CTX.get("milestone")
+    if milestone not in ("M3", "M4"):
+        return True, [f"not applicable at {milestone} (pre-M3 qualification data gate)"]
+
+    def _canon(obj: dict, field: str) -> str:
+        unsigned = {k: v for k, v in obj.items() if k != field}
+        return hashlib.sha256(json.dumps(
+            unsigned, ensure_ascii=False, sort_keys=True,
+            separators=(",", ":")).encode("utf-8")).hexdigest()
+
+    tools_dir = root / P7 / "m3_data_supply_001/tools"
+    sys.path.insert(0, str(tools_dir))
+    try:
+        import pre_m0_readiness as prm  # type: ignore
+    except Exception as exc:  # noqa: BLE001
+        return False, [f"pre_m0_readiness tool unimportable: {type(exc).__name__}:{exc}"]
+    finally:
+        if sys.path and sys.path[0] == str(tools_dir):
+            sys.path.pop(0)
+
+    qual_dir = root / P7 / "m3_data_supply_001/gold/qual"
+    details: list[str] = []
+    ok = True
+    for s in ("A", "B"):
+        rp = qual_dir / f"QUAL_{s}_READINESS_RECEIPT.v1.json"
+        if not rp.is_file():
+            ok = False
+            details.append(f"QUAL-{s} PRE_M0 readiness receipt ABSENT -> "
+                           "M3 FINAL fail-closed（逐套逐模块 M0 下限未证）")
+            continue
+        try:
+            r = json.loads(rp.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            ok = False
+            details.append(f"QUAL-{s} readiness receipt unreadable: {exc}")
+            continue
+        if r.get("schema_version") != "p7-pre-m0-data-readiness-v1":
+            ok = False
+            details.append(f"QUAL-{s} wrong schema_version")
+        if r.get("contract_id") != "EAS-M0-QUALIFICATION-V2":
+            ok = False
+            details.append(f"QUAL-{s} contract_id != EAS-M0-QUALIFICATION-V2")
+        if r.get("record_digest") != _canon(r, "record_digest"):
+            ok = False
+            details.append(f"QUAL-{s} readiness record_digest recompute mismatch (tampered)")
+        recomputed = prm.recompute_verdict(r)
+        if r.get("verdict") != "PASS" or recomputed != "PASS":
+            ok = False
+            fk = r.get("failing_keys", [])
+            details.append(f"QUAL-{s} readiness verdict={r.get('verdict')} "
+                           f"recomputed={recomputed} failing={len(fk)} "
+                           f"first={fk[:5]}")
+        else:
+            details.append(f"QUAL-{s} readiness PASS (rows={len(r.get('rows', []))}, "
+                           f"9-module coverage + families + governance 全绿)")
+    return ok, details
+
+
 def check_candidate_manifest(root: Path) -> tuple[bool, list[str]]:
     """候选清单必须覆盖并精确绑定当前实现，审核/证据自身不参与递归摘要。"""
     manifest_path = root / EVAL_SPINE / "release/candidate_manifest.v1.json"
@@ -818,6 +883,7 @@ SECTIONS: dict[str, object] = {
     "pkg1_route": check_pkg1_route,
     "pkg1_blind": check_pkg1_blind,
     "pkg1_reviews": check_pkg1_reviews,
+    "qual_data_readiness": check_qual_data_readiness,
     "final_receipts": check_final_receipts,
 }
 
@@ -833,11 +899,11 @@ SECTION_SCOPES: dict[str, str] = {
     "candidate_manifest": "A", "independent_reviews": "A",
     "recovery_shadow_recompute": "SHARED",
     "pkg1_input_freeze": "B", "pkg1_route": "B", "pkg1_blind": "B",
-    "pkg1_reviews": "B", "final_receipts": "SHARED",
+    "pkg1_reviews": "B", "qual_data_readiness": "A", "final_receipts": "SHARED",
 }
 
 # 仅 FINAL 模式运行的节（PRE_REVIEW 只证送审条件，不要求签字存在）
-FINAL_ONLY_SECTIONS = {"final_receipts"}
+FINAL_ONLY_SECTIONS = {"final_receipts", "qual_data_readiness"}
 
 
 def selftest() -> int:

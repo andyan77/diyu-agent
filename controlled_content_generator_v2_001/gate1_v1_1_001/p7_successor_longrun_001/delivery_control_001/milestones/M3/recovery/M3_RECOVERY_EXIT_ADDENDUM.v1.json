@@ -1,0 +1,27 @@
+{
+ "schema_version": "p7-m3-recovery-exit-addendum-v1",
+ "milestone_id": "M3",
+ "recovery_id": "M3_R1",
+ "supersedes_note": "追加于 MILESTONE_EXIT_CONTRACT M3 行（23 required_exit_keys）——不改原文，新增数据实质硬门",
+ "additional_required_exit_keys_for_CLOSED_PASS": [
+  {
+   "key": "PRE_M0_QUAL_A_READINESS_PASS",
+   "evidence": "m3_data_supply_001/gold/qual/QUAL_A_READINESS_RECEIPT.v1.json verdict=PASS",
+   "gate": "checker --milestone M3 --mode FINAL --section qual_data_readiness (scope A)"
+  },
+  {
+   "key": "PRE_M0_QUAL_B_READINESS_PASS",
+   "evidence": "m3_data_supply_001/gold/qual/QUAL_B_READINESS_RECEIPT.v1.json verdict=PASS",
+   "gate": "同上"
+  },
+  {
+   "key": "PRE_M0_DATA_REQUIREMENT_MATRIX_PRESENT",
+   "evidence": "m3_data_supply_001/gold/qual/PRE_M0_DATA_REQUIREMENT_MATRIX.v1.json"
+  }
+ ],
+ "rule": "M3-R1 CLOSED_PASS 需原 23 出口键 + 本三键全绿；就绪门读公开聚合零明文；任一套 readiness FAIL 或缺回执 → checker qual_data_readiness FAIL → M3 FINAL fail-closed。容量/预算不足 → HONEST_STOP（本三键不强制 HONEST_STOP，仅约束 PASS）。",
+ "does_not_lower_standard": "本附录只加严不放宽；原 23 键与 measurement_qualification.v2 全部承继",
+ "authorized_by": "发起人 2026-07-18 M3-R1 恢复授权；journal seq45",
+ "issued_at": "2026-07-18T17:52:16.288173+00:00",
+ "record_digest": "9f23c190d18477e172f8ffc099496bf8c5908bddeb8974d8ff1b5e8978ca54e8"
+}

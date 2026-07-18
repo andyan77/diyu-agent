@@ -1,0 +1,566 @@
+{
+ "schema_version": "p7-pre-m0-requirement-matrix-v1",
+ "contract_id": "EAS-M0-QUALIFICATION-V2",
+ "generated_from": [
+  "measurement_qualification.v2.json/qualification_set_minimums",
+  "spine gold_field_names + m0 REQUIRED_MODULES/record-role minimums"
+ ],
+ "required_content_families": [
+  "F1_PEOPLE_AND_REAL_SCENE",
+  "F2_PROFESSIONAL_AND_SEARCH",
+  "F3_PRODUCT_RELATION_AND_AESTHETIC",
+  "F4_STORE_LOCAL_AND_RETAIL",
+  "F5_ENTERPRISE_LONG_TERM_TRUST"
+ ],
+ "qualification_sets": [
+  "A",
+  "B"
+ ],
+ "note": "actual 为 pre-recovery 快照（旧 QUAL 公开聚合，7 模块=0）；R4 由保全工具以新数据重填",
+ "entries": [
+  {
+   "requirement_key": "reference_extraction_positive_cases",
+   "module": "reference_extraction",
+   "m0_caliber": "gold_present=true 正样",
+   "cross_module_reuse_allowed": true,
+   "statistic": "detection_positive",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    },
+    "B": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    }
+   }
+  },
+  {
+   "requirement_key": "reference_extraction_negative_controls",
+   "module": "reference_extraction",
+   "m0_caliber": "gold_present=false 负控",
+   "cross_module_reuse_allowed": true,
+   "statistic": "detection_negative",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    },
+    "B": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    }
+   }
+  },
+  {
+   "requirement_key": "claim_atomization_positive_cases",
+   "module": "claim_atomization",
+   "m0_caliber": "gold_atom_partition 正样",
+   "cross_module_reuse_allowed": true,
+   "statistic": "detection_positive",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    },
+    "B": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    }
+   }
+  },
+  {
+   "requirement_key": "claim_atomization_negative_controls",
+   "module": "claim_atomization",
+   "m0_caliber": "负控",
+   "cross_module_reuse_allowed": true,
+   "statistic": "detection_negative",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    },
+    "B": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    }
+   }
+  },
+  {
+   "requirement_key": "risk_classification_high_risk_cases",
+   "module": "risk_classification",
+   "m0_caliber": "gold_risk∈{HIGH,CRITICAL}",
+   "cross_module_reuse_allowed": true,
+   "statistic": "class_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 300,
+     "actual": 128,
+     "delta": -172
+    },
+    "B": {
+     "required": 300,
+     "actual": 118,
+     "delta": -182
+    }
+   }
+  },
+  {
+   "requirement_key": "risk_classification_legal_controls",
+   "module": "risk_classification",
+   "m0_caliber": "NATURAL∩gold_risk∈{LOW,MEDIUM}",
+   "cross_module_reuse_allowed": true,
+   "statistic": "class_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 300,
+     "actual": 597,
+     "delta": 297
+    },
+    "B": {
+     "required": 300,
+     "actual": 583,
+     "delta": 283
+    }
+   }
+  },
+  {
+   "requirement_key": "high_risk_contradicted_cases",
+   "module": "entailment",
+   "m0_caliber": "high_risk∩gold_label=CONTRADICTED",
+   "cross_module_reuse_allowed": true,
+   "statistic": "class_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 300,
+     "actual": 145,
+     "delta": -155
+    },
+    "B": {
+     "required": 300,
+     "actual": 148,
+     "delta": -152
+    }
+   }
+  },
+  {
+   "requirement_key": "high_risk_unknown_cases",
+   "module": "entailment",
+   "m0_caliber": "high_risk∩gold_label=UNKNOWN",
+   "cross_module_reuse_allowed": true,
+   "statistic": "class_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 100,
+     "actual": 55,
+     "delta": -45
+    },
+    "B": {
+     "required": 100,
+     "actual": 57,
+     "delta": -43
+    }
+   }
+  },
+  {
+   "requirement_key": "natural_legal_supported_cases",
+   "module": "entailment",
+   "m0_caliber": "NATURAL_legal∩gold_label=SUPPORTED",
+   "cross_module_reuse_allowed": true,
+   "statistic": "class_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 300,
+     "actual": 525,
+     "delta": 225
+    },
+    "B": {
+     "required": 300,
+     "actual": 496,
+     "delta": 196
+    }
+   }
+  },
+  {
+   "requirement_key": "fact_chain_high_risk_unsafe_cases",
+   "module": "fact_chain",
+   "m0_caliber": "gold_safe_to_clear=false∩HIGH/CRITICAL",
+   "cross_module_reuse_allowed": true,
+   "statistic": "class_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 300,
+     "actual": 0,
+     "delta": -300
+    },
+    "B": {
+     "required": 300,
+     "actual": 0,
+     "delta": -300
+    }
+   }
+  },
+  {
+   "requirement_key": "fact_chain_natural_legal_cases",
+   "module": "fact_chain",
+   "m0_caliber": "NATURAL_legal 链",
+   "cross_module_reuse_allowed": true,
+   "statistic": "class_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 300,
+     "actual": 0,
+     "delta": -300
+    },
+    "B": {
+     "required": 300,
+     "actual": 0,
+     "delta": -300
+    }
+   }
+  },
+  {
+   "requirement_key": "formulaic_double_reviewed_pairs_total",
+   "module": "formulaic",
+   "m0_caliber": "fresh 双审 pair 总数",
+   "cross_module_reuse_allowed": false,
+   "statistic": "pair_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 300,
+     "actual": 0,
+     "delta": -300
+    },
+    "B": {
+     "required": 300,
+     "actual": 0,
+     "delta": -300
+    }
+   }
+  },
+  {
+   "requirement_key": "formulaic_positive_pairs_minimum",
+   "module": "formulaic",
+   "m0_caliber": "final_verdict=FORMULAIC",
+   "cross_module_reuse_allowed": false,
+   "statistic": "pair_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    },
+    "B": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    }
+   }
+  },
+  {
+   "requirement_key": "formulaic_negative_pairs_minimum",
+   "module": "formulaic",
+   "m0_caliber": "final_verdict=NOT_FORMULAIC",
+   "cross_module_reuse_allowed": false,
+   "statistic": "pair_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    },
+    "B": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    }
+   }
+  },
+  {
+   "requirement_key": "formulaic_necessary_grammar_pairs_minimum",
+   "module": "formulaic",
+   "m0_caliber": "final_verdict=NECESSARY_GRAMMAR",
+   "cross_module_reuse_allowed": false,
+   "statistic": "pair_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 20,
+     "actual": 0,
+     "delta": -20
+    },
+    "B": {
+     "required": 20,
+     "actual": 0,
+     "delta": -20
+    }
+   }
+  },
+  {
+   "requirement_key": "deterministic_disclosure_cases_total",
+   "module": "disclosure",
+   "m0_caliber": "确定性 disclosure gold",
+   "cross_module_reuse_allowed": true,
+   "statistic": "det_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    },
+    "B": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    }
+   }
+  },
+  {
+   "requirement_key": "omission_misleading_high_risk_cases",
+   "module": "omission",
+   "m0_caliber": "gold_misleading=true∩HIGH/CRITICAL",
+   "cross_module_reuse_allowed": true,
+   "statistic": "class_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    },
+    "B": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    }
+   }
+  },
+  {
+   "requirement_key": "omission_nonmisleading_controls",
+   "module": "omission",
+   "m0_caliber": "gold_misleading=false 控制",
+   "cross_module_reuse_allowed": true,
+   "statistic": "class_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    },
+    "B": {
+     "required": 100,
+     "actual": 0,
+     "delta": -100
+    }
+   }
+  },
+  {
+   "requirement_key": "review_double_reviewed_items",
+   "module": "review_calibration",
+   "m0_caliber": "双审 item",
+   "cross_module_reuse_allowed": false,
+   "statistic": "item_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 40,
+     "actual": 0,
+     "delta": -40
+    },
+    "B": {
+     "required": 40,
+     "actual": 0,
+     "delta": -40
+    }
+   }
+  },
+  {
+   "requirement_key": "review_judgment_records",
+   "module": "review_calibration",
+   "m0_caliber": "judgment 记录(2×item)",
+   "cross_module_reuse_allowed": false,
+   "statistic": "record_count",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 80,
+     "actual": 0,
+     "delta": -80
+    },
+    "B": {
+     "required": 80,
+     "actual": 0,
+     "delta": -80
+    }
+   }
+  },
+  {
+   "requirement_key": "deterministic_disclosure_obligation_types_required",
+   "module": "disclosure",
+   "m0_caliber": "distinct obligation_type 数",
+   "cross_module_reuse_allowed": false,
+   "statistic": "type_coverage",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 4,
+     "actual": 0,
+     "delta": -4
+    },
+    "B": {
+     "required": 4,
+     "actual": 0,
+     "delta": -4
+    }
+   }
+  },
+  {
+   "requirement_key": "known_r5_hard_veto_cases_and_registered_variants_recall",
+   "module": "entailment",
+   "m0_caliber": "已知 R5 硬否决+注册变体召回",
+   "cross_module_reuse_allowed": false,
+   "statistic": "recall",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 1.0,
+     "actual": 0,
+     "delta": -1.0
+    },
+    "B": {
+     "required": 1.0,
+     "actual": 0,
+     "delta": -1.0
+    }
+   }
+  },
+  {
+   "requirement_key": "cost_events",
+   "module": "cost",
+   "m0_caliber": "完整成本事件",
+   "cross_module_reuse_allowed": false,
+   "statistic": "event_count",
+   "production_stage": "M4",
+   "per_set": {
+    "A": {
+     "required": 12,
+     "actual": null,
+     "delta": null
+    },
+    "B": {
+     "required": 12,
+     "actual": null,
+     "delta": null
+    }
+   }
+  },
+  {
+   "requirement_key": "cost_expected_event_manifests",
+   "module": "cost",
+   "m0_caliber": "expected 事件 manifest",
+   "cross_module_reuse_allowed": false,
+   "statistic": "manifest",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 1,
+     "actual": null,
+     "delta": null
+    },
+    "B": {
+     "required": 1,
+     "actual": null,
+     "delta": null
+    }
+   }
+  },
+  {
+   "requirement_key": "cost_source_event_manifests",
+   "module": "cost",
+   "m0_caliber": "source 事件 manifest",
+   "cross_module_reuse_allowed": false,
+   "statistic": "manifest",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 1,
+     "actual": null,
+     "delta": null
+    },
+    "B": {
+     "required": 1,
+     "actual": null,
+     "delta": null
+    }
+   }
+  },
+  {
+   "requirement_key": "cost_rate_cards",
+   "module": "cost",
+   "m0_caliber": "费率卡",
+   "cross_module_reuse_allowed": false,
+   "statistic": "manifest",
+   "production_stage": "M3",
+   "per_set": {
+    "A": {
+     "required": 1,
+     "actual": null,
+     "delta": null
+    },
+    "B": {
+     "required": 1,
+     "actual": null,
+     "delta": null
+    }
+   }
+  }
+ ],
+ "m3_enforced_count_keys": [
+  "reference_extraction_positive_cases",
+  "reference_extraction_negative_controls",
+  "claim_atomization_positive_cases",
+  "claim_atomization_negative_controls",
+  "risk_classification_high_risk_cases",
+  "risk_classification_legal_controls",
+  "high_risk_contradicted_cases",
+  "high_risk_unknown_cases",
+  "natural_legal_supported_cases",
+  "fact_chain_high_risk_unsafe_cases",
+  "fact_chain_natural_legal_cases",
+  "formulaic_double_reviewed_pairs_total",
+  "formulaic_positive_pairs_minimum",
+  "formulaic_negative_pairs_minimum",
+  "formulaic_necessary_grammar_pairs_minimum",
+  "deterministic_disclosure_cases_total",
+  "omission_misleading_high_risk_cases",
+  "omission_nonmisleading_controls",
+  "review_double_reviewed_items",
+  "review_judgment_records"
+ ],
+ "generated_at": "2026-07-18T17:55:42.724475+00:00",
+ "record_digest": "dfc4d3de2138d034e7010c12cefed569ca516fd37300e13e5fa1296560ce0846"
+}

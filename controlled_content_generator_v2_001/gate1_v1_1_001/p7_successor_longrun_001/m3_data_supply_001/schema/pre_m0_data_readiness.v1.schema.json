@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "p7-pre-m0-data-readiness-v1",
+  "title": "PRE_M0 数据就绪回执（逐套逐模块 M0 下限 + 模块 gold 字段覆盖 + 治理旗标）",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "set", "contract_id",
+               "reads_public_aggregates_only", "main_session_plaintext_contact",
+               "rows", "module_gold_field_coverage", "family_coverage_ok",
+               "governance", "failing_keys", "verdict", "record_digest"],
+  "properties": {
+    "schema_version": {"const": "p7-pre-m0-data-readiness-v1"},
+    "set": {"enum": ["A", "B"]},
+    "contract_id": {"const": "EAS-M0-QUALIFICATION-V2"},
+    "reads_public_aggregates_only": {"const": true},
+    "main_session_plaintext_contact": {"const": "NONE"},
+    "rows": {
+      "type": "array", "minItems": 20,
+      "items": {
+        "type": "object",
+        "required": ["key", "module", "required", "actual", "delta", "pass"],
+        "properties": {
+          "key": {"type": "string"},
+          "module": {"type": "string"},
+          "required": {"type": "number"},
+          "actual": {"type": "number"},
+          "delta": {"type": "number"},
+          "pass": {"type": "boolean"},
+          "reuse_allowed": {"type": "boolean"},
+          "statistic": {"type": "string"}
+        }
+      }
+    },
+    "module_gold_field_coverage": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["required_fields", "present", "missing"],
+        "properties": {
+          "required_fields": {"type": "array", "items": {"type": "string"}},
+          "present": {"type": "boolean"},
+          "missing": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "family_coverage_ok": {"type": "boolean"},
+    "family_present": {"type": "array", "items": {"type": "string"}},
+    "governance": {
+      "type": "object",
+      "required": ["ab_mutually_exclusive", "dev_isolation", "qual_order_ok",
+                   "sealed_no_leak", "two_independent_labels_per_record",
+                   "adjudication_on_disagreement"],
+      "additionalProperties": {"type": "boolean"}
+    },
+    "public_counts_faces_sha256": {"type": ["string", "null"]},
+    "public_counts_gold_sha256": {"type": ["string", "null"]},
+    "failing_keys": {"type": "array", "items": {"type": "string"}},
+    "verdict": {"enum": ["PASS", "FAIL"]},
+    "evaluated_at": {"type": "string"},
+    "record_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}
