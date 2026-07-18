@@ -31,6 +31,13 @@
     "database_credential_rotated_after_log_exposure": true,
     "credential_rotation_secret_output_count": 0,
     "model_call_hard_cap_frozen_at_current_upper_bound": 207,
+    "provider_response_staging_and_replay_deployed": true,
+    "provider_completion_recovery_deterministic_tests": "PASS_3_OF_3",
+    "remote_unit_tests": "PASS_35_OF_35",
+    "remote_checker_selftest": "PASS_13_NEGATIVE_CASES",
+    "remote_optimized_fail_closed_exit": 2,
+    "post_repair_model_call_increment": 0,
+    "git_aware_full_checker_location": "LOCAL_AND_REMOTE_CI_NOT_RUNTIME_IMAGE",
     "simulation_only": true,
     "production_ready": false
   },
@@ -199,7 +206,10 @@
       "response_recovery_performed": false,
       "invocation_terminal_state": "FAILED_OR_UNKNOWN_BILLING",
       "runtime_terminal_state": "PROVIDER_FAILED_BEFORE_OUTPUT",
-      "private_evidence_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      "private_evidence_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "historical_failure_preserved": true,
+      "deterministic_repair": "DURABLE_PROVIDER_RESPONSE_STAGING_AND_ZERO_CALL_REPLAY",
+      "repair_regression_state": "PASS_WITHOUT_NEW_MODEL_CALL"
     }
   ],
   "representative_journeys": {
