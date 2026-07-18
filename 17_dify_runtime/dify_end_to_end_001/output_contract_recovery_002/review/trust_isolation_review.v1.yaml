@@ -1,0 +1,62 @@
+task_id: DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002
+review_id: P7R-TRUST-REVIEW-001
+review_type: TRUST_RUNTIME_IDENTITY_DATA_ACCESS_PRIVACY_SESSION_AND_OPERATIONS
+review_mode: READ_ONLY_FIXED_SNAPSHOT
+reviewer_identity: codex-trust-runtime-independent-reviewer
+reviewer_session_id: TRUST-SESSION-20260718-B14A3BFC
+reviewer_run_id: TRUST-RUN-OUTPUT-CONTRACT-RECOVERY-002-01
+independent_from_executor_and_other_reviewer: true
+other_reviewer_accessed: false
+candidate_commit: b14a3bfc2ffe1acdb9b56337f16fc07493e0f374
+candidate_tree: 4a4e3ddf7b75e4a1451571e5640ed513044c7b89
+score: 68
+score_scale: 100
+pass_threshold: 90
+verdict: FAIL
+hard_veto: true
+blocking_items:
+  - id: TRUST-RT-001
+    severity: CRITICAL
+    finding: 门店线下物料真实旅程未闭合，七类成品的强制运行验收不成立。
+    required_closure: 保留第10次失败记录，并取得线下物料可用候选和完整操作链；新增调用须另获授权。
+  - id: TRUST-RT-002
+    severity: CRITICAL
+    finding: provider成功后若完成事务失败或进程被杀，调用和模型运行缺少可回放的可靠收口。
+    required_closure: 为调用和模型运行增加确定性失败终态与恢复，并覆盖事务失败和进程退出。
+  - id: TRUST-RT-003
+    severity: HIGH
+    finding: Founder授权的10次新增调用已全部使用，仍有强制旅程未完成。
+    required_closure: 停止新增付费调用；只允许零调用恢复，或等待新的最小调用和费用授权。
+  - id: TRUST-RT-004
+    severity: HIGH
+    finding: 两个失败用户表面包含内部 RUN 编号。
+    required_closure: 用户表面改用非内部追踪提示，RUN编号只保留在受控审计接口。
+evidence:
+  - "冻结候选提交与树精确匹配，审查期间工作树干净。"
+  - "门店线下物料 candidate_count=0，选择、审核、导出和参考范围均未闭合。"
+  - "第10次回归 bridge_exit_code=137，provider_answer_length=6700，但未形成可审候选。"
+  - "offline_regression.json 为0字节，确认不存在可供审查的线下成品表面。"
+  - "新增调用为10次，等于本轮授权上限；累计调用上界从197升至207。"
+  - "失败被诚实登记为 FAILED_OR_UNKNOWN_BILLING，没有换样、删除或伪装成功。"
+  - "服务端会话签发、可信范围和浏览器会话RLS机制存在，未发现跨会话或跨租户泄漏证据。"
+  - "六类成功候选表面未命中手机号、身份证号、密钥或内部编号。"
+  - "两个失败用户表面显示 RUN 内部编号，违反内部标识不得进入用户表面的边界。"
+  - "所有页面响应保持 publish_allowed=false，未发现自动发布路径。"
+nonblocking_observations:
+  - RLS和双浏览器隔离在源码与导出证据层面成立。
+  - 未发现自动发布能力，所有候选仍是内部非生产内容。
+  - exit137、未知计费和空回归文件均被保留，失败记录真实。
+  - 300、120、86保持不变，全部 readiness 继续为 false。
+readiness_flags:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  production_servable: false
+  generation_eligible: false
+  generation_allowed: false
+  release_ready: false
+  production_ready: false
+signed_at: "2026-07-18T08:04:06-07:00"
+signature_basis: "review_id|identity|session|run|candidate_commit|candidate_tree|score|verdict|hard_veto|blocker_ids|signed_at"
+signature_sha256: 4f5eab1acca2723c06e16afd32e5758828e69e2b42bf0662d465ca9cc34907ff

@@ -1,0 +1,75 @@
+task_id: DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002
+review_id: P7R-CONTENT-REVIEW-001
+review_type: CONTENT_NOVICE_SEVEN_FORMATS_AND_CREATIVE_FREEDOM
+review_mode: READ_ONLY_FIXED_SNAPSHOT
+reviewer_identity: "OpenAI Codex / 内容与小白体验独立审查"
+reviewer_session_id: diyu-content-novice-b14a3bf-20260718-s1
+reviewer_run_id: diyu-output-contract-recovery-002-content-review-r1
+independent_from_executor_and_other_reviewer: true
+other_reviewer_accessed: false
+candidate_commit: b14a3bfc2ffe1acdb9b56337f16fc07493e0f374
+candidate_tree: 4a4e3ddf7b75e4a1451571e5640ed513044c7b89
+score: 76
+score_scale: 100
+pass_threshold: 90
+verdict: FAIL
+hard_veto: true
+blocking_items:
+  - id: B1_OFFLINE_DELIVERABLE_MISSING
+    severity: HARD_VETO
+    finding: 门店线下物料没有形成可展示、可选择或可导出的最终候选。
+    required_closure: 在保留失败记录的前提下，形成至少一份真实可用候选并闭合用户操作链。
+  - id: B2_FOUNDER_OVERRIDE_NOT_CLOSED
+    severity: BLOCKER
+    finding: 冻结候选的当前作者提示和当前终结入口仍保留普通正文事实限制。
+    required_closure: 当前作者入口须完整服从 Founder 覆盖裁决，不再把普通正文主张交给旧事实门。
+  - id: B3_LOCAL_REVISION_SURFACE_UNPROVEN
+    severity: BLOCKER
+    finding: 代表性局部修改虽返回成功，但审查证据只保存长度和摘要，无法核对修改前后正文。
+    required_closure: 保留可审的修改前后表面，证明修改是局部且结果可读。
+  - id: B4_SINGLE_VALID_CANDIDATE_CONTRACT_MISMATCH
+    severity: BLOCKER
+    finding: 作者合同仍要求至少两份原始候选，展示提示也固定写成可选第1、2或3份。
+    required_closure: 允许一份完整候选展示，并按实际数量生成选择提示。
+evidence:
+  - "冻结候选提交与树分别为 b14a3bf 和 4a4e3dd；审查期间未修改仓库。"
+  - "短视频、图文、直播内容包、私域沟通内容、培训与门店话术、陈列搭配各形成3份真实远端候选。"
+  - "六类成功候选均留下选择、审核、导出和参考范围回查成功记录。"
+  - "门店线下物料 candidate_count=0，相关选择、审核、导出和回查均为 false。"
+  - "线下回归的桥接进程以137退出，offline_regression.json为空，6700字符模型响应未恢复为候选。"
+  - "成功候选总体具备不同切入和完整成品字段，但跨格式仍反复出现治理式措辞。"
+  - "直播代表样本的自然语言局部修改返回200，但证据未保存修改后的可读正文。"
+  - "当前作者提示仍包含价格、库存、规格、授权、承诺和真实事件不得创意补造的旧限制。"
+  - "当前候选外壳最少要求2份，和 Founder 允许单份候选展示的裁决不一致。"
+product_capability_summary:
+  remotely_complete_formats:
+    - 短视频
+    - 图文
+    - 直播内容包
+    - 私域沟通内容
+    - 培训与门店话术
+    - 陈列搭配
+  remotely_incomplete_formats:
+    - 门店线下物料
+  remote_complete_format_count: 6
+  remote_required_format_count: 7
+  underlying_20_product_profiles_remote_coverage_proven: false
+  production_release_approved: false
+nonblocking_observations:
+  - 六类成功候选的字段总体完整，能够形成脚本、画面、直播环节、渠道文案、培训练习或陈列执行信息。
+  - 推荐与备选标签清楚，并持续提示内部测试、不可直接发布和需要人工确认。
+  - 图文和短视频个别候选共享同一故事主线，批内差异仍可增强。
+  - 门户以长文本展示全部候选并要求手工输入编号，对小白的比较效率一般。
+readiness_flags:
+  candidatepack_ready: false
+  KE_ready: false
+  RAG_ready: false
+  DIFY_ready: false
+  production_servable: false
+  generation_eligible: false
+  generation_allowed: false
+  release_ready: false
+  production_ready: false
+signed_at: "2026-07-18T08:04:06-07:00"
+signature_basis: "review_id|identity|session|run|candidate_commit|candidate_tree|score|verdict|hard_veto|blocker_ids|signed_at"
+signature_sha256: 67fa40fdadb4515d19a577ba1ee35b3f7458748607cefe07d68011f43fe55378

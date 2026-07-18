@@ -1,0 +1,128 @@
+{
+  "schema": "diyu.package7.output_contract_recovery.result.v1",
+  "task_id": "DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002",
+  "state": "STOPPED_INDEPENDENT_REVIEWS_FAILED",
+  "stopped_reason": "Six of seven deliverable formats completed real remote journeys, but the offline-material journey did not produce a reviewable candidate and both independent reviews issued hard vetoes.",
+  "reviewed_candidate_commit": "b14a3bfc2ffe1acdb9b56337f16fc07493e0f374",
+  "reviewed_candidate_tree": "4a4e3ddf7b75e4a1451571e5640ed513044c7b89",
+  "blocking_items": [
+    "REMOTE_OFFLINE_DELIVERABLE_NOT_FINALIZED",
+    "FOUNDER_OVERRIDE_NOT_FULLY_CLOSED_IN_CURRENT_AUTHOR_PATH",
+    "SINGLE_CANDIDATE_DISPLAY_CONTRACT_MISMATCH",
+    "FAILED_USER_SURFACE_INTERNAL_RUN_ID",
+    "PROVIDER_COMPLETION_TRANSACTION_RECOVERY_GAP",
+    "FOUNDER_MODEL_CALL_WINDOW_EXHAUSTED"
+  ],
+  "content_product_capability": {
+    "scope_note": "This result proves remote deliverable-format journeys, not remote 20-of-20 content-product coverage.",
+    "remotely_complete_formats": [
+      "短视频",
+      "图文",
+      "直播内容包",
+      "私域沟通内容",
+      "培训与门店话术",
+      "陈列搭配"
+    ],
+    "remotely_incomplete_formats": [
+      "门店线下物料"
+    ],
+    "complete_format_count": 6,
+    "required_format_count": 7,
+    "successful_remote_candidate_count": 18,
+    "offline_remote_candidate_count": 0,
+    "local_contract_support_format_count": 7,
+    "public_topic_option_count": 10,
+    "underlying_content_product_profile_count": 20,
+    "underlying_20_product_profiles_remote_coverage_proven": false,
+    "ordinary_chat_and_ideation_local_regression": "PASS",
+    "selection_review_export_reference_local_regression": "PASS",
+    "representative_remote_natural_language_revision": "PASS_WITH_DIGEST_ONLY_REVIEW_EVIDENCE",
+    "automatic_publish_available": false,
+    "production_use_approved": false
+  },
+  "acceptance": {
+    "P7R-A01": true,
+    "P7R-A02": false,
+    "P7R-A03": false,
+    "P7R-A04": false,
+    "P7R-A05": false,
+    "P7R-A06": true,
+    "P7R-A07": true,
+    "P7R-A08": false,
+    "P7R-A09": false,
+    "P7R-A10": false,
+    "P7R-A11": false,
+    "P7R-A12": false
+  },
+  "acceptance_notes": {
+    "P7R-A02": "One versioned contract exists, but current author and finalizer semantics still conflict with the Founder override.",
+    "P7R-A03": "Six formats completed; offline material did not.",
+    "P7R-A04": "Founder superseded the old prose-evidence gate, but the frozen candidate still contains and calls it.",
+    "P7R-A05": "Historical classes are retained honestly, but the current path still exposes the retired hard-fact class and internal run identifiers.",
+    "P7R-A08": "Internal run identifiers appear in failed user-visible surfaces.",
+    "P7R-A09": "Isolation passed, but internal identifier leakage is non-zero.",
+    "P7R-A10": "The ten-call budget was respected, but the seventh required journey remained incomplete.",
+    "P7R-A11": "Implementation checks passed before final reports; the full current checker correctly rejects this stopped evidence and the public successor file-set check is not green.",
+    "P7R-A12": "Independent review scores are 76 and 68, both with hard vetoes."
+  },
+  "independent_reviews": [
+    {
+      "review_id": "P7R-CONTENT-REVIEW-001",
+      "path": "review/content_novice_review.v1.yaml",
+      "score": 76,
+      "verdict": "FAIL",
+      "hard_veto": true
+    },
+    {
+      "review_id": "P7R-TRUST-REVIEW-001",
+      "path": "review/trust_isolation_review.v1.yaml",
+      "score": 68,
+      "verdict": "FAIL",
+      "hard_veto": true
+    }
+  ],
+  "model_call_audit": {
+    "new_content_model_call_count": 10,
+    "authorized_additional_call_limit": 10,
+    "final_cumulative_upper_bound": 207,
+    "new_cost_rmb_conservative_ceiling": "5",
+    "content_quality_reroll_count": 0,
+    "additional_calls_allowed_without_new_authorization": 0
+  },
+  "checks": {
+    "package7_unit_tests": "PASS_32_OF_32_AT_FROZEN_CANDIDATE",
+    "package7_current_checker_implementation": "PASS",
+    "package7_current_selftest": "PASS_10_NEGATIVE_CASES",
+    "package7_optimized_fail_closed": "PASS_EXIT_2",
+    "package2_regression": "PASS",
+    "package6_regression": "PASS",
+    "public_foundation_checker": "FAIL_EXPECTED_INCOMPLETE_SUCCESSOR_REPORT_FILE_SET",
+    "full_recovery_checker": "FAIL_EXPECTED_REMOTE_OFFLINE_CANDIDATE_COUNT_ZERO_AND_REVIEW_VETOES",
+    "secret_scan": "PASS_NO_LEAKS_AT_FROZEN_CANDIDATE",
+    "remote_checker_compatibility": "NOT_RUN_FOR_STOPPED_FINALIZATION_COMMIT"
+  },
+  "core_numbers": {
+    "300": 300,
+    "120": 120,
+    "86": 86,
+    "changed": false
+  },
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "generator_qualified": false,
+    "retrieval_ready": false,
+    "runtime_ready": false,
+    "release_ready": false,
+    "production_ready": false
+  },
+  "merge_allowed": false,
+  "package10_started": false,
+  "next_action": "GUARDIAN_AND_ROOT_REVIEW_OF_STOPPED_CANDIDATE",
+  "implementation_repairs_paused_by_founder": true
+}
