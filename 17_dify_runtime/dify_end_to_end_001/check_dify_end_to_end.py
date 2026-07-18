@@ -1991,6 +1991,7 @@ def validate_recovery_source_contract(root: Path) -> None:
             "runtime_models.py",
             "security.py",
             "bridge_app.py",
+            "portal.js",
             "deploy_remote.sh",
             "dify_chat.py",
             "test_dify_end_to_end.py",
@@ -2054,8 +2055,15 @@ def validate_recovery_source_contract(root: Path) -> None:
     models = sources["runtime_models.py"]
     security = sources["security.py"]
     bridge = sources["bridge_app.py"]
+    portal = sources["portal.js"]
     deploy = sources["deploy_remote.sh"]
     chat = sources["dify_chat.py"]
+    for marker in (
+        'value === "门店线下物料"',
+        "（暂未开放）",
+        "option.disabled = temporarilyUnavailable",
+    ):
+        require(marker in portal, f"E_RECOVERY_OFFLINE_ENTRY_DISABLED:{marker}")
     for marker in (
         "runtime_browser_session",
         "start_browser_session",

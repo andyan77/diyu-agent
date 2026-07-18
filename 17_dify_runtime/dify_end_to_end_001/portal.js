@@ -31,7 +31,15 @@ function fillSelect(name, values, includeBlank = false) {
   const select = taskForm.elements[name];
   select.replaceChildren();
   if (includeBlank) select.add(new Option("由系统建议", ""));
-  for (const value of values) select.add(new Option(value, value));
+  for (const value of values) {
+    const temporarilyUnavailable = name === "content_format" && value === "门店线下物料";
+    const option = new Option(
+      temporarilyUnavailable ? `${value}（暂未开放）` : value,
+      value
+    );
+    option.disabled = temporarilyUnavailable;
+    select.add(option);
+  }
 }
 
 function updateRoleAndColumn() {

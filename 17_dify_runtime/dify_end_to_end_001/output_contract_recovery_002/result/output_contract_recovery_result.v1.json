@@ -1,109 +1,105 @@
 {
   "schema": "diyu.package7.output_contract_recovery.result.v1",
   "task_id": "DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002",
-  "state": "STOPPED_MODEL_CALL_LIMIT_EXCEEDED",
-  "stopped_reason": "The implementation and deterministic recovery checks are closed, but the task ledger contains 50 new calls against an authorized limit of 40. The offline-material remote positive remains incomplete, and no new independent reviews may be claimed for this later candidate.",
-  "reviewed_candidate_commit": "b7d61ef086e5d1ac618f4660117f7b161e387b25",
-  "reviewed_candidate_tree": "7c80feeb4e2c3365f9817d5b996c59b7b4def552",
+  "state": "STOPPED_INDEPENDENT_REVIEWS_FAILED",
+  "stopped_reason": "Six of seven deliverable formats completed real remote journeys, but the offline-material journey did not produce a reviewable candidate and both independent reviews issued hard vetoes.",
+  "reviewed_candidate_commit": "b14a3bfc2ffe1acdb9b56337f16fc07493e0f374",
+  "reviewed_candidate_tree": "4a4e3ddf7b75e4a1451571e5640ed513044c7b89",
   "blocking_items": [
-    "P7R-A03_OFFLINE_FORMAT_NOT_FINALIZED",
-    "P7R-A10_MODEL_CALL_LIMIT_EXCEEDED",
-    "P7R-A12_CURRENT_CANDIDATE_NOT_REVIEWED"
+    "REMOTE_OFFLINE_DELIVERABLE_NOT_FINALIZED",
+    "FOUNDER_OVERRIDE_NOT_FULLY_CLOSED_IN_CURRENT_AUTHOR_PATH",
+    "SINGLE_CANDIDATE_DISPLAY_CONTRACT_MISMATCH",
+    "FAILED_USER_SURFACE_INTERNAL_RUN_ID",
+    "PROVIDER_COMPLETION_TRANSACTION_RECOVERY_GAP",
+    "FOUNDER_MODEL_CALL_WINDOW_EXHAUSTED"
   ],
-  "completed_repairs": {
-    "single_light_author_contract": true,
-    "explicit_hard_fact_only_server_validation": true,
-    "ordinary_creative_surfaces_remain_free": true,
-    "two_to_three_candidate_success_contract": true,
-    "internal_run_id_removed_from_user_visible_failures": true,
-    "paid_provider_response_staged_before_completion": true,
-    "staged_response_replayed_before_new_model_call": true,
-    "provider_recovery_model_call_increment": 0,
-    "credential_rotated_after_accidental_tool_log_exposure": true
-  },
-  "remote_probe_summary": {
-    "successful_format_count": 6,
+  "content_product_capability": {
+    "scope_note": "This result proves remote deliverable-format journeys, not remote 20-of-20 content-product coverage.",
+    "remotely_complete_formats": [
+      "短视频",
+      "图文",
+      "直播内容包",
+      "私域沟通内容",
+      "培训与门店话术",
+      "陈列搭配"
+    ],
+    "remotely_incomplete_formats": [
+      "门店线下物料"
+    ],
+    "complete_format_count": 6,
     "required_format_count": 7,
-    "blocked_format": "门店线下物料",
-    "successful_candidate_count": 18,
-    "existing_dify_app_count": 1,
-    "existing_dataset_count": 1,
-    "existing_runtime_database_count": 1,
-    "existing_bridge_count": 1,
-    "parallel_object_count": 0,
-    "bridge_health": "HEALTHY_SIMULATION_ONLY_NOT_PRODUCTION",
-    "post_repair_model_call_increment": 0
+    "successful_remote_candidate_count": 18,
+    "offline_remote_candidate_count": 0,
+    "local_contract_support_format_count": 7,
+    "public_topic_option_count": 10,
+    "underlying_content_product_profile_count": 20,
+    "underlying_20_product_profiles_remote_coverage_proven": false,
+    "ordinary_chat_and_ideation_local_regression": "PASS",
+    "selection_review_export_reference_local_regression": "PASS",
+    "representative_remote_natural_language_revision": "PASS_WITH_DIGEST_ONLY_REVIEW_EVIDENCE",
+    "automatic_publish_available": false,
+    "production_use_approved": false
   },
   "acceptance": {
     "P7R-A01": true,
-    "P7R-A02": true,
+    "P7R-A02": false,
     "P7R-A03": false,
-    "P7R-A04": true,
-    "P7R-A05": true,
+    "P7R-A04": false,
+    "P7R-A05": false,
     "P7R-A06": true,
     "P7R-A07": true,
-    "P7R-A08": true,
-    "P7R-A09": true,
+    "P7R-A08": false,
+    "P7R-A09": false,
     "P7R-A10": false,
-    "P7R-A11": true,
+    "P7R-A11": false,
     "P7R-A12": false
   },
   "acceptance_notes": {
-    "P7R-A03": "Six deliverable formats completed real remote journeys; the offline-material journey retained its first failure and did not produce a final candidate before the call limit was exceeded.",
-    "P7R-A05": "All five result classes remain distinct. Internal run IDs remain queryable in structured records but are absent from user-visible failure text.",
-    "P7R-A10": "The content-free ledger audit proves 50 new calls and an upper bound of 50 against an authorized limit of 40; the excess 10 are retained and no further model call was made after stop.",
-    "P7R-A12": "The preserved 76/68 reviews bind an earlier candidate and remain failed historical evidence. They are not reused as reviews of b7d61ef; current independent review count is zero."
+    "P7R-A02": "One versioned contract exists, but current author and finalizer semantics still conflict with the Founder override.",
+    "P7R-A03": "Six formats completed; offline material did not.",
+    "P7R-A04": "Founder superseded the old prose-evidence gate, but the frozen candidate still contains and calls it.",
+    "P7R-A05": "Historical classes are retained honestly, but the current path still exposes the retired hard-fact class and internal run identifiers.",
+    "P7R-A08": "Internal run identifiers appear in failed user-visible surfaces.",
+    "P7R-A09": "Isolation passed, but internal identifier leakage is non-zero.",
+    "P7R-A10": "The ten-call budget was respected, but the seventh required journey remained incomplete.",
+    "P7R-A11": "Implementation checks passed before final reports; the full current checker correctly rejects this stopped evidence and the public successor file-set check is not green.",
+    "P7R-A12": "Independent review scores are 76 and 68, both with hard vetoes."
   },
-  "independent_reviews": [],
-  "prior_failed_reviews": [
+  "independent_reviews": [
     {
       "review_id": "P7R-CONTENT-REVIEW-001",
       "path": "review/content_novice_review.v1.yaml",
-      "candidate_commit": "b14a3bfc2ffe1acdb9b56337f16fc07493e0f374",
       "score": 76,
       "verdict": "FAIL",
-      "status": "HISTORICAL_FAILED_REVIEW_NOT_CURRENT_APPROVAL"
+      "hard_veto": true
     },
     {
       "review_id": "P7R-TRUST-REVIEW-001",
       "path": "review/trust_isolation_review.v1.yaml",
-      "candidate_commit": "b14a3bfc2ffe1acdb9b56337f16fc07493e0f374",
       "score": 68,
       "verdict": "FAIL",
-      "status": "HISTORICAL_FAILED_REVIEW_NOT_CURRENT_APPROVAL"
+      "hard_veto": true
     }
   ],
   "model_call_audit": {
-    "baseline_invocation_count": 153,
-    "baseline_cumulative_model_call_upper_bound": 157,
-    "authorized_new_content_model_call_limit": 40,
-    "new_content_model_call_count": 50,
-    "new_model_call_upper_bound": 50,
-    "final_invocation_count": 203,
-    "final_cumulative_model_call_upper_bound": 207,
-    "excess_model_call_upper_bound": 10,
-    "model_call_limit_exceeded": true,
-    "known_new_cost_rmb": "0.239319",
-    "known_new_token_count": 158309,
-    "failed_or_unknown_billing_count": 10,
+    "new_content_model_call_count": 10,
+    "authorized_additional_call_limit": 10,
+    "final_cumulative_upper_bound": 207,
+    "new_cost_rmb_conservative_ceiling": "5",
     "content_quality_reroll_count": 0,
-    "ledger_digest": "2f05970d0c30ddd49ae1347933e62d512aaa28f780140b49c3eb9c3084355a3c",
-    "authorized_window_ledger_digest": "8b1816f268f79861757e511e6c0c1de7a97c1512079e77899a9ab0e13cc1afab",
-    "excess_window_ledger_digest": "226bec5324b320cb469ea2ddeec3f124c801fe3e9bcf71249398ec56649c013e",
-    "additional_calls_allowed": 0
+    "additional_calls_allowed_without_new_authorization": 0
   },
   "checks": {
-    "package7_unit_tests": "PASS_35_OF_35_LOCAL_AND_REMOTE",
-    "package7_current_checker": "PROVEN_BY_CURRENT_CHECK_RUN",
-    "package7_current_selftest": "PASS_13_NEGATIVE_CASES_LOCAL_AND_REMOTE",
-    "package7_optimized_fail_closed": "PASS_EXIT_2_LOCAL_AND_REMOTE",
-    "historical_package7_checker": "PASS_LIVE_AND_SELFTEST_23",
-    "package2_regression": "PASS_48_TESTS_CHECKER_AND_SELFTEST_8",
-    "package6_regression": "PASS_16_TESTS_CHECKER_AND_SELFTEST",
-    "public_foundation_checker": "PASS_LIVE_AND_SELFTEST_90",
-    "gate1_current_checker": "PASS_LIVE_AND_FULL_SELFTEST",
-    "secret_scan": "PASS_304_COMMITS_NO_LEAKS",
-    "remote_checker_compatibility": "PENDING_FINAL_BRANCH_CI"
+    "package7_unit_tests": "PASS_32_OF_32_AT_FROZEN_CANDIDATE",
+    "package7_current_checker_implementation": "PASS",
+    "package7_current_selftest": "PASS_10_NEGATIVE_CASES",
+    "package7_optimized_fail_closed": "PASS_EXIT_2",
+    "package2_regression": "PASS",
+    "package6_regression": "PASS",
+    "public_foundation_checker": "FAIL_EXPECTED_INCOMPLETE_SUCCESSOR_REPORT_FILE_SET",
+    "full_recovery_checker": "FAIL_EXPECTED_REMOTE_OFFLINE_CANDIDATE_COUNT_ZERO_AND_REVIEW_VETOES",
+    "secret_scan": "PASS_NO_LEAKS_AT_FROZEN_CANDIDATE",
+    "remote_checker_compatibility": "NOT_RUN_FOR_STOPPED_FINALIZATION_COMMIT"
   },
   "core_numbers": {
     "300": 300,
@@ -127,5 +123,6 @@
   },
   "merge_allowed": false,
   "package10_started": false,
-  "next_action": "ACKNOWLEDGE_STOP_AND_REQUIRE_NEW_EXPLICIT_MODEL_CALL_AUTHORIZATION_BEFORE_ANY_NEW_REMOTE_PROBE"
+  "next_action": "GUARDIAN_AND_ROOT_REVIEW_OF_STOPPED_CANDIDATE",
+  "implementation_repairs_paused_by_founder": true
 }

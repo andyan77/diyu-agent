@@ -535,6 +535,10 @@ class Package7RecoveryTests(unittest.TestCase):
     ) -> None:
         options = self.runtime.portal_options(self.principal_id)
         self.assertEqual(options["content_formats"], list(CONTENT_FORMATS))
+        portal_javascript = (PACKAGE_ROOT / "portal.js").read_text(encoding="utf-8")
+        self.assertIn('value === "门店线下物料"', portal_javascript)
+        self.assertIn("（暂未开放）", portal_javascript)
+        self.assertIn("option.disabled = temporarilyUnavailable", portal_javascript)
         self.assertTrue(
             {
                 "品牌和企业故事",
