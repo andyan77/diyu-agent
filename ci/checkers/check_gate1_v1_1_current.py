@@ -111,7 +111,7 @@ PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
     "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
 )
 PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
-    "6f802297d7fe182e76699f90feab5786a0d0ece04d1cf49c8fc5153380dd8e01"
+    "c777c8e39e75062e7eacc81fd03fbcffe9a83b47159e4ff729d157ce5a2c1155"
 )
 PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES = (
     "python3 ci/checkers/check_product_foundation.py",
@@ -192,6 +192,10 @@ DOWNSTREAM_REFERENCE_SAFE_COMMITS = {
         "18_deployment/hosted_operations_001/"
         "check_hosted_operations.py"
     ): "e4ca0b44d5f5b64a8c7840986b716abb3be4f88d",
+    Path(
+        "19_cloud_cutover/ecs_migration_001/"
+        "check_ecs_cutover.py"
+    ): "5c8011c3cbe99516ff865388eaca73fe2ba32cd8",
 }
 DOWNSTREAM_NORMAL_WORKFLOW_STEP = "Run reserved downstream package checks"
 DOWNSTREAM_OPTIMIZED_WORKFLOW_STEP = (

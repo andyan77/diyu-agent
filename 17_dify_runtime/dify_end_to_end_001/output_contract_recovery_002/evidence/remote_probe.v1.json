@@ -1,7 +1,12 @@
 {
   "schema": "diyu.package7.output_contract_recovery.remote_probe.v1",
   "task_id": "DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002",
-  "founder_override_sha256": "eb543d9d97e8685b866cf3b0432478a610773fd92da5f7dd0e4bb3ff00b0eac7",
+  "state": "STOPPED_MODEL_CALL_LIMIT_EXCEEDED",
+  "blocking_items": [
+    "P7R-A03_OFFLINE_FORMAT_NOT_FINALIZED",
+    "P7R-A10_MODEL_CALL_LIMIT_EXCEEDED",
+    "P7R-A12_CURRENT_CANDIDATE_NOT_REVIEWED"
+  ],
   "existing_objects": {
     "dify_app_count": 1,
     "dataset_count": 1,
@@ -23,26 +28,39 @@
     "rollback_test_pass": true,
     "post_rollback_redeploy_pass": true,
     "final_service_health": "healthy",
+    "database_credential_rotated_after_log_exposure": true,
+    "credential_rotation_secret_output_count": 0,
+    "model_call_hard_cap_frozen_at_current_upper_bound": 207,
     "simulation_only": true,
     "production_ready": false
   },
   "model_call_audit": {
-    "new_content_model_call_count": 10,
-    "founder_override_baseline_cumulative_upper_bound": 197,
-    "founder_override_additional_call_limit": 10,
-    "final_cumulative_upper_bound": 207,
-    "new_cost_rmb": "5",
-    "new_cost_value_kind": "CONSERVATIVE_AUTHORIZED_CEILING_NOT_EXACT_SPEND",
-    "exact_cost_unavailable_reason": "The tenth bridge process exited before the application ledger received the completed provider response metadata.",
+    "baseline_invocation_count": 153,
+    "baseline_cumulative_model_call_upper_bound": 157,
+    "authorized_new_content_model_call_limit": 40,
+    "new_content_model_call_count": 50,
+    "new_model_call_upper_bound": 50,
+    "final_invocation_count": 203,
+    "final_cumulative_model_call_upper_bound": 207,
+    "excess_model_call_upper_bound": 10,
+    "model_call_limit_exceeded": true,
+    "known_new_cost_rmb": "0.239319",
+    "unknown_billing_call_count": 10,
+    "known_new_token_count": 158309,
+    "cost_limit_pass_claimed": false,
     "content_quality_reroll_count": 0,
-    "defect_regression_replay_count": 2,
+    "deterministic_replay_count": 30,
     "failed_calls_retained": true,
-    "failed_or_unknown_billing_increment": 1,
-    "ledger_digest": "94e37bbdd9bfb56a4c0e560710160e2d9a590c08558bb2cefd8e3f52367ce89b"
+    "failed_or_unknown_billing_increment": 10,
+    "ledger_digest": "2f05970d0c30ddd49ae1347933e62d512aaa28f780140b49c3eb9c3084355a3c",
+    "authorized_window_ledger_digest": "8b1816f268f79861757e511e6c0c1de7a97c1512079e77899a9ab0e13cc1afab",
+    "excess_window_ledger_digest": "226bec5324b320cb469ea2ddeec3f124c801fe3e9bcf71249398ec56649c013e",
+    "content_or_prompt_body_included": false
   },
   "format_probes": [
     {
       "content_format": "短视频",
+      "probe_state": "PASS",
       "candidate_count": 3,
       "candidate_option_warning": null,
       "first_output_retained": true,
@@ -57,6 +75,7 @@
     },
     {
       "content_format": "图文",
+      "probe_state": "PASS",
       "candidate_count": 3,
       "candidate_option_warning": null,
       "first_output_retained": true,
@@ -71,6 +90,7 @@
     },
     {
       "content_format": "直播内容包",
+      "probe_state": "PASS",
       "candidate_count": 3,
       "candidate_option_warning": null,
       "first_output_retained": true,
@@ -85,6 +105,7 @@
     },
     {
       "content_format": "私域沟通内容",
+      "probe_state": "PASS",
       "candidate_count": 3,
       "candidate_option_warning": null,
       "first_output_retained": true,
@@ -99,6 +120,7 @@
     },
     {
       "content_format": "门店线下物料",
+      "probe_state": "BLOCKED",
       "candidate_count": 0,
       "candidate_option_warning": null,
       "first_output_retained": true,
@@ -114,6 +136,7 @@
     },
     {
       "content_format": "培训与门店话术",
+      "probe_state": "PASS",
       "candidate_count": 3,
       "candidate_option_warning": null,
       "first_output_retained": true,
@@ -128,6 +151,7 @@
     },
     {
       "content_format": "陈列搭配",
+      "probe_state": "PASS",
       "candidate_count": 3,
       "candidate_option_warning": null,
       "first_output_retained": true,
@@ -153,10 +177,10 @@
     {
       "case": "offline_initial",
       "result_class": "HARD_FACT_REFERENCE_ERROR",
-      "historical_gate_only": true,
+      "historical_gate_diagnosis": true,
       "private_evidence_sha256": "34ea43c0dd1647c5edb0a9e5f69cd56c5ffc819d97c1e8ef1a17459e5afc6cd9",
-      "repair": "CURRENT_FACT_GATE_REMOVED",
-      "regression_result": "SYSTEM_OR_PROVIDER_ERROR"
+      "repair": "REPLACED_BROAD_GATE_WITH_EXPLICIT_FACT_ONLY_CLASSIFIER",
+      "regression_result": "SYSTEM_OR_PROVIDER_ERROR_BEFORE_FINAL_OUTPUT"
     },
     {
       "case": "article_revision_transport",

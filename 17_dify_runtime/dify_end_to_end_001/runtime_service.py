@@ -1406,18 +1406,27 @@ class Package7Runtime:
                 account_id=account_id,
                 browser_session_id=browser_session_id,
             )
-            if run is None or run.first_output_preserved:
-                raise RuntimeContractError("Unknown or already completed run")
             try:
                 raw_bytes = base64.b64decode(model_output_b64, validate=True)
             except ValueError as exc:
                 raise RuntimeContractError("Model output transport is invalid") from exc
             raw_output_digest = hashlib.sha256(raw_bytes).hexdigest()
-            self.repository.receive_first_output(
-                run_id,
-                output_digest=raw_output_digest,
-                output_size_bytes=len(raw_bytes),
+            if run is None:
+                raise RuntimeContractError("Unknown or already completed run")
+            replaying_received_output = (
+                run.first_output_preserved
+                and run.state == "FIRST_OUTPUT_RECEIVED"
+                and run.model_output_digest == raw_output_digest
+                and isinstance(run.payload.get("provider_response_staging"), dict)
             )
+            if run.first_output_preserved and not replaying_received_output:
+                raise RuntimeContractError("Unknown or already completed run")
+            if not replaying_received_output:
+                self.repository.receive_first_output(
+                    run_id,
+                    output_digest=raw_output_digest,
+                    output_size_bytes=len(raw_bytes),
+                )
             try:
                 return self._finalize_model_output_scoped(
                     run,
@@ -1633,6 +1642,7 @@ class Package7Runtime:
             task_brief = {}
         expected_format = str(task_brief.get("content_format", ""))
         fact_refs, material_refs = self._server_reference_scope(materials, task_brief)
+        source_corpus = self._source_corpus_by_ref(materials)
         plan_record = self.adapter.expression_service.store.get(run.plan_ref)
         if plan_record is None:
             raise RuntimeContractError("Candidate plan is unavailable")
@@ -1668,6 +1678,21 @@ class Package7Runtime:
                 surfaces,
                 literal_prohibitions,
             )
+            fact_bindings, fact_failures = self._server_fact_resolution(
+                surfaces,
+                classification_surfaces=surfaces,
+                source_corpus=source_corpus,
+            )
+            if fact_failures:
+                candidate_failures.append(
+                    {
+                        "candidate_ordinal": ordinal,
+                        "error_type": "HARD_FACT_REFERENCE_ERROR",
+                        "error_count": len(fact_failures),
+                        "error_locations": fact_failures,
+                    }
+                )
+                continue
             sensitive_failures = self._server_sensitive_surface_failures(surfaces)
             if sensitive_failures:
                 candidate_failures.append(
@@ -1686,7 +1711,7 @@ class Package7Runtime:
                 "creative_difference": candidate.creative_difference,
                 "difference_label": candidate.creative_difference,
                 "candidate_user_visible_surfaces": surfaces,
-                "claim_bindings": [],
+                "claim_bindings": fact_bindings,
                 "author_declared_claim_bindings": [],
                 "used_fact_refs": list(fact_refs),
                 "used_material_refs": list(material_refs),
@@ -1696,7 +1721,7 @@ class Package7Runtime:
                     "used_material_count": len(material_refs),
                     "scope_and_authorization_checked": True,
                     "machine_proves_every_sentence": False,
-                    "server_bound_explicit_fact_count": 0,
+                    "server_bound_explicit_fact_count": len(fact_bindings),
                     "semantic_fact_review": "待人工确认",
                     "publishable": False,
                 },
@@ -1741,8 +1766,15 @@ class Package7Runtime:
             evidence_panel["similarity_review_hints"] = [
                 row for row in similarity_hints if ordinal in row["candidate_ordinals"]
             ]
-        if not accepted:
-            result_class = "MODEL_OUTPUT_CONTRACT_ERROR"
+        if len(accepted) < 2:
+            result_class = (
+                "HARD_FACT_REFERENCE_ERROR"
+                if any(
+                    row.get("error_type") == "HARD_FACT_REFERENCE_ERROR"
+                    for row in candidate_failures
+                )
+                else "MODEL_OUTPUT_CONTRACT_ERROR"
+            )
             self.repository.preserve_first_output(
                 run.run_id,
                 output_digest,
@@ -1752,13 +1784,13 @@ class Package7Runtime:
                     "failure_stage": "CANDIDATE_VALIDATION",
                     "candidate_failures": candidate_failures,
                     "accepted_candidate_count": len(accepted),
+                    "failure_reason": "INSUFFICIENT_SAFE_CANDIDATES",
                     "original_envelope": copy.deepcopy(original_envelope),
                     "run_id": run.run_id,
                     "first_output_preserved": True,
                 },
             )
             return self._failure_result(result_class, run.run_id)
-        candidate_option_warning = "可选方案不足" if len(accepted) == 1 else None
         self.repository.save_candidate_set(
             run_id=run.run_id,
             account_id=run.account_id,
@@ -1774,7 +1806,7 @@ class Package7Runtime:
                 "result_class": "SUCCESS",
                 "candidate_failures": candidate_failures,
                 "accepted_candidate_count": len(accepted),
-                "candidate_option_warning": candidate_option_warning,
+                "candidate_option_warning": None,
                 "model_wrapper_normalization": normalization,
                 "similarity_review_hints": similarity_hints,
                 "first_output_preserved": True,
@@ -1784,11 +1816,8 @@ class Package7Runtime:
             "response_kind": "DIRECT",
             "result_class": "SUCCESS",
             "run_id": run.run_id,
-            "candidate_option_warning": candidate_option_warning,
-            "user_visible_text": (
-                ("可选方案不足\n\n" if candidate_option_warning else "")
-                + self._render_candidates(accepted)
-            ),
+            "candidate_option_warning": None,
+            "user_visible_text": self._render_candidates(accepted),
         }
 
     @staticmethod
@@ -2722,8 +2751,6 @@ class Package7Runtime:
             "SYSTEM_OR_PROVIDER_ERROR": "当前系统或模型服务未完成处理，请稍后重试或由系统维护人员处理。",
         }
         message = messages.get(result_class, messages["SYSTEM_OR_PROVIDER_ERROR"])
-        if run_id is not None:
-            message = f"{message}\n运行记录：{run_id}"
         return {
             "response_kind": "DIRECT",
             "result_class": result_class,

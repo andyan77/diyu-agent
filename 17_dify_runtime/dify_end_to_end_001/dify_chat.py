@@ -58,6 +58,7 @@ class DifyChatClient:
         query: str,
         inputs: JsonObject,
         reuse_conversation: bool = True,
+        recovery_run_id: str | None = None,
     ) -> JsonObject:
         self.repository.reserve_dify_invocation(
             invocation_id=invocation_id,
@@ -120,11 +121,23 @@ class DifyChatClient:
         if not isinstance(usage, dict):
             usage = {}
         public_result = {"answer": value["answer"], "usage": usage}
+        response_digest = digest_object(public_result)
+        if recovery_run_id is not None:
+            self.repository.stage_dify_response(
+                invocation_id,
+                run_id=recovery_run_id,
+                account_id=conversation_scope,
+                response_payload=public_result,
+                response_digest=response_digest,
+                dify_user_key=effective_user_key,
+                conversation_id=response_conversation_id,
+                persist_conversation=reuse_conversation,
+            )
         self.repository.complete_dify_invocation(
             invocation_id,
             account_id=conversation_scope,
             usage=usage,
-            response_digest=digest_object(public_result),
+            response_digest=response_digest,
             dify_user_key=effective_user_key,
             conversation_id=response_conversation_id,
             persist_conversation=reuse_conversation,

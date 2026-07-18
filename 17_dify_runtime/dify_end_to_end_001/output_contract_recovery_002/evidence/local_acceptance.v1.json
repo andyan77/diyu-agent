@@ -13,13 +13,14 @@
   ],
   "public_topic_count": 10,
   "unit_tests": {
-    "count": 32,
+    "count": 35,
     "pass": true
   },
   "action_card_by_result_class": {
     "MATERIAL_GAP": true,
     "AUTHORIZATION_OR_SCOPE_BLOCK": false,
     "MODEL_OUTPUT_CONTRACT_ERROR": false,
+    "HARD_FACT_REFERENCE_ERROR": false,
     "SYSTEM_OR_PROVIDER_ERROR": false
   },
   "single_bad_candidate_preserves_two_safe_siblings": true,
@@ -27,8 +28,12 @@
   "anonymous_daily_scene_allowed": true,
   "future_shooting_scene_allowed": true,
   "similarity_is_review_hint_only": true,
-  "creative_fact_claims_runtime_allowed": true,
+  "ordinary_creative_surfaces_do_not_require_fact_binding": true,
+  "explicit_hard_fact_claims_require_server_sources": true,
   "internal_and_sensitive_reference_leakage_blocked": true,
+  "failed_user_surface_internal_run_id_free": true,
+  "paid_provider_response_staged_before_completion": true,
+  "staged_response_recovery_new_model_call_count": 0,
   "concurrent_budget_reservation_atomic": true,
   "managed_migration_transaction_and_rollback_declared": true,
   "legacy_contract_replay_read_only": true,

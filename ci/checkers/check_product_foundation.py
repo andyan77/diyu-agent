@@ -124,6 +124,9 @@ REFERENCE_SAFE_SUCCESSOR_COMMITS = {
     Path(
         "18_deployment/hosted_operations_001/check_hosted_operations.py"
     ): "e4ca0b44d5f5b64a8c7840986b716abb3be4f88d",
+    Path(
+        "19_cloud_cutover/ecs_migration_001/check_ecs_cutover.py"
+    ): "5c8011c3cbe99516ff865388eaca73fe2ba32cd8",
 }
 REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
     Path("17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py"): {
@@ -135,6 +138,7 @@ REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
         Path("17_dify_runtime/dify_end_to_end_001/content_capability_mapping.v1.yaml"),
         Path("17_dify_runtime/dify_end_to_end_001/contracts.py"),
         Path("17_dify_runtime/dify_end_to_end_001/deploy_remote.sh"),
+        Path("17_dify_runtime/dify_end_to_end_001/dify_app.v1.yaml"),
         Path("17_dify_runtime/dify_end_to_end_001/dify_chat.py"),
         Path("17_dify_runtime/dify_end_to_end_001/persistence.py"),
         Path("17_dify_runtime/dify_end_to_end_001/portal.html"),
@@ -167,11 +171,11 @@ REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
         ),
         Path(
             "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
-            "review/content_experience_review.v1.yaml"
+            "review/content_novice_review.v1.yaml"
         ),
         Path(
             "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
-            "review/trust_fact_authorization_runtime_review.v1.yaml"
+            "review/trust_isolation_review.v1.yaml"
         ),
     },
 }

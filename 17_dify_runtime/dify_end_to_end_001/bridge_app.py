@@ -423,6 +423,40 @@ def create_app(
                     f"{browser_session_id}"
                 ).encode("utf-8")
             ).hexdigest()
+            recovered = active_repository.recoverable_staged_model_output(
+                principal_id=principal_id,
+                account_id=conversation_scope,
+            )
+            if recovered is not None:
+                failure_stage = "MODEL_OUTPUT_RECOVERY"
+                run_id = str(recovered["run_id"])
+                active_repository.complete_dify_invocation(
+                    str(recovered["invocation_id"]),
+                    account_id=conversation_scope,
+                    usage=dict(recovered["usage"]),
+                    response_digest=str(recovered["response_digest"]),
+                    dify_user_key=str(recovered["dify_user_key"]),
+                    conversation_id=str(recovered["conversation_id"]),
+                    persist_conversation=bool(recovered["persist_conversation"]),
+                )
+                finalized = active_runtime.finalize_model_output(
+                    run_id,
+                    base64.b64encode(
+                        str(recovered["answer"]).encode("utf-8")
+                    ).decode("ascii"),
+                    trusted_scope=selected_scope,
+                )
+                return jsonify(
+                    {
+                        "answer": str(
+                            finalized.get(
+                                "user_visible_text", "当前结果已恢复并完成处理。"
+                            )
+                        ),
+                        "simulation_only": True,
+                        "publish_allowed": False,
+                    }
+                )
             if runtime_request["operation"] == "确认制作":
                 failure_stage = "CLASSIFIER_INVOKE"
                 classifier = active_chat.invoke(
@@ -500,6 +534,7 @@ def create_app(
                 },
                 reuse_conversation=runtime_request["operation"]
                 in {"普通聊天", "找灵感"},
+                recovery_run_id=run_id,
             )
             failure_stage = "MODEL_OUTPUT_FINALIZE"
             finalized = active_runtime.finalize_model_output(

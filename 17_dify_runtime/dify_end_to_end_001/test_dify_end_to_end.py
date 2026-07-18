@@ -22,7 +22,7 @@ from author_contract import AUTHOR_CONTRACT_VERSION, CANDIDATE_MODELS
 from brand_import import load_simulation_bundle, preflight_brand_bundle
 from bridge_app import create_app, selected_account_database_scope
 from contracts import BridgePrepareRequest
-from dify_chat import DifyChatError
+from dify_chat import DifyChatClient, DifyChatError
 from persistence import (
     RuntimeRepository,
     SqlAlchemyPlanStore,
@@ -30,6 +30,7 @@ from persistence import (
     create_runtime_engine,
     create_session_factory,
     current_trusted_database_scope,
+    digest_object,
     runtime_browser_session,
     trusted_database_scope,
 )
@@ -662,7 +663,7 @@ class Package7RecoveryTests(unittest.TestCase):
             echoed_run.payload["model_wrapper_normalization"],
         )
 
-    def test_negative_prohibition_examples_and_optional_live_speech_are_compatible(
+    def test_negative_prohibitions_are_allowed_but_false_assertions_are_blocked(
         self,
     ) -> None:
         prepared = self.prepare("直播内容包")
@@ -687,21 +688,25 @@ class Package7RecoveryTests(unittest.TestCase):
             "直播内容包",
             envelope=creative_envelope,
         )
-        self.assertEqual(creative_result["result_class"], "SUCCESS")
+        self.assertEqual(
+            creative_result["result_class"],
+            "HARD_FACT_REFERENCE_ERROR",
+        )
+        self.assertFalse(creative_result["action_card"])
 
-    def test_one_valid_candidate_is_shown_with_insufficient_options_warning(
+    def test_one_valid_candidate_is_rejected_as_insufficient_options(
         self,
     ) -> None:
         prepared = self.prepare()
         envelope = candidate_envelope("短视频")
         del envelope["candidates"][0]["deliverable"]
         result = self.finalize(prepared, "短视频", envelope=envelope)
-        self.assertEqual(result["result_class"], "SUCCESS")
-        self.assertEqual(result["candidate_option_warning"], "可选方案不足")
-        self.assertIn("可选方案不足", result["user_visible_text"])
+        self.assertEqual(result["result_class"], "MODEL_OUTPUT_CONTRACT_ERROR")
+        self.assertFalse(result["action_card"])
         run = self.repository.model_run(str(prepared["run_id"]))
         self.assertEqual(run.payload["accepted_candidate_count"], 1)
-        self.assertEqual(run.state, "FIRST_OUTPUT_ACCEPTED")
+        self.assertEqual(run.payload["failure_reason"], "INSUFFICIENT_SAFE_CANDIDATES")
+        self.assertEqual(run.state, "FIRST_OUTPUT_REJECTED")
 
         mismatched = self.prepare("短视频", duration_label="30秒左右")
         mismatched_envelope = candidate_envelope("短视频")
@@ -759,13 +764,13 @@ class Package7RecoveryTests(unittest.TestCase):
             recovered_run.payload["model_wrapper_normalization"],
         )
 
-    def test_ordinary_creative_claims_and_sensitive_surfaces_are_separated(
+    def test_unsupported_explicit_facts_and_sensitive_surfaces_are_blocked(
         self,
     ) -> None:
         for text in (
             "这款商品售价99999元。",
             "当前库存还有12件。",
-            "这件上衣长度120厘米。",
+            "这件上衣长度999厘米。",
             "本账号已经获准代表总部。",
             "公司已经决定发布这项活动。",
             "已有照片可直接使用。",
@@ -776,7 +781,11 @@ class Package7RecoveryTests(unittest.TestCase):
                 for row in envelope["candidates"]:
                     row["title"] = text
                 result = self.finalize(prepared, "短视频", envelope=envelope)
-                self.assertEqual(result["result_class"], "SUCCESS")
+                self.assertEqual(
+                    result["result_class"],
+                    "HARD_FACT_REFERENCE_ERROR",
+                )
+                self.assertFalse(result["action_card"])
 
         for text in (
             "把CP01作为标题展示。",
@@ -806,7 +815,14 @@ class Package7RecoveryTests(unittest.TestCase):
                 "ACCOUNT-DIYU-HQ-OFFICIAL",
             )
         bindings = candidates[0].candidate_payload["claim_bindings"]
-        self.assertEqual(bindings, [])
+        self.assertGreaterEqual(len(bindings), 1)
+        self.assertEqual(bindings[0]["binding_origin"], "SERVER_PATH_CLASSIFICATION")
+        self.assertGreaterEqual(
+            candidates[0].candidate_payload["evidence_panel"][
+                "server_bound_explicit_fact_count"
+            ],
+            1,
+        )
         self.assertFalse(
             candidates[0].candidate_payload["evidence_panel"][
                 "machine_proves_every_sentence"
@@ -841,20 +857,6 @@ class Package7RecoveryTests(unittest.TestCase):
         )
         result = self.finalize(prepared, "短视频", envelope=envelope)
         self.assertEqual(result["result_class"], "SUCCESS")
-
-        for text in (
-            "公司已经决定发布这项活动。",
-            "本账号已经获准代表总部。",
-            "这款商品售价99999元。",
-            "已有照片可直接使用。",
-        ):
-            with self.subTest(text=text):
-                prepared = self.prepare("短视频")
-                envelope = candidate_envelope("短视频")
-                for candidate in envelope["candidates"]:
-                    candidate["body"] = text
-                result = self.finalize(prepared, "短视频", envelope=envelope)
-                self.assertEqual(result["result_class"], "SUCCESS")
 
     def test_similarity_is_a_review_hint_not_a_runtime_rejection(self) -> None:
         prepared = self.prepare()
@@ -984,6 +986,151 @@ class Package7RecoveryTests(unittest.TestCase):
             "SYSTEM_OR_PROVIDER_ERROR",
         )
 
+    def test_paid_author_response_survives_completion_transaction_failure(
+        self,
+    ) -> None:
+        browser_session_id = "BRS-STAGED-RESPONSE"
+        prepared = self.prepare(browser_session_id=browser_session_id)
+        answer = json.dumps(candidate_envelope("短视频"), ensure_ascii=False)
+        response_value = {
+            "answer": answer,
+            "conversation_id": "CONV-STAGED-001",
+            "metadata": {
+                "usage": {
+                    "prompt_tokens": 10,
+                    "completion_tokens": 20,
+                    "total_tokens": 30,
+                    "total_price": "0.01",
+                    "currency": "CNY",
+                }
+            },
+        }
+
+        class Response:
+            def __enter__(self) -> "Response":
+                return self
+
+            def __exit__(self, *_args: object) -> None:
+                return None
+
+            @staticmethod
+            def read(_limit: int) -> bytes:
+                return json.dumps(response_value, ensure_ascii=False).encode("utf-8")
+
+        chat = DifyChatClient(
+            base_url="https://dify.invalid/v1",
+            app_api_token="t" * 32,
+            repository=self.repository,
+            maximum_model_calls=40,
+        )
+        invocation_id = "INV-STAGED-RESPONSE-001"
+        scope = self.runtime_scope(browser_session_id)
+        with (
+            trusted_database_scope(scope),
+            runtime_browser_session(browser_session_id),
+            patch("urllib.request.urlopen", return_value=Response()),
+            patch.object(
+                self.repository,
+                "complete_dify_invocation",
+                side_effect=RuntimeError("simulated completion transaction failure"),
+            ),
+            self.assertRaisesRegex(RuntimeError, "completion transaction failure"),
+        ):
+            chat.invoke(
+                invocation_id=invocation_id,
+                principal_id=self.principal_id,
+                conversation_scope="ACCOUNT-DIYU-HQ-OFFICIAL",
+                user_key="pkg7-staged-response-user",
+                query="执行服务端受控的首次内部内容任务。",
+                inputs={"execution_phase": "AUTHOR"},
+                reuse_conversation=False,
+                recovery_run_id=str(prepared["run_id"]),
+            )
+
+        with (
+            trusted_database_scope(scope),
+            runtime_browser_session(browser_session_id),
+        ):
+            recovered = self.repository.recoverable_staged_model_output(
+                principal_id=self.principal_id,
+                account_id="ACCOUNT-DIYU-HQ-OFFICIAL",
+            )
+            self.assertIsNotNone(recovered)
+            assert recovered is not None
+            self.assertEqual(recovered["answer"], answer)
+            self.repository.complete_dify_invocation(
+                invocation_id,
+                account_id="ACCOUNT-DIYU-HQ-OFFICIAL",
+                usage=dict(recovered["usage"]),
+                response_digest=str(recovered["response_digest"]),
+                dify_user_key=str(recovered["dify_user_key"]),
+                conversation_id=str(recovered["conversation_id"]),
+                persist_conversation=bool(recovered["persist_conversation"]),
+            )
+        finalized = self.scoped_finalize(
+            str(prepared["run_id"]),
+            base64.b64encode(answer.encode("utf-8")).decode("ascii"),
+        )
+        self.assertEqual(finalized["result_class"], "SUCCESS")
+        saved = self.repository.model_run(str(prepared["run_id"]))
+        self.assertEqual(saved.state, "FIRST_OUTPUT_ACCEPTED")
+        self.assertNotIn("provider_response_staging", saved.payload)
+
+    def test_received_staged_response_can_resume_without_a_second_call(self) -> None:
+        browser_session_id = "BRS-RECEIVED-REPLAY"
+        prepared = self.prepare(browser_session_id=browser_session_id)
+        answer = json.dumps(candidate_envelope("短视频"), ensure_ascii=False)
+        answer_digest = hashlib.sha256(answer.encode("utf-8")).hexdigest()
+        usage = {"total_tokens": 30, "total_price": "0.01", "currency": "CNY"}
+        invocation_id = "INV-RECEIVED-REPLAY-001"
+        scope = self.runtime_scope(browser_session_id)
+        with (
+            trusted_database_scope(scope),
+            runtime_browser_session(browser_session_id),
+        ):
+            self.repository.reserve_dify_invocation(
+                invocation_id=invocation_id,
+                principal_id=self.principal_id,
+                model_call_upper_bound=1,
+                maximum_model_calls=40,
+            )
+            public_result = {"answer": answer, "usage": usage}
+            response_digest = digest_object(public_result)
+            self.repository.stage_dify_response(
+                invocation_id,
+                run_id=str(prepared["run_id"]),
+                account_id="ACCOUNT-DIYU-HQ-OFFICIAL",
+                response_payload=public_result,
+                response_digest=response_digest,
+                dify_user_key="pkg7-received-replay-user",
+                conversation_id="CONV-RECEIVED-REPLAY-001",
+                persist_conversation=False,
+            )
+            self.repository.complete_dify_invocation(
+                invocation_id,
+                account_id="ACCOUNT-DIYU-HQ-OFFICIAL",
+                usage=usage,
+                response_digest=response_digest,
+                dify_user_key="pkg7-received-replay-user",
+                conversation_id="CONV-RECEIVED-REPLAY-001",
+                persist_conversation=False,
+            )
+            self.repository.receive_first_output(
+                str(prepared["run_id"]),
+                output_digest=answer_digest,
+                output_size_bytes=len(answer.encode("utf-8")),
+            )
+            recovered = self.repository.recoverable_staged_model_output(
+                principal_id=self.principal_id,
+                account_id="ACCOUNT-DIYU-HQ-OFFICIAL",
+            )
+            self.assertIsNotNone(recovered)
+        finalized = self.scoped_finalize(
+            str(prepared["run_id"]),
+            base64.b64encode(answer.encode("utf-8")).decode("ascii"),
+        )
+        self.assertEqual(finalized["result_class"], "SUCCESS")
+
     def test_concurrent_budget_reservation_cannot_exceed_the_limit(self) -> None:
         barrier = threading.Barrier(2)
         outcomes: list[str] = []
@@ -1034,21 +1181,31 @@ class Package7RecoveryTests(unittest.TestCase):
             deployment,
         )
 
-    def test_four_failure_classes_do_not_impersonate_material_gaps(self) -> None:
+    def test_five_failure_classes_do_not_impersonate_material_gaps(self) -> None:
         material = self.runtime._plain_action("COLLECT_MATERIAL")
         authorization = self.runtime._plain_action("REQUEST_AUTHORIZATION")
         model = self.runtime._failure_result("MODEL_OUTPUT_CONTRACT_ERROR", "RUN-TEST")
+        hard_fact = self.runtime._failure_result(
+            "HARD_FACT_REFERENCE_ERROR", "RUN-TEST"
+        )
         system = self.runtime._failure_result("SYSTEM_OR_PROVIDER_ERROR", "RUN-TEST")
         self.assertEqual(material["result_class"], "MATERIAL_GAP")
         self.assertTrue(material["action_card"])
-        for row in (authorization, model, system):
+        for row in (authorization, model, hard_fact, system):
             self.assertFalse(row["action_card"])
+        for row in (model, hard_fact, system):
+            self.assertEqual(row["run_id"], "RUN-TEST")
+            self.assertNotIn("RUN-TEST", row["user_visible_text"])
         self.assertEqual(
-            {row["result_class"] for row in (material, authorization, model, system)},
+            {
+                row["result_class"]
+                for row in (material, authorization, model, hard_fact, system)
+            },
             {
                 "MATERIAL_GAP",
                 "AUTHORIZATION_OR_SCOPE_BLOCK",
                 "MODEL_OUTPUT_CONTRACT_ERROR",
+                "HARD_FACT_REFERENCE_ERROR",
                 "SYSTEM_OR_PROVIDER_ERROR",
             },
         )
@@ -1236,6 +1393,74 @@ class Package7RecoveryTests(unittest.TestCase):
         ]
         second_prompt = json.loads(author_calls[-1]["inputs"]["author_prompt"])
         self.assertEqual(second_prompt["conversation_context"], [])
+
+    def test_portal_recovers_staged_output_before_any_new_model_call(self) -> None:
+        fake_chat = FakeDifyChatClient()
+        app = create_app(self.runtime, self.repository, fake_chat)
+        app.testing = True
+        client = app.test_client()
+        browser_sessions: list[str] = []
+        start_browser_session = self.repository.start_browser_session
+
+        def capture_browser_session(**kwargs: Any) -> None:
+            browser_sessions.append(str(kwargs["browser_session_id"]))
+            start_browser_session(**kwargs)
+
+        with patch.object(
+            self.repository,
+            "start_browser_session",
+            side_effect=capture_browser_session,
+        ):
+            self.assertEqual(
+                client.post(
+                    "/login",
+                    json={
+                        "username": "package7-test-owner",
+                        "password": "package7-test-password",
+                    },
+                ).status_code,
+                200,
+            )
+        browser_session_id = browser_sessions[0]
+        prepared = self.prepare(browser_session_id=browser_session_id)
+        answer = json.dumps(candidate_envelope("短视频"), ensure_ascii=False)
+        public_result = {"answer": answer, "usage": {"total_tokens": 30}}
+        invocation_id = "INV-PORTAL-RECOVERY-001"
+        with (
+            trusted_database_scope(self.runtime_scope(browser_session_id)),
+            runtime_browser_session(browser_session_id),
+        ):
+            self.repository.reserve_dify_invocation(
+                invocation_id=invocation_id,
+                principal_id=self.principal_id,
+                model_call_upper_bound=1,
+                maximum_model_calls=40,
+            )
+            self.repository.stage_dify_response(
+                invocation_id,
+                run_id=str(prepared["run_id"]),
+                account_id="ACCOUNT-DIYU-HQ-OFFICIAL",
+                response_payload=public_result,
+                response_digest=digest_object(public_result),
+                dify_user_key="pkg7-portal-recovery-user",
+                conversation_id="CONV-PORTAL-RECOVERY-001",
+                persist_conversation=False,
+            )
+        response = client.post(
+            "/v1/portal/chat",
+            json={
+                "account_display_name": "笛语童装",
+                "operation": "随便聊聊",
+                "message": "这次请求必须先恢复已付费结果。",
+            },
+            headers={"X-Diyu-Portal": "same-origin-v1"},
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("方案1", response.get_json()["answer"])
+        self.assertEqual(fake_chat.calls, [])
+        saved = self.repository.model_run(str(prepared["run_id"]))
+        self.assertEqual(saved.state, "FIRST_OUTPUT_ACCEPTED")
+        self.assertNotIn("provider_response_staging", saved.payload)
 
     def test_portal_unauthorized_account_is_not_reported_as_system_failure(
         self,

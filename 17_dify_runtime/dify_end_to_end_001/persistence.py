@@ -827,8 +827,22 @@ class RuntimeRepository:
             row = session.get(
                 RuntimeDifyInvocation, invocation_id, with_for_update=True
             )
-            if row is None or row.state != "RESERVED":
+            if row is None or row.state not in {
+                "RESERVED",
+                "RESPONSE_STAGED",
+                "SUCCEEDED",
+            }:
                 raise ValueError("Unknown or completed Dify invocation")
+            if row.state in {"RESPONSE_STAGED", "SUCCEEDED"} and (
+                row.response_digest != response_digest
+                or row.prompt_tokens != int(usage.get("prompt_tokens", 0))
+                or row.completion_tokens
+                != int(usage.get("completion_tokens", 0))
+                or row.total_tokens != int(usage.get("total_tokens", 0))
+                or row.total_price != str(usage.get("total_price", "0"))
+                or row.currency != str(usage.get("currency", "UNKNOWN"))
+            ):
+                raise ValueError("Staged Dify response identity changed")
             principal = session.get(RuntimePrincipal, row.principal_id)
             account = session.get(RuntimeAccount, account_id)
             if (
@@ -868,6 +882,8 @@ class RuntimeRepository:
                     or binding.conversation_id != conversation_id
                 ):
                     raise ValueError("Dify conversation identity changed unexpectedly")
+            if row.state == "SUCCEEDED":
+                return
             row.state = "SUCCEEDED"
             row.prompt_tokens = int(usage.get("prompt_tokens", 0))
             row.completion_tokens = int(usage.get("completion_tokens", 0))
@@ -876,6 +892,137 @@ class RuntimeRepository:
             row.currency = str(usage.get("currency", "UNKNOWN"))
             row.response_digest = response_digest
             row.updated_at = utc_now()
+
+    def stage_dify_response(
+        self,
+        invocation_id: str,
+        *,
+        run_id: str,
+        account_id: str,
+        response_payload: JsonObject,
+        response_digest: str,
+        dify_user_key: str,
+        conversation_id: str,
+        persist_conversation: bool,
+    ) -> None:
+        """Durably stage one paid author response before downstream processing."""
+
+        answer = response_payload.get("answer")
+        usage = response_payload.get("usage")
+        if not isinstance(answer, str) or not answer or not isinstance(usage, dict):
+            raise ValueError("Dify response staging payload is invalid")
+        if response_digest != digest_object({"answer": answer, "usage": usage}):
+            raise ValueError("Dify response staging digest is invalid")
+        browser_session_id = current_browser_session_id()
+        with self.sessions.begin() as session:
+            invocation = session.get(
+                RuntimeDifyInvocation, invocation_id, with_for_update=True
+            )
+            if invocation is None or invocation.state != "RESERVED":
+                raise ValueError("Unknown or completed Dify response staging target")
+            run = session.scalar(
+                select(RuntimeModelRun)
+                .where(
+                    RuntimeModelRun.run_id == run_id,
+                    RuntimeModelRun.principal_id == invocation.principal_id,
+                    RuntimeModelRun.account_id == account_id,
+                    RuntimeModelRun.browser_session_id == browser_session_id,
+                )
+                .with_for_update()
+            )
+            if run is None:
+                raise ValueError("Unknown or completed Dify response staging target")
+            if run.state != "AWAITING_FIRST_MODEL_OUTPUT" or run.first_output_preserved:
+                raise ValueError("Model run cannot accept a staged provider response")
+            principal = session.get(RuntimePrincipal, invocation.principal_id)
+            account = session.get(RuntimeAccount, account_id)
+            if (
+                principal is None
+                or account is None
+                or account_id not in principal.allowed_account_ids
+            ):
+                raise ValueError("Staged Dify response is outside the principal scope")
+            invocation.state = "RESPONSE_STAGED"
+            invocation.prompt_tokens = int(usage.get("prompt_tokens", 0))
+            invocation.completion_tokens = int(usage.get("completion_tokens", 0))
+            invocation.total_tokens = int(usage.get("total_tokens", 0))
+            invocation.total_price = str(usage.get("total_price", "0"))
+            invocation.currency = str(usage.get("currency", "UNKNOWN"))
+            invocation.response_digest = response_digest
+            invocation.updated_at = utc_now()
+            merged_payload = copy.deepcopy(run.payload)
+            merged_payload["provider_response_staging"] = {
+                "invocation_id": invocation_id,
+                "account_id": account_id,
+                "answer": answer,
+                "answer_digest": hashlib.sha256(answer.encode("utf-8")).hexdigest(),
+                "usage": copy.deepcopy(usage),
+                "response_digest": response_digest,
+                "dify_user_key": dify_user_key,
+                "conversation_id": conversation_id,
+                "persist_conversation": persist_conversation,
+            }
+            run.payload = merged_payload
+            run.state = "PROVIDER_RESPONSE_STAGED"
+            run.updated_at = utc_now()
+
+    def recoverable_staged_model_output(
+        self,
+        *,
+        principal_id: str,
+        account_id: str,
+    ) -> JsonObject | None:
+        """Return the sole scoped paid response awaiting deterministic finalization."""
+
+        browser_session_id = current_browser_session_id()
+        with self.sessions() as session:
+            rows = list(
+                session.scalars(
+                    select(RuntimeModelRun)
+                    .where(
+                        RuntimeModelRun.principal_id == principal_id,
+                        RuntimeModelRun.account_id == account_id,
+                        RuntimeModelRun.browser_session_id == browser_session_id,
+                        RuntimeModelRun.state.in_(
+                            ("PROVIDER_RESPONSE_STAGED", "FIRST_OUTPUT_RECEIVED")
+                        ),
+                    )
+                    .order_by(RuntimeModelRun.created_at)
+                ).all()
+            )
+        recoverable: list[JsonObject] = []
+        for row in rows:
+            staging = row.payload.get("provider_response_staging")
+            if not isinstance(staging, dict):
+                continue
+            answer = staging.get("answer")
+            answer_digest = staging.get("answer_digest")
+            usage = staging.get("usage")
+            response_digest = staging.get("response_digest")
+            if (
+                not isinstance(answer, str)
+                or not answer
+                or answer_digest != hashlib.sha256(answer.encode("utf-8")).hexdigest()
+                or not isinstance(usage, dict)
+                or response_digest
+                != digest_object({"answer": answer, "usage": usage})
+                or staging.get("account_id") != account_id
+                or not all(
+                    isinstance(staging.get(key), str) and staging[key]
+                    for key in (
+                        "invocation_id",
+                        "account_id",
+                        "dify_user_key",
+                        "conversation_id",
+                    )
+                )
+                or not isinstance(staging.get("persist_conversation"), bool)
+            ):
+                raise ValueError("Staged provider response integrity failed")
+            recoverable.append({"run_id": row.run_id, **copy.deepcopy(staging)})
+        if len(recoverable) > 1:
+            raise ValueError("Multiple staged provider responses require operator review")
+        return recoverable[0] if recoverable else None
 
     def dify_conversation(
         self, principal_id: str, account_id: str
@@ -1139,6 +1286,14 @@ class RuntimeRepository:
                 raise KeyError(run_id)
             if row.first_output_preserved:
                 raise ValueError("Content reroll is forbidden for a completed run")
+            if row.state not in {
+                "AWAITING_FIRST_MODEL_OUTPUT",
+                "PROVIDER_RESPONSE_STAGED",
+            }:
+                raise ValueError("Model run is not awaiting first output")
+            staging = row.payload.get("provider_response_staging")
+            if isinstance(staging, dict) and staging.get("answer_digest") != output_digest:
+                raise ValueError("Staged provider response digest changed")
             row.model_output_digest = output_digest
             row.first_output_preserved = True
             row.state = "FIRST_OUTPUT_RECEIVED"
@@ -1146,7 +1301,7 @@ class RuntimeRepository:
             merged_payload["first_output_receipt"] = {
                 "sha256": output_digest,
                 "size_bytes": output_size_bytes,
-                "raw_content_persisted": False,
+                "raw_content_persisted": isinstance(staging, dict),
             }
             row.payload = merged_payload
             row.updated_at = utc_now()
@@ -1241,6 +1396,7 @@ class RuntimeRepository:
             row.first_output_preserved = True
             row.state = state
             merged_payload = copy.deepcopy(row.payload)
+            merged_payload.pop("provider_response_staging", None)
             merged_payload.update(copy.deepcopy(payload))
             row.payload = merged_payload
             row.updated_at = utc_now()
