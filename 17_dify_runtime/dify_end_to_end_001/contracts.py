@@ -7,6 +7,8 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
+from author_contract import ContentFormat
+
 
 def normalize_model_json_text(raw: str) -> tuple[str, str]:
     """Remove only known provider wrappers around one JSON object."""
@@ -25,9 +27,56 @@ def normalize_model_json_text(raw: str) -> tuple[str, str]:
             if normalization == "NONE"
             else f"{normalization}+STRIPPED_JSON_FENCE"
         )
+    if value.startswith("[") and value.endswith("]"):
+        value = '{"candidates":' + value + "}"
+        normalization = (
+            "WRAPPED_TOP_LEVEL_CANDIDATE_ARRAY"
+            if normalization == "NONE"
+            else f"{normalization}+WRAPPED_TOP_LEVEL_CANDIDATE_ARRAY"
+        )
     if not value.startswith("{") or not value.endswith("}"):
         raise ValueError("Model output is not one JSON object")
     return value, normalization
+
+
+def escape_json_string_control_characters(value: str) -> tuple[str, int]:
+    """Escape raw control characters only while inside JSON string literals."""
+
+    replacements = {
+        "\b": "\\b",
+        "\t": "\\t",
+        "\n": "\\n",
+        "\f": "\\f",
+        "\r": "\\r",
+    }
+    output: list[str] = []
+    inside_string = False
+    escaped = False
+    replacement_count = 0
+    for character in value:
+        if not inside_string:
+            output.append(character)
+            if character == '"':
+                inside_string = True
+            continue
+        if escaped:
+            output.append(character)
+            escaped = False
+            continue
+        if character == "\\":
+            output.append(character)
+            escaped = True
+            continue
+        if character == '"':
+            output.append(character)
+            inside_string = False
+            continue
+        if ord(character) < 0x20:
+            output.append(replacements.get(character, f"\\u{ord(character):04x}"))
+            replacement_count += 1
+            continue
+        output.append(character)
+    return "".join(output), replacement_count
 
 
 Operation = Literal[
@@ -55,14 +104,22 @@ PortalOperation = Literal[
     "提交反馈",
 ]
 
-ContentFormat = Literal["短视频", "图文", "陈列搭配"]
 NarrativeArchitecture = Literal[
     "EVIDENCE_FIRST",
     "QUESTION_ANSWER",
     "OBJECT_OR_TIMELINE",
 ]
 ClaimClass = Literal["SOURCE_CLAIM", "CREATIVE_DIRECTION", "DISCLOSURE"]
-DurationLabel = Literal["15秒左右", "30秒左右", "60秒左右", "1至3分钟", "由系统建议"]
+DurationLabel = Literal[
+    "15秒左右",
+    "30秒左右",
+    "60秒左右",
+    "1至3分钟",
+    "5至15分钟",
+    "15至30分钟",
+    "30至60分钟",
+    "由系统建议",
+]
 ExpressionFeeling = Literal[
     "真实记录",
     "专业讲明白",
@@ -92,11 +149,25 @@ TopicLabel = Literal[
     "商品质感与视觉审美",
     "门店运营与空间经营",
     "城市门店与本地生活",
+    "品牌和企业故事",
+    "创始人或主理人的工作日常与观点",
+    "商品为什么这样设计",
+    "穿搭、试穿和选购建议",
+    "门店日常与顾客服务",
+    "团队幕后、跨岗位协作和岗位成长",
+    "陈列调整与空间经营",
+    "城市、区域与本地生活",
+    "活动、直播、咨询、到店、私域和复购承接",
+    "招商、招聘与组织信任",
 ]
 
 
 class StrictModel(BaseModel):
-    model_config = ConfigDict(extra="forbid", protected_namespaces=())
+    model_config = ConfigDict(
+        extra="forbid",
+        populate_by_name=True,
+        protected_namespaces=(),
+    )
 
 
 class LoginRequest(StrictModel):
@@ -142,9 +213,57 @@ class BridgePrepareRequest(StrictModel):
     duration_label: DurationLabel = "由系统建议"
     expression_feeling: ExpressionFeeling = "由系统建议"
     content_format: ContentFormat = "短视频"
+    organization_level: Literal["品牌总部", "区域组织", "门店"] | None = None
+    content_identity: (
+        Literal[
+            "品牌价值身份",
+            "专业身份",
+            "区域经营身份",
+            "门店关系身份",
+            "商品或栏目身份",
+        ]
+        | None
+    ) = None
+    long_term_storyline: (
+        Literal[
+            "品牌为什么存在",
+            "衣服如何服务真实生活",
+            "商品为什么这样设计",
+            "一群人如何把品牌做好",
+        ]
+        | None
+    ) = None
+    content_direction: (
+        Literal[
+            "品牌与价值叙事",
+            "商品专业解释",
+            "真实组织与幕后",
+            "消费者生活与穿搭判断",
+            "活动、交易与关系承接",
+        ]
+        | None
+    ) = None
+    business_goal: (
+        Literal[
+            "品牌认知",
+            "商品理解",
+            "建立信任",
+            "引发咨询",
+            "到店",
+            "复购",
+            "招商",
+            "招聘",
+        ]
+        | None
+    ) = None
+    expression_method: (
+        Literal["故事", "问答", "对比", "观察", "幕后", "演示", "纪实"] | None
+    ) = None
     existing_material_kinds: list[str] = Field(default_factory=list, max_length=8)
     user_material_refs: list[str] = Field(default_factory=list, max_length=20)
-    precise_fact_requests: list[PreciseFactRequest] = Field(default_factory=list, max_length=10)
+    precise_fact_requests: list[PreciseFactRequest] = Field(
+        default_factory=list, max_length=10
+    )
 
     @field_validator("message", "target_platform", "account_display_name")
     @classmethod
@@ -207,6 +326,52 @@ class PortalTaskRequest(StrictModel):
     duration_label: DurationLabel = "由系统建议"
     expression_feeling: ExpressionFeeling = "由系统建议"
     content_format: ContentFormat = "短视频"
+    organization_level: Literal["品牌总部", "区域组织", "门店"] | None = None
+    content_identity: (
+        Literal[
+            "品牌价值身份",
+            "专业身份",
+            "区域经营身份",
+            "门店关系身份",
+            "商品或栏目身份",
+        ]
+        | None
+    ) = None
+    long_term_storyline: (
+        Literal[
+            "品牌为什么存在",
+            "衣服如何服务真实生活",
+            "商品为什么这样设计",
+            "一群人如何把品牌做好",
+        ]
+        | None
+    ) = None
+    content_direction: (
+        Literal[
+            "品牌与价值叙事",
+            "商品专业解释",
+            "真实组织与幕后",
+            "消费者生活与穿搭判断",
+            "活动、交易与关系承接",
+        ]
+        | None
+    ) = None
+    business_goal: (
+        Literal[
+            "品牌认知",
+            "商品理解",
+            "建立信任",
+            "引发咨询",
+            "到店",
+            "复购",
+            "招商",
+            "招聘",
+        ]
+        | None
+    ) = None
+    expression_method: (
+        Literal["故事", "问答", "对比", "观察", "幕后", "演示", "纪实"] | None
+    ) = None
     existing_material_kinds: list[str] = Field(default_factory=list, max_length=8)
 
     @field_validator(
@@ -291,6 +456,55 @@ class DisplayProduction(StrictModel):
     shooting_angles: list[str] = Field(min_length=1, max_length=20)
 
 
+class LiveSegment(StrictModel):
+    segment_title: str = Field(min_length=1, max_length=300)
+    talking_points: list[str] = Field(min_length=1, max_length=20)
+    interaction_prompt: str = Field(min_length=1, max_length=500)
+
+
+class LiveProduction(StrictModel):
+    theme: str = Field(min_length=1, max_length=500)
+    opening: str = Field(min_length=1, max_length=1200)
+    segments: list[LiveSegment] = Field(min_length=2, max_length=20)
+    interaction_qa: list[str] = Field(min_length=1, max_length=30)
+    risk_reminders: list[str] = Field(min_length=1, max_length=20)
+    closing: str = Field(min_length=1, max_length=1200)
+
+
+class PrivateMessage(StrictModel):
+    channel: Literal["朋友圈", "社群", "一对一"]
+    message_text: str = Field(alias="copy", min_length=1, max_length=3000)
+
+
+class PrivateCommunicationProduction(StrictModel):
+    applicable_scenario: str = Field(min_length=1, max_length=800)
+    messages: list[PrivateMessage] = Field(min_length=1, max_length=6)
+    follow_up_actions: list[str] = Field(min_length=1, max_length=12)
+    communication_boundaries: list[str] = Field(min_length=1, max_length=12)
+
+
+class OfflineMaterialProduction(StrictModel):
+    core_copy: str = Field(min_length=1, max_length=2000)
+    information_hierarchy: list[str] = Field(min_length=2, max_length=12)
+    layout_or_placement_notes: list[str] = Field(min_length=1, max_length=12)
+    action_guidance: str = Field(min_length=1, max_length=800)
+    validity_boundary: str = Field(min_length=1, max_length=800)
+
+
+class SituationalQA(StrictModel):
+    question: str = Field(min_length=1, max_length=800)
+    suggested_answer: str = Field(min_length=1, max_length=1600)
+
+
+class TrainingProduction(StrictModel):
+    training_goal: str = Field(min_length=1, max_length=800)
+    outline: list[str] = Field(min_length=2, max_length=20)
+    exercises: list[str] = Field(min_length=1, max_length=12)
+    situational_qa: list[SituationalQA] = Field(min_length=1, max_length=20)
+    allowed_phrasing: list[str] = Field(min_length=1, max_length=20)
+    prohibited_phrasing: list[str] = Field(min_length=1, max_length=20)
+
+
 class ProductionPackage(StrictModel):
     production_format: ContentFormat
     task_summary: str = Field(min_length=1, max_length=1000)
@@ -306,15 +520,29 @@ class ProductionPackage(StrictModel):
     next_actions: list[str] = Field(min_length=1, max_length=12)
     video: VideoProduction | None = None
     article: ArticleProduction | None = None
+    live: LiveProduction | None = None
+    private_communication: PrivateCommunicationProduction | None = None
+    offline_material: OfflineMaterialProduction | None = None
+    training: TrainingProduction | None = None
     display: DisplayProduction | None = None
 
     @model_validator(mode="after")
     def validate_format_payload(self) -> ProductionPackage:
-        payloads = {"短视频": self.video, "图文": self.article, "陈列搭配": self.display}
+        payloads = {
+            "短视频": self.video,
+            "图文": self.article,
+            "直播内容包": self.live,
+            "私域沟通内容": self.private_communication,
+            "门店线下物料": self.offline_material,
+            "培训与门店话术": self.training,
+            "陈列搭配": self.display,
+        }
         if payloads[self.production_format] is None:
             raise ValueError("the selected content format needs its production payload")
         if sum(item is not None for item in payloads.values()) != 1:
-            raise ValueError("exactly one format-specific production payload is allowed")
+            raise ValueError(
+                "exactly one format-specific production payload is allowed"
+            )
         return self
 
 
@@ -329,7 +557,10 @@ class CandidateSurfaces(StrictModel):
     @field_validator("spoken_lines")
     @classmethod
     def validate_spoken_lines(cls, value: list[str]) -> list[str]:
-        if any(not isinstance(item, str) or not item.strip() or len(item) > 500 for item in value):
+        if any(
+            not isinstance(item, str) or not item.strip() or len(item) > 500
+            for item in value
+        ):
             raise ValueError("spoken_lines must contain short non-empty strings")
         return [item.strip() for item in value]
 
@@ -367,7 +598,9 @@ class ClaimBinding(StrictModel):
         if self.claim_class == "SOURCE_CLAIM" and not self.source_refs:
             raise ValueError("source claims need at least one source ref")
         if self.claim_class != "SOURCE_CLAIM" and self.source_refs:
-            raise ValueError("creative directions and disclosures cannot cite source refs")
+            raise ValueError(
+                "creative directions and disclosures cannot cite source refs"
+            )
         return self
 
 
@@ -375,7 +608,14 @@ class ModelCandidate(StrictModel):
     difference_label: str = Field(min_length=1, max_length=120)
     narrative_architecture: NarrativeArchitecture | None = None
     difference_dimensions: list[
-        Literal["核心创意", "切入问题或场景", "情绪钩子", "叙事视角", "事实或证明路径", "画面组织方法"]
+        Literal[
+            "核心创意",
+            "切入问题或场景",
+            "情绪钩子",
+            "叙事视角",
+            "事实或证明路径",
+            "画面组织方法",
+        ]
     ] = Field(min_length=2, max_length=6)
     surfaces: CandidateSurfaces
     claim_bindings: list[ClaimBinding] = Field(default_factory=list, max_length=120)
@@ -401,7 +641,9 @@ class ModelEnvelope(StrictModel):
             if not self.reply or self.candidates:
                 raise ValueError("chat reply must contain reply only")
         elif len(self.candidates) not in {2, 3} or self.reply is not None:
-            raise ValueError("candidate set must contain exactly two or three candidates")
+            raise ValueError(
+                "candidate set must contain exactly two or three candidates"
+            )
         return self
 
 

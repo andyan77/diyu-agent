@@ -31,7 +31,15 @@ function fillSelect(name, values, includeBlank = false) {
   const select = taskForm.elements[name];
   select.replaceChildren();
   if (includeBlank) select.add(new Option("由系统建议", ""));
-  for (const value of values) select.add(new Option(value, value));
+  for (const value of values) {
+    const temporarilyUnavailable = name === "content_format" && value === "门店线下物料";
+    const option = new Option(
+      temporarilyUnavailable ? `${value}（暂未开放）` : value,
+      value
+    );
+    option.disabled = temporarilyUnavailable;
+    select.add(option);
+  }
 }
 
 function updateRoleAndColumn() {
@@ -74,6 +82,12 @@ function activateWorkbench(value) {
   fillSelect("expression_feeling", value.feelings);
   fillSelect("content_format", value.content_formats);
   fillSelect("storyline_name", value.storylines, true);
+  fillSelect("organization_level", value.organization_levels, true);
+  fillSelect("content_identity", value.content_identities, true);
+  fillSelect("long_term_storyline", value.long_term_storylines, true);
+  fillSelect("content_direction", value.content_directions, true);
+  fillSelect("business_goal", value.business_goals, true);
+  fillSelect("expression_method", value.expression_methods, true);
   const materials = document.querySelector("#materials");
   materials.replaceChildren();
   for (const kind of value.material_kinds) {
@@ -121,7 +135,12 @@ taskForm.addEventListener("submit", async (event) => {
   body.localization_allowed = taskForm.elements.localization_allowed.checked;
   body.continue_previous = body.operation === "继续一个系列";
   body.existing_material_kinds = form.getAll("existing_material_kinds");
-  for (const key of ["topic_label", "primary_audience", "content_goal", "key_takeaway", "speaker_role_name", "storyline_name", "column_name"]) {
+  for (const key of [
+    "topic_label", "primary_audience", "content_goal", "key_takeaway",
+    "speaker_role_name", "storyline_name", "column_name", "organization_level",
+    "content_identity", "long_term_storyline", "content_direction", "business_goal",
+    "expression_method"
+  ]) {
     if (!body[key]) body[key] = null;
   }
   try {

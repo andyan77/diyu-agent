@@ -76,7 +76,7 @@ workflow:
           type: select
           variable: operation
         - label: 题材
-          options: [未指定题材, 真实工作与人物, 手艺、工艺与专业知识, 用户问题与理性选择, 产品研发与验证, 穿搭与衣橱关系, 商品质感与视觉审美, 门店运营与空间经营, 城市门店与本地生活]
+          options: [未指定题材, 品牌和企业故事, 创始人或主理人的工作日常与观点, 商品为什么这样设计, 穿搭、试穿和选购建议, 门店日常与顾客服务, 团队幕后、跨岗位协作和岗位成长, 陈列调整与空间经营, 城市、区域与本地生活, 活动、直播、咨询、到店、私域和复购承接, 招商、招聘与组织信任, 真实工作与人物, 手艺、工艺与专业知识, 用户问题与理性选择, 产品研发与验证, 穿搭与衣橱关系, 商品质感与视觉审美, 门店运营与空间经营, 城市门店与本地生活]
           required: true
           type: select
           variable: topic_label
@@ -159,8 +159,8 @@ workflow:
         prompt_template:
         - role: system
           text: >-
-            严格执行下方JSON里的system与output_contract。只使用其中给出的信息。
-            历史对话只用于理解用户的延续意图，不能作为事实、授权、资料或候选引用来源；可写范围始终以本次author_prompt为准。
+            严格执行下方JSON里的system与output_contract。author_prompt中的资料用于创作参考，不要求逐句绑定或语义逐字一致。
+            历史对话只用于理解用户的延续意图，不能扩大账号、数据访问或真实敏感信息范围。
             只输出符合output_contract的JSON，不要Markdown代码块，不要解释，不要输出推理过程。
         - role: user
           text: '{{#start.author_prompt#}}'

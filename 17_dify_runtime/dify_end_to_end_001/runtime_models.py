@@ -72,6 +72,17 @@ class RuntimePrincipal(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
 
 
+class RuntimeBrowserSession(Base):
+    __tablename__ = "runtime_browser_sessions"
+
+    browser_session_id: Mapped[str] = mapped_column(String(160), primary_key=True)
+    principal_id: Mapped[str] = mapped_column(String(128), nullable=False, index=True)
+    state: Mapped[str] = mapped_column(String(32), nullable=False, index=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+
+
 class RuntimeAccount(Base):
     __tablename__ = "runtime_content_accounts"
     __table_args__ = (
@@ -184,6 +195,7 @@ class RuntimeRequirement(Base):
     requirement_version: Mapped[int] = mapped_column(Integer, nullable=False)
     principal_id: Mapped[str] = mapped_column(String(128), nullable=False, index=True)
     account_id: Mapped[str] = mapped_column(String(160), nullable=False, index=True)
+    browser_session_id: Mapped[str] = mapped_column(String(160), nullable=False, index=True)
     status: Mapped[str] = mapped_column(String(32), nullable=False)
     payload: Mapped[JsonObject] = mapped_column(JSON, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
@@ -208,7 +220,9 @@ class RuntimeCandidate(Base):
     candidate_id: Mapped[str] = mapped_column(String(160), primary_key=True)
     run_id: Mapped[str] = mapped_column(String(160), nullable=False, index=True)
     plan_ref: Mapped[str | None] = mapped_column(String(240), nullable=True, index=True)
+    principal_id: Mapped[str] = mapped_column(String(128), nullable=False, index=True)
     account_id: Mapped[str] = mapped_column(String(160), nullable=False, index=True)
+    browser_session_id: Mapped[str] = mapped_column(String(160), nullable=False, index=True)
     ordinal: Mapped[int] = mapped_column(Integer, nullable=False)
     selected: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     candidate_payload: Mapped[JsonObject] = mapped_column(JSON, nullable=False)
@@ -233,6 +247,7 @@ class RuntimeFeedback(Base):
     feedback_id: Mapped[str] = mapped_column(String(160), primary_key=True)
     principal_id: Mapped[str] = mapped_column(String(128), nullable=False)
     account_id: Mapped[str] = mapped_column(String(160), nullable=False)
+    browser_session_id: Mapped[str] = mapped_column(String(160), nullable=False, index=True)
     candidate_id: Mapped[str | None] = mapped_column(String(160), nullable=True)
     requirement_id: Mapped[str | None] = mapped_column(String(160), nullable=True)
     role_id: Mapped[str | None] = mapped_column(String(160), nullable=True)
@@ -252,6 +267,7 @@ class RuntimeModelRun(Base):
     run_id: Mapped[str] = mapped_column(String(160), primary_key=True)
     principal_id: Mapped[str] = mapped_column(String(128), nullable=False)
     account_id: Mapped[str] = mapped_column(String(160), nullable=False)
+    browser_session_id: Mapped[str] = mapped_column(String(160), nullable=False, index=True)
     operation: Mapped[str] = mapped_column(String(64), nullable=False)
     state: Mapped[str] = mapped_column(String(64), nullable=False)
     plan_ref: Mapped[str | None] = mapped_column(String(240), nullable=True)
@@ -287,6 +303,7 @@ class RuntimeDifyConversation(Base):
         UniqueConstraint(
             "principal_id",
             "account_id",
+            "browser_session_id",
             name="uq_runtime_dify_conversation_scope",
         ),
     )
@@ -294,6 +311,7 @@ class RuntimeDifyConversation(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     principal_id: Mapped[str] = mapped_column(String(128), nullable=False, index=True)
     account_id: Mapped[str] = mapped_column(String(160), nullable=False, index=True)
+    browser_session_id: Mapped[str] = mapped_column(String(160), nullable=False, index=True)
     dify_user_key: Mapped[str] = mapped_column(String(128), nullable=False, unique=True)
     conversation_id: Mapped[str] = mapped_column(String(160), nullable=False, unique=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)

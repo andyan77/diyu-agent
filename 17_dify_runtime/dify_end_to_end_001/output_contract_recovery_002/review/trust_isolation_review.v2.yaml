@@ -1,0 +1,65 @@
+review:
+  task_id: DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002
+  review_id: P7R-TRUST-REVIEW-002
+  review_type: TRUST_RUNTIME_IDENTITY_DATA_ACCESS_PRIVACY_SESSION_AND_OPERATIONS
+  review_mode: FOCUSED_REREVIEW_OF_ORIGINAL_BLOCKER
+  reviewer_identity: codex-trust-isolation-focused-rereviewer-v2
+  reviewer_session_id: SESSION-TRUST-ISO-BIND-D88D475-20260718-01
+  reviewer_run_id: RUN-TRUST-ISO-BIND-D88D475-20260718T190015Z
+  independent_from_executor_and_other_reviewer: true
+  other_reviewer_accessed: false
+  candidate_commit: d88d475b4b6d9fe7239a842da27c722248af887d
+  candidate_tree: 28b5e57cf27714c73196dc35b3694e960051c48e
+  score: 96
+  score_scale: 100
+  pass_threshold: 90
+  verdict: PASS
+  hard_veto: false
+  blocking_items: []
+  findings: []
+  recommend_progress: true
+  focused_repair:
+    initial_candidate_commit: 2e6093617be5b05eb2cb13f974d9103bf298910f
+    initial_verdict: FAIL
+    initial_score: 88
+    original_blocker: SECURE_COOKIE_TRANSPORT
+    blocker_closed: true
+    third_full_review_performed: false
+  binding_confirmation:
+    product_baseline_commit: a62c5bf8618de288af39c9fb06d04f3a36f7284f
+    scope_drift: false
+    compatibility_only_paths:
+      - .github/workflows/ci.yml
+      - ci/checkers/check_gate1_v1_1_current.py
+      - ci/checkers/check_product_foundation.py
+  evidence:
+    - "最终候选与 tree 精确绑定 d88d475b4b6d9fe7239a842da27c722248af887d / 28b5e57cf27714c73196dc35b3694e960051c48e。"
+    - "部署配置、bridge.env 与运行容器环境均实测 DIYU_COOKIE_SECURE=true。"
+    - "公网 HTTPS 双登录均返回 200，会话 Cookie 均含 Secure、HttpOnly、SameSite=Strict。"
+    - "两浏览器 Cookie 不同；注销 A 后 A 返回 401、B 仍返回 200，随后已注销清理 B。"
+    - "HTTP /apps/ 返回 301 并重定向到 HTTPS。"
+    - "服务健康状态为 healthy、simulation_only=true、production_ready=false。"
+    - "容器继续以 1001:1001、只读根文件系统、cap-drop ALL、no-new-privileges 运行。"
+    - "Cookie、签名会话、会话生命周期、注销与双浏览器隔离共 7 项聚焦测试通过。"
+    - "Package 7 子树在 a62c5bf 与 d88d475 的 tree ID 相同，产品与安全 blob 均未漂移。"
+    - "CI 摘要针与公共基础检查器 SHA-256 一致，git diff --check 通过。"
+    - "远端四个定向部署文件 SHA-256 与产品基线逐项一致。"
+    - "模型调用账本保持 204 次 invocation / 208 累计上界，本次部署与复审零模型调用。"
+  nonblocking_observations:
+    - "全局多 principal 调用上限语义留待 Package 10 明确；本任务一次新增调用未越权，且全部 readiness 仍为 false。"
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    generator_qualified: false
+    retrieval_ready: false
+    runtime_ready: false
+    release_ready: false
+    production_ready: false
+  signed_at: "2026-07-18T19:00:15Z"
+  signature_basis: "reviewer_identity|session|run|candidate_commit|candidate_tree|focused_scope|score|verdict|signed_at"
+  signature_sha256: 60e14009d9e015ffbce03c67cb4a5d2510db30c6ebedbda02de2883ba6e4e1e0

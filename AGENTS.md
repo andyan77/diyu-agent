@@ -19,9 +19,9 @@ be used to infer the current product phase or silently rewritten.
 - Login identity and outward-facing content account are separate objects. Real
   people never share credentials. A simulation exception must be explicit and
   non-publishable.
-- Narrative retrieval is supporting evidence. It cannot grant authorization or
-  override a newer exact fact for SKU, specification, price, stock, time,
-  authorization, or revocation.
+- Narrative retrieval and precise facts are optional writing references. They
+  never grant authorization or data access, but missing references do not block
+  a creative draft from entering human review.
 - Expression components, rules, edges, and A/B paths are optional offline
   research, regression, diagnostic, or explicit-experiment assets. Normal
   requests and light content plans must work without them. They are not brand
@@ -30,11 +30,15 @@ be used to infer the current product phase or silently rewritten.
   The expression `prepare` operation owns that plan; Dify, retrieval, and the
   generator may not create competing plans.
 - Brand expression profiles, high-level modes, examples, and client soft
-  preferences guide expression only. They cannot grant facts, authorization,
-  scope, or publishability, and client preferences cannot weaken server-side
-  prohibitions.
-- No evidence or authorization means no publishable output. Missing inputs must
-  produce an action card, degradation, or stop decision.
+  preferences guide expression only. They cannot grant authorization, data
+  access, scope, or publishability, and client preferences cannot weaken
+  server-side security controls.
+- Draft copy may creatively state product attributes, prices, inventory,
+  dimensions, authorization wording, commitments, events, and material ideas
+  without sentence-level evidence binding. Human review is still required
+  before publication; writing that something is authorized never grants real
+  access. Only a specifically requested but unavailable file, image, video, or
+  audio object produces a material action card.
 
 ## Historical and forbidden default writes
 

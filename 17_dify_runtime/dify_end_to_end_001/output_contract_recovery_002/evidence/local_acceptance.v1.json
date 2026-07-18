@@ -1,0 +1,79 @@
+{
+  "schema": "diyu.package7.output_contract_recovery.local_acceptance.v1",
+  "task_id": "DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002",
+  "author_contract_version": "diyu.author-output.v2.0",
+  "content_formats": [
+    "短视频",
+    "图文",
+    "直播内容包",
+    "私域沟通内容",
+    "门店线下物料",
+    "培训与门店话术",
+    "陈列搭配"
+  ],
+  "public_topic_count": 10,
+  "unit_tests": {
+    "count": 35,
+    "pass": true
+  },
+  "candidate_count_range": [
+    1,
+    3
+  ],
+  "action_card_by_result_class": {
+    "MATERIAL_GAP": true,
+    "AUTHORIZATION_OR_SCOPE_BLOCK": false,
+    "MODEL_OUTPUT_CONTRACT_ERROR": false,
+    "HARD_FACT_REFERENCE_ERROR": false,
+    "SYSTEM_OR_PROVIDER_ERROR": false
+  },
+  "single_bad_candidate_preserves_two_safe_siblings": true,
+  "server_owned_reference_scope": true,
+  "anonymous_daily_scene_allowed": true,
+  "future_shooting_scene_allowed": true,
+  "similarity_is_review_hint_only": true,
+  "ordinary_creative_surfaces_do_not_require_fact_binding": true,
+  "creative_claims_without_evidence_binding_allowed": true,
+  "current_entry_fact_gate_reachable": false,
+  "current_hard_fact_reference_error_reachable": false,
+  "single_complete_candidate_delivered": true,
+  "single_candidate_option_warning": "本轮可选方案不足",
+  "ordinary_creation_without_retrieval_allowed": true,
+  "explicit_missing_object_requires_material_card": true,
+  "internal_and_sensitive_reference_leakage_blocked": true,
+  "manual_review_required_before_publish": true,
+  "failed_user_surface_internal_run_id_free": true,
+  "paid_provider_response_staged_before_completion": true,
+  "staged_response_recovery_new_model_call_count": 0,
+  "portal_replays_staged_response_before_new_model_call": true,
+  "received_output_transaction_resume_pass": true,
+  "concurrent_budget_reservation_atomic": true,
+  "managed_migration_transaction_and_rollback_declared": true,
+  "legacy_contract_replay_read_only": true,
+  "two_browser_candidate_isolation": true,
+  "two_browser_chat_isolation": true,
+  "logout_revokes_session": true,
+  "historical_package7_bytes_unchanged": true,
+  "package10_zero_call_replay_pass": true,
+  "package10_replay_model_call_increment": 0,
+  "core_numbers": {
+    "300": 300,
+    "120": 120,
+    "86": 86,
+    "changed": false
+  },
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "generator_qualified": false,
+    "retrieval_ready": false,
+    "runtime_ready": false,
+    "release_ready": false,
+    "production_ready": false
+  }
+}

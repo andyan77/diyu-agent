@@ -44,7 +44,7 @@ CHECKER_PATH = Path("ci/checkers/check_product_foundation.py")
 WORKFLOW_PATH = Path(".github/workflows/ci.yml")
 FROZEN_REVIEWED_COMMIT = "3f610726943dee5545d4d310f107239f2eeb9234"
 AUTHORIZED_CURRENT_LIVE_PATHS = frozenset(
-    {LEGACY_GATE1_CHECKER_PATH, CHECKER_PATH, WORKFLOW_PATH}
+    {Path("AGENTS.md"), LEGACY_GATE1_CHECKER_PATH, CHECKER_PATH, WORKFLOW_PATH}
 )
 SUCCESSOR_PACKAGES = (
     (
@@ -124,13 +124,22 @@ REFERENCE_SAFE_SUCCESSOR_COMMITS = {
     Path(
         "18_deployment/hosted_operations_001/check_hosted_operations.py"
     ): "e4ca0b44d5f5b64a8c7840986b716abb3be4f88d",
+    Path(
+        "19_cloud_cutover/ecs_migration_001/check_ecs_cutover.py"
+    ): "5c8011c3cbe99516ff865388eaca73fe2ba32cd8",
 }
 REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
     Path("17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py"): {
+        Path("17_dify_runtime/dify_end_to_end_001/author_contract.py"),
         Path("17_dify_runtime/dify_end_to_end_001/brand_import.py"),
         Path("17_dify_runtime/dify_end_to_end_001/brand_import_contract.v1.yaml"),
         Path("17_dify_runtime/dify_end_to_end_001/bridge_app.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/content_capability_mapping.v1.yaml"),
+        Path("17_dify_runtime/dify_end_to_end_001/contracts.py"),
         Path("17_dify_runtime/dify_end_to_end_001/deploy_remote.sh"),
+        Path("17_dify_runtime/dify_end_to_end_001/dify_app.v1.yaml"),
+        Path("17_dify_runtime/dify_end_to_end_001/dify_chat.py"),
         Path("17_dify_runtime/dify_end_to_end_001/persistence.py"),
         Path("17_dify_runtime/dify_end_to_end_001/portal.html"),
         Path("17_dify_runtime/dify_end_to_end_001/portal.js"),
@@ -138,8 +147,66 @@ REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
         Path("17_dify_runtime/dify_end_to_end_001/runtime_models.py"),
         Path("17_dify_runtime/dify_end_to_end_001/runtime_retrieval.py"),
         Path("17_dify_runtime/dify_end_to_end_001/runtime_service.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/security.py"),
         Path("17_dify_runtime/dify_end_to_end_001/test_dify_end_to_end.py"),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "delivery/execution_review_request.v1.yaml"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "delivery/execution_review_request.v2.yaml"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "evidence/local_acceptance.v1.json"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "evidence/p10_zero_call_replay.v1.json"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "evidence/remote_probe.v1.json"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "evidence/remote_probe.v2.json"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "result/output_contract_recovery_result.v1.json"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "result/output_contract_recovery_result.v2.json"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "review/content_novice_review.v1.yaml"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "review/content_novice_review.v2.yaml"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "review/trust_isolation_review.v1.yaml"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "review/trust_isolation_review.v2.yaml"
+        ),
     },
+}
+REFERENCE_SAFE_SUCCESSOR_ADDITIONAL_PATHS = {
+    checker: {
+        path
+        for path in mutable_paths
+        if path.name in {"author_contract.py", "content_capability_mapping.v1.yaml"}
+        or "output_contract_recovery_002" in path.parts
+    }
+    for checker, mutable_paths in REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS.items()
 }
 SUCCESSOR_NORMAL_STEP_NAME = "Run reserved downstream package checks"
 SUCCESSOR_OPTIMIZED_STEP_NAME = (
@@ -186,6 +253,8 @@ SUCCESSOR_NORMAL_RUN_LINES = (
         )
         for _, package_root, checker, _ in CHECKED_DOWNSTREAM_PACKAGES
     ),
+    'run_downstream_package_checker "17_dify_runtime/dify_end_to_end_001" '
+    '"17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py" "true"',
 )
 SUCCESSOR_OPTIMIZED_RUN_LINES = (
     "set -euo pipefail",
@@ -233,6 +302,9 @@ SUCCESSOR_OPTIMIZED_RUN_LINES = (
         )
         for _, package_root, checker, _ in CHECKED_DOWNSTREAM_PACKAGES
     ),
+    'run_downstream_package_checker_optimized '
+    '"17_dify_runtime/dify_end_to_end_001" '
+    '"17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py" "true"',
 )
 
 BASE_FOUNDATION_FILES = frozenset(
@@ -864,26 +936,31 @@ def git_object_bytes(commit: str, path: Path) -> bytes:
 def validate_reference_safe_successor_bytes(
     root: Path, package_root: Path, reference_commit: str
 ) -> None:
-    expected_paths = git_tree_paths(reference_commit, package_root)
+    reference_paths = git_tree_paths(reference_commit, package_root)
     actual_paths = {
         path.relative_to(root)
         for path in (root / package_root).rglob("*")
         if path.is_file() and "__pycache__" not in path.parts
     }
-    require(
-        actual_paths == expected_paths,
-        f"E_SUCCESSOR_REFERENCE_FILE_SET:{package_root}",
-    )
     checker = next(
         candidate_checker
         for _, candidate_root, candidate_checker, _ in CHECKED_DOWNSTREAM_PACKAGES
         if candidate_root == package_root
     )
+    additional_paths = REFERENCE_SAFE_SUCCESSOR_ADDITIONAL_PATHS.get(
+        checker,
+        set(),
+    )
+    expected_paths = reference_paths | additional_paths
+    require(
+        actual_paths == expected_paths,
+        f"E_SUCCESSOR_REFERENCE_FILE_SET:{package_root}",
+    )
     mutable_paths = REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS.get(checker, set())
     require(
         mutable_paths <= expected_paths, f"E_SUCCESSOR_MUTABLE_PATHS:{package_root}"
     )
-    for relative in sorted(expected_paths - mutable_paths):
+    for relative in sorted(reference_paths - mutable_paths):
         require(
             (root / relative).read_bytes()
             == git_object_bytes(reference_commit, relative),
@@ -4679,6 +4756,13 @@ raise SystemExit(0)
             destination = temp_root / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_bytes(git_object_bytes(reference_commit, relative))
+        for relative in REFERENCE_SAFE_SUCCESSOR_ADDITIONAL_PATHS[checker]:
+            destination = temp_root / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_text(
+                "reference-safe successor test\n",
+                encoding="utf-8",
+            )
         mutable_path = min(
             REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS[checker],
             key=lambda path: path.as_posix(),
