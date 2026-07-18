@@ -1,0 +1,54 @@
+{
+ "schema_version": "p7-m3-recovery-progress-v1",
+ "recovery_id": "M3_R1",
+ "checkpoint_kind": "INTERRUPTED_RESUMABLE",
+ "checkpoint_reason": "R0-R2（发起人裁定的大规模密封建造实质前置）已完整完成并机器验证并提交；R3-R6=密封两套9模块双盲建标+分歧裁决+双审+版本化重关闭，系专用多会话计算/编排工程，不宜在本已长会话内半建（避免留破损中间态）。按发起人裁定④落盘可复算检查点+唯一 resume Prompt。",
+ "resume_prompt": "delivery_control_001/milestones/M3/recovery/RESUME_PROMPT.M3_R1.v1.md",
+ "resume_baseline_head_expected": "b3f5b2c",
+ "completed": [
+  {
+   "stage": "R0",
+   "commit": "8af997f",
+   "what": "恢复启动+M4 fail-closed 硬门(9测)+旧QUAL机械失败基线(6测)+§7偏差登记"
+  },
+  {
+   "stage": "R1",
+   "commit": "c96bb80",
+   "what": "供需矩阵+PRE_M0就绪评估器+checker qual_data_readiness节+就绪schema+出口附录(11测)"
+  },
+  {
+   "stage": "R2",
+   "commit": "b3f5b2c",
+   "what": "9模块gold schema+构造蓝图(逐套容量证明)+qual_runner 0.4修复+RECOVERY_DECISIONS(12测)"
+  }
+ ],
+ "pending": [
+  {
+   "stage": "R3",
+   "what": "构建新版双密封 QUAL-A/B（9模块 gold，密封双盲，裁决，cross-module复用登记，不可变摘要）；含扩展 annexC 模板支持新kinds + 7新模块构造/标注逻辑"
+  },
+  {
+   "stage": "R4",
+   "what": "保全工具零泄漏输出 A/B 公开聚合计数 → pre_m0_readiness 落 QUAL_{A,B}_READINESS_RECEIPT，两套 PASS 才进候选审核"
+  },
+  {
+   "stage": "R5",
+   "what": "测试全套(不减)+新增负测 + 两份新独立审核(Claude对抗+Codex复算)绑新候选，整改重审"
+  },
+  {
+   "stage": "R6",
+   "what": "版本化重关闭：v2关闭工件+新closeout+更新ORIGIN_ANCHOR+推锚+journal CLOSED_PASS+M3_RECOVERY_STATUS→CLOSED_PASS+closure复算+M4 dry-run"
+  }
+ ],
+ "invariants_held_at_checkpoint": {
+  "m4_fail_closed": true,
+  "m3_recovery_status_state": "ACTIVE",
+  "old_qual_status": "SUPERSEDED_UNREVEALED_INSUFFICIENT_FOR_M0（封存不改不揭晓）",
+  "old_close_artifacts": "全部封存不改（candidate 84f8fc50/closeout 07414172/anchor 1fbddc48）",
+  "checker_m3_final_qual_data_readiness": "FAIL（fail-closed，就绪回执尚未产出）",
+  "working_tree": "干净（提交后）",
+  "not_a_honest_stop": "成本/会话额度非停工门；本检查点=可恢复中断，恢复继续"
+ },
+ "issued_at": "2026-07-18T23:38:48.887369+00:00",
+ "record_digest": "40cda995aea32ab33575c5cc6beccde90f3f29e7e0a3ddf20e3b8865ad5602c0"
+}
