@@ -2125,6 +2125,10 @@ def validate_recovery_source_contract(root: Path) -> None:
         'os.environ.get("PACKAGE7_MAX_MODEL_CALLS", "1096")' in deploy,
         "E_RECOVERY_DEPLOY_CUMULATIVE_MODEL_LIMIT",
     )
+    require(
+        '"DIYU_COOKIE_SECURE": "true"' in deploy,
+        "E_RECOVERY_DEPLOY_SECURE_COOKIE",
+    )
     tests = sources["test_dify_end_to_end.py"]
     required_tests = (
         "test_light_author_contract_has_one_current_format_and_no_server_fields",
@@ -2139,6 +2143,7 @@ def validate_recovery_source_contract(root: Path) -> None:
         "test_received_staged_response_can_resume_without_a_second_call",
         "test_portal_recovers_staged_output_before_any_new_model_call",
         "test_portal_provider_failure_is_a_system_error",
+        "test_remote_deployment_uses_secure_session_cookie",
         "test_concurrent_budget_reservation_cannot_exceed_the_limit",
         "test_managed_migration_is_atomic_and_browser_rls_is_restrictive",
         "test_five_failure_classes_do_not_impersonate_material_gaps",

@@ -300,7 +300,7 @@ values = {
     "DIYU_DIFY_DATASET_ID": state["dataset_id"],
     "DIYU_DIFY_STATE_PATH": "/state/dify-state.json",
     "DIYU_PKG7_MAX_MODEL_CALLS": os.environ.get("PACKAGE7_MAX_MODEL_CALLS", "1096"),
-    "DIYU_COOKIE_SECURE": "false",
+    "DIYU_COOKIE_SECURE": "true",
     "PYTHONDONTWRITEBYTECODE": "1",
 }
 if managed_database:

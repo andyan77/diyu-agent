@@ -968,6 +968,26 @@ class Package7RecoveryTests(unittest.TestCase):
             "SYSTEM_OR_PROVIDER_ERROR",
         )
 
+    def test_remote_deployment_uses_secure_session_cookie(self) -> None:
+        deploy = (PACKAGE_ROOT / "deploy_remote.sh").read_text(encoding="utf-8")
+        self.assertIn('"DIYU_COOKIE_SECURE": "true"', deploy)
+        with patch.dict(os.environ, {"DIYU_COOKIE_SECURE": "true"}):
+            app = create_app(self.runtime, self.repository, FakeDifyChatClient())
+        app.testing = True
+        response = app.test_client().post(
+            "/login",
+            base_url="https://localhost",
+            json={
+                "username": "package7-test-owner",
+                "password": "package7-test-password",
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        session_cookie = response.headers["Set-Cookie"]
+        self.assertIn("Secure", session_cookie)
+        self.assertIn("HttpOnly", session_cookie)
+        self.assertIn("SameSite=Strict", session_cookie)
+
     def test_paid_author_response_survives_completion_transaction_failure(
         self,
     ) -> None:
@@ -1211,6 +1231,12 @@ class Package7RecoveryTests(unittest.TestCase):
             self.request(message="请分析这段未提供的录音并改写成门店话术。"),
         )
         self.assertEqual(audio_gap["result_class"], "MATERIAL_GAP")
+        for generic_reference in (
+            "NO_MATCH:请参考素材创作一篇轻松图文。",
+            "NO_MATCH:请结合图片讲一个春日搭配故事。",
+        ):
+            creative = self.scoped_prepare(self.request(message=generic_reference))
+            self.assertEqual(creative["response_kind"], "MODEL_REQUIRED")
         denied = self.scoped_prepare(
             self.request(account_display_name="未授权账号"),
             selected_account=False,
