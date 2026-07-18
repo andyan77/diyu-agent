@@ -1,0 +1,29 @@
+execution_review_request:
+  task_id: DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002
+  status: REQUESTING_APPROVE_PACKAGE_7_RECOVERY_MERGE
+  candidate_commit: d88d475b4b6d9fe7239a842da27c722248af887d
+  candidate_tree: 28b5e57cf27714c73196dc35b3694e960051c48e
+  result_state: PASS_TO_NEW_PACKAGE10_WITH_OFFLINE_MATERIAL_DISABLED
+  requested_root_decision: APPROVE_PACKAGE_7_RECOVERY_MERGE
+  merge_authorization: NOT_GRANTED
+  draft_pull_request_url: https://github.com/andyan77/diyu-agent/pull/27
+  draft_pull_request_required: true
+  package10_started: false
+  summary:
+    content_review_score: 97
+    trust_review_score: 96
+    both_reviews_passed: true
+    hard_veto_count: 0
+    blocking_item_count: 0
+    new_content_model_calls: 1
+    authorized_call_limit: 2
+    new_cost_rmb: "0.003832"
+    offline_material_enabled: false
+    offline_entry_disabled_and_marked_unavailable: true
+    core_numbers_300_120_86_changed: false
+    all_readiness_flags_remain_false: true
+  delivery_boundary:
+    no_merge: true
+    no_package10_start: true
+    no_additional_model_call: true
+    wait_for_root_decision: true

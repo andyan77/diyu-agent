@@ -1,0 +1,104 @@
+{
+  "schema": "diyu.package7.output_contract_recovery.result.v2",
+  "task_id": "DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002",
+  "state": "PASS_TO_NEW_PACKAGE10_WITH_OFFLINE_MATERIAL_DISABLED",
+  "blocking_items": [],
+  "offline_material_enabled": false,
+  "degraded_reason": "The single authorized offline-material provider output was preserved but rejected at JSON decode; a quality reroll was forbidden, so the offline entry is disabled and visibly unavailable.",
+  "reviewed_candidate_commit": "d88d475b4b6d9fe7239a842da27c722248af887d",
+  "reviewed_candidate_tree": "28b5e57cf27714c73196dc35b3694e960051c48e",
+  "acceptance": {
+    "P7F-A01": true,
+    "P7F-A02": true,
+    "P7F-A03": true,
+    "P7F-A04": true,
+    "P7F-A05": true,
+    "P7F-A06": true,
+    "P7F-A07": true,
+    "P7F-A08": true,
+    "P7F-A09": true,
+    "P7F-A10": true,
+    "P7F-A11": true,
+    "P7F-A12": true,
+    "P7F-A13": true,
+    "P7F-A14": true
+  },
+  "model_call_audit": {
+    "authorized_new_content_model_call_limit": 2,
+    "new_content_model_call_count": 1,
+    "new_cost_rmb": "0.003832",
+    "new_token_count": 2818,
+    "content_quality_reroll_count": 0,
+    "final_invocation_count": 204,
+    "final_cumulative_model_call_upper_bound": 208,
+    "failed_calls_retained": true
+  },
+  "independent_reviews": [
+    {
+      "review_id": "P7R-CONTENT-REVIEW-002",
+      "path": "review/content_novice_review.v2.yaml",
+      "score": 97,
+      "verdict": "PASS",
+      "hard_veto": false
+    },
+    {
+      "review_id": "P7R-TRUST-REVIEW-002",
+      "path": "review/trust_isolation_review.v2.yaml",
+      "score": 96,
+      "verdict": "PASS",
+      "hard_veto": false
+    }
+  ],
+  "prior_failed_reviews": [
+    {
+      "review_id": "P7R-CONTENT-REVIEW-001",
+      "path": "review/content_novice_review.v1.yaml",
+      "status": "HISTORICAL_FAILED_REVIEW_NOT_CURRENT_APPROVAL"
+    },
+    {
+      "review_id": "P7R-TRUST-REVIEW-001",
+      "path": "review/trust_isolation_review.v1.yaml",
+      "status": "HISTORICAL_FAILED_REVIEW_NOT_CURRENT_APPROVAL"
+    }
+  ],
+  "checks": {
+    "package7_unit_tests": "PASS_36_OF_36_LOCAL_AND_REMOTE",
+    "package7_implementation_checker": "PASS_UNIT_TEST_COUNT_36",
+    "package7_current_checker": "PASS_LOCAL_FINAL_REPORT_VALIDATION",
+    "package7_current_selftest": "PASS_NEGATIVE_CASES",
+    "package7_optimized_fail_closed": "PASS_EXIT_2",
+    "ruff": "PASS_CHANGED_PYTHON_NO_CACHE",
+    "type_check": "PASS_STRICT_CHANGED_PRODUCTION_MODULES",
+    "git_diff_check": "PASS",
+    "current_branch_secret_scan": "PASS_NO_LEAKS",
+    "full_history_secret_scan": "PASS_NO_LEAKS",
+    "public_foundation_checker": "PASS",
+    "gate1_current_checker": "PASS",
+    "remote_checker_compatibility": "PASS_BOOTSTRAP_PENDING_FINAL_DRAFT_PR_CI",
+    "remote_secret_scan": "PASS_GITHUB_ACTIONS_RUN_108"
+  },
+  "core_numbers": {
+    "300": 300,
+    "120": 120,
+    "86": 86,
+    "changed": false
+  },
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "generator_qualified": false,
+    "retrieval_ready": false,
+    "runtime_ready": false,
+    "release_ready": false,
+    "production_ready": false
+  },
+  "merge_allowed": false,
+  "package10_started": false,
+  "draft_pull_request_url": "https://github.com/andyan77/diyu-agent/pull/27",
+  "next_action": "REQUEST_APPROVE_PACKAGE_7_RECOVERY_MERGE"
+}

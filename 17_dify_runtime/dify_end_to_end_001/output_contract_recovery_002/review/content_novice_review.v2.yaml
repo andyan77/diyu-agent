@@ -1,0 +1,63 @@
+review:
+  task_id: DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002
+  review_id: P7R-CONTENT-REVIEW-002
+  review_type: CONTENT_NOVICE_SEVEN_FORMATS_AND_CREATIVE_FREEDOM
+  review_mode: FOCUSED_REREVIEW_OF_ORIGINAL_BLOCKER
+  reviewer_identity: "Codex / content-novice independent focused reviewer"
+  reviewer_session_id: REVIEW-SESSION-7D0FAEFD15A34FDE9D75EF1CBA02E5EB
+  reviewer_run_id: REVIEW-RUN-98054B6AA3CA4ECC929345F72E1711EC
+  independent_from_executor_and_other_reviewer: true
+  other_reviewer_accessed: false
+  candidate_commit: d88d475b4b6d9fe7239a842da27c722248af887d
+  candidate_tree: 28b5e57cf27714c73196dc35b3694e960051c48e
+  score: 97
+  score_scale: 100
+  pass_threshold: 90
+  verdict: PASS
+  hard_veto: false
+  blocking_items: []
+  findings: []
+  recommend_progress: true
+  focused_repair:
+    initial_candidate_commit: 2e6093617be5b05eb2cb13f974d9103bf298910f
+    initial_verdict: FAIL
+    initial_score: 88
+    original_blocker: P7F-A05_GENERIC_MATERIAL_REFERENCE_FALSE_POSITIVE
+    blocker_closed: true
+    third_full_review_performed: false
+  binding_confirmation:
+    product_baseline_commit: a62c5bf8618de288af39c9fb06d04f3a36f7284f
+    scope_drift: false
+    compatibility_only_paths:
+      - .github/workflows/ci.yml
+      - ci/checkers/check_gate1_v1_1_current.py
+      - ci/checkers/check_product_foundation.py
+  evidence:
+    - "最终候选与 tree 精确绑定 d88d475b4b6d9fe7239a842da27c722248af887d / 28b5e57cf27714c73196dc35b3694e960051c48e。"
+    - "泛化请求‘请参考素材创作一篇轻松图文’实测进入 MODEL_REQUIRED。"
+    - "泛化请求‘请结合图片讲一个春日搭配故事’实测进入 MODEL_REQUIRED。"
+    - "明确要求使用未上传视频实测返回 MATERIAL_GAP。"
+    - "明确要求分析未提供录音实测返回 MATERIAL_GAP。"
+    - "Package 7 全量单元回归实测 36 项通过。"
+    - "当前源合同、本地证据和远端证据只读校验通过。"
+    - "补料正则现要求具体指示、上传或未提供语义，泛化素材词不再单独命中。"
+    - "AGENTS.md、author_contract.py、portal.js 及既有证据相对初审候选未漂移。"
+    - "a62c5bf..d88d475 仅变更中央兼容摘要与工作流摘要针，Package 7 产品文件 blob 未漂移。"
+    - "公共基础检查只读复跑通过，review_state=PASS_TO_MERGE。"
+    - "聚焦候选差异通过 git diff --check。"
+  readiness_flags:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    generator_qualified: false
+    retrieval_ready: false
+    runtime_ready: false
+    release_ready: false
+    production_ready: false
+  signed_at: "2026-07-18T18:56:36Z"
+  signature_basis: "review_id|identity|session|run|candidate_commit|candidate_tree|score|verdict|hard_veto|signed_at"
+  signature_sha256: e2425fd850880aea8a562062f8ecaa72bb69159b8cad97920ce71060df18cf06
