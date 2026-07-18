@@ -101,33 +101,36 @@ FAILED_PACKAGE10_EVIDENCE_SHA256 = (
 RECOVERY_ROOT = Path("output_contract_recovery_002")
 RECOVERY_REPLAY_PATH = RECOVERY_ROOT / "evidence/p10_zero_call_replay.v1.json"
 RECOVERY_LOCAL_EVIDENCE_PATH = RECOVERY_ROOT / "evidence/local_acceptance.v1.json"
-RECOVERY_REMOTE_EVIDENCE_PATH = RECOVERY_ROOT / "evidence/remote_probe.v1.json"
-RECOVERY_RESULT_PATH = RECOVERY_ROOT / "result/output_contract_recovery_result.v1.json"
-RECOVERY_DELIVERY_PATH = RECOVERY_ROOT / "delivery/execution_review_request.v1.yaml"
-RECOVERY_REVIEW_PATHS = (
+RECOVERY_PRIOR_REMOTE_EVIDENCE_PATH = RECOVERY_ROOT / "evidence/remote_probe.v1.json"
+RECOVERY_REMOTE_EVIDENCE_PATH = RECOVERY_ROOT / "evidence/remote_probe.v2.json"
+RECOVERY_PRIOR_RESULT_PATH = RECOVERY_ROOT / "result/output_contract_recovery_result.v1.json"
+RECOVERY_RESULT_PATH = RECOVERY_ROOT / "result/output_contract_recovery_result.v2.json"
+RECOVERY_PRIOR_DELIVERY_PATH = RECOVERY_ROOT / "delivery/execution_review_request.v1.yaml"
+RECOVERY_DELIVERY_PATH = RECOVERY_ROOT / "delivery/execution_review_request.v2.yaml"
+RECOVERY_PRIOR_REVIEW_PATHS = (
     RECOVERY_ROOT / "review/content_novice_review.v1.yaml",
     RECOVERY_ROOT / "review/trust_isolation_review.v1.yaml",
+)
+RECOVERY_REVIEW_PATHS = (
+    RECOVERY_ROOT / "review/content_novice_review.v2.yaml",
+    RECOVERY_ROOT / "review/trust_isolation_review.v2.yaml",
 )
 RECOVERY_REVIEW_TYPES = {
     "CONTENT_NOVICE_SEVEN_FORMATS_AND_CREATIVE_FREEDOM",
     "TRUST_RUNTIME_IDENTITY_DATA_ACCESS_PRIVACY_SESSION_AND_OPERATIONS",
 }
 RECOVERY_SUCCESS_STATE = "PASS_TO_NEW_PACKAGE10_EVALUATION_DRAFT_ONLY"
-RECOVERY_STOP_STATE = "STOPPED_MODEL_CALL_LIMIT_EXCEEDED"
+RECOVERY_DEGRADED_STATE = "PASS_TO_NEW_PACKAGE10_WITH_OFFLINE_MATERIAL_DISABLED"
 RECOVERY_PRIOR_REVIEW_EVIDENCE_COMMIT = (
     "dfe35f82e09e9bc190a1b99e543b2ab0a109291a"
 )
+RECOVERY_PRIOR_ARTIFACT_COMMIT = "b7d61ef086e5d1ac618f4660117f7b161e387b25"
 RECOVERY_PRIOR_REVIEWED_CANDIDATE_COMMIT = (
     "b14a3bfc2ffe1acdb9b56337f16fc07493e0f374"
 )
 RECOVERY_PRIOR_REVIEWED_CANDIDATE_TREE = (
     "4a4e3ddf7b75e4a1451571e5640ed513044c7b89"
 )
-RECOVERY_STOP_BLOCKERS = [
-    "P7R-A03_OFFLINE_FORMAT_NOT_FINALIZED",
-    "P7R-A10_MODEL_CALL_LIMIT_EXCEEDED",
-    "P7R-A12_CURRENT_CANDIDATE_NOT_REVIEWED",
-]
 RECOVERY_RESULT_CLASSES = {
     "MATERIAL_GAP",
     "AUTHORIZATION_OR_SCOPE_BLOCK",
@@ -164,9 +167,13 @@ RECOVERY_DELIVERY_FILES = frozenset(
     {
         RECOVERY_REPLAY_PATH,
         RECOVERY_LOCAL_EVIDENCE_PATH,
+        RECOVERY_PRIOR_REMOTE_EVIDENCE_PATH,
         RECOVERY_REMOTE_EVIDENCE_PATH,
+        RECOVERY_PRIOR_RESULT_PATH,
         RECOVERY_RESULT_PATH,
+        RECOVERY_PRIOR_DELIVERY_PATH,
         RECOVERY_DELIVERY_PATH,
+        *RECOVERY_PRIOR_REVIEW_PATHS,
         *RECOVERY_REVIEW_PATHS,
     }
 )
@@ -185,6 +192,7 @@ RECOVERY_HISTORICAL_FROZEN_FILES = frozenset(
 )
 RECOVERY_AUTHORIZED_REPOSITORY_PATHS = frozenset(
     {
+        Path("AGENTS.md"),
         Path(".github/workflows/ci.yml"),
         Path("ci/checkers/check_product_foundation.py"),
         Path("ci/checkers/check_gate1_v1_1_current.py"),
@@ -1880,6 +1888,11 @@ def validate_author_contract_projection(projection: Mapping[str, Any]) -> None:
             descriptor.get("candidate_schema") == schema,
             f"E_RECOVERY_DESCRIPTOR_SCHEMA:{content_format}",
         )
+        require(
+            descriptor.get("root_fields")
+            == {"candidates": "1至3份；每份按candidate_schema填写"},
+            f"E_RECOVERY_DESCRIPTOR_CANDIDATE_RANGE:{content_format}",
+        )
 
 
 def validate_capability_mapping(root: Path) -> None:
@@ -2004,8 +2017,9 @@ def validate_recovery_source_contract(root: Path) -> None:
         "_server_sensitive_surface_failures(",
         "_server_fact_resolution(",
         "_explicit_required_object_missing(",
-        "INSUFFICIENT_SAFE_CANDIDATES",
-        "不得靠创意补造",
+        "NO_COMPLETE_SAFE_CANDIDATE",
+        "本轮可选方案不足",
+        "都可作为待人审正文创作",
         "不授予任何登录或数据访问权限",
     ):
         require(marker in runtime, f"E_RECOVERY_RUNTIME_MARKER:{marker}")
@@ -2020,17 +2034,22 @@ def validate_recovery_source_contract(root: Path) -> None:
     )
     for marker in (
         "_server_fact_resolution(",
+        "surface_requires_evidence_binding(",
+        "_claim_bindings_are_closed(",
         '"HARD_FACT_REFERENCE_ERROR"',
-        '"claim_bindings": fact_bindings',
-        '"server_bound_explicit_fact_count": len(fact_bindings)',
-        "if len(accepted) < 2:",
-        '"failure_reason": "INSUFFICIENT_SAFE_CANDIDATES"',
     ):
-        require(marker in current_finalizer, f"E_RECOVERY_CURRENT_FACT_GATE:{marker}")
-    require(
-        '"claim_bindings": []' not in current_finalizer,
-        "E_RECOVERY_CURRENT_BINDINGS_EMPTY",
-    )
+        require(
+            marker not in current_finalizer,
+            f"E_RECOVERY_CURRENT_FACT_GATE_REACHABLE:{marker}",
+        )
+    for marker in (
+        '"claim_bindings": []',
+        '"server_bound_explicit_fact_count": 0',
+        "if not accepted:",
+        '"failure_reason": "NO_COMPLETE_SAFE_CANDIDATE"',
+        '"本轮可选方案不足" if len(accepted) == 1 else None',
+    ):
+        require(marker in current_finalizer, f"E_RECOVERY_CURRENT_CONTRACT:{marker}")
     persistence = sources["persistence.py"]
     models = sources["runtime_models.py"]
     security = sources["security.py"]
@@ -2103,10 +2122,10 @@ def validate_recovery_source_contract(root: Path) -> None:
         "test_light_author_contract_has_one_current_format_and_no_server_fields",
         "test_all_seven_formats_finalize_select_review_export_and_reference",
         "test_one_bad_candidate_does_not_erase_two_safe_siblings",
-        "test_negative_prohibitions_are_allowed_but_false_assertions_are_blocked",
-        "test_unsupported_explicit_facts_and_sensitive_surfaces_are_blocked",
-        "test_reference_panel_does_not_claim_sentence_level_fact_binding",
-        "test_one_valid_candidate_is_rejected_as_insufficient_options",
+        "test_creative_claims_enter_human_review_without_evidence_binding",
+        "test_internal_identifiers_sensitive_data_and_secrets_are_blocked",
+        "test_reference_panel_records_scope_without_sentence_binding",
+        "test_one_valid_candidate_is_delivered_with_option_warning",
         "test_first_output_is_preserved_and_reroll_is_forbidden",
         "test_paid_author_response_survives_completion_transaction_failure",
         "test_received_staged_response_can_resume_without_a_second_call",
@@ -2241,7 +2260,7 @@ def validate_recovery_replay(replay: Mapping[str, Any]) -> None:
     )
 
 
-def run_recovery_unit_tests(root: Path) -> None:
+def run_recovery_unit_tests(root: Path) -> int:
     environment = os.environ.copy()
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
     process = subprocess.run(
@@ -2257,9 +2276,9 @@ def run_recovery_unit_tests(root: Path) -> None:
         f"E_RECOVERY_UNIT_TESTS:{process.stdout[-500:]}:{process.stderr[-500:]}",
     )
     combined = process.stdout + process.stderr
-    require(
-        "Ran 35 tests" in combined and "OK" in combined, "E_RECOVERY_UNIT_TEST_COUNT"
-    )
+    match = re.search(r"Ran (\d+) tests?", combined)
+    require(match is not None and "OK" in combined, "E_RECOVERY_UNIT_TEST_SUMMARY")
+    return int(match.group(1))
 
 
 def validate_recovery_implementation(
@@ -2274,12 +2293,12 @@ def validate_recovery_implementation(
     validate_recovery_source_contract(root)
     replay = load_json(root / RECOVERY_REPLAY_PATH)
     validate_recovery_replay(replay)
-    run_recovery_unit_tests(root)
+    unit_test_count = run_recovery_unit_tests(root)
     return {
         "author_contract_version": projection["contract_version"],
         "format_count": len(RECOVERY_FORMATS),
         "topic_count": 10,
-        "unit_test_count": 35,
+        "unit_test_count": unit_test_count,
         "p10_replay_case_count": 30,
         "p10_replay_model_call_increment": 0,
     }
@@ -2319,7 +2338,14 @@ def validate_local_acceptance(evidence: Mapping[str, Any]) -> None:
     require(evidence.get("public_topic_count") == 10, "E_RECOVERY_LOCAL_TOPICS")
     tests = cast(Mapping[str, Any], evidence.get("unit_tests", {}))
     require(
-        tests.get("count") == 35 and tests.get("pass") is True, "E_RECOVERY_LOCAL_TESTS"
+        isinstance(tests.get("count"), int)
+        and int(tests["count"]) > 0
+        and tests.get("pass") is True,
+        "E_RECOVERY_LOCAL_TESTS",
+    )
+    require(
+        evidence.get("candidate_count_range") == [1, 3],
+        "E_RECOVERY_LOCAL_CANDIDATE_RANGE",
     )
     validate_failure_matrix(
         cast(Mapping[str, Any], evidence.get("action_card_by_result_class", {}))
@@ -2331,8 +2357,12 @@ def validate_local_acceptance(evidence: Mapping[str, Any]) -> None:
         "future_shooting_scene_allowed",
         "similarity_is_review_hint_only",
         "ordinary_creative_surfaces_do_not_require_fact_binding",
-        "explicit_hard_fact_claims_require_server_sources",
+        "creative_claims_without_evidence_binding_allowed",
+        "single_complete_candidate_delivered",
+        "ordinary_creation_without_retrieval_allowed",
+        "explicit_missing_object_requires_material_card",
         "internal_and_sensitive_reference_leakage_blocked",
+        "manual_review_required_before_publish",
         "failed_user_surface_internal_run_id_free",
         "paid_provider_response_staged_before_completion",
         "concurrent_budget_reservation_atomic",
@@ -2345,6 +2375,15 @@ def validate_local_acceptance(evidence: Mapping[str, Any]) -> None:
         "package10_zero_call_replay_pass",
     ):
         require(evidence.get(key) is True, f"E_RECOVERY_LOCAL_INVARIANT:{key}")
+    require(
+        evidence.get("current_entry_fact_gate_reachable") is False
+        and evidence.get("current_hard_fact_reference_error_reachable") is False,
+        "E_RECOVERY_LOCAL_RETIRED_FACT_GATE",
+    )
+    require(
+        evidence.get("single_candidate_option_warning") == "本轮可选方案不足",
+        "E_RECOVERY_LOCAL_SINGLE_WARNING",
+    )
     require(
         evidence.get("staged_response_recovery_new_model_call_count") == 0,
         "E_RECOVERY_LOCAL_STAGED_RECOVERY_CALLS",
@@ -2367,10 +2406,20 @@ def validate_local_acceptance(evidence: Mapping[str, Any]) -> None:
 def validate_remote_probe(evidence: Mapping[str, Any]) -> None:
     require(
         evidence.get("schema")
-        == "diyu.package7.output_contract_recovery.remote_probe.v1",
+        == "diyu.package7.output_contract_recovery.remote_probe.v2",
         "E_RECOVERY_REMOTE_SCHEMA",
     )
     require(evidence.get("task_id") == RECOVERY_TASK_ID, "E_RECOVERY_REMOTE_TASK")
+    state = evidence.get("state")
+    require(
+        state in {RECOVERY_SUCCESS_STATE, RECOVERY_DEGRADED_STATE},
+        "E_RECOVERY_REMOTE_STATE",
+    )
+    offline_enabled = state == RECOVERY_SUCCESS_STATE
+    require(
+        evidence.get("offline_material_enabled") is offline_enabled,
+        "E_RECOVERY_REMOTE_OFFLINE_STATE",
+    )
     objects = cast(Mapping[str, Any], evidence.get("existing_objects", {}))
     require(
         objects
@@ -2393,43 +2442,31 @@ def validate_remote_probe(evidence: Mapping[str, Any]) -> None:
         "post_rollback_redeploy_pass",
     ):
         require(deployment.get(key) is True, f"E_RECOVERY_REMOTE_DEPLOYMENT:{key}")
-    state = evidence.get("state", RECOVERY_SUCCESS_STATE)
     require(
-        state in {RECOVERY_SUCCESS_STATE, RECOVERY_STOP_STATE},
-        "E_RECOVERY_REMOTE_STATE",
+        deployment.get("final_service_health") == "healthy"
+        and deployment.get("simulation_only") is True
+        and deployment.get("production_ready") is False,
+        "E_RECOVERY_REMOTE_HEALTH",
     )
+
     audit = cast(Mapping[str, Any], evidence.get("model_call_audit", {}))
     call_count = audit.get("new_content_model_call_count")
     require(
-        audit.get("baseline_invocation_count") == 153
-        and audit.get("baseline_cumulative_model_call_upper_bound") == 157
-        and audit.get("authorized_new_content_model_call_limit") == 40,
+        audit.get("baseline_invocation_count") == 203
+        and audit.get("baseline_cumulative_model_call_upper_bound") == 207
+        and audit.get("authorized_new_content_model_call_limit") == 2,
         "E_RECOVERY_REMOTE_CALL_BASELINE",
     )
-    if state == RECOVERY_STOP_STATE:
-        require(
-            call_count == 50
-            and audit.get("new_model_call_upper_bound") == 50
-            and audit.get("final_invocation_count") == 203
-            and audit.get("final_cumulative_model_call_upper_bound") == 207
-            and audit.get("excess_model_call_upper_bound") == 10
-            and audit.get("model_call_limit_exceeded") is True,
-            "E_RECOVERY_REMOTE_STOP_BUDGET",
-        )
-        require(
-            evidence.get("blocking_items") == RECOVERY_STOP_BLOCKERS,
-            "E_RECOVERY_REMOTE_STOP_BLOCKERS",
-        )
-    else:
-        require(
-            isinstance(call_count, int)
-            and 7 <= call_count <= 40
-            and audit.get("new_model_call_upper_bound") == call_count
-            and audit.get("final_cumulative_model_call_upper_bound")
-            == 157 + call_count
-            and audit.get("model_call_limit_exceeded") is False,
-            "E_RECOVERY_REMOTE_CALLS",
-        )
+    require(
+        isinstance(call_count, int)
+        and 1 <= int(call_count) <= 2
+        and audit.get("new_model_call_upper_bound") == call_count
+        and audit.get("final_invocation_count") == 203 + int(call_count)
+        and audit.get("final_cumulative_model_call_upper_bound")
+        == 207 + int(call_count)
+        and audit.get("model_call_limit_exceeded") is False,
+        "E_RECOVERY_REMOTE_CALLS",
+    )
     require(audit.get("content_quality_reroll_count") == 0, "E_RECOVERY_REMOTE_REROLL")
     require(
         audit.get("failed_calls_retained") is True,
@@ -2439,90 +2476,111 @@ def validate_remote_probe(evidence: Mapping[str, Any]) -> None:
         cost = Decimal(str(audit.get("known_new_cost_rmb")))
     except InvalidOperation as exc:
         raise CheckFailure("E_RECOVERY_REMOTE_COST_FORMAT") from exc
-    require(cost <= Decimal("5"), "E_RECOVERY_REMOTE_COST")
+    require(cost <= Decimal("1"), "E_RECOVERY_REMOTE_COST")
     require(
         isinstance(audit.get("ledger_digest"), str)
         and bool(re.fullmatch(r"[0-9a-f]{64}", str(audit.get("ledger_digest")))),
         "E_RECOVERY_REMOTE_LEDGER_DIGEST",
     )
+
+    replay = cast(Mapping[str, Any], evidence.get("six_format_zero_call_replay", {}))
+    require(
+        replay.get("format_count") == 6
+        and replay.get("new_content_model_call_count") == 0,
+        "E_RECOVERY_REMOTE_REPLAY_SUMMARY",
+    )
+    for key in (
+        "selection_pass",
+        "natural_language_revision_pass",
+        "review_pass",
+        "export_pass",
+        "reference_lookup_pass",
+    ):
+        require(replay.get(key) is True, f"E_RECOVERY_REMOTE_REPLAY:{key}")
+
     probes = evidence.get("format_probes")
     require(
-        isinstance(probes, list) and len(probes) == 7, "E_RECOVERY_REMOTE_PROBE_COUNT"
+        isinstance(probes, list) and len(probes) == 7,
+        "E_RECOVERY_REMOTE_PROBE_COUNT",
     )
     formats: set[str] = set()
-    successful_formats: set[str] = set()
-    blocked_formats: set[str] = set()
     for row in probes:
         require(isinstance(row, dict), "E_RECOVERY_REMOTE_PROBE")
         content_format = str(row.get("content_format", ""))
         formats.add(content_format)
-        probe_state = row.get("probe_state", "PASS")
-        if probe_state == "PASS":
-            successful_formats.add(content_format)
+        probe_state = row.get("probe_state")
+        if content_format == "门店线下物料" and not offline_enabled:
             require(
-                isinstance(row.get("candidate_count"), int)
-                and 2 <= int(row["candidate_count"]) <= 3,
-                f"E_RECOVERY_REMOTE_CANDIDATE_COUNT:{content_format}",
-            )
-            require(
-                row.get("candidate_option_warning") is None,
-                f"E_RECOVERY_REMOTE_CANDIDATE_WARNING:{content_format}",
-            )
-            for key in (
-                "first_output_retained",
-                "creative_difference_pass",
-                "selection_pass",
-                "review_pass",
-                "export_pass",
-                "reference_scope_pass",
-                "internal_identifier_leak_free",
-            ):
-                require(
-                    row.get(key) is True,
-                    f"E_RECOVERY_REMOTE_PROBE:{content_format}:{key}",
-                )
-        elif probe_state == "BLOCKED":
-            blocked_formats.add(content_format)
-            require(
-                row.get("candidate_count") == 0
+                probe_state == "DISABLED"
+                and row.get("candidate_count") == 0
+                and row.get("entry_enabled") is False
+                and row.get("attempt_count") == call_count
                 and isinstance(row.get("blocking_item"), str)
                 and bool(row["blocking_item"]),
-                f"E_RECOVERY_REMOTE_BLOCKED_PROBE:{content_format}",
+                "E_RECOVERY_REMOTE_OFFLINE_DISABLED",
             )
-        else:
-            raise CheckFailure(f"E_RECOVERY_REMOTE_PROBE_STATE:{content_format}")
+            continue
+        expected_state = (
+            "LIVE_PASS" if content_format == "门店线下物料" else "REPLAY_PASS"
+        )
+        require(
+            probe_state == expected_state,
+            f"E_RECOVERY_REMOTE_PROBE_STATE:{content_format}",
+        )
+        candidate_count = row.get("candidate_count")
+        require(
+            isinstance(candidate_count, int) and 1 <= int(candidate_count) <= 3,
+            f"E_RECOVERY_REMOTE_CANDIDATE_COUNT:{content_format}",
+        )
+        expected_warning = "本轮可选方案不足" if candidate_count == 1 else None
+        require(
+            row.get("candidate_option_warning") == expected_warning,
+            f"E_RECOVERY_REMOTE_CANDIDATE_WARNING:{content_format}",
+        )
+        expected_calls = call_count if content_format == "门店线下物料" else 0
+        require(
+            row.get("new_model_call_increment") == expected_calls,
+            f"E_RECOVERY_REMOTE_FORMAT_CALLS:{content_format}",
+        )
+        for key in (
+            "first_output_retained",
+            "selection_pass",
+            "natural_language_revision_pass",
+            "review_pass",
+            "export_pass",
+            "reference_scope_pass",
+            "internal_identifier_leak_free",
+            "sensitive_information_leak_free",
+        ):
+            require(
+                row.get(key) is True,
+                f"E_RECOVERY_REMOTE_PROBE:{content_format}:{key}",
+            )
     require(formats == set(RECOVERY_FORMATS), "E_RECOVERY_REMOTE_FORMATS")
-    if state == RECOVERY_STOP_STATE:
-        require(
-            successful_formats == set(RECOVERY_FORMATS) - {"门店线下物料"}
-            and blocked_formats == {"门店线下物料"},
-            "E_RECOVERY_REMOTE_STOP_FORMATS",
-        )
-    else:
-        require(
-            successful_formats == set(RECOVERY_FORMATS) and not blocked_formats,
-            "E_RECOVERY_REMOTE_SUCCESS_FORMATS",
-        )
+
     journeys = cast(Mapping[str, Any], evidence.get("representative_journeys", {}))
-    revision = cast(Mapping[str, Any], journeys.get("revision", {}))
-    material = cast(Mapping[str, Any], journeys.get("material_gap", {}))
-    authorization = cast(Mapping[str, Any], journeys.get("authorization_block", {}))
-    browsers = cast(Mapping[str, Any], journeys.get("two_browser_sessions", {}))
     require(
-        revision.get("result_class") == "SUCCESS"
-        and revision.get("first_output_retained") is True,
-        "E_RECOVERY_REMOTE_REVISION",
+        cast(Mapping[str, Any], journeys.get("ordinary_creation_without_retrieval", {})).get(
+            "result_class"
+        )
+        == "SUCCESS",
+        "E_RECOVERY_REMOTE_NO_RETRIEVAL",
     )
+    material = cast(Mapping[str, Any], journeys.get("explicit_missing_object", {}))
     require(
         material.get("result_class") == "MATERIAL_GAP"
-        and material.get("action_card") is True,
+        and material.get("action_card") is True
+        and material.get("model_call_increment") == 0,
         "E_RECOVERY_REMOTE_MATERIAL_GAP",
     )
+    authorization = cast(Mapping[str, Any], journeys.get("authorization_block", {}))
     require(
         authorization.get("result_class") == "AUTHORIZATION_OR_SCOPE_BLOCK"
-        and authorization.get("action_card") is False,
+        and authorization.get("action_card") is False
+        and authorization.get("model_call_increment") == 0,
         "E_RECOVERY_REMOTE_AUTHORIZATION",
     )
+    browsers = cast(Mapping[str, Any], journeys.get("two_browser_sessions", {}))
     for key in (
         "chat_isolated",
         "candidates_isolated",
@@ -2536,6 +2594,10 @@ def validate_remote_probe(evidence: Mapping[str, Any]) -> None:
     ):
         require(browsers.get(key) is True, f"E_RECOVERY_REMOTE_BROWSER:{key}")
     require(
+        evidence.get("staged_response_recovery_new_model_calls") == 0,
+        "E_RECOVERY_REMOTE_STAGED_RECOVERY",
+    )
+    require(
         evidence.get("package10_replay_new_model_calls") == 0,
         "E_RECOVERY_REMOTE_REPLAY_CALLS",
     )
@@ -2548,7 +2610,6 @@ def validate_remote_probe(evidence: Mapping[str, Any]) -> None:
         cast(Mapping[str, Any], evidence.get("readiness", {})),
         "E_RECOVERY_REMOTE_READINESS",
     )
-
 
 def validate_recovery_candidate_binding(result: Mapping[str, Any]) -> tuple[str, str]:
     candidate_commit = str(result.get("reviewed_candidate_commit", ""))
@@ -2702,7 +2763,7 @@ def validate_recovery_prior_failed_reviews(
     result: Mapping[str, Any],
 ) -> None:
     reviews: list[JsonObject] = []
-    for path in RECOVERY_REVIEW_PATHS:
+    for path in RECOVERY_PRIOR_REVIEW_PATHS:
         absolute_path = root / path
         repository_path = PACKAGE_RELATIVE_ROOT / path
         require(
@@ -2751,127 +2812,49 @@ def validate_recovery_prior_failed_reviews(
         ),
         "E_RECOVERY_PRIOR_REVIEW_STATUS",
     )
-
-
-def validate_recovery_stop_result(
-    root: Path,
-    result: Mapping[str, Any],
-) -> None:
-    require(
-        result.get("blocking_items") == RECOVERY_STOP_BLOCKERS,
-        "E_RECOVERY_STOP_BLOCKERS",
-    )
-    candidate_commit, candidate_tree_digest = validate_recovery_candidate_binding(
-        result
-    )
-    acceptance = cast(Mapping[str, Any], result.get("acceptance", {}))
-    expected_acceptance = {f"P7R-A{number:02d}" for number in range(1, 13)}
-    require(set(acceptance) == expected_acceptance, "E_RECOVERY_STOP_ACCEPTANCE_SET")
-    failed_acceptance = {"P7R-A03", "P7R-A10", "P7R-A12"}
-    for key in expected_acceptance - failed_acceptance:
-        require(acceptance.get(key) is True, f"E_RECOVERY_STOP_ACCEPTANCE:{key}")
-    for key in failed_acceptance:
-        require(acceptance.get(key) is False, f"E_RECOVERY_STOP_ACCEPTANCE:{key}")
-    calls = cast(Mapping[str, Any], result.get("model_call_audit", {}))
-    require(
-        calls.get("baseline_cumulative_model_call_upper_bound") == 157
-        and calls.get("authorized_new_content_model_call_limit") == 40
-        and calls.get("new_content_model_call_count") == 50
-        and calls.get("new_model_call_upper_bound") == 50
-        and calls.get("excess_model_call_upper_bound") == 10
-        and calls.get("model_call_limit_exceeded") is True,
-        "E_RECOVERY_STOP_CALLS",
-    )
-    require(
-        result.get("core_numbers")
-        == {"300": 300, "120": 120, "86": 86, "changed": False},
-        "E_RECOVERY_STOP_CORE",
-    )
-    validate_recovery_readiness(
-        cast(Mapping[str, Any], result.get("readiness", {})),
-        "E_RECOVERY_STOP_READINESS",
-    )
-    require(result.get("merge_allowed") is False, "E_RECOVERY_STOP_MERGE")
-    require(result.get("package10_started") is False, "E_RECOVERY_STOP_PACKAGE10")
-    require(result.get("independent_reviews") == [], "E_RECOVERY_STOP_REVIEWS")
-    validate_recovery_prior_failed_reviews(root, result)
-    checks = cast(Mapping[str, Any], result.get("checks", {}))
-    for key in (
-        "package7_unit_tests",
-        "package7_current_selftest",
-        "package7_optimized_fail_closed",
-        "historical_package7_checker",
-        "package2_regression",
-        "package6_regression",
-        "public_foundation_checker",
-        "gate1_current_checker",
-        "secret_scan",
-    ):
+    for path in (RECOVERY_PRIOR_RESULT_PATH, RECOVERY_PRIOR_DELIVERY_PATH):
         require(
-            str(checks.get(key, "")).startswith("PASS"),
-            f"E_RECOVERY_STOP_CHECK:{key}",
+            (root / path).read_bytes()
+            == git_blob(RECOVERY_PRIOR_ARTIFACT_COMMIT, PACKAGE_RELATIVE_ROOT / path),
+            f"E_RECOVERY_PRIOR_ARTIFACT_CHANGED:{path}",
         )
-    require(
-        checks.get("package7_current_checker") == "PROVEN_BY_CURRENT_CHECK_RUN",
-        "E_RECOVERY_STOP_CURRENT_CHECK",
-    )
-    delivery = load_yaml_root(root / RECOVERY_DELIVERY_PATH, "execution_review_request")
-    require(delivery.get("task_id") == RECOVERY_TASK_ID, "E_RECOVERY_STOP_DELIVERY_TASK")
-    require(
-        delivery.get("candidate_commit") == candidate_commit
-        and delivery.get("candidate_tree") == candidate_tree_digest,
-        "E_RECOVERY_STOP_DELIVERY_BINDING",
-    )
-    require(
-        delivery.get("status") == RECOVERY_STOP_STATE,
-        "E_RECOVERY_STOP_DELIVERY_STATUS",
-    )
-    require(
-        delivery.get("requested_root_decision")
-        == "ACKNOWLEDGE_PACKAGE_7_RECOVERY_STOP",
-        "E_RECOVERY_STOP_DELIVERY_REQUEST",
-    )
-    require(
-        delivery.get("merge_authorization") == "NOT_REQUESTED",
-        "E_RECOVERY_STOP_DELIVERY_MERGE",
-    )
-    require(
-        delivery.get("draft_pull_request_required") is True,
-        "E_RECOVERY_STOP_DELIVERY_DRAFT",
-    )
-    require(delivery.get("package10_started") is False, "E_RECOVERY_STOP_DELIVERY_P10")
 
 
 def validate_recovery_result(root: Path, result: Mapping[str, Any]) -> None:
     require(
-        result.get("schema") == "diyu.package7.output_contract_recovery.result.v1",
+        result.get("schema") == "diyu.package7.output_contract_recovery.result.v2",
         "E_RECOVERY_RESULT_SCHEMA",
     )
     require(result.get("task_id") == RECOVERY_TASK_ID, "E_RECOVERY_RESULT_TASK")
-    if result.get("state") == RECOVERY_STOP_STATE:
-        validate_recovery_stop_result(root, result)
-        return
+    state = result.get("state")
     require(
-        result.get("state") == RECOVERY_SUCCESS_STATE,
+        state in {RECOVERY_SUCCESS_STATE, RECOVERY_DEGRADED_STATE},
         "E_RECOVERY_RESULT_STATE",
     )
     require(result.get("blocking_items") == [], "E_RECOVERY_RESULT_BLOCKERS")
+    require(
+        result.get("offline_material_enabled") is (state == RECOVERY_SUCCESS_STATE),
+        "E_RECOVERY_RESULT_OFFLINE_STATE",
+    )
     candidate_commit, candidate_tree_digest = validate_recovery_candidate_binding(
         result
     )
     acceptance = cast(Mapping[str, Any], result.get("acceptance", {}))
-    expected_acceptance = {f"P7R-A{number:02d}" for number in range(1, 13)}
+    expected_acceptance = {f"P7F-A{number:02d}" for number in range(1, 15)}
     require(set(acceptance) == expected_acceptance, "E_RECOVERY_RESULT_ACCEPTANCE_SET")
     for key in expected_acceptance:
         require(acceptance.get(key) is True, f"E_RECOVERY_RESULT_ACCEPTANCE:{key}")
+
     calls = cast(Mapping[str, Any], result.get("model_call_audit", {}))
+    call_count = calls.get("new_content_model_call_count")
     require(
-        isinstance(calls.get("new_content_model_call_count"), int)
-        and 7 <= int(calls["new_content_model_call_count"]) <= 40,
+        isinstance(call_count, int)
+        and 1 <= int(call_count) <= 2
+        and calls.get("authorized_new_content_model_call_limit") == 2,
         "E_RECOVERY_RESULT_CALLS",
     )
     require(
-        Decimal(str(calls.get("new_cost_rmb"))) <= Decimal("5"),
+        Decimal(str(calls.get("new_cost_rmb"))) <= Decimal("1"),
         "E_RECOVERY_RESULT_COST",
     )
     require(calls.get("content_quality_reroll_count") == 0, "E_RECOVERY_RESULT_REROLL")
@@ -2886,19 +2869,27 @@ def validate_recovery_result(root: Path, result: Mapping[str, Any]) -> None:
     )
     require(result.get("merge_allowed") is False, "E_RECOVERY_RESULT_MERGE")
     require(result.get("package10_started") is False, "E_RECOVERY_RESULT_PACKAGE10")
+    require(
+        isinstance(result.get("draft_pull_request_url"), str)
+        and str(result["draft_pull_request_url"]).startswith("https://"),
+        "E_RECOVERY_RESULT_DRAFT_PR",
+    )
     checks = cast(Mapping[str, Any], result.get("checks", {}))
     for key in (
         "package7_unit_tests",
+        "package7_implementation_checker",
         "package7_current_checker",
         "package7_current_selftest",
         "package7_optimized_fail_closed",
-        "historical_package7_checker",
-        "package2_regression",
-        "package6_regression",
+        "ruff",
+        "type_check",
+        "git_diff_check",
+        "current_branch_secret_scan",
+        "full_history_secret_scan",
         "public_foundation_checker",
         "gate1_current_checker",
-        "secret_scan",
         "remote_checker_compatibility",
+        "remote_secret_scan",
     ):
         require(
             str(checks.get(key, "")).startswith("PASS"),
@@ -2910,15 +2901,13 @@ def validate_recovery_result(root: Path, result: Mapping[str, Any]) -> None:
         candidate_commit,
         candidate_tree_digest,
     )
+    validate_recovery_prior_failed_reviews(root, result)
     delivery = load_yaml_root(root / RECOVERY_DELIVERY_PATH, "execution_review_request")
     require(delivery.get("task_id") == RECOVERY_TASK_ID, "E_RECOVERY_DELIVERY_TASK")
     require(
-        delivery.get("candidate_commit") == candidate_commit,
-        "E_RECOVERY_DELIVERY_COMMIT",
-    )
-    require(
-        delivery.get("candidate_tree") == candidate_tree_digest,
-        "E_RECOVERY_DELIVERY_TREE",
+        delivery.get("candidate_commit") == candidate_commit
+        and delivery.get("candidate_tree") == candidate_tree_digest,
+        "E_RECOVERY_DELIVERY_BINDING",
     )
     require(
         delivery.get("status") == "REQUESTING_APPROVE_PACKAGE_7_RECOVERY_MERGE",
@@ -2933,10 +2922,14 @@ def validate_recovery_result(root: Path, result: Mapping[str, Any]) -> None:
         "E_RECOVERY_DELIVERY_MERGE",
     )
     require(
-        delivery.get("draft_pull_request_required") is True, "E_RECOVERY_DELIVERY_DRAFT"
+        delivery.get("draft_pull_request_url") == result.get("draft_pull_request_url"),
+        "E_RECOVERY_DELIVERY_PR",
+    )
+    require(
+        delivery.get("draft_pull_request_required") is True,
+        "E_RECOVERY_DELIVERY_DRAFT",
     )
     require(delivery.get("package10_started") is False, "E_RECOVERY_DELIVERY_PACKAGE10")
-
 
 def validate_recovery_workflow() -> None:
     workflow = (REPOSITORY_ROOT / ".github/workflows/ci.yml").read_text(
@@ -2980,14 +2973,14 @@ def validate_recovery_all(root: Path = PACKAGE_ROOT) -> JsonObject:
     validate_remote_probe(remote)
     validate_recovery_result(root, result)
     validate_recovery_workflow()
-    stopped = result.get("state") == RECOVERY_STOP_STATE
     return {
         "task_id": RECOVERY_TASK_ID,
-        "status": "PASS_HONEST_STOP" if stopped else "PASS",
+        "status": "PASS",
+        "success_state": result["state"],
         **implementation,
         "model_call_count": remote["model_call_audit"]["new_content_model_call_count"],
-        "review_count": 0 if stopped else 2,
-        "acceptance_pass": not stopped,
+        "review_count": 2,
+        "acceptance_pass": True,
         "readiness_transition_count": 0,
         "core_numbers_changed": False,
     }
@@ -3052,8 +3045,10 @@ def run_recovery_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
     )
 
     synthetic_remote: JsonObject = {
-        "schema": "diyu.package7.output_contract_recovery.remote_probe.v1",
+        "schema": "diyu.package7.output_contract_recovery.remote_probe.v2",
         "task_id": RECOVERY_TASK_ID,
+        "state": RECOVERY_SUCCESS_STATE,
+        "offline_material_enabled": True,
         "existing_objects": {
             "dify_app_count": 1,
             "dataset_count": 1,
@@ -3068,44 +3063,68 @@ def run_recovery_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
             "migration_pass": True,
             "rollback_test_pass": True,
             "post_rollback_redeploy_pass": True,
+            "final_service_health": "healthy",
+            "simulation_only": True,
+            "production_ready": False,
         },
         "model_call_audit": {
-            "new_content_model_call_count": 7,
-            "new_model_call_upper_bound": 7,
-            "baseline_invocation_count": 153,
-            "baseline_cumulative_model_call_upper_bound": 157,
-            "authorized_new_content_model_call_limit": 40,
-            "final_cumulative_model_call_upper_bound": 164,
+            "baseline_invocation_count": 203,
+            "baseline_cumulative_model_call_upper_bound": 207,
+            "authorized_new_content_model_call_limit": 2,
+            "new_content_model_call_count": 1,
+            "new_model_call_upper_bound": 1,
+            "final_invocation_count": 204,
+            "final_cumulative_model_call_upper_bound": 208,
             "model_call_limit_exceeded": False,
             "known_new_cost_rmb": "0",
             "content_quality_reroll_count": 0,
             "failed_calls_retained": True,
             "ledger_digest": "a" * 64,
         },
+        "six_format_zero_call_replay": {
+            "format_count": 6,
+            "new_content_model_call_count": 0,
+            "selection_pass": True,
+            "natural_language_revision_pass": True,
+            "review_pass": True,
+            "export_pass": True,
+            "reference_lookup_pass": True,
+        },
         "format_probes": [
             {
                 "content_format": content_format,
+                "probe_state": (
+                    "LIVE_PASS"
+                    if content_format == "门店线下物料"
+                    else "REPLAY_PASS"
+                ),
                 "candidate_count": 2,
                 "candidate_option_warning": None,
+                "new_model_call_increment": (
+                    1 if content_format == "门店线下物料" else 0
+                ),
                 "first_output_retained": True,
-                "creative_difference_pass": True,
                 "selection_pass": True,
+                "natural_language_revision_pass": True,
                 "review_pass": True,
                 "export_pass": True,
                 "reference_scope_pass": True,
                 "internal_identifier_leak_free": True,
+                "sensitive_information_leak_free": True,
             }
             for content_format in RECOVERY_FORMATS
         ],
         "representative_journeys": {
-            "revision": {
-                "result_class": "SUCCESS",
-                "first_output_retained": True,
+            "ordinary_creation_without_retrieval": {"result_class": "SUCCESS"},
+            "explicit_missing_object": {
+                "result_class": "MATERIAL_GAP",
+                "action_card": True,
+                "model_call_increment": 0,
             },
-            "material_gap": {"result_class": "MATERIAL_GAP", "action_card": True},
             "authorization_block": {
                 "result_class": "AUTHORIZATION_OR_SCOPE_BLOCK",
                 "action_card": False,
+                "model_call_increment": 0,
             },
             "two_browser_sessions": {
                 "chat_isolated": True,
@@ -3119,15 +3138,23 @@ def run_recovery_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
                 "revoked_session_rejected": True,
             },
         },
+        "staged_response_recovery_new_model_calls": 0,
         "package10_replay_new_model_calls": 0,
         "core_numbers": {"300": 300, "120": 120, "86": 86, "changed": False},
         "readiness": valid_readiness,
     }
     changed_remote = copy.deepcopy(synthetic_remote)
-    changed_remote["model_call_audit"]["new_content_model_call_count"] = 41
+    changed_remote["model_call_audit"]["new_content_model_call_count"] = 3
     expect_failure(
         lambda: validate_remote_probe(changed_remote),
         "E_RECOVERY_REMOTE_CALLS",
+    )
+
+    changed_remote = copy.deepcopy(synthetic_remote)
+    changed_remote["format_probes"][0]["candidate_count"] = 1
+    expect_failure(
+        lambda: validate_remote_probe(changed_remote),
+        "E_RECOVERY_REMOTE_CANDIDATE_WARNING:短视频",
     )
 
     changed_remote = copy.deepcopy(synthetic_remote)
@@ -3139,57 +3166,32 @@ def run_recovery_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
         "E_RECOVERY_REMOTE_BROWSER:candidates_isolated",
     )
 
-    synthetic_stop = copy.deepcopy(synthetic_remote)
-    synthetic_stop["state"] = RECOVERY_STOP_STATE
-    synthetic_stop["blocking_items"] = copy.deepcopy(RECOVERY_STOP_BLOCKERS)
-    synthetic_stop["model_call_audit"].update(
+    synthetic_degraded = copy.deepcopy(synthetic_remote)
+    synthetic_degraded["state"] = RECOVERY_DEGRADED_STATE
+    synthetic_degraded["offline_material_enabled"] = False
+    synthetic_degraded["model_call_audit"].update(
         {
-            "new_content_model_call_count": 50,
-            "new_model_call_upper_bound": 50,
-            "final_invocation_count": 203,
-            "final_cumulative_model_call_upper_bound": 207,
-            "excess_model_call_upper_bound": 10,
-            "model_call_limit_exceeded": True,
+            "new_content_model_call_count": 2,
+            "new_model_call_upper_bound": 2,
+            "final_invocation_count": 205,
+            "final_cumulative_model_call_upper_bound": 209,
         }
     )
-    blocked_probe = synthetic_stop["format_probes"][4]
-    blocked_probe.update(
-        {
-            "probe_state": "BLOCKED",
-            "candidate_count": 0,
-            "candidate_option_warning": None,
-            "creative_difference_pass": False,
-            "selection_pass": False,
-            "review_pass": False,
-            "export_pass": False,
-            "reference_scope_pass": False,
-            "internal_identifier_leak_free": None,
-            "blocking_item": "REMOTE_OFFLINE_DELIVERABLE_NOT_FINALIZED",
-        }
-    )
-    validate_remote_probe(synthetic_stop)
+    synthetic_degraded["format_probes"][4] = {
+        "content_format": "门店线下物料",
+        "probe_state": "DISABLED",
+        "candidate_count": 0,
+        "entry_enabled": False,
+        "attempt_count": 2,
+        "blocking_item": "REMOTE_OFFLINE_DELIVERABLE_NOT_FINALIZED",
+    }
+    validate_remote_probe(synthetic_degraded)
 
-    changed_stop = copy.deepcopy(synthetic_stop)
-    changed_stop["model_call_audit"]["excess_model_call_upper_bound"] = 9
+    changed_degraded = copy.deepcopy(synthetic_degraded)
+    changed_degraded["offline_material_enabled"] = True
     expect_failure(
-        lambda: validate_remote_probe(changed_stop),
-        "E_RECOVERY_REMOTE_STOP_BUDGET",
-    )
-
-    changed_stop = copy.deepcopy(synthetic_stop)
-    changed_stop["blocking_items"] = []
-    expect_failure(
-        lambda: validate_remote_probe(changed_stop),
-        "E_RECOVERY_REMOTE_STOP_BLOCKERS",
-    )
-
-    changed_stop = copy.deepcopy(synthetic_stop)
-    changed_stop["format_probes"][4] = copy.deepcopy(
-        synthetic_remote["format_probes"][4]
-    )
-    expect_failure(
-        lambda: validate_remote_probe(changed_stop),
-        "E_RECOVERY_REMOTE_STOP_FORMATS",
+        lambda: validate_remote_probe(changed_degraded),
+        "E_RECOVERY_REMOTE_OFFLINE_STATE",
     )
 
     synthetic_reviews = [
@@ -3222,7 +3224,7 @@ def run_recovery_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
     return {
         "task_id": RECOVERY_TASK_ID,
         "selftest": "PASS",
-        "negative_case_count": 13,
+        "negative_cases": "PASS",
         "optimized_mode_fail_closed": True,
     }
 

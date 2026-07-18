@@ -16,6 +16,10 @@
     "count": 35,
     "pass": true
   },
+  "candidate_count_range": [
+    1,
+    3
+  ],
   "action_card_by_result_class": {
     "MATERIAL_GAP": true,
     "AUTHORIZATION_OR_SCOPE_BLOCK": false,
@@ -29,8 +33,15 @@
   "future_shooting_scene_allowed": true,
   "similarity_is_review_hint_only": true,
   "ordinary_creative_surfaces_do_not_require_fact_binding": true,
-  "explicit_hard_fact_claims_require_server_sources": true,
+  "creative_claims_without_evidence_binding_allowed": true,
+  "current_entry_fact_gate_reachable": false,
+  "current_hard_fact_reference_error_reachable": false,
+  "single_complete_candidate_delivered": true,
+  "single_candidate_option_warning": "本轮可选方案不足",
+  "ordinary_creation_without_retrieval_allowed": true,
+  "explicit_missing_object_requires_material_card": true,
   "internal_and_sensitive_reference_leakage_blocked": true,
+  "manual_review_required_before_publish": true,
   "failed_user_surface_internal_run_id_free": true,
   "paid_provider_response_staged_before_completion": true,
   "staged_response_recovery_new_model_call_count": 0,

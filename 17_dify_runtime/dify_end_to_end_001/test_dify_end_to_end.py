@@ -516,19 +516,19 @@ class Package7RecoveryTests(unittest.TestCase):
         self.assertIn("narrative_materials", prompt["author_materials"])
         self.assertNotIn("retrieval_fragment_refs", prompt["author_materials"])
         self.assertIn(
-            "普通标题、正文、口播、分镜、未来拍摄和排版建议均可自由创作",
+            "商品属性或功效、价格、库存、尺寸、授权表述、企业承诺",
             prompt["system"],
         )
-        self.assertIn("价格、库存、规格、商品功效", prompt["system"])
-        self.assertIn("没有提供就不要写成事实", prompt["system"])
+        self.assertIn("没有检索资料也要", prompt["system"])
         self.assertIn(
-            "只是本次创作参考，不是逐句真值证明",
+            "只是可选创作参考，不是逐句真值证明",
             prompt["author_materials"]["instruction"],
         )
-        self.assertIn("不得靠创意补造", serialized)
-        self.assertNotIn("准确性由人工审查", serialized)
+        self.assertIn("都可作为待人审正文创作", serialized)
         self.assertIn("不授予任何登录或数据访问权限", serialized)
         self.assertNotIn("逐句绑定", serialized)
+        self.assertNotIn("required_candidate_count", serialized)
+        self.assertEqual(contract["root_fields"]["candidates"], "1至3份；每份按candidate_schema填写")
 
     def test_public_capability_mapping_exposes_ten_topics_and_seven_formats(
         self,
@@ -663,50 +663,49 @@ class Package7RecoveryTests(unittest.TestCase):
             echoed_run.payload["model_wrapper_normalization"],
         )
 
-    def test_negative_prohibitions_are_allowed_but_false_assertions_are_blocked(
+    def test_creative_claims_enter_human_review_without_evidence_binding(
         self,
     ) -> None:
-        prepared = self.prepare("直播内容包")
-        envelope = candidate_envelope("直播内容包")
-        for candidate in envelope["candidates"]:
-            candidate["spoken_lines"] = []
-            candidate["cta"] = ""
-            candidate["deliverable"]["risk_reminders"] = [
-                "不能承诺‘永远不会’或‘所有孩子都喜欢’。",
-                "不要为了互动而编造证言或使用‘顾客都说’类表达。",
-                "平时在别处看到主播说‘这件衣服百分百适合你家孩子’，先把它当作待核对说法。",
-            ]
-        result = self.finalize(prepared, "直播内容包", envelope=envelope)
-        self.assertEqual(result["result_class"], "SUCCESS")
-
-        creative = self.prepare("直播内容包")
-        creative_envelope = candidate_envelope("直播内容包")
-        for candidate in creative_envelope["candidates"]:
-            candidate["body"] = "这套方法百分百适合所有孩子，顾客都说好。"
-        creative_result = self.finalize(
-            creative,
-            "直播内容包",
-            envelope=creative_envelope,
+        claims = (
+            "这款商品售价99999元，当前库存还有12件，长度999厘米。",
+            "本账号已经获准代表总部，公司承诺下周完成活动。",
+            "昨天一位顾客选择了红色上衣，已有照片和视频可直接使用。",
+            "这套方法百分百适合所有孩子，顾客都说好。",
         )
-        self.assertEqual(
-            creative_result["result_class"],
-            "HARD_FACT_REFERENCE_ERROR",
-        )
-        self.assertFalse(creative_result["action_card"])
+        for text in claims:
+            with self.subTest(text=text):
+                prepared = self.prepare("直播内容包")
+                envelope = candidate_envelope("直播内容包")
+                for candidate in envelope["candidates"]:
+                    candidate["body"] = text
+                result = self.finalize(
+                    prepared,
+                    "直播内容包",
+                    envelope=envelope,
+                )
+                self.assertEqual(result["result_class"], "SUCCESS")
 
-    def test_one_valid_candidate_is_rejected_as_insufficient_options(
+    def test_one_valid_candidate_is_delivered_with_option_warning(
         self,
     ) -> None:
         prepared = self.prepare()
         envelope = candidate_envelope("短视频")
         del envelope["candidates"][0]["deliverable"]
         result = self.finalize(prepared, "短视频", envelope=envelope)
-        self.assertEqual(result["result_class"], "MODEL_OUTPUT_CONTRACT_ERROR")
-        self.assertFalse(result["action_card"])
+        self.assertEqual(result["result_class"], "SUCCESS")
+        self.assertEqual(result["candidate_option_warning"], "本轮可选方案不足")
+        self.assertIn("本轮可选方案不足", result["user_visible_text"])
         run = self.repository.model_run(str(prepared["run_id"]))
         self.assertEqual(run.payload["accepted_candidate_count"], 1)
-        self.assertEqual(run.payload["failure_reason"], "INSUFFICIENT_SAFE_CANDIDATES")
-        self.assertEqual(run.state, "FIRST_OUTPUT_REJECTED")
+        self.assertEqual(run.payload["candidate_option_warning"], "本轮可选方案不足")
+        self.assertEqual(run.state, "FIRST_OUTPUT_ACCEPTED")
+        selected = self.scoped_prepare(
+            self.request(operation="选择候选", candidate_number=1),
+        )
+        self.assertIn("已选择", selected["user_visible_text"])
+        for operation in ("审核", "导出"):
+            response = self.scoped_prepare(self.request(operation=operation))
+            self.assertEqual(response["response_kind"], "DIRECT")
 
         mismatched = self.prepare("短视频", duration_label="30秒左右")
         mismatched_envelope = candidate_envelope("短视频")
@@ -764,29 +763,9 @@ class Package7RecoveryTests(unittest.TestCase):
             recovered_run.payload["model_wrapper_normalization"],
         )
 
-    def test_unsupported_explicit_facts_and_sensitive_surfaces_are_blocked(
+    def test_internal_identifiers_sensitive_data_and_secrets_are_blocked(
         self,
     ) -> None:
-        for text in (
-            "这款商品售价99999元。",
-            "当前库存还有12件。",
-            "这件上衣长度999厘米。",
-            "本账号已经获准代表总部。",
-            "公司已经决定发布这项活动。",
-            "已有照片可直接使用。",
-        ):
-            with self.subTest(text=text):
-                prepared = self.prepare()
-                envelope = candidate_envelope("短视频")
-                for row in envelope["candidates"]:
-                    row["title"] = text
-                result = self.finalize(prepared, "短视频", envelope=envelope)
-                self.assertEqual(
-                    result["result_class"],
-                    "HARD_FACT_REFERENCE_ERROR",
-                )
-                self.assertFalse(result["action_card"])
-
         for text in (
             "把CP01作为标题展示。",
             "联系电话是13812345678。",
@@ -801,7 +780,7 @@ class Package7RecoveryTests(unittest.TestCase):
                 self.assertEqual(result["result_class"], "MODEL_OUTPUT_CONTRACT_ERROR")
                 self.assertFalse(result["action_card"])
 
-    def test_reference_panel_does_not_claim_sentence_level_fact_binding(self) -> None:
+    def test_reference_panel_records_scope_without_sentence_binding(self) -> None:
         prepared = self.prepare()
         envelope = candidate_envelope("短视频")
         supported = "笛语商品使用100厘米至150厘米的常用尺码范围。"
@@ -815,13 +794,12 @@ class Package7RecoveryTests(unittest.TestCase):
                 "ACCOUNT-DIYU-HQ-OFFICIAL",
             )
         bindings = candidates[0].candidate_payload["claim_bindings"]
-        self.assertGreaterEqual(len(bindings), 1)
-        self.assertEqual(bindings[0]["binding_origin"], "SERVER_PATH_CLASSIFICATION")
-        self.assertGreaterEqual(
+        self.assertEqual(bindings, [])
+        self.assertEqual(
             candidates[0].candidate_payload["evidence_panel"][
                 "server_bound_explicit_fact_count"
             ],
-            1,
+            0,
         )
         self.assertFalse(
             candidates[0].candidate_payload["evidence_panel"][
@@ -1225,6 +1203,10 @@ class Package7RecoveryTests(unittest.TestCase):
         )
         self.assertEqual(gap["result_class"], "MATERIAL_GAP")
         self.assertIn("明确要求使用", gap["user_visible_text"])
+        audio_gap = self.scoped_prepare(
+            self.request(message="请分析这段未提供的录音并改写成门店话术。"),
+        )
+        self.assertEqual(audio_gap["result_class"], "MATERIAL_GAP")
         denied = self.scoped_prepare(
             self.request(account_display_name="未授权账号"),
             selected_account=False,

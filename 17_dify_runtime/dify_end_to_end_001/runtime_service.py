@@ -150,9 +150,9 @@ SECRET_SURFACE_PATTERNS = (
     re.compile(r"Bearer [A-Za-z0-9._-]{20,}"),
 )
 EXPLICIT_REQUIRED_OBJECT_PATTERN = re.compile(
-    r"(?:使用|采用|根据|基于|结合|参考|拿|把).{0,12}"
-    r"(?:这份|这个|这张|该份|该张|现有|已有|上传的|提供的)?"
-    r"(?:文件|图片|照片|视频|素材|截图|海报|设计稿)"
+    r"(?:使用|采用|根据|基于|结合|参考|拿|把|分析|改写|解读).{0,12}"
+    r"(?:这份|这个|这张|这段|该份|该张|该段|现有|已有|上传的|提供的|未提供的)?"
+    r"(?:文件|图片|照片|视频|声音|音频|录音|素材|截图|海报|设计稿)"
 )
 FUTURE_OR_HYPOTHETICAL_PATTERN = re.compile(
     r"(?:建议|可以|可拍|计划|如果|若有|如有|假设|示意|未来|待确认|需准备|"
@@ -1232,23 +1232,29 @@ class Package7Runtime:
                 {
                     "system": (
                         "你是受控内容作者，只负责把已给任务和资料写成内容。返回严格JSON，不要Markdown。"
-                        "一次写2至3份候选；每份在点子、切入、叙事视角或呈现方式上真正不同，换标题或同义改写不算不同。"
+                        "一次写1至3份候选；有多份时，每份在点子、切入、叙事视角或呈现方式上真正不同，"
+                        "换标题或同义改写不算不同。"
                         "只填写当前成品合同列出的内容字段。不要填写企业、账号、组织、平台、时长、内部编号、引用路径、"
                         "资料账本、组件编号，也不要输出其他六种成品的空分支。"
-                        "普通标题、正文、口播、分镜、未来拍摄和排版建议均可自由创作；明确的价格、库存、规格、商品功效、"
-                        "授权状态、企业承诺、真实事件和已有素材状态只能使用author_materials中实际提供且仍有效的信息，"
-                        "没有提供就不要写成事实。author_materials不是逐句真值证明，作者不要输出引用编号；服务端会记录本次参考范围。"
+                        "标题、正文、口播、分镜、商品属性或功效、价格、库存、尺寸、授权表述、企业承诺、"
+                        "已发生事件、顾客或员工动作、假设场景、未来拍摄和已有素材描述均可自由创作并进入人工审核。"
+                        "author_materials只是可选参考，不是逐句真值证明；没有检索资料也要根据用户输入和品牌表达配置继续创作。"
+                        "作者不要输出引用编号；服务端只记录本次参考范围。"
                         "内容中写出‘已授权’不代表获得登录、账号或数据访问权限，也不得声称绕过这些权限。"
                         "不得输出内部编号、密钥、身份证号、手机号等真实敏感信息。只有任务明确要求使用某个文件、图片、视频或"
-                        "其他实物而它没有提供时，才停止并请求补料。"
+                        "声音对象而它没有提供时，才停止并请求补料。"
                         "previous_candidate只用于按本次修改要求改内容。"
                     ),
                     "creative_plan": {
                         "task_objective": plan.get("task_objective"),
                         "primary_audience": plan.get("primary_audience"),
-                        "candidate_policy": copy.deepcopy(
-                            plan.get("candidate_policy", {})
-                        ),
+                        "candidate_policy": {
+                            key: copy.deepcopy(value)
+                            for key, value in dict(
+                                plan.get("candidate_policy", {})
+                            ).items()
+                            if key != "required_candidate_count"
+                        },
                         "expression_guidance": {
                             key: copy.deepcopy(value)
                             for key, value in dict(
@@ -1369,10 +1375,9 @@ class Package7Runtime:
             "narrative_materials": narrative,
             "precise_facts": facts,
             "instruction": (
-                "这些内容只是本次创作参考，不是逐句真值证明。普通表达、假设场景和未来制作建议可自由创作；"
-                "明确的价格、库存、规格、商品功效、授权状态、企业承诺、真实事件、顾客证言和已有素材状态，"
-                "只能在这里实际提供且仍有效时写入，不得靠创意补造。服务端负责记录参考范围，作者不要输出引用编号；"
-                "文本中的授权措辞不授予任何登录或数据访问权限。"
+                "这些内容只是可选创作参考，不是逐句真值证明。即使列表为空，也要按用户输入、账号定位和品牌表达配置创作。"
+                "价格、库存、规格、商品功效、授权表述、企业承诺、真实或假设事件、顾客动作和素材描述都可作为待人审正文创作；"
+                "服务端只记录参考范围，作者不要输出引用编号。文本中的授权措辞不授予任何登录或数据访问权限。"
                 "不得输出内部编号、密钥或真实敏感信息。"
             ),
         }
@@ -1642,7 +1647,6 @@ class Package7Runtime:
             task_brief = {}
         expected_format = str(task_brief.get("content_format", ""))
         fact_refs, material_refs = self._server_reference_scope(materials, task_brief)
-        source_corpus = self._source_corpus_by_ref(materials)
         plan_record = self.adapter.expression_service.store.get(run.plan_ref)
         if plan_record is None:
             raise RuntimeContractError("Candidate plan is unavailable")
@@ -1678,21 +1682,6 @@ class Package7Runtime:
                 surfaces,
                 literal_prohibitions,
             )
-            fact_bindings, fact_failures = self._server_fact_resolution(
-                surfaces,
-                classification_surfaces=surfaces,
-                source_corpus=source_corpus,
-            )
-            if fact_failures:
-                candidate_failures.append(
-                    {
-                        "candidate_ordinal": ordinal,
-                        "error_type": "HARD_FACT_REFERENCE_ERROR",
-                        "error_count": len(fact_failures),
-                        "error_locations": fact_failures,
-                    }
-                )
-                continue
             sensitive_failures = self._server_sensitive_surface_failures(surfaces)
             if sensitive_failures:
                 candidate_failures.append(
@@ -1711,7 +1700,7 @@ class Package7Runtime:
                 "creative_difference": candidate.creative_difference,
                 "difference_label": candidate.creative_difference,
                 "candidate_user_visible_surfaces": surfaces,
-                "claim_bindings": fact_bindings,
+                "claim_bindings": [],
                 "author_declared_claim_bindings": [],
                 "used_fact_refs": list(fact_refs),
                 "used_material_refs": list(material_refs),
@@ -1721,7 +1710,7 @@ class Package7Runtime:
                     "used_material_count": len(material_refs),
                     "scope_and_authorization_checked": True,
                     "machine_proves_every_sentence": False,
-                    "server_bound_explicit_fact_count": len(fact_bindings),
+                    "server_bound_explicit_fact_count": 0,
                     "semantic_fact_review": "待人工确认",
                     "publishable": False,
                 },
@@ -1766,15 +1755,8 @@ class Package7Runtime:
             evidence_panel["similarity_review_hints"] = [
                 row for row in similarity_hints if ordinal in row["candidate_ordinals"]
             ]
-        if len(accepted) < 2:
-            result_class = (
-                "HARD_FACT_REFERENCE_ERROR"
-                if any(
-                    row.get("error_type") == "HARD_FACT_REFERENCE_ERROR"
-                    for row in candidate_failures
-                )
-                else "MODEL_OUTPUT_CONTRACT_ERROR"
-            )
+        if not accepted:
+            result_class = "MODEL_OUTPUT_CONTRACT_ERROR"
             self.repository.preserve_first_output(
                 run.run_id,
                 output_digest,
@@ -1784,13 +1766,16 @@ class Package7Runtime:
                     "failure_stage": "CANDIDATE_VALIDATION",
                     "candidate_failures": candidate_failures,
                     "accepted_candidate_count": len(accepted),
-                    "failure_reason": "INSUFFICIENT_SAFE_CANDIDATES",
+                    "failure_reason": "NO_COMPLETE_SAFE_CANDIDATE",
                     "original_envelope": copy.deepcopy(original_envelope),
                     "run_id": run.run_id,
                     "first_output_preserved": True,
                 },
             )
             return self._failure_result(result_class, run.run_id)
+        candidate_option_warning = (
+            "本轮可选方案不足" if len(accepted) == 1 else None
+        )
         self.repository.save_candidate_set(
             run_id=run.run_id,
             account_id=run.account_id,
@@ -1806,7 +1791,7 @@ class Package7Runtime:
                 "result_class": "SUCCESS",
                 "candidate_failures": candidate_failures,
                 "accepted_candidate_count": len(accepted),
-                "candidate_option_warning": None,
+                "candidate_option_warning": candidate_option_warning,
                 "model_wrapper_normalization": normalization,
                 "similarity_review_hints": similarity_hints,
                 "first_output_preserved": True,
@@ -1816,8 +1801,15 @@ class Package7Runtime:
             "response_kind": "DIRECT",
             "result_class": "SUCCESS",
             "run_id": run.run_id,
-            "candidate_option_warning": None,
-            "user_visible_text": self._render_candidates(accepted),
+            "candidate_option_warning": candidate_option_warning,
+            "user_visible_text": "\n".join(
+                value
+                for value in (
+                    candidate_option_warning,
+                    self._render_candidates(accepted),
+                )
+                if value
+            ),
         }
 
     @staticmethod
@@ -2536,20 +2528,34 @@ class Package7Runtime:
 
     @staticmethod
     def _render_candidates(candidates: list[JsonObject]) -> str:
-        blocks = ["已准备好推荐候选和备选。它们仍是内部测试内容，请先人工确认。"]
+        candidate_count = len(candidates)
+        opening = (
+            "已准备好1份候选。它仍是内部测试内容，请先人工确认。"
+            if candidate_count == 1
+            else "已准备好推荐候选和备选。它们仍是内部测试内容，请先人工确认。"
+        )
+        blocks = [opening]
         for ordinal, candidate in enumerate(candidates, 1):
             surfaces = candidate["candidate_user_visible_surfaces"]
             package = surfaces["execution_payload"]
-            prefix = "推荐候选" if ordinal == 1 else f"备选{ordinal - 1}"
+            prefix = (
+                "候选1"
+                if candidate_count == 1
+                else ("推荐候选" if ordinal == 1 else f"备选{ordinal - 1}")
+            )
             blocks.append(
                 f"\n【{prefix}】\n{surfaces['title']}\n{surfaces['body']}\n"
                 f"方向：{package['content_direction']}\n核心创意：{package['core_idea']}\n"
                 f"{Package7Runtime._format_production_package(package)}\n"
-                f"依据：{candidate['evidence_panel']['used_material_count']}份资料、"
+                f"参考范围：{candidate['evidence_panel']['used_material_count']}份资料、"
                 f"{candidate['evidence_panel']['used_fact_count']}项精确事实；"
                 "范围已检查，正文语义待人工确认。"
             )
-        blocks.append("\n可以选择第1、2或3份，也可以说明想局部修改哪里。")
+        if candidate_count == 1:
+            blocks.append("\n可以选择第1份，也可以说明想局部修改哪里。")
+        else:
+            choices = "、".join(str(value) for value in range(1, candidate_count + 1))
+            blocks.append(f"\n可以选择第{choices}份，也可以说明想局部修改哪里。")
         return "\n".join(blocks)
 
     @staticmethod
