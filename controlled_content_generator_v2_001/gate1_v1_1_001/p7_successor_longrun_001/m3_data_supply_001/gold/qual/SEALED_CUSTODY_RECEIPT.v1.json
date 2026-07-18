@@ -1,0 +1,26 @@
+{
+ "schema_version": "p7-m3-sealed-custody-receipt-v1",
+ "at": "2026-07-18T14:53:42.927142+00:00",
+ "qual_order_verdict": {
+  "violations": [],
+  "verdict": "PASS"
+ },
+ "sealed_scan_tail": "",
+ "sets": {
+  "QUAL_A": {
+   "gold": 725,
+   "gold_sha256": "8203ddb452ffe177ff746978827606a69b2a6c6692da8ce7127289bc771d102b"
+  },
+  "QUAL_B": {
+   "gold": 701,
+   "gold_sha256": "10cba2681ef855351ba66988edfad334854ea5dc93e4d4b5cf4b10fe9b8c3838"
+  }
+ },
+ "custodian_discipline": "编排会话全程只见数量/摘要/回执（registry visible_material_count 零内容清单）；明文承载区 gitignore + denylist 撞库；接触明文的 headless 会话逐叫登记（thread/session id + ephemeral/无记忆）",
+ "cost": {
+  "calls": 464,
+  "total_usd": 257.6375,
+  "total_wall_clock_ms": 84476211,
+  "corrupt_rows_skipped": 0
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "schema_version": "p7-m3-qual-gold-freeze-receipt-v1",
+ "set": "QUAL_B",
+ "at": "2026-07-18T14:51:03.110244+00:00",
+ "gold_count": 701,
+ "class_counts": {
+  "risk": {
+   "CRITICAL": 10,
+   "HIGH": 108,
+   "LOW": 416,
+   "MEDIUM": 167
+  },
+  "entailment": {
+   "CONTRADICTED": 148,
+   "SUPPORTED": 496,
+   "UNKNOWN": 57
+  },
+  "kind": {
+   "CHALLENGE_VARIANT": 199,
+   "NATURAL": 502
+  },
+  "per_family": {
+   "F1_PEOPLE_AND_REAL_SCENE": 189,
+   "F2_PROFESSIONAL_AND_SEARCH": 170,
+   "F3_PRODUCT_RELATION_AND_AESTHETIC": 138,
+   "F4_STORE_LOCAL_AND_RETAIL": 140,
+   "F5_ENTERPRISE_LONG_TERM_TRUST": 64
+  }
+ },
+ "gold_sha256": "10cba2681ef855351ba66988edfad334854ea5dc93e4d4b5cf4b10fe9b8c3838",
+ "faces_sha256": "5f3aac4473e8f2d84deba4584abc1afe00b2a7f8fc489f1287653fe364ff1ec7",
+ "sealed_denylist_registered": true,
+ "location": "sealed_custody_001/qual_B/gold_frozen.json（保全区；永不入 Git）",
+ "custodian_view": "本回执仅数量/摘要；编排会话零接触明文（工具 stdout 纪律）"
+}

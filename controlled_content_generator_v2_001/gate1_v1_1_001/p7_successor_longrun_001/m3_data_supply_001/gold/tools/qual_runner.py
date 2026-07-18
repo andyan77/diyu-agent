@@ -67,6 +67,19 @@ def sha_file(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
+def _batch_ready(p: Path) -> bool:
+    """真批文件就绪 = 存在且能解析为非空 JSON 数组。
+    进程被杀会留下截断/空的 qvb_NNN.json；裸 exists() 会把它当已完成而永久跳过，
+    故构造/续跑/组装三处一律用本判据（截断文件视为未完成，触发重建）。"""
+    if not p.exists():
+        return False
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, ValueError):
+        return False
+    return isinstance(data, list) and len(data) > 0
+
+
 def assert_sealed_ignored() -> None:
     r = subprocess.run(["git", "-C", str(P7.parents[2]), "check-ignore",
                         str(SEAL / "probe")], capture_output=True, text=True)
@@ -227,7 +240,7 @@ def cmd_faces(set_id: str, max_batches: int) -> int:
         if done >= max_batches:
             break
         out_path = cdir / f"qvb_{i:03d}.json"
-        if out_path.exists():
+        if _batch_ready(out_path):
             continue
         expected = {t["variant_id"] for t in batch}
 
@@ -249,13 +262,15 @@ def cmd_faces(set_id: str, max_batches: int) -> int:
                             encoding="utf-8")
         done += 1
         print(f"OK faces {set_id} qvb_{i:03d}")
-    remaining = [i for i in range(len(batches)) if not (cdir / f"qvb_{i:03d}.json").exists()]
+    remaining = [i for i in range(len(batches))
+                 if not _batch_ready(cdir / f"qvb_{i:03d}.json")]
     if remaining:
         print(json.dumps({"set": set_id, "variant_batches_remaining": remaining}))
         return 0
     # 全部构造完成 → 组装题面（faces = 自然 + 变体正文；构造意图另存 gold 侧，不入题面）
+    # glob 精确到三位数字批号，排除同目录 qvb_NNN.raw.tryN.json 原始留存（否则拿原始串当字典）
     variants_faces, variant_intents = [], []
-    for p in sorted(cdir.glob("qvb_*.json")):
+    for p in sorted(cdir.glob("qvb_[0-9][0-9][0-9].json")):
         for r in json.loads(p.read_text(encoding="utf-8")):
             t = next(t for t in tasks if t["variant_id"] == r["variant_id"])
             variants_faces.append({
@@ -319,7 +334,7 @@ def cmd_label(set_id: str, seat: str, max_batches: int) -> int:
         if done >= max_batches:
             break
         out_path = out_dir / (bpath.stem + ".labels.json")
-        if out_path.exists():
+        if _batch_ready(out_path):
             continue
         cases = json.loads(bpath.read_text(encoding="utf-8"))
         slim = [{k: c[k] for k in ("case_id", "claim_text", "claim_boundary",
@@ -383,7 +398,7 @@ def cmd_labelfreeze(set_id: str) -> int:
         "schema_version": "p7-m3-qual-doubleblind-receipt-v1",
         "set": f"QUAL_{set_id}", "at": now(),
         "faces_total": total, "labeled_both_seats": both,
-        "seats": "A=Codex-GPT(gpt-5.6-sol) / B=Fable（跨模型双盲）",
+        "seats": "A=Codex-GPT(gpt-5.6-sol) / B=Opus-4.8（跨模型双盲；载体裁决 seq41）",
         "dispute_count": disputes,
         "dispute_rate": round(disputes / max(1, both), 4),
         "labels_A_sha256": digest_json(sorted(

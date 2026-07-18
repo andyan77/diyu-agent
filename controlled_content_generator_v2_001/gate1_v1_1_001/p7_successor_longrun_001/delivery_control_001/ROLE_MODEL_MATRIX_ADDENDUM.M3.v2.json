@@ -1,0 +1,55 @@
+{
+  "schema_version": "p7-role-model-matrix-addendum-v2",
+  "addendum_to": "ROLE_MODEL_MATRIX.v1.json（ACS 冻结成员原文不动）+ ROLE_MODEL_MATRIX_ADDENDUM.M3.v1.json（A 席切 Codex，本件只增不改其 A 席行）",
+  "authority": "发起人 2026-07-17 裁决：Fable 5 使用窗口 429 硬阻，授权豁免将 Anthropic 侧载体 claude-fable-5 → claude-opus-4-8，并令本会话诚实裁定所有已/将形成结论是否仍等价",
+  "milestone_id": "M3",
+  "trigger": {
+    "event": "QUAL 面构造与 B 席建标载体 claude -p --model claude-fable-5 返回 HTTP 429 'You've reached your Fable 5 limit'",
+    "probe_fable": "runtime_verified 2026-07-17：claude-fable-5 headless exit1 api_error_status=429（额度门，非预算门；Claude 侧累计 $173.63/$1500）",
+    "probe_opus": "runtime_verified 2026-07-17 session 8d92604b：claude-opus-4-8 headless exit0 is_error=false 回显正确",
+    "probe_codex": "runtime_verified 2026-07-17 thread 019f7136：codex(gpt-5.6-sol) headless exit0 正常"
+  },
+  "carrier_switch": [
+    {
+      "role_id": "GOLD_LABELING_SEAT_B",
+      "old_model": "claude-fable-5",
+      "new_model": "claude-opus-4-8",
+      "carrier": "claude -p --model claude-opus-4-8 headless（CLAUDE_CODE_DISABLE_AUTO_MEMORY=1，全新会话，仓外中性目录）",
+      "note": "承接 ROLE_MODEL_MATRIX_ADDENDUM.M3.v1 GOLD_LABELING_SEAT_B 行；仅换 Anthropic 侧模型，席位隔离/披露纪律不变"
+    },
+    {
+      "role_id": "GOLD_ADJUDICATOR_M3",
+      "old_model": "claude-fable-5",
+      "new_model": "claude-opus-4-8（披露：仍与 B 席同模型；分歧材料匿名化送裁）",
+      "carrier": "claude -p --model claude-opus-4-8 headless 全新会话"
+    },
+    {
+      "role_id": "QUAL_FACE_VARIANT_CONSTRUCTOR",
+      "old_model": "claude-fable-5",
+      "new_model": "claude-opus-4-8",
+      "note": "QUAL 面（challenge 变体）构造载体；为统一来源，A/B 两集已 Fable 构造的 31 批全部作废并以 Opus 重建（faces 冻结前，可安全重建）"
+    }
+  ],
+  "unchanged": {
+    "GOLD_LABELING_SEAT_A": "维持 codex exec headless（OpenAI GPT gpt-5.6-sol），ROLE_MODEL_MATRIX_ADDENDUM.M3.v1 原行不动",
+    "DEV_GOLD_G1_G2": "G1（295 金标）/G2（493 用例）已按当时载体合同（Fable 生成侧 + Codex A 席复核）建成并提交（7c76c43 / 411a278），本裁决不回溯、不重建；其载体如实登记于各自 SESSION_REGISTRY",
+    "frozen_ACS_members": "ROLE_MODEL_MATRIX.v1.json / annotation_protocol.v1.json 模板文本 / MILESTONE_EXIT_CONTRACT / GPT_CODEX_SCOPE_CONTRACT 均未改动；ACS set_digest 516fe73b 不变（本件为叠加层，非 ACS 成员）"
+  },
+  "equivalence_ruling": {
+    "verdict": "EQUIVALENT_IN_ALL_VALIDITY_BEARING_PROPERTIES",
+    "certified_by": "M3 主编排会话（claude-fable-5 顶层；载体裁决当事会话）2026-07-17",
+    "grounds": [
+      "① 跨模型双盲不减反净：A=Codex-GPT(OpenAI) vs B=Opus-4.8(Anthropic) 仍为两供应商、两架构、会话隔离、互不见对方标签——设计目的（规避单模型系统性偏差）完整保留；换的只是 Anthropic 侧填充模型，A–B 跨供应商多样性不变",
+      "② 金标有效性门为模型无关的确定性机器门：validate_reference_assertions 零错误、逐字节 span 引证、族覆盖下限、dispute_rate 可复算、摘要闭合复核记录——Opus-4.8（Mythos 级，能力≥Fable-5）至少同等满足",
+      "③ 仲裁披露语义不变：仲裁员与 B 席同模型（原 Fable=Fable，今 Opus=Opus），分歧匿名化送裁口径一致",
+      "④ 密封保全/资格顺序/family-wise 假通过率预算/抽样框互斥分层，全部载体无关",
+      "⑤ QUAL 面构造经 Opus 全量重建后来源统一（构造+标注+仲裁均 Opus，对 Codex 交叉核），无混载体星号；自然面（真实 claims）本就确定性抽取、与构造模型无关"
+    ],
+    "honest_residuals_disclosed": [
+      "DEV 金标（G1/G2）为 Fable-5 建成、QUAL 金标为 Opus-4.8 建成：二者为相互独立的金标集（DEV=开发/校准，QUAL=密封资格），各自内部一致、各自独立过机器门；互不为对方前置或基准，故非等价性破口，仅为如实登记的来源事实",
+      "构造 31 批 Fable 产物作废（移出题面链，SESSION_REGISTRY 行保留为历史）；Opus 重建后题面链 100% Opus"
+    ],
+    "would_have_stopped_if": "若切换会破坏跨模型双盲、降低金标门、或使 QUAL 依赖 DEV 载体一致性——则判 NOT_EQUIVALENT 并停机报发起人。经核均不成立，故认证等价并继续。"
+  },
+  "recorded_at": "2026-07-17T00:00:00+00:00"
+}

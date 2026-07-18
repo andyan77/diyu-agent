@@ -1,0 +1,76 @@
+{
+ "schema_version": "p7-m3-family-wise-false-pass-budget-v1",
+ "milestone_id": "M3",
+ "authority": "AB_DUAL_PRODUCT_DELIVERY_PLAN.v2.3 P0-f（family-wise 假通过率预算预注册）；MILESTONE_EXIT_CONTRACT.M3 键 FAMILY_WISE_FALSE_PASS_BUDGET_PREREGISTERED",
+ "preregistered_at": "2026-07-17T17:19:14.543764+00:00",
+ "preregistration_order_proof": "落盘时点：QUAL-A/B 题面构造进行中、双盲建标未开始、金标未冻结（QUAL_ORDER_EVENTS 无 A2/B2/A3/B3 事件）——预算先于任何金标结果可见",
+ "definitions": {
+  "false_pass": "资格运行中，候选模型对某密封项产出被判为通过/合规，而该项密封金标为 FAIL/违规。按项计，不按组计。",
+  "denominator": "该族该集内金标有效（非 UNRESOLVED）且进入资格评测的项数",
+  "family_wise_rule": "合取控制：五族须同时各自满足其预算（任一族超预算 = 整体资格 FAIL）。合取设计天然保守，无需额外多重校正。",
+  "dual_set_rule": "QUAL-A 与 QUAL-B 分别独立评测，两集均须满足全部预算（A 过 B 不过 = FAIL）"
+ },
+ "hard_veto_overlay": {
+  "rule": "risk_level ∈ {HIGH, CRITICAL} 的项出现任何 false_pass → 立即整体 FAIL，不消耗比率预算",
+  "authority": "v2.3 S3 出口 HIGH_RISK_HARD_VETO_COUNT_ZERO 的资格面镜像"
+ },
+ "overall_budget": {
+  "max_overall_false_pass_rate": 0.05,
+  "note": "跨族合并口径，叠加于各族 0.10 之上（两层都须过）"
+ },
+ "per_family_budgets": [
+  {
+   "family": "F1_PEOPLE_AND_REAL_SCENE",
+   "max_false_pass_rate": 0.1,
+   "small_n_rule": "若该族集内有效判定项 n<30，改用计数帽 max(1, floor(0.10*n))（小样本下比率不稳定，计数帽更保守）",
+   "derivation": "锚定 VECTOR_CAPACITY_TABLE.v1 的 ci95_halfwidth_at_demand_n=0.098（n=100）：0.10 是该功效下可与 0 区分的最小稳定阈"
+  },
+  {
+   "family": "F2_PROFESSIONAL_AND_SEARCH",
+   "max_false_pass_rate": 0.1,
+   "small_n_rule": "若该族集内有效判定项 n<30，改用计数帽 max(1, floor(0.10*n))（小样本下比率不稳定，计数帽更保守）",
+   "derivation": "锚定 VECTOR_CAPACITY_TABLE.v1 的 ci95_halfwidth_at_demand_n=0.098（n=100）：0.10 是该功效下可与 0 区分的最小稳定阈"
+  },
+  {
+   "family": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "max_false_pass_rate": 0.1,
+   "small_n_rule": "若该族集内有效判定项 n<30，改用计数帽 max(1, floor(0.10*n))（小样本下比率不稳定，计数帽更保守）",
+   "derivation": "锚定 VECTOR_CAPACITY_TABLE.v1 的 ci95_halfwidth_at_demand_n=0.098（n=100）：0.10 是该功效下可与 0 区分的最小稳定阈"
+  },
+  {
+   "family": "F4_STORE_LOCAL_AND_RETAIL",
+   "max_false_pass_rate": 0.1,
+   "small_n_rule": "若该族集内有效判定项 n<30，改用计数帽 max(1, floor(0.10*n))（小样本下比率不稳定，计数帽更保守）",
+   "derivation": "锚定 VECTOR_CAPACITY_TABLE.v1 的 ci95_halfwidth_at_demand_n=0.098（n=100）：0.10 是该功效下可与 0 区分的最小稳定阈"
+  },
+  {
+   "family": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "max_false_pass_rate": 0.1,
+   "small_n_rule": "若该族集内有效判定项 n<30，改用计数帽 max(1, floor(0.10*n))（小样本下比率不稳定，计数帽更保守）",
+   "derivation": "锚定 VECTOR_CAPACITY_TABLE.v1 的 ci95_halfwidth_at_demand_n=0.098（n=100）：0.10 是该功效下可与 0 区分的最小稳定阈"
+  }
+ ],
+ "consumption": {
+  "consumed_at": "M4（M0 资格运行）——M3 内禁止任何资格运行（越界 = STOP）",
+  "evaluation_procedure": "M4 资格评测器读取本件与密封金标，逐族复算 false_pass 计数/比率；评测报告必须引用本件 sha256",
+  "immutability": "本件一经预登记与提交，任何修改 = STOP_GOALPOST_MOVE；如确需修订须发起人显式裁决 + SUPERSESSION_LEDGER 登记 + 重新预登记且不得晚于揭晓"
+ },
+ "bindings": {
+  "sampling_frame_digest": "b20a9ae3fe6d8f45bd7f13aa8b00aa92fdba9f61de0cdd72b93e5cf3829f77d8",
+  "qual_split_receipt_sha256": "66e4fdd5d8496280e617ef00d7953ede362adf87a973e0667e6fe16fbc499334",
+  "qual_a_per_family_groups": {
+   "F1_PEOPLE_AND_REAL_SCENE": 12,
+   "F2_PROFESSIONAL_AND_SEARCH": 12,
+   "F3_PRODUCT_RELATION_AND_AESTHETIC": 9,
+   "F4_STORE_LOCAL_AND_RETAIL": 9,
+   "F5_ENTERPRISE_LONG_TERM_TRUST": 4
+  },
+  "qual_b_per_family_groups": {
+   "F1_PEOPLE_AND_REAL_SCENE": 11,
+   "F2_PROFESSIONAL_AND_SEARCH": 11,
+   "F3_PRODUCT_RELATION_AND_AESTHETIC": 9,
+   "F4_STORE_LOCAL_AND_RETAIL": 9,
+   "F5_ENTERPRISE_LONG_TERM_TRUST": 4
+  }
+ }
+}

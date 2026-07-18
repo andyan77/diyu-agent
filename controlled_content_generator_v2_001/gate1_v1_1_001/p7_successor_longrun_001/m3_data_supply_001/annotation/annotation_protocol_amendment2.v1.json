@@ -1,0 +1,19 @@
+{
+ "schema_version": "p7-m3-annotation-protocol-amendment2-v1",
+ "amends": "annotation_protocol.v1.json 与 annotation_protocol_amendment1.v1.json（两原文与模板摘要均不动，本件只增不改）",
+ "authority": "发起人 2026-07-17 载体豁免裁决（journal seq41）+ ROLE_MODEL_MATRIX_ADDENDUM.M3.v2.json",
+ "carrier_amendment": {
+  "GOLD_BUILDER_B/GOLD_LABELING_SEAT_B": {
+   "old": "claude -p headless（claude-fable-5）",
+   "new": "claude -p headless（claude-opus-4-8）",
+   "reason": "Fable-5 使用窗口 429 硬阻；Opus-4.8 headless 实测可用",
+   "probe": "runtime_verified 2026-07-17 session 8d92604b 回显正确"
+  },
+  "adjudicator": "claude -p headless 改 claude-opus-4-8；披露：仍与 B 席同模型，分歧匿名化送裁",
+  "QUAL_FACE_VARIANT_CONSTRUCTOR": "claude -p headless 改 claude-opus-4-8；A/B 两集面构造全量 Opus 重建（faces 冻结前）",
+  "GOLD_LABELING_SEAT_A": "不变，维持 codex exec headless（gpt-5.6-sol）"
+ },
+ "prompt_templates_note": "提示词模板逐字沿用主协议与附录 B/C（摘要不变，模板文本不含模型自述）；席位占位 {seat} 在 B 席仍渲染为 'B'",
+ "cross_model_disclosure": "QUAL 双席自此为 A=Codex-GPT(OpenAI) / B=Opus-4.8(Anthropic) 跨供应商双盲；构造+标注+仲裁 Anthropic 侧统一为 Opus-4.8；等价裁定详 ROLE_MODEL_MATRIX_ADDENDUM.M3.v2.json equivalence_ruling",
+ "dev_gold_untouched": "小试 111 金标 / G1 / G2 已建成产物按其当时载体如实保留，不回溯"
+}

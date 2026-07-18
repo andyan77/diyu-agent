@@ -1,35 +1,87 @@
 {
-  "schema_version": "eval-spine-calibration-manifest-v1",
-  "manifest_id": "EAS-M0-QUALIFICATION-V1",
-  "data_grid": "G3_MEASUREMENT_QUALIFICATION",
-  "content_status": "NOT_MATERIALIZED",
-  "sealed": true,
-  "case_count": 0,
-  "class_counts": {},
-  "dataset_manifest_digest": null,
-  "source_manifest_digest": null,
-  "gold_manifest_digest": null,
-  "record_manifest_digests": {},
-  "qualification_record_index_digest": null,
-  "allowed_consumers": [
-    "INDEPENDENT_AUDITOR",
-    "QUALIFICATION_ADJUDICATOR",
-    "QUALIFICATION_REVIEWER_A",
-    "QUALIFICATION_REVIEWER_B",
-    "QUALIFICATION_RUNNER",
-    "SEALED_DATA_CUSTODIAN"
-  ],
-  "prohibited_consumers": [
-    "EVALUATOR_DEVELOPER",
-    "GENERATOR_AUTHOR",
-    "GENERATOR_DEVELOPER",
-    "RUBRIC_DEVELOPER"
-  ],
-  "leakage_status": "NOT_EVALUATED",
-  "notes": [
-    "No sealed qualification cases or answers exist in this manifest version.",
-    "The sealed flag declares the intended access class, not that a qualification set has been built.",
-    "Any answer exposure to a prohibited consumer invalidates the affected set."
-  ],
-  "manifest_digest": null
+ "schema_version": "eval-spine-calibration-manifest-v1",
+ "manifest_id": "EAS-M0-QUALIFICATION-V1",
+ "data_grid": "G3_MEASUREMENT_QUALIFICATION",
+ "content_status": "MATERIALIZED",
+ "sealed": true,
+ "case_count": 1426,
+ "class_counts": {
+  "QUAL_A": {
+   "risk": {
+    "CRITICAL": 7,
+    "HIGH": 121,
+    "LOW": 465,
+    "MEDIUM": 132
+   },
+   "entailment": {
+    "CONTRADICTED": 145,
+    "SUPPORTED": 525,
+    "UNKNOWN": 55
+   },
+   "kind": {
+    "CHALLENGE_VARIANT": 206,
+    "NATURAL": 519
+   },
+   "per_family": {
+    "F1_PEOPLE_AND_REAL_SCENE": 203,
+    "F2_PROFESSIONAL_AND_SEARCH": 182,
+    "F3_PRODUCT_RELATION_AND_AESTHETIC": 138,
+    "F4_STORE_LOCAL_AND_RETAIL": 141,
+    "F5_ENTERPRISE_LONG_TERM_TRUST": 61
+   }
+  },
+  "QUAL_B": {
+   "risk": {
+    "CRITICAL": 10,
+    "HIGH": 108,
+    "LOW": 416,
+    "MEDIUM": 167
+   },
+   "entailment": {
+    "CONTRADICTED": 148,
+    "SUPPORTED": 496,
+    "UNKNOWN": 57
+   },
+   "kind": {
+    "CHALLENGE_VARIANT": 199,
+    "NATURAL": 502
+   },
+   "per_family": {
+    "F1_PEOPLE_AND_REAL_SCENE": 189,
+    "F2_PROFESSIONAL_AND_SEARCH": 170,
+    "F3_PRODUCT_RELATION_AND_AESTHETIC": 138,
+    "F4_STORE_LOCAL_AND_RETAIL": 140,
+    "F5_ENTERPRISE_LONG_TERM_TRUST": 64
+   }
+  }
+ },
+ "dataset_manifest_digest": "4159ae35a9ec6356f731ba61b69019d6ca6d2762d004c177133a69e6ce49d265",
+ "source_manifest_digest": "0ecc9f15e1f71b87d09b2f36f14980d8a2281734d5a2726cd10bee741f219ccb",
+ "gold_manifest_digest": "60852bb6850d4a7f105ee2e185afe9b419d3a854d3015d19ba65f48a4837c3f5",
+ "record_manifest_digests": {
+  "A_double_blind": "23409275742ae9ad25b24e4350054072763f541ef56ac716c8fe99b3847992d1",
+  "B_double_blind": "b0b97f8a28c44cff6c3ed8b3ae8bd056705d0f26dbe62ae08d6faba0314874a4"
+ },
+ "qualification_record_index_digest": "b903fec0d71eb6f59daf608f93eb4e2e13355aea57aa829cdcd4fa36b187ec18",
+ "allowed_consumers": [
+  "INDEPENDENT_AUDITOR",
+  "QUALIFICATION_ADJUDICATOR",
+  "QUALIFICATION_REVIEWER_A",
+  "QUALIFICATION_REVIEWER_B",
+  "QUALIFICATION_RUNNER",
+  "SEALED_DATA_CUSTODIAN"
+ ],
+ "prohibited_consumers": [
+  "EVALUATOR_DEVELOPER",
+  "GENERATOR_AUTHOR",
+  "GENERATOR_DEVELOPER",
+  "RUBRIC_DEVELOPER"
+ ],
+ "leakage_status": "SEALED_NO_REVEAL",
+ "notes": [
+  "M3-C5 物化：QUAL-A/B 双密封（题面冻结→跨模型双盲建标→金标冻结，每步带单调序号回执）",
+  "明文全部留 sealed_custody_001（gitignore + denylist 撞库扫描）；本 manifest 只载数量/摘要",
+  "揭晓步（A6/B6）属 M4+；本里程碑零揭晓、零方法冻结"
+ ],
+ "manifest_digest": "12d6f63f86fe1df25cb04ada3a6277b52634391b0eb95bc7e637c640ef324c2c"
 }

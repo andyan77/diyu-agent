@@ -1,11 +1,31 @@
 {
-  "schema_version": "p7-sealed-payload-denylist-v1",
-  "description": "已知密封载荷摘要 denylist（撞库扫描输入）。M1 阶段只含合成标记（不接触真实密封材料）；自 M3 起由密封保全角色登记真实载荷摘要。",
-  "entries": [
-    {
-      "sha256": "14f552627284d2f6ed4a213e34ba2810393bf095e645368cfd171945c051c6a9",
-      "kind": "SYNTHETIC_TEST_MARKER",
-      "note": "sha256(b'SYNTHETIC-SEALED-PAYLOAD-QUAL-MARKER-001')——仅供 M1 负向测试；真实密封载荷摘要自 M3 起追加"
-    }
-  ]
+ "schema_version": "p7-sealed-payload-denylist-v1",
+ "description": "已知密封载荷摘要 denylist（撞库扫描输入）。M1 阶段只含合成标记（不接触真实密封材料）；自 M3 起由密封保全角色登记真实载荷摘要。",
+ "entries": [
+  {
+   "sha256": "14f552627284d2f6ed4a213e34ba2810393bf095e645368cfd171945c051c6a9",
+   "kind": "SYNTHETIC_TEST_MARKER",
+   "note": "sha256(b'SYNTHETIC-SEALED-PAYLOAD-QUAL-MARKER-001')——仅供 M1 负向测试；真实密封载荷摘要自 M3 起追加"
+  },
+  {
+   "sha256": "4bc1bcf89000d73e6ebf63718957f536db0ffe05ee0b2bc38a1a68693bed2e3a",
+   "kind": "QUAL_A_FACES",
+   "note": "M3 密封载荷（sealed_custody_001/qual_A）；登记于 goldfreeze"
+  },
+  {
+   "sha256": "8203ddb452ffe177ff746978827606a69b2a6c6692da8ce7127289bc771d102b",
+   "kind": "QUAL_A_GOLD",
+   "note": "M3 密封载荷（sealed_custody_001/qual_A）；登记于 goldfreeze"
+  },
+  {
+   "sha256": "5f3aac4473e8f2d84deba4584abc1afe00b2a7f8fc489f1287653fe364ff1ec7",
+   "kind": "QUAL_B_FACES",
+   "note": "M3 密封载荷（sealed_custody_001/qual_B）；登记于 goldfreeze"
+  },
+  {
+   "sha256": "10cba2681ef855351ba66988edfad334854ea5dc93e4d4b5cf4b10fe9b8c3838",
+   "kind": "QUAL_B_GOLD",
+   "note": "M3 密封载荷（sealed_custody_001/qual_B）；登记于 goldfreeze"
+  }
+ ]
 }
