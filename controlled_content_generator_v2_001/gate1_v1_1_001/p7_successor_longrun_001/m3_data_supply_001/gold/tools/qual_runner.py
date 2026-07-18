@@ -197,6 +197,47 @@ def _cases_for_set(set_id: str) -> list[dict]:
     return cases
 
 
+def _build_variant_tasks(by_fam: dict, frame_digest: str, plan: dict) -> list:
+    """密封变体任务构造：per-class-target-driven, k>=2 变体/claim, 高风险偏置。
+
+    替代 M3 v1 的 `take = max(10, int(0.4 * len(ranked)))` 固定 40% 比例缺陷
+    （as-built ~206/199 变体、注释谎称 ~400、每 claim 单 kind）。改由
+    CAPACITY_AND_CONSTRUCTION_PLAN 的 per-class 目标驱动数量、k>=2、按族供给分摊 +
+    F5 保底。确定性（sha 序），零 0.4。R3 须同步对齐 annexC 构造模板以支持扩展 kinds。"""
+    vc = plan["variant_construction"]
+    if not vc.get("no_fixed_ratio"):
+        raise SystemExit("variant_construction.no_fixed_ratio!=true；拒绝回退固定比例")
+    k = int(vc["k_variants_per_claim"])
+    if k < 2:
+        raise SystemExit("k_variants_per_claim 必须 >=2（每 claim 至少两变体）")
+    kinds = list(vc["kinds"])
+    et = plan["per_set_module_targets"]["entailment"]
+    hi_target = (et["high_risk_contradicted"]["target"]
+                 + et["high_risk_unknown"]["target"])
+    total = sum(len(v) for v in by_fam.values()) or 1
+    tasks = []
+    for famname in sorted(by_fam):
+        ranked = sorted(by_fam[famname],
+                        key=lambda c: L.sha_text(frame_digest + "QV" + c["case_id"]))
+        share = len(ranked) / total
+        claims_to_perturb = min(len(ranked),
+                                max(8, -(-int(hi_target * share) // k)))  # F5 保底 8
+        for c in ranked[:claims_to_perturb]:
+            for kk in range(k):
+                h = int(L.sha_text(frame_digest + c["case_id"] + str(kk))[:8], 16)
+                kind = kinds[h % len(kinds)]
+                tasks.append({"variant_id": f"V-{c['case_id']}-{kind[:4]}-{kk}",
+                              "base_case_id": c["case_id"], "variant_kind": kind,
+                              "base_claim_text": c["claim_text"],
+                              "claim_boundary": c["claim_boundary"],
+                              "authorization_scope": c["authorization_scope"],
+                              "slot_facts": c["slot_facts"],
+                              "source_summary_a": c["source_summary_a"],
+                              "source_summary_b": c["source_summary_b"],
+                              "family_id": c["family_id"]})
+    return tasks
+
+
 def cmd_faces(set_id: str, max_batches: int) -> int:
     assert_sealed_ignored()
     spec = json.loads(ANNEXC.read_text(encoding="utf-8"))
@@ -210,27 +251,17 @@ def cmd_faces(set_id: str, max_batches: int) -> int:
     if not nat_path.exists():
         nat_path.write_text(json.dumps(natural, ensure_ascii=False, indent=1),
                             encoding="utf-8")
-    # 密封变体构造：每族前 40% claims（确定性序）轮转三类 → 目标 ~每集 400 变体
+    # 密封变体构造：per-class-target-driven, k>=2, 高风险偏置（替代固定 40%；
+    # 见 CAPACITY_AND_CONSTRUCTION_PLAN.variant_construction）
     frame_digest = json.loads((M3DS / "SAMPLING_FRAME.v1.json").read_text())["frame_digest"]
+    plan_path = M3DS / "plan/CAPACITY_AND_CONSTRUCTION_PLAN.v1.json"
+    if not plan_path.is_file():
+        raise SystemExit("CAPACITY_AND_CONSTRUCTION_PLAN.v1 缺失；拒绝回退固定 0.4 比例（R2 前置）")
+    plan = json.loads(plan_path.read_text(encoding="utf-8"))
     by_fam: dict[str, list[dict]] = {}
     for c in natural:
         by_fam.setdefault(c["family_id"], []).append(c)
-    tasks = []
-    for famname in sorted(by_fam):
-        ranked = sorted(by_fam[famname],
-                        key=lambda c: L.sha_text(frame_digest + "QV" + c["case_id"]))
-        take = max(10, int(0.4 * len(ranked)))
-        for j, c in enumerate(ranked[:take]):
-            kind = VARIANT_KINDS[j % 3]
-            tasks.append({"variant_id": f"V-{c['case_id']}-{kind[:4]}",
-                          "base_case_id": c["case_id"], "variant_kind": kind,
-                          "base_claim_text": c["claim_text"],
-                          "claim_boundary": c["claim_boundary"],
-                          "authorization_scope": c["authorization_scope"],
-                          "slot_facts": c["slot_facts"],
-                          "source_summary_a": c["source_summary_a"],
-                          "source_summary_b": c["source_summary_b"],
-                          "family_id": c["family_id"]})
+    tasks = _build_variant_tasks(by_fam, frame_digest, plan)
     (sdir / "variant_tasks.json").write_text(
         json.dumps(tasks, ensure_ascii=False, indent=1), encoding="utf-8")
     batches = [tasks[i:i + BATCH] for i in range(0, len(tasks), BATCH)]

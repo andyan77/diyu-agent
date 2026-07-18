@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "p7-qual-gold-record-v1",
+  "title": "QUAL 资格金标记录（9 模块统一信封 + 逐模块 gold 字段）",
+  "description": "R3 密封双盲建标的记录级契约。承 spine gold_field_names 代码合同（calibration.py/formulaic.py/qualification_data.py）。此记录属 HIDDEN 分区，明文由保全会话处理；gold_label_digest 覆盖 gold_field_names 指定字段。",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["record_id", "module", "set", "record_role", "family_id",
+               "case_origin", "visibility_partition", "source_group_id",
+               "source_evidence_digest", "gold_field_names", "gold_label_digest",
+               "gold_review_provenance"],
+  "properties": {
+    "record_id": {"type": "string", "minLength": 1},
+    "module": {"enum": ["reference_extraction", "claim_atomization",
+                        "risk_classification", "entailment", "fact_chain",
+                        "formulaic", "disclosure", "omission", "review_calibration"]},
+    "set": {"enum": ["A", "B"]},
+    "record_role": {"enum": ["qualification_case", "judgment", "adjudication",
+                             "candidate_audit", "disclosure_case", "omission_case",
+                             "review_item", "known_risk_regression"]},
+    "family_id": {"enum": ["F1_PEOPLE_AND_REAL_SCENE", "F2_PROFESSIONAL_AND_SEARCH",
+                           "F3_PRODUCT_RELATION_AND_AESTHETIC",
+                           "F4_STORE_LOCAL_AND_RETAIL",
+                           "F5_ENTERPRISE_LONG_TERM_TRUST"]},
+    "case_origin": {"enum": ["NATURAL", "CHALLENGE"]},
+    "visibility_partition": {"const": "HIDDEN"},
+    "source_group_id": {"type": "string", "minLength": 1},
+    "source_evidence_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "gold_field_names": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "gold_label_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "gold_review_provenance": {
+      "type": "array", "minItems": 2,
+      "description": "≥2 独立评审 provenance；reviewer_id 必须≥2 个不同身份（作者不自签，工具+测试强制 distinct）",
+      "items": {
+        "type": "object",
+        "required": ["reviewer_id", "reviewer_kind"],
+        "properties": {
+          "reviewer_id": {"type": "string", "minLength": 1},
+          "reviewer_kind": {"enum": ["HUMAN", "AI"]},
+          "provider": {"type": "string"},
+          "model": {"type": "string"},
+          "session_thread_id": {"type": "string"},
+          "role": {"enum": ["SEAT_A", "SEAT_B", "ADJUDICATOR"]}
+        }
+      }
+    },
+    "cross_module_reuse": {
+      "type": "array",
+      "description": "同一合法案例复用登记：本 case 亦服务哪些模块，各以何 record_role（禁同分母重复计数）",
+      "items": {
+        "type": "object",
+        "required": ["module", "record_role"],
+        "properties": {"module": {"type": "string"}, "record_role": {"type": "string"}}
+      }
+    },
+    "adjudicated": {"type": "boolean"},
+    "seat_labels_agree": {"type": "boolean"}
+  },
+  "allOf": [
+    {"if": {"properties": {"module": {"const": "reference_extraction"}},
+            "required": ["module"]},
+     "then": {"required": ["gold_present", "gold_risk", "gold_attributes"],
+              "properties": {
+                "gold_present": {"type": "boolean"},
+                "gold_risk": {"enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]},
+                "gold_attributes": {"type": "object",
+                  "required": ["polarity", "modality", "time_scope", "preconditions"],
+                  "properties": {
+                    "polarity": {"type": "string"}, "modality": {"type": "string"},
+                    "time_scope": {"type": "string"}, "preconditions": {}}}}}},
+    {"if": {"properties": {"module": {"const": "claim_atomization"}}, "required": ["module"]},
+     "then": {"required": ["gold_present", "gold_risk", "gold_atom_partition"],
+              "properties": {
+                "gold_present": {"type": "boolean"},
+                "gold_risk": {"enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]},
+                "gold_atom_partition": {"type": "array",
+                  "items": {"type": "array", "items": {"type": "string"}}}}}},
+    {"if": {"properties": {"module": {"const": "risk_classification"}}, "required": ["module"]},
+     "then": {"required": ["gold_risk"],
+              "properties": {"gold_risk": {"enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]}}}},
+    {"if": {"properties": {"module": {"const": "entailment"}}, "required": ["module"]},
+     "then": {"required": ["gold_label", "gold_risk"],
+              "properties": {
+                "gold_label": {"enum": ["SUPPORTED", "CONTRADICTED", "UNKNOWN"]},
+                "gold_risk": {"enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]}}}},
+    {"if": {"properties": {"module": {"const": "fact_chain"}}, "required": ["module"]},
+     "then": {"required": ["gold_risk", "gold_safe_to_clear", "chain_manifest"],
+              "properties": {
+                "gold_risk": {"enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]},
+                "gold_safe_to_clear": {"type": "boolean"},
+                "chain_manifest": {"type": "object",
+                  "description": "6 角色摘要闭合：source_evidence/reference_assertion/claim_atom/risk_classification/entailment/final_action",
+                  "required": ["source_evidence", "reference_assertion", "claim_atom",
+                               "risk_classification", "entailment", "final_action"]}}}},
+    {"if": {"properties": {"module": {"const": "formulaic"}, "record_role": {"const": "judgment"}},
+            "required": ["module", "record_role"]},
+     "then": {"required": ["pair_id", "left_id", "right_id", "axes", "verdict"],
+              "properties": {
+                "verdict": {"enum": ["FORMULAIC", "NOT_FORMULAIC", "NECESSARY_GRAMMAR", "INDETERMINATE"]},
+                "axes": {"type": "object"},
+                "necessary_grammar_exception_id": {"type": ["string", "null"]}}}},
+    {"if": {"properties": {"module": {"const": "formulaic"}, "record_role": {"const": "adjudication"}},
+            "required": ["module", "record_role"]},
+     "then": {"required": ["pair_id", "final_verdict"],
+              "properties": {
+                "final_verdict": {"enum": ["FORMULAIC", "NOT_FORMULAIC", "NECESSARY_GRAMMAR", "INDETERMINATE"]},
+                "necessary_grammar_exception_id": {"type": ["string", "null"]}}}},
+    {"if": {"properties": {"module": {"const": "formulaic"}, "record_role": {"const": "candidate_audit"}},
+            "required": ["module", "record_role"]},
+     "then": {"required": ["gold_formulaic", "candidate_selected"],
+              "properties": {"gold_formulaic": {"type": "boolean"},
+                             "candidate_selected": {"type": "boolean"}}}},
+    {"if": {"properties": {"module": {"const": "disclosure"}}, "required": ["module"]},
+     "then": {"required": ["obligation_type", "gold_violation"],
+              "properties": {
+                "obligation_type": {"enum": ["SYNTHETIC_IDENTITY_DISCLOSURE",
+                  "PROHIBITED_REAL_IDENTITY_IMPERSONATION",
+                  "EXPLICIT_AUTHORIZATION_BOUNDARY", "PRIVACY_REDACTION_OR_BLOCK"]},
+                "gold_violation": {"type": "boolean"}}}},
+    {"if": {"properties": {"module": {"const": "omission"}}, "required": ["module"]},
+     "then": {"required": ["gold_misleading", "gold_risk"],
+              "properties": {
+                "gold_misleading": {"type": "boolean"},
+                "gold_risk": {"enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"]}}}},
+    {"if": {"properties": {"module": {"const": "review_calibration"}}, "required": ["module"]},
+     "then": {"required": ["item_id", "decision", "hard_veto"],
+              "properties": {
+                "item_id": {"type": "string"},
+                "decision": {"enum": ["APPROVE", "REJECT"]},
+                "hard_veto": {"type": "boolean"}}}}
+  ]
+}

@@ -1,0 +1,37 @@
+{
+ "schema_version": "p7-m3-recovery-decisions-v1",
+ "recovery_id": "M3_R1",
+ "founder_rulings": [
+  {
+   "at": "2026-07-18",
+   "mechanism": "AskUserQuestion Q1",
+   "ruling": "本会话继续(Opus，记偏差)：主负责人=claude-opus-4-8、会话=/compact 续跑，偏离 FORMAL_MODEL_RUN_CONTRACT §1，记 SUPERSESSION_LEDGER §7",
+   "journal_seq": 45
+  },
+  {
+   "at": "2026-07-18",
+   "mechanism": "AskUserQuestion Q2 (被第三裁定 supersede)",
+   "ruling": "原:『$1,500 上限内直接开工，耗尽即 HONEST_STOP』——口径理解已被下条 supersede",
+   "superseded_by": "third_ruling"
+  },
+  {
+   "at": "2026-07-18",
+   "mechanism": "会话内追加裁定（R2 前）",
+   "id": "third_ruling",
+   "ruling": "①R2 必须先完整完成并提交可复算检查点；②成本只记录+工程优化，非停工门——单次会话/模型额度临时耗尽=可恢复中断，绝不据此关 HONEST_STOP；③R2 后不等新授权续 R3-R6；④会话确不能续→落盘完整 INTERRUPTED_RESUMABLE 检查点+唯一 resume Prompt，新会话从磁盘续；⑤HONEST_STOP 仅限：机械证明合法材料容量不足/不可恢复数据泄漏或顺序破坏/确缺只能由用户提供的外部权限与事实；⑥M4 始终拦截直至 R3-R6+双审+新关闭链+M4 dry-run 全过；⑦不得提前冻结或批量标注 schema 未完成的资格数据",
+   "journal_seq": 47
+  }
+ ],
+ "binding_stop_discipline": {
+  "cost_is_not_a_stop_gate": true,
+  "session_or_quota_exhaustion": "INTERRUPTED_RESUMABLE（非 HONEST_STOP）",
+  "honest_stop_only_if": [
+   "mechanically-proven legal material capacity insufficient",
+   "unrecoverable data leak or qualification order breach",
+   "genuinely missing external permission/facts only user can provide"
+  ],
+  "m4_blocked_until": "R3-R6 + 两份新独立审核 + 新 M3 关闭链 + M4 dry-run 全过"
+ },
+ "issued_at": "2026-07-18T23:30:36.074198+00:00",
+ "record_digest": "1a9ed6ddb24dc5719757f956ddeabe3a4511b4d88a57b88b47d30d0789da5bfa"
+}

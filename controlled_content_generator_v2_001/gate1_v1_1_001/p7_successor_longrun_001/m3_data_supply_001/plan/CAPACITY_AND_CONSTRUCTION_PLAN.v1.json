@@ -1,0 +1,314 @@
+{
+ "schema_version": "p7-capacity-and-construction-plan-v1",
+ "recovery_id": "M3_R1",
+ "contract_id": "EAS-M0-QUALIFICATION-V2",
+ "gold_record_schema": "m3_data_supply_001/schema/qual_gold_record.v1.schema.json",
+ "readiness_gate": "m3_data_supply_001/tools/pre_m0_readiness.py + checker qual_data_readiness",
+ "safety_margin": 0.15,
+ "safety_margin_basis": "小试争议率/裁决漂移/淘汰率初值 0.15；R3 小试实测后重标定（记入回执）",
+ "families": [
+  "F1_PEOPLE_AND_REAL_SCENE",
+  "F2_PROFESSIONAL_AND_SEARCH",
+  "F3_PRODUCT_RELATION_AND_AESTHETIC",
+  "F4_STORE_LOCAL_AND_RETAIL",
+  "F5_ENTERPRISE_LONG_TERM_TRUST"
+ ],
+ "per_set_module_targets": {
+  "reference_extraction": {
+   "positive": {
+    "min": 100,
+    "target": 115
+   },
+   "negative_control": {
+    "min": 100,
+    "target": 115
+   }
+  },
+  "claim_atomization": {
+   "positive": {
+    "min": 100,
+    "target": 115
+   },
+   "negative_control": {
+    "min": 100,
+    "target": 115
+   }
+  },
+  "risk_classification": {
+   "high_risk": {
+    "min": 300,
+    "target": 345
+   },
+   "legal_control": {
+    "min": 300,
+    "target": 345
+   }
+  },
+  "entailment": {
+   "high_risk_contradicted": {
+    "min": 300,
+    "target": 345
+   },
+   "high_risk_unknown": {
+    "min": 100,
+    "target": 115
+   },
+   "natural_legal_supported": {
+    "min": 300,
+    "target": 345
+   }
+  },
+  "fact_chain": {
+   "high_risk_unsafe": {
+    "min": 300,
+    "target": 345
+   },
+   "natural_legal": {
+    "min": 300,
+    "target": 345
+   }
+  },
+  "formulaic": {
+   "pairs_total": {
+    "min": 300,
+    "target": 345
+   },
+   "positive": {
+    "min": 100,
+    "target": 115
+   },
+   "negative": {
+    "min": 100,
+    "target": 115
+   },
+   "necessary_grammar": {
+    "min": 20,
+    "target": 23
+   }
+  },
+  "disclosure": {
+   "cases_total": {
+    "min": 100,
+    "target": 115
+   },
+   "obligation_types": {
+    "min": 4,
+    "target": 4
+   }
+  },
+  "omission": {
+   "misleading_high_risk": {
+    "min": 100,
+    "target": 115
+   },
+   "nonmisleading_control": {
+    "min": 100,
+    "target": 115
+   }
+  },
+  "review_calibration": {
+   "double_reviewed_items": {
+    "min": 40,
+    "target": 46
+   },
+   "judgment_records": {
+    "min": 80,
+    "target": 92
+   }
+  }
+ },
+ "cross_module_reuse_archetypes": [
+  {
+   "archetype": "HIGH_RISK_UNSAFE_CONTRADICTED",
+   "case_origin": "CHALLENGE",
+   "serves": [
+    {
+     "module": "risk_classification",
+     "class": "high_risk"
+    },
+    {
+     "module": "entailment",
+     "class": "high_risk_contradicted"
+    },
+    {
+     "module": "fact_chain",
+     "class": "high_risk_unsafe"
+    },
+    {
+     "module": "reference_extraction",
+     "class": "positive"
+    },
+    {
+     "module": "claim_atomization",
+     "class": "positive"
+    },
+    {
+     "module": "omission",
+     "class": "misleading_high_risk"
+    }
+   ],
+   "per_set_target": 300,
+   "construction": "矛盾注入+风险提升，绑真源 claim"
+  },
+  {
+   "archetype": "HIGH_RISK_UNKNOWN",
+   "case_origin": "CHALLENGE",
+   "serves": [
+    {
+     "module": "risk_classification",
+     "class": "high_risk"
+    },
+    {
+     "module": "entailment",
+     "class": "high_risk_unknown"
+    }
+   ],
+   "per_set_target": 115,
+   "construction": "证据不足化（不可判定），绑真源"
+  },
+  {
+   "archetype": "NATURAL_LEGAL_SUPPORTED",
+   "case_origin": "NATURAL",
+   "serves": [
+    {
+     "module": "risk_classification",
+     "class": "legal_control"
+    },
+    {
+     "module": "entailment",
+     "class": "natural_legal_supported"
+    },
+    {
+     "module": "fact_chain",
+     "class": "natural_legal"
+    },
+    {
+     "module": "reference_extraction",
+     "class": "negative_control"
+    },
+    {
+     "module": "claim_atomization",
+     "class": "negative_control"
+    },
+    {
+     "module": "omission",
+     "class": "nonmisleading_control"
+    }
+   ],
+   "per_set_target": 345,
+   "construction": "自然合法主张，无扰动"
+  },
+  {
+   "archetype": "DISCLOSURE_DETERMINISTIC",
+   "case_origin": "CHALLENGE",
+   "serves": [
+    {
+     "module": "disclosure",
+     "class": "cases_total"
+    }
+   ],
+   "per_set_target": 115,
+   "construction": "4 义务类型确定性构造（合成身份披露/禁真人冒充/授权边界/隐私删挡）"
+  },
+  {
+   "archetype": "FORMULAIC_PAIR",
+   "case_origin": "NATURAL",
+   "serves": [
+    {
+     "module": "formulaic",
+     "class": "pairs_total"
+    }
+   ],
+   "per_set_target": 345,
+   "construction": "成对生成正文（>=100 FORMULAIC/>=100 NOT/>=20 NECESSARY_GRAMMAR），双审+裁决"
+  },
+  {
+   "archetype": "REVIEW_CALIBRATION_ITEM",
+   "case_origin": "NATURAL",
+   "serves": [
+    {
+     "module": "review_calibration",
+     "class": "double_reviewed_items"
+    }
+   ],
+   "per_set_target": 46,
+   "construction": "评审校准 item（双审 → 92 judgment/set，>=80）"
+  }
+ ],
+ "reuse_discipline": "每 case 登记 cross_module_reuse[]（case→module→record_role）；同一统计分母内不重复计数；一条 challenge 不虚报多个互不成立类别；每 gold 字段由对应证据+双标/确定性验证+裁决支持",
+ "variant_construction": {
+  "replaces": "qual_runner cmd_faces int(0.4*len(ranked)) 固定 40% 比例（as-built ~206/199 变体，注释谎称~400；单 claim 单 kind）",
+  "method": "per-class-target-driven, k>=2 variants per selected claim, high-risk-biased",
+  "kinds": [
+   "CONTRADICTION_INJECT",
+   "RISK_ELEVATE",
+   "EVIDENCE_INSUFFICIENT",
+   "BOUNDARY_OMIT",
+   "OMISSION_MISLEAD",
+   "LEGAL_NEGATIVE_CONTROL"
+  ],
+  "high_risk_bias": 0.6,
+  "k_variants_per_claim": 2,
+  "traceability": "每变体绑 base_case_id + source_group_id；只可追溯矛盾注入/边界省略/风险提升/合法负控；禁编造新领域事实",
+  "no_fixed_ratio": true
+ },
+ "f5_tier1_topup": {
+  "trigger": "F5 逐族下限（per-family floors 20-40）或高风险类不达标时启动",
+  "tiers": {
+   "Tier0": "变体扩展（默认）",
+   "Tier1": "F5 定向新组（预授权）",
+   "Tier2": "整轮新组（需发起人）"
+  },
+  "authorized": "Tier0/Tier1 预授权（supply_demand_audit_v2 三层模型）；Tier2 须发起人"
+ },
+ "statistical_calibers": {
+  "confidence_level": 0.95,
+  "binomial_interval_method": "CLOPPER_PEARSON_OR_PREDECLARED_EQUIVALENT",
+  "point_estimate_required": true,
+  "confidence_interval_required": true,
+  "sample_denominator_required": true,
+  "abstention_denominator_required": true,
+  "per_risk_class_breakdown_required": true,
+  "per_content_family_breakdown_required": true,
+  "gold_build_own_fp_fn_and_dispute_rate_retained": true,
+  "llm_labels_not_treated_as_ground_truth": true
+ },
+ "sealed_dual_blind_protocol": {
+  "seat_A": "Codex-GPT（跨模型双盲）",
+  "seat_B": "Opus-4.8",
+  "adjudicator": "Opus（披露）",
+  "two_independent_labels_per_record": true,
+  "adjudication_on_disagreement": true,
+  "author_not_self_sign": true,
+  "main_session_zero_plaintext": true,
+  "plaintext_sealed_gitignored": true,
+  "public_aggregates_only_to_main_session": true
+ },
+ "per_set_capacity_feasibility": {
+  "per_set_reuse_demand_claim_anchor": 760,
+  "per_set_capacity_natural_plus_k2": 1530,
+  "feasible": true,
+  "verdict": "CONDITIONALLY_FEASIBLE（复用+k2；F5 为绑定家族，可能触发 Tier1）",
+  "corpus": {
+   "distinct_claims_total": 1356,
+   "qual_pool_groups": 90,
+   "qual_pool_claims": 1021,
+   "per_set_natural_claim_supply_approx": 510,
+   "pair_capacity_within_profile": 1200,
+   "surface_units": 5546,
+   "known_r5_regression_rows": 5,
+   "per_family_claims_full": {
+    "F1": 363,
+    "F2": 333,
+    "F3": 264,
+    "F4": 267,
+    "F5": 129
+   },
+   "binding_family": "F5_ENTERPRISE_LONG_TERM_TRUST (最薄，~5 QUAL 组/套)"
+  },
+  "insufficiency_would_be": "若复用后仍机械证明 < 下限 且 Tier1 F5 补量后仍不足 → 合法 HONEST_STOP（容量不足）"
+ },
+ "does_not_lower_standard": "本计划只规划如何达到 measurement_qualification.v2 全部下限，零降标；目标含安全余量以抗淘汰",
+ "generated_at": "2026-07-18T23:28:02.899579+00:00",
+ "record_digest": "028b8b301b9a4577b24ca9e5487119e77066f402e8e241da914b3f3fc0b042f3"
+}
