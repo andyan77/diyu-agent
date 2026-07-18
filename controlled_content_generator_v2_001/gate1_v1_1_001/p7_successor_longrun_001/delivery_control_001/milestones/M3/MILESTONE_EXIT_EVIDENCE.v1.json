@@ -1,0 +1,125 @@
+{
+ "schema_version": "p7-milestone-exit-evidence-v1",
+ "milestone_id": "M3",
+ "candidate_commit": "84f8fc503e487d4291411f5b9b616595467c138e",
+ "closeout_receipt_digest": "4cee2cdf15f9a05d95ce2524648a243489b96ec6851a79e180ace6ac0e77cbbb",
+ "exit_keys": {
+  "SUPPLY_DEMAND_TABLE_PER_CELL_ON_DISK": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/SUPPLY_DEMAND_TABLE.v2.json",
+   "evidence_sha256": "a385425604f6843adfd665eeb21b0db8d829961182f2f9866736991e5350634b"
+  },
+  "VECTOR_CAPACITY_TABLE_INITIAL_PROJECTION_ON_DISK": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/VECTOR_CAPACITY_TABLE.v1.json",
+   "evidence_sha256": "ed68b0445efc6039e65e10b9b044e095bb0e073f487188ea6d31dce41f4a2147"
+  },
+  "SAMPLING_FRAME_AND_EXCLUSION_LOG_PREREGISTERED": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/SAMPLING_FRAME.v1.json",
+   "evidence_sha256": "1774f583037d800b5a88751cf1f04878c43c0cc6facb74660c1ffc1c7f84cdc2"
+  },
+  "CURATION_OWNER_REGISTERED": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/SUPPLY_DEMAND_TABLE.v1.json",
+   "evidence_sha256": "eda02b24c888bd828f3114cc14e837e89f33974e5fa6fffe507b5917a4d22cb4"
+  },
+  "ANNOTATION_PROTOCOL_FROZEN_WITH_PILOT_RECEIPT": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/annotation/pilot/PILOT_RECEIPT.v1.json",
+   "evidence_sha256": "4f0314b2b3c57186f12377b53d3b338738615ccb5d32062183f81300dbea3e24"
+  },
+  "G1_REFERENCE_GOLD_BUILT_COVERAGE_VERIFIED": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/g1/G1_RECEIPT.v1.json",
+   "evidence_sha256": "df5391e486209d329281d96b0923ad73e457a3cbbddb98cc614550cd1542d955"
+  },
+  "G2_DEV_GOLD_BUILT_COVERAGE_VERIFIED": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/g2/G2_RECEIPT.v1.json",
+   "evidence_sha256": "8801116f32112d8c48d22a498bf15ef17cbf910d6fba4e76908da6a3e71d1b00"
+  },
+  "DISPUTE_RATE_AND_COST_RECOMPUTABLE": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/qual/DISPUTE_RATE_AND_COST_RECEIPT.v1.json",
+   "evidence_sha256": "093f2d6af7f52942ea4e56df3597bdd7891ee7c464442068a539e0849abcf90a"
+  },
+  "ROLE_COLLISION_CHECK_RECEIPT": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/qual/ROLE_COLLISION_CHECK_RECEIPT.v1.json",
+   "evidence_sha256": "fb9c38834a3dc949c5aea717267fdb61a3c132d13256a5c82ca5559ae5a7191e"
+  },
+  "QUAL_A_FACE_FROZEN_RECEIPT": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/qual/QUAL_A_FACE_FROZEN_RECEIPT.v1.json",
+   "evidence_sha256": "bce1a7063e8ac07d3ac94e9bd31065b4dbe1f63a053d2edabcac8bc37956d185"
+  },
+  "QUAL_A_DOUBLE_BLIND_LABELED_RECEIPT": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/qual/QUAL_A_DOUBLE_BLIND_RECEIPT.v1.json",
+   "evidence_sha256": "23409275742ae9ad25b24e4350054072763f541ef56ac716c8fe99b3847992d1"
+  },
+  "QUAL_A_GOLD_FROZEN_RECEIPT": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/qual/QUAL_A_GOLD_FROZEN_RECEIPT.v1.json",
+   "evidence_sha256": "1d5265f80526fb088fa79db993ea71aa9cba4cedc9c9570d2a0efcf6b9e30da1"
+  },
+  "QUAL_B_FACE_FROZEN_RECEIPT": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/qual/QUAL_B_FACE_FROZEN_RECEIPT.v1.json",
+   "evidence_sha256": "5ebbbf1ab1ea135110d1d141de3d5e004c0f162bb03a8ce4243fa8d36e433955"
+  },
+  "QUAL_B_DOUBLE_BLIND_LABELED_RECEIPT": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/qual/QUAL_B_DOUBLE_BLIND_RECEIPT.v1.json",
+   "evidence_sha256": "b0b97f8a28c44cff6c3ed8b3ae8bd056705d0f26dbe62ae08d6faba0314874a4"
+  },
+  "QUAL_B_GOLD_FROZEN_RECEIPT": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/qual/QUAL_B_GOLD_FROZEN_RECEIPT.v1.json",
+   "evidence_sha256": "0aeb224e78d4475b9c1ce2a8d41e041a1c56c67452a6e29eb5698e1d97479169"
+  },
+  "QUAL_SETS_DISJOINT_STRATIFIED_BALANCED_PROOF": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/qual/QUAL_SPLIT_RECEIPT.v1.json",
+   "evidence_sha256": "66e4fdd5d8496280e617ef00d7953ede362adf87a973e0667e6fe16fbc499334"
+  },
+  "FAMILY_WISE_FALSE_PASS_BUDGET_PREREGISTERED": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/qual/FAMILY_WISE_FALSE_PASS_BUDGET.v1.json",
+   "evidence_sha256": "cc3e2db42724745450c49b29fb6eea186af1241955a943a222824c59cab0b626"
+  },
+  "QUAL_ORDER_EVENTS_VALIDATED": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/state/QUAL_ORDER_EVENTS.v1.json",
+   "evidence_sha256": "9329814e84a0d639d8312c8611047ab888a54987ef752d95b0e6908ef766597c"
+  },
+  "SEALED_CUSTODY_COUNTS_DIGESTS_RECEIPTS_ONLY": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/qual/SEALED_CUSTODY_RECEIPT.v1.json",
+   "evidence_sha256": "716f1005bfd398e8639d4c37e40cb3fa837cabb79378562c0eacd6ab9d920514"
+  },
+  "SEALED_PAYLOAD_DENYLIST_UPDATED_AND_SCAN_CLEAN": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/state/SEALED_PAYLOAD_DENYLIST.v1.json",
+   "evidence_sha256": "de91a0b45fca3e05b726f6f987c138a12ffc8c140bd2db682b1cfbffa61603d2"
+  },
+  "LOGICAL_CORE_SEPARATED": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/product_core_staging_001/CORE_BOOT_REPORT.v1.json",
+   "evidence_sha256": "66cc73866fa2c139a3ce1bd01c88c3a30055b79861a3520bda92e828657271e1"
+  },
+  "INDEPENDENT_CLAUDE_FABLE_REVIEW_ACCEPT": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER.5f2a47c676da.signer_receipt.json",
+   "evidence_sha256": "1b12f34796ab0253ce23bdfef81196cc9d94d4e4b727b809abfe78879337c639"
+  },
+  "CODEX_GPT_REVIEW_ACCEPT": {
+   "satisfied": true,
+   "evidence_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/CODEX_GPT_EXTERNAL_REVIEW_SIGNER.9abcf7b232eb.signer_receipt.json",
+   "evidence_sha256": "f81396ca98d7b92d8adc7454a6a8765cd10912f088d6b0dc4c87dd8cb6536790"
+  }
+ },
+ "issued_at": "2026-07-18T15:30:00+00:00",
+ "record_digest": "1af4db7d57d38cd482188899cf5490703803bcfa5da02f16c08dfb45ddca8594"
+}

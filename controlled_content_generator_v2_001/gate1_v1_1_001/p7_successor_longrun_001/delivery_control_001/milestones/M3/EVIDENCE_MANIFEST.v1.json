@@ -1,0 +1,43 @@
+{
+ "schema_version": "p7-milestone-manifest-v1",
+ "bound_candidate_commit": "84f8fc503e487d4291411f5b9b616595467c138e",
+ "entries": [
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/journal/RUN_JOURNAL.v1.jsonl",
+   "sha256": "132084d63ca005af31787033dfeadb0c5a7c60c77b8a88327e7f12f7ba8fdaf0",
+   "frozen_snapshot": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/snapshots/close/RUN_JOURNAL.v1.jsonl"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/evidence/SESSION_IDENTITY.M3.v1.json",
+   "sha256": "09b9b0aaca83e4a40f62f9cf6eb5d232ee028bf0b7c97af4957b8bfd5ecda7aa"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/SUPERSESSION_LEDGER.v1.md",
+   "sha256": "5f2cff9a218e846a6d8341f54accbf3c21f42ec383361bd48be94ebbfad79ff3"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/g1/SESSION_REGISTRY.v1.jsonl",
+   "sha256": "d43c4e63cb241f94af019b0379061bc12b37076ebbd06430d65b3df2de242db2"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/g2/SESSION_REGISTRY.v1.jsonl",
+   "sha256": "0505f809782bc373437d7ad5952299ebfffa1e47bf648e62977dcdd18fdc8dc5"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/m3_data_supply_001/gold/qual/SESSION_REGISTRY.v1.jsonl",
+   "sha256": "5e1d9afd26ac52c8b1070b2a9576eb85744270f5d0a75dae48eb55d2e07acb9f"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/state/QUAL_ORDER_EVENTS.v1.json",
+   "sha256": "9329814e84a0d639d8312c8611047ab888a54987ef752d95b0e6908ef766597c"
+  },
+  {
+   "path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/eval_audit_spine_001/release/candidate_manifest.v1.json",
+   "sha256": "56241696b66696c5398ac278765123f4b80c9e71f5bfde50482c3303cef8a3db",
+   "frozen_snapshot": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/snapshots/close/candidate_manifest.v1.json"
+  }
+ ],
+ "entry_count": 8,
+ "note": "M3 证据：运行日志(冻结快照) + 会话身份 + 取代账本 + G1/G2/QUAL 会话注册表(仅计数) + 资格顺序事件 + 候选清单(冻结快照)",
+ "manifest_digest": "0eee0c1873cfc9ff59a0cb0bc1b69e85e1ac2260d54193278fe71b99576489ad"
+}

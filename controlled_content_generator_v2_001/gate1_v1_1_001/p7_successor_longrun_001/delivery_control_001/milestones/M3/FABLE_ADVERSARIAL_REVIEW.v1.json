@@ -1,0 +1,13 @@
+{
+ "reviewer_kind": "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
+ "reviewer_role": "METHODOLOGY",
+ "actual_model_id": "claude-opus-4-8",
+ "carrier_note": "Fable-5 撞 429 使用窗口，依 SUPERSESSION_LEDGER §7 载体豁免由 Opus-4.8 代承对抗审核角色（等价裁定 ROLE_MODEL_MATRIX_ADDENDUM.M3.v2）",
+ "candidate_commit": "84f8fc503e487d4291411f5b9b616595467c138e",
+ "agent_id": "a5d33fa2cdccce785",
+ "verdict": "ACCEPT",
+ "findings": [{"severity": "ADVISORY", "status": "RESOLVED", "note": "M3 关闭绑定工件(INPUT/OUTPUT/EVIDENCE_MANIFEST, REVIEW_REQUEST, snapshots)为未追踪工作树文件、未在候选 84f8fc5 提交——预期 PRE_REVIEW 态，关闭时提交。P7 下无已改追踪文件；36 OUTPUT 条目全 hash 匹配工作树(0 drift)；candidate_manifest verify PASS。非有效性破口。"}],
+ "recompute_notes": "checker PRE_REVIEW: SHARED=PASS(10)/A=PASS(5)/B=PASS(6)/ARTIFACT_INTEGRITY=PASS/M0=NOT_QUALIFIED。qual_order 6事件A1,B1,B2,A2,A3,B3 seq1-6严格单调+集内序，violations=[]，selftest ALL_PASS。金标A=725(族和725)/B=701(族和701)，denylist_registered=true。密封零泄漏：git status+ls-files grep sealed_custody_001/ 双空，.gitignore含之，check-ignore确认，0追踪。三manifest自摘要复算 INPUT=29de0b8b/OUTPUT=8ebc581f/EVIDENCE=0eee0c18 全匹配；OUTPUT 36/36条目sha256验证0失配。denylist注册 QUAL_A_GOLD 8203ddb4/QUAL_B_GOLD 10cba268+A/B FACES。ROLE_MODEL_MATRIX_ADDENDUM.M3.v2 verdict=EQUIVALENT_IN_ALL_VALIDITY_BEARING_PROPERTIES，诚实残留披露(DEV Fable/QUAL Opus独立非互门集；31 Fable构造批作废+Opus重建；仲裁=B席模型披露)，ACS未动 contract_set verify=PASS drift=[]。FAMILY_WISE_FALSE_PASS_BUDGET preregistered 2026-07-17T17:19Z含order_proof，consumption延至M4。",
+ "checker_result": "MODE: PRE_REVIEW MILESTONE: M3 | RESULT[SHARED]: PASS(10) | RESULT[A]: PASS(5) | RESULT[B]: PASS(6) | ARTIFACT_INTEGRITY: PASS | M0: NOT_QUALIFIED",
+ "signed_at": "2026-07-18T15:29:00+00:00"
+}

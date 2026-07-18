@@ -1,0 +1,37 @@
+{
+ "schema_version": "p7-signer-receipt-v2",
+ "reviewer_kind": "CODEX_GPT_EXTERNAL_REVIEW_SIGNER",
+ "provider": "openai",
+ "actual_model_id": "GPT-5 (Codex)",
+ "model_version": {
+  "value": "UNAVAILABLE",
+  "unavailable_reason": "provider does not expose internal revision to agent runtime",
+  "evidence_ref": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/codex_review_r1_last_message.json"
+ },
+ "task_thread_session_id": "019f75e1-524e-7161-af09-f592fae1e7b6",
+ "milestone_id": "M3",
+ "product_scope": "SHARED",
+ "input_commit": "84f8fc503e487d4291411f5b9b616595467c138e",
+ "input_manifest_digest": "29de0b8bb3d77c67a0e252b4f7137c7159a0b3f30dfe04140b3ea374396e4067",
+ "output_manifest_digest": "8ebc581fccaa1c323e61e32bc0a6d92b357b10a899ee09adedd34ff459fa0194",
+ "evidence_manifest_digest": "0eee0c1873cfc9ff59a0cb0bc1b69e85e1ac2260d54193278fe71b99576489ad",
+ "prompt_digest": "5e0cde42022fec26c61b097fb6ea32604be2e9c28612eb4c33ad7b75544faa7e",
+ "config_digest": "codex exec - --json -o codex_review_r1_last_message.json --skip-git-repo-check -s read-only（仓根 cwd 只读沙箱，全新 ephemeral 线程）",
+ "tool_summary": "read-only 复算：三 manifest 逐条 sha256 + canonical 自摘要、qual_order 六步序、金标计数、denylist、registry 净、工具加固；零仓写",
+ "output_report_digest": "1bd3d0ca7a691c52015c35bb1b7d1072d8532a980fef0ba14454080e59831547",
+ "call_receipt": "{\"events_file\": \"controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/codex_review_r1_events.jsonl\", \"events_sha256\": \"111c87b764474384441f63f24841946148c86189d9dedf58e1bf66750f709de7\", \"last_message_sha256\": \"1bd3d0ca7a691c52015c35bb1b7d1072d8532a980fef0ba14454080e59831547\"}",
+ "exit_status": 0,
+ "findings_summary": [
+  "ADVISORY(RESOLVED): 只读沙箱无可写临时目录致 checker 无法跑，非候选缺陷；全部实现项已 read-only 独立复算"
+ ],
+ "signed_at": "2026-07-18T15:30:00+00:00",
+ "verdict": "ACCEPT",
+ "session_isolation_attestation": {
+  "fresh_session_not_fork_not_resume": true,
+  "did_not_author_reviewed_scope": true,
+  "auto_memory_disabled_or_not_applicable": true,
+  "auto_memory_disabled_before_launch": true,
+  "isolation_evidence": "codex ephemeral 线程 019f75e1，不持久化不继承主会话上下文；订阅计量；read-only 沙箱杜绝仓写"
+ },
+ "receipt_digest": "9abcf7b232eba1b3fe3f83685f4ea9f7d288901daf1b44fd08f584618727462b"
+}

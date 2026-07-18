@@ -1,0 +1,38 @@
+{
+ "schema_version": "p7-signer-receipt-v2.1",
+ "reviewer_kind": "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
+ "provider": "anthropic",
+ "actual_model_id": "claude-opus-4-8",
+ "model_version": {
+  "value": "UNAVAILABLE",
+  "unavailable_reason": "provider does not expose internal revision to agent runtime",
+  "evidence_ref": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/FABLE_ADVERSARIAL_REVIEW.v1.json"
+ },
+ "task_thread_session_id": "a5d33fa2cdccce785",
+ "milestone_id": "M3",
+ "product_scope": "SHARED",
+ "input_commit": "84f8fc503e487d4291411f5b9b616595467c138e",
+ "input_manifest_digest": "29de0b8bb3d77c67a0e252b4f7137c7159a0b3f30dfe04140b3ea374396e4067",
+ "output_manifest_digest": "8ebc581fccaa1c323e61e32bc0a6d92b357b10a899ee09adedd34ff459fa0194",
+ "evidence_manifest_digest": "0eee0c1873cfc9ff59a0cb0bc1b69e85e1ac2260d54193278fe71b99576489ad",
+ "prompt_digest": "4653654f95c8a42bd25489464436b58ac739bdff9d053fcca26b67ce6c0e5d16",
+ "config_digest": "Agent subagent (general-purpose, model=opus-4-8) 全新独立上下文；载体豁免同 SUPERSESSION_LEDGER §7（Fable 撞 429→Opus 代承对抗审核角色）",
+ "tool_summary": "read-only 复算+对抗探针：checker PRE_REVIEW、qual_order 六步序、密封零泄漏 git 探针、载体等价诚实性、三 manifest 摘要复算；scratch 仅 /tmp",
+ "output_report_digest": "e6a8450c62b54fbce29a7e6c77312d8242e177873a12aecdbee3fd901f16a77e",
+ "call_receipt": "{\"agent_id\": \"a5d33fa2cdccce785\", \"report_path\": \"controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/FABLE_ADVERSARIAL_REVIEW.v1.json\", \"report_sha256\": \"e6a8450c62b54fbce29a7e6c77312d8242e177873a12aecdbee3fd901f16a77e\"}",
+ "exit_status": 0,
+ "findings_summary": [
+  "见 output_report findings 数组"
+ ],
+ "signed_at": "2026-07-18T15:30:00+00:00",
+ "verdict": "ACCEPT",
+ "session_isolation_attestation": {
+  "fresh_session_not_fork_not_resume": true,
+  "did_not_author_reviewed_scope": true,
+  "auto_memory_disabled_or_not_applicable": true,
+  "auto_memory_disabled_before_launch": false,
+  "auto_memory_injection_disclosure": "本对抗审核由 harness 生成的 Agent 子代理承载，其上下文被 harness 注入用户级全局 CLAUDE.md 与项目 MEMORY.md 索引（不可在子代理内关闭）。审核者据实披露：注入内容仅为通用工作偏好/画像，未被采纳为本次 M3 候选的任何审核证据；全部裁决基于 read-only 独立复算仓库真实工件（checker/qual_order/manifest 摘要/git 探针），与注入记忆无关。",
+  "isolation_evidence": "全新 Agent 子代理上下文，非 fork 非 resume；未参与 M3 任何工件创作；read-only（scratch 限 /tmp），审核前后 git status 不变"
+ },
+ "receipt_digest": "5f2a47c676da3e6cf1e05c8c3eab3ac9cdcc6bceab070e4ace2d2b5e17d87616"
+}

@@ -1,0 +1,51 @@
+{
+ "M1": {
+  "status": "CLOSED_PASS",
+  "ready": false,
+  "reasons": []
+ },
+ "M2": {
+  "status": "CLOSED_PASS",
+  "ready": false,
+  "reasons": []
+ },
+ "M3": {
+  "status": "CLOSED_PASS",
+  "ready": false,
+  "reasons": []
+ },
+ "M4": {
+  "status": "READY",
+  "ready": true,
+  "reasons": [
+   "OK M3:PASS got=PASS",
+   "OK M3.LOGICAL_CORE_SEPARATED==True (PASS-receipt only)"
+  ]
+ },
+ "M5": {
+  "status": "WAITING",
+  "ready": false,
+  "reasons": [
+   "UNMET M4 in ['PASS', 'DIAGNOSTIC_FINAL'] got=None",
+   "UNMET M4.A_LIFT_READY==False"
+  ]
+ },
+ "M6": {
+  "status": "WAITING",
+  "ready": false,
+  "reasons": [
+   "OK M2:PASS got=PASS",
+   "UNMET route_frozen=None"
+  ]
+ },
+ "M7": {
+  "status": "WAITING",
+  "ready": false,
+  "reasons": [
+   "UNMET M6:PASS got=None",
+   "UNMET M6.B_LIFT_READY==False (PASS-receipt only)"
+  ]
+ },
+ "_invalid_receipts": {},
+ "_route": null
+}

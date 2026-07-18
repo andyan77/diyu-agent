@@ -1,0 +1,37 @@
+{
+ "schema_version": "p7-typed-receipt-v1",
+ "receipt_kind": "CLOSEOUT_RECEIPT",
+ "milestone_id": "M3",
+ "product_scope": "SHARED",
+ "result": "PASS",
+ "terminal": true,
+ "qualification_flags": {
+  "LOGICAL_CORE_SEPARATED": true
+ },
+ "candidate_commit": "84f8fc503e487d4291411f5b9b616595467c138e",
+ "output_manifest_digest": "8ebc581fccaa1c323e61e32bc0a6d92b357b10a899ee09adedd34ff459fa0194",
+ "evidence_manifest_digest": "0eee0c1873cfc9ff59a0cb0bc1b69e85e1ac2260d54193278fe71b99576489ad",
+ "review_bindings": [
+  {
+   "receipt_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER.5f2a47c676da.signer_receipt.json",
+   "receipt_digest": "1b12f34796ab0253ce23bdfef81196cc9d94d4e4b727b809abfe78879337c639",
+   "reviewer_kind": "INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER",
+   "verdict": "ACCEPT"
+  },
+  {
+   "receipt_path": "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/CODEX_GPT_EXTERNAL_REVIEW_SIGNER.9abcf7b232eb.signer_receipt.json",
+   "receipt_digest": "f81396ca98d7b92d8adc7454a6a8765cd10912f088d6b0dc4c87dd8cb6536790",
+   "reviewer_kind": "CODEX_GPT_EXTERNAL_REVIEW_SIGNER",
+   "verdict": "ACCEPT"
+  }
+ ],
+ "session_id": "374b677b-6537-465f-bab1-993e8a9d75aa",
+ "issued_at": "2026-07-18T15:30:15.200000+00:00",
+ "issued_by_role": "M3_PRINCIPAL_ORCHESTRATOR",
+ "stop_code": null,
+ "notes": [
+  "M3 六胶囊全交付+QUAL 双密封六步序+逻辑核解耦；双独立审核 ACCEPT（Opus 对抗 METHODOLOGY + Codex IMPLEMENTATION）",
+  "载体裁决 Fable→Opus 等价裁定；密封纪律零泄漏；23 出口键逐键满足"
+ ],
+ "receipt_digest": "4cee2cdf15f9a05d95ce2524648a243489b96ec6851a79e180ace6ac0e77cbbb"
+}
