@@ -111,7 +111,7 @@ PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
     "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
 )
 PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
-    "7f531d09c1508c9bae29986843b9b94b215e59ef7ca6d66663c7a62ddf8e9fab"
+    "6f802297d7fe182e76699f90feab5786a0d0ece04d1cf49c8fc5153380dd8e01"
 )
 PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES = (
     "python3 ci/checkers/check_product_foundation.py",
@@ -897,6 +897,8 @@ def downstream_successor_workflow_registration_is_valid(root: Path) -> bool:
             )
             for package_root, checker_path in DOWNSTREAM_SUCCESSOR_DELEGATIONS
         ),
+        'run_downstream_package_checker "17_dify_runtime/dify_end_to_end_001" '
+        '"17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py" "true"',
     )
     optimized_lines = (
         "set -euo pipefail",
@@ -945,6 +947,9 @@ def downstream_successor_workflow_registration_is_valid(root: Path) -> bool:
             )
             for package_root, checker_path in DOWNSTREAM_SUCCESSOR_DELEGATIONS
         ),
+        'run_downstream_package_checker_optimized '
+        '"17_dify_runtime/dify_end_to_end_001" '
+        '"17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py" "true"',
     )
     return (
         downstream_workflow_step_lines(root, DOWNSTREAM_NORMAL_WORKFLOW_STEP)

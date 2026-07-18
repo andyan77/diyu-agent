@@ -8,7 +8,7 @@ import hashlib
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Mapping, cast
 
 from sqlalchemy import select
 
@@ -51,7 +51,7 @@ class RepositoryIdentityAuthority:
         return scope
 
 
-class RuntimeBrandFactRetrievalService(BrandFactRetrievalService):
+class RuntimeBrandFactRetrievalService(BrandFactRetrievalService):  # type: ignore[misc]
     """Keep Package 5 result semantics while replacing narrative ranking only."""
 
     def __init__(
@@ -163,7 +163,7 @@ class RuntimeBrandFactRetrievalService(BrandFactRetrievalService):
             "exact_fact_resolution": base.get("retrieval_audit", {}).get("fact_audit", {}),
             "exact_fact_authoritative_metadata_refreshed": True,
         }
-        return base
+        return cast(JsonObject, base)
 
     def _postcheck_results(
         self,

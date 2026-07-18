@@ -13,12 +13,36 @@ from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 from difflib import SequenceMatcher
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import yaml  # type: ignore[import-untyped]
 
-from contracts import BridgePrepareRequest, ModelCandidate, ModelEnvelope, normalize_model_json_text
-from persistence import RuntimeRepository, SqlAlchemyPlanStore, digest_object
+from author_contract import (
+    AUTHOR_CONTRACT_VERSION,
+    CandidateBase,
+    ChatEnvelope,
+    ContentFormat,
+    contract_descriptor,
+    parse_candidate_envelope,
+)
+from contracts import (
+    BridgePrepareRequest,
+    CandidateSurfaces,
+    ModelCandidate,
+    ModelEnvelope,
+    ProductionPackage,
+    escape_json_string_control_characters,
+    normalize_model_json_text,
+)
+from persistence import (
+    RuntimeRepository,
+    SqlAlchemyPlanStore,
+    TrustedDatabaseScope,
+    current_trusted_database_scope,
+    digest_object,
+    runtime_browser_session,
+    trusted_database_scope,
+)
 from runtime_models import RuntimeModelRun
 from runtime_retrieval import RuntimeBrandFactRetrievalService
 
@@ -26,7 +50,9 @@ from runtime_retrieval import RuntimeBrandFactRetrievalService
 JsonObject = dict[str, Any]
 PACKAGE_ROOT = Path(__file__).resolve().parent
 REPOSITORY_ROOT = PACKAGE_ROOT.parents[1]
-PACKAGE_2_ROOT = REPOSITORY_ROOT / "12_expression_service/expression_runtime_adapter_001"
+PACKAGE_2_ROOT = (
+    REPOSITORY_ROOT / "12_expression_service/expression_runtime_adapter_001"
+)
 PACKAGE_6_ROOT = REPOSITORY_ROOT / "16_composition_runtime/fact_aware_plan_adapter_001"
 for root in (PACKAGE_2_ROOT, PACKAGE_6_ROOT):
     if str(root) not in sys.path:
@@ -49,8 +75,15 @@ from light_expression_service import (  # type: ignore[import-not-found]  # noqa
 )
 
 
-TOPIC_PATH = REPOSITORY_ROOT / "11_product_foundation/public_foundation_001/taxonomy/topic_product_mapping.v1.yaml"
-ACTION_PATH = REPOSITORY_ROOT / "14_dify_shell/dify_content_shell_001/state_action_mapping.v1.json"
+TOPIC_PATH = (
+    REPOSITORY_ROOT
+    / "11_product_foundation/public_foundation_001/taxonomy/topic_product_mapping.v1.yaml"
+)
+ACTION_PATH = (
+    REPOSITORY_ROOT
+    / "14_dify_shell/dify_content_shell_001/state_action_mapping.v1.json"
+)
+CAPABILITY_PATH = PACKAGE_ROOT / "content_capability_mapping.v1.yaml"
 NARRATIVE_ARCHITECTURES = (
     "EVIDENCE_FIRST",
     "QUESTION_ANSWER",
@@ -89,6 +122,9 @@ PRODUCT_FACT_ASSERTION_PATTERN = re.compile(
     r"|(?:上衣|商品|产品).{0,12}(?:纯棉|亚麻|针织|羊毛|涤纶|棉质)"
     r"|(?:采用|使用|具备|包含).{0,16}(?:薄针织|双重厚度|纯棉|亚麻|羊毛|涤纶|棉质|面料|材质)"
     r"|(?:本店|门店|当前)?.{0,6}库存.{0,10}(?:充足|不足|有货|缺货|可售|售罄|剩余|紧张)"
+    r"|(?:百分百|完全|绝对).{0,8}适合|适合所有|所有孩子都"
+    r"|(?:这款|该款|本款|这件|该件|商品|产品|上衣|童装).{0,20}"
+    r"(?:改善|缓解|治愈|解决|更舒服|更轻松|更自在)"
 )
 AUTHORIZATION_CLAIM_PATTERN = re.compile(
     r"(?:已|已经|此前|目前).{0,24}(?:授权|获准|批准|允许|有权|代表)"
@@ -102,6 +138,33 @@ REAL_EVENT_CLAIM_PATTERN = re.compile(
     r"|(?:顾客|员工|家长|儿童|孩子).{0,18}(?:说|反馈|购买|完成|决定|承诺)"
     r"|(?:企业|品牌|公司|总部|门店).{0,18}(?:决定|承诺|保证)"
 )
+INTERNAL_REFERENCE_PATTERN = re.compile(
+    r"(?:PKG5-FRAGMENT|FACT-|AUTH-|ACCOUNT-|TENANT-|ORG-|STORE-|CP(?:0[1-9]|1[0-9]|20))"
+)
+PERSONAL_INFORMATION_PATTERN = re.compile(
+    r"(?<!\d)1[3-9]\d{9}(?!\d)|(?<!\d)\d{17}[0-9Xx](?!\d)"
+)
+SECRET_SURFACE_PATTERNS = (
+    re.compile(r"sk-[A-Za-z0-9_-]{16,}"),
+    re.compile(r"-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----"),
+    re.compile(r"Bearer [A-Za-z0-9._-]{20,}"),
+)
+EXPLICIT_REQUIRED_OBJECT_PATTERN = re.compile(
+    r"(?:使用|采用|根据|基于|结合|参考|拿|把).{0,12}"
+    r"(?:这份|这个|这张|该份|该张|现有|已有|上传的|提供的)?"
+    r"(?:文件|图片|照片|视频|素材|截图|海报|设计稿)"
+)
+FUTURE_OR_HYPOTHETICAL_PATTERN = re.compile(
+    r"(?:建议|可以|可拍|计划|如果|若有|如有|假设|示意|未来|待确认|需准备|"
+    r"不代表|不能确认|不得视为|不可假设|不把.{0,16}写成|并非|不是已发生)"
+)
+ENTERPRISE_COMMITMENT_PATTERN = re.compile(
+    r"(?:企业|品牌|公司|总部|区域|门店).{0,24}(?:承诺|保证|确保|永久|全部解决|一定会)"
+)
+ANONYMOUS_DAILY_EVENT_PATTERN = re.compile(
+    r"^(?:一位|有位|匿名)?(?:顾客|孩子|儿童|家长|员工).{0,24}"
+    r"(?:选择|试穿|拿起|放下|走进|看了|问|比较|转身)"
+)
 EXISTING_ASSET_CLAIM_PATTERN = re.compile(
     r"(?:已有|现有|已经|已提供|已拍摄|可直接使用).{0,18}(?:照片|视频|样衣|设计稿|截图|工作台|库存)"
     r"|(?:照片|视频|样衣|设计稿|截图|工作台|库存).{0,18}(?:已有|现有|已经|已提供|可用|存在|确认)"
@@ -110,9 +173,33 @@ EXISTING_ASSET_CLAIM_PATTERN = re.compile(
 CLAUSE_SPLIT_PATTERN = re.compile(r"[，,。；;！？!?：:\n]+")
 NON_ASSERTIVE_BOUNDARY_PATTERN = re.compile(
     r"(?:不代表|只代表组织层级|不能确认|不得视为|不可假设|尚待确认|待确认|仅用于内部|不可发布|暂时不发布|还没有新的本地事实)"
+    r"|(?:(?:也)?不讲|不写|不声称|不宣称|不承诺|不能承诺|不可承诺|不保证|不替|禁止|不得|不要|避免|拒绝)"
+    r".{0,24}(?:已完成|已经完成|授权|决定|承诺|保证)"
+    r"|任何宣称"
+    r"|(?:授权管理|授权流程|授权变化|授权边界)"
+    r"|(?:讨论|分享|说明|识别|区分|提醒|强调).{0,28}(?:授权|承诺|保证)"
+    r"|(?:不能|不可|不要|不得|避免|禁止|拒绝).{0,48}"
+    r"(?:承诺|保证|证言|顾客都说|所有孩子都|百分百适合)"
+    r"|(?:看到|听到|遇到).{0,48}(?:说|写|讲|声称)"
+    r"|(?:待核对|需要核对|先核对)"
+    r"|(?:尺码表|尺码).{0,12}(?:从来)?不是.{0,12}(?:一个数字|简单表格|单一依据|唯一依据)"
+)
+NEGATED_PROHIBITION_PREFIX_PATTERN = re.compile(
+    r"(?:(?:不说|不要说|请勿说|不讲|不写|不使用|不得使用|不要使用|避免使用|"
+    r"禁止使用|禁用|请勿使用|拒绝使用|不能说|不可写|不要把|不能把|不承诺|"
+    r"不能承诺|不得承诺).{0,48}"
+    r"|(?:不要|不得|不能|避免|禁止|拒绝).{0,48}(?:使用|采用|写|说|讲|承诺).{0,12}"
+    r"|(?:看到|听到|遇到).{0,24}(?:说|写|讲|声称).{0,16})$"
+)
+NEGATED_PROHIBITION_SUFFIX_PATTERN = re.compile(
+    r"^[\"'“”‘’「」『』《》（）()]{0,2}"
+    r"(?:不能|不可|不应|不作为|不等于|并非|不是|只作|仅作|这类)"
 )
 CONDITIONAL_AUTHORIZATION_PATTERN = re.compile(
     r"^(?:建议|计划)?(?:如有|若有|如果有|假如有|仅在有).{0,24}(?:已授权|经授权|获准|批准|允许)"
+)
+KEY_FACT_CONTEXT_PATTERN = re.compile(
+    r"(?:售价|价格|库存|现货|可售|售罄|剩余|尺码|规格|身高|年龄|日期|截至|折扣|比例|承诺)"
 )
 NUMERIC_DETAIL_PATTERN = re.compile(
     r"^(?P<first>\d+(?:\.\d+)?)"
@@ -179,24 +266,125 @@ def protected_detail_is_supported(detail: str, corpus: str) -> bool:
     return normalize_support_text(detail) in normalize_support_text(corpus)
 
 
-def surface_requires_evidence_binding(path: str, text: str) -> bool:
-    """Require bindings only for high-risk factual assertions, not creative prose."""
+def high_risk_fact_clauses(path: str, text: str) -> tuple[str, ...]:
+    """Classify explicit reality claims while leaving creative directions open."""
 
-    for clause in filter(None, (part.strip() for part in CLAUSE_SPLIT_PATTERN.split(text))):
+    clauses: list[str] = []
+    for clause in filter(
+        None, (part.strip() for part in CLAUSE_SPLIT_PATTERN.split(text))
+    ):
         if EXISTING_ASSET_CLAIM_PATTERN.search(clause):
-            return True
+            clauses.append(clause)
+            continue
         if NON_ASSERTIVE_BOUNDARY_PATTERN.search(clause):
             continue
-        if KEY_NUMBER_PATTERN.search(clause):
-            return True
-        if AUTHORIZATION_CLAIM_PATTERN.search(clause):
-            if CONDITIONAL_AUTHORIZATION_PATTERN.search(clause) is None:
-                return True
-        if PRODUCT_FACT_ASSERTION_PATTERN.search(clause):
-            return True
-        if REAL_EVENT_CLAIM_PATTERN.search(clause):
-            return True
-    return False
+        product_fact = PRODUCT_FACT_ASSERTION_PATTERN.search(clause) is not None
+        authorization_fact = (
+            AUTHORIZATION_CLAIM_PATTERN.search(clause) is not None
+            and CONDITIONAL_AUTHORIZATION_PATTERN.search(clause) is None
+        )
+        enterprise_commitment = ENTERPRISE_COMMITMENT_PATTERN.search(clause) is not None
+        real_event = REAL_EVENT_CLAIM_PATTERN.search(clause) is not None
+        if real_event and (
+            FUTURE_OR_HYPOTHETICAL_PATTERN.search(clause)
+            or ANONYMOUS_DAILY_EVENT_PATTERN.search(clause)
+        ):
+            real_event = False
+        key_number = KEY_NUMBER_PATTERN.search(clause) is not None
+        if (
+            key_number
+            and CREATIVE_INSTRUCTION_SURFACE_PATH.fullmatch(path)
+            and KEY_FACT_CONTEXT_PATTERN.search(clause) is None
+        ):
+            key_number = False
+        if any(
+            (
+                key_number,
+                product_fact,
+                authorization_fact,
+                enterprise_commitment,
+                real_event,
+            )
+        ):
+            clauses.append(clause)
+    return tuple(clauses)
+
+
+def surface_requires_evidence_binding(path: str, text: str) -> bool:
+    """Require bindings only for explicit factual assertions, not creative prose."""
+
+    return bool(high_risk_fact_clauses(path, text))
+
+
+def audience_surface_text_map(value: object) -> dict[str, str]:
+    """Enumerate every non-empty audience-facing text leaf exactly once."""
+
+    result: dict[str, str] = {}
+
+    def visit(child: object, path: str) -> None:
+        if isinstance(child, str):
+            normalized = child.strip()
+            if normalized:
+                result[path] = normalized
+            return
+        if isinstance(child, list):
+            for index, item in enumerate(child):
+                visit(item, f"{path}[{index}]")
+            return
+        if isinstance(child, dict):
+            for key, item in child.items():
+                if key == "surface_units":
+                    continue
+                visit(item, f"{path}.{key}" if path else str(key))
+
+    visit(value, "")
+    return result
+
+
+def normalized_fact_support_text(value: str) -> str:
+    return re.sub(
+        r"[\s，,。；;！？!?：:\"'“”‘’（）()【】\[\]]+",
+        "",
+        normalize_support_text(value),
+    )
+
+
+def source_supports_fact_clause(clause: str, source_text: str) -> bool:
+    """Conservatively accept direct source wording or closed numeric semantics."""
+
+    if normalized_fact_support_text(clause) in normalized_fact_support_text(
+        source_text
+    ):
+        return True
+    numeric_details = tuple(
+        token
+        for token in PROTECTED_SOURCE_DETAIL_PATTERN.findall(clause)
+        if normalize_numeric_detail(token) is not None
+    )
+    if not numeric_details or not all(
+        protected_detail_is_supported(token, source_text) for token in numeric_details
+    ):
+        return False
+    context_aliases = {
+        "价格": ("价格", "售价", '"fact_kind":"PRICE"'),
+        "库存": ("库存", "现货", "可售", '"fact_kind":"STOCK"'),
+        "尺码": ("尺码", "规格", "身高", '"fact_kind":"SPECIFICATION"'),
+        "日期": ("日期", "截至", "时效", '"fact_kind":"TIME_POINT"'),
+    }
+    required_aliases = [
+        aliases
+        for marker, aliases in context_aliases.items()
+        if marker in clause
+        or (marker == "价格" and "售价" in clause)
+        or (marker == "库存" and any(value in clause for value in aliases[:3]))
+        or (marker == "尺码" and any(value in clause for value in aliases[:3]))
+        or (marker == "日期" and "截至" in clause)
+    ]
+    normalized_source = normalize_support_text(source_text)
+    return all(
+        any(alias.lower() in normalized_source for alias in aliases)
+        for aliases in required_aliases
+    )
 
 
 class RuntimeContractError(ValueError):
@@ -227,13 +415,80 @@ class Package7Runtime:
         )
         topic_doc = yaml.safe_load(TOPIC_PATH.read_text(encoding="utf-8"))
         categories = topic_doc["topic_product_mapping"]["categories"]
-        self.topic_by_label = {str(row["display_name"]): copy.deepcopy(row) for row in categories}
+        self.topic_by_label = {
+            str(row["display_name"]): copy.deepcopy(row) for row in categories
+        }
+        canonical_topics = copy.deepcopy(self.topic_by_label)
         self.product_labels = {
             str(row["content_product_id"]): str(row["internal_label"])
             for row in topic_doc["topic_product_mapping"]["internal_products"]
         }
+        capability_doc = yaml.safe_load(CAPABILITY_PATH.read_text(encoding="utf-8"))
+        if not isinstance(capability_doc, dict):
+            raise RuntimeContractError("Content capability mapping is invalid")
+        public_topics = capability_doc.get("public_topics")
+        content_formats = capability_doc.get("content_formats")
+        if not isinstance(public_topics, list) or not isinstance(content_formats, list):
+            raise RuntimeContractError("Content capability mapping is incomplete")
+        for row in public_topics:
+            if not isinstance(row, dict):
+                raise RuntimeContractError("Public topic mapping is invalid")
+            label = str(row.get("display_name", ""))
+            product_ids = row.get("internal_product_ids")
+            if (
+                not label
+                or not isinstance(product_ids, list)
+                or not product_ids
+                or not set(map(str, product_ids)).issubset(self.product_labels)
+            ):
+                raise RuntimeContractError("Public topic mapping is invalid")
+            legacy_labels = row.get("legacy_topic_labels")
+            if not isinstance(legacy_labels, list) or not legacy_labels:
+                raise RuntimeContractError("Public topic mapping is invalid")
+            canonical_topic_by_product: dict[str, str] = {}
+            for product_id in map(str, product_ids):
+                matching_categories: list[JsonObject] = []
+                for legacy_label in legacy_labels:
+                    category = canonical_topics.get(str(legacy_label))
+                    if not isinstance(category, dict):
+                        continue
+                    category_products = category.get("internal_product_ids")
+                    if (
+                        isinstance(category_products, list)
+                        and product_id in category_products
+                    ):
+                        matching_categories.append(category)
+                if not matching_categories:
+                    raise RuntimeContractError(
+                        "Public topic mapping is not canonically closed"
+                    )
+                canonical_topic_by_product[product_id] = str(
+                    matching_categories[0]["topic_category_id"]
+                )
+            self.topic_by_label[label] = {
+                "display_name": label,
+                "internal_product_ids": list(map(str, product_ids)),
+                "legacy_topic_labels": list(map(str, legacy_labels)),
+                "canonical_topic_category_id_by_product": canonical_topic_by_product,
+            }
+        if tuple(content_formats) != tuple(
+            [
+                "短视频",
+                "图文",
+                "直播内容包",
+                "私域沟通内容",
+                "门店线下物料",
+                "培训与门店话术",
+                "陈列搭配",
+            ]
+        ):
+            raise RuntimeContractError("Content format mapping drifted")
+        self.content_formats = tuple(str(value) for value in content_formats)
         action_doc = json.loads(ACTION_PATH.read_text(encoding="utf-8"))
-        self.action_cards = {str(row["action_type"]): copy.deepcopy(row) for row in action_doc["action_cards"]}
+        self.action_cards = {
+            str(row["action_type"]): copy.deepcopy(row)
+            for row in action_doc["action_cards"]
+        }
         self.unknown_action = copy.deepcopy(action_doc["unknown_action_behavior"])
 
     def _trusted_context(self, request: JsonObject) -> TrustedUpstreamContext:
@@ -241,10 +496,14 @@ class Package7Runtime:
         runtime_principal = self.repository.principal_by_id(principal_id)
         if runtime_principal is None or runtime_principal.status != "ACTIVE":
             raise RuntimeContractError("Trusted principal is unavailable")
-        root = self.repository.setting(f"identity_authority:{runtime_principal.tenant_id}")
+        root = self.repository.setting(
+            f"identity_authority:{runtime_principal.tenant_id}"
+        )
         tenant = root["tenant"]
         principal = next(
-            row for row in root["login_principals"] if row["principal_id"] == principal_id
+            row
+            for row in root["login_principals"]
+            if row["principal_id"] == principal_id
         )
         allowed = set(principal["allowed_content_account_ids"])
         accounts: dict[str, AccountAuthority] = {}
@@ -254,9 +513,13 @@ class Package7Runtime:
             routes = tuple(
                 ConfirmationRoute(
                     scope=str(route["scope"]),
-                    confirmer_role_ids=tuple(str(value) for value in route["confirmer_role_ids"]),
+                    confirmer_role_ids=tuple(
+                        str(value) for value in route["confirmer_role_ids"]
+                    ),
                     approval_mode=str(route["approval_mode"]),
-                    subject_confirmation_required=bool(route["subject_confirmation_required"]),
+                    subject_confirmation_required=bool(
+                        route["subject_confirmation_required"]
+                    ),
                 )
                 for route in raw["confirmation_routes"]
             )
@@ -328,7 +591,32 @@ class Package7Runtime:
             raise RuntimeContractError("Brand profile scope mismatch")
         return copy.deepcopy(profile)
 
-    def prepare(self, request: BridgePrepareRequest, principal_id: str) -> JsonObject:
+    def prepare(
+        self,
+        request: BridgePrepareRequest,
+        principal_id: str,
+        *,
+        trusted_scope: TrustedDatabaseScope,
+    ) -> JsonObject:
+        """Prepare one request inside a server-issued browser-session boundary."""
+
+        if (
+            trusted_scope.principal_id != principal_id
+            or not isinstance(trusted_scope.browser_session_id, str)
+            or not trusted_scope.browser_session_id
+        ):
+            raise RuntimeContractError("Trusted request scope is incomplete")
+        with (
+            trusted_database_scope(trusted_scope),
+            runtime_browser_session(trusted_scope.browser_session_id),
+        ):
+            return self._prepare_scoped(request, principal_id)
+
+    def _prepare_scoped(
+        self,
+        request: BridgePrepareRequest,
+        principal_id: str,
+    ) -> JsonObject:
         try:
             principal, account = self.repository.require_active_scope_by_display_name(
                 principal_id,
@@ -336,13 +624,23 @@ class Package7Runtime:
             )
         except ValueError:
             return self._plain_action("REQUEST_AUTHORIZATION")
+        request_scope = current_trusted_database_scope()
+        if request_scope.account_id != account.account_id:
+            raise RuntimeContractError("Trusted account scope mismatch")
 
         if request.operation == "普通聊天":
-            return self._start_chat_run(request, principal_id, account.account_id, inspiration=False)
+            return self._start_chat_run(
+                request, principal_id, account.account_id, inspiration=False
+            )
         if request.operation == "找灵感":
-            return self._start_chat_run(request, principal_id, account.account_id, inspiration=True)
+            return self._start_chat_run(
+                request, principal_id, account.account_id, inspiration=True
+            )
         if request.operation == "确认制作":
-            if request.topic_label is None or request.selected_content_product_id is None:
+            if (
+                request.topic_label is None
+                or request.selected_content_product_id is None
+            ):
                 return self._start_chat_run(
                     request,
                     principal_id,
@@ -359,21 +657,33 @@ class Package7Runtime:
             }
             return self._prepare_creation(request, principal_id, account_payload)
         if request.operation == "选择候选":
-            chosen = self.repository.select_candidate(account.account_id, int(request.candidate_number or 0))
+            try:
+                chosen = self.repository.select_candidate(
+                    principal_id,
+                    account.account_id,
+                    int(request.candidate_number or 0),
+                )
+            except (KeyError, ValueError):
+                return self._failure_result("AUTHORIZATION_OR_SCOPE_BLOCK", None)
             return {
                 "response_kind": "DIRECT",
                 "user_visible_text": f"已选择第{chosen.ordinal}份候选。需要时可以继续说想修改哪里。",
             }
         if request.operation == "局部修改":
-            return self._prepare_revision(request, principal_id, account.account_id)
+            try:
+                return self._prepare_revision(request, principal_id, account.account_id)
+            except (KeyError, ValueError):
+                return self._failure_result("AUTHORIZATION_OR_SCOPE_BLOCK", None)
         if request.operation == "审核":
-            return self._review_selected(account.account_id)
+            return self._review_selected(principal_id, account.account_id)
         if request.operation == "导出":
-            return self._export_selected(account.account_id)
+            return self._export_selected(principal_id, account.account_id)
         if request.operation == "查看来源":
-            return self._source_lookup(account.account_id)
+            return self._source_lookup(principal_id, account.account_id)
         if request.operation == "提交反馈":
-            selected = self.repository.selected_candidate(account.account_id)
+            selected = self.repository.selected_candidate(
+                principal_id, account.account_id
+            )
             context = (
                 {}
                 if selected is None
@@ -395,7 +705,9 @@ class Package7Runtime:
                     request.previous_content_ref or context.get("previous_content_ref")
                 ),
                 fact_refs=[] if selected is None else list(selected.used_fact_refs),
-                material_refs=[] if selected is None else list(selected.used_material_refs),
+                material_refs=[]
+                if selected is None
+                else list(selected.used_material_refs),
                 short_reason=request.message,
             )
             return {
@@ -440,17 +752,23 @@ class Package7Runtime:
                 if isinstance(role, dict):
                     roles_by_account[account.display_name] = [str(role["display_name"])]
             for storyline in profile.get("storylines", []):
-                if isinstance(storyline, dict) and isinstance(storyline.get("storyline_id"), str):
+                if isinstance(storyline, dict) and isinstance(
+                    storyline.get("storyline_id"), str
+                ):
                     storylines[str(storyline["storyline_id"])] = storyline
             for column in profile.get("columns", []):
-                if isinstance(column, dict) and isinstance(column.get("column_id"), str):
+                if isinstance(column, dict) and isinstance(
+                    column.get("column_id"), str
+                ):
                     columns[str(column["column_id"])] = column
         return {
             "content_accounts": [account.display_name for account in accounts],
             "roles_by_account": roles_by_account,
             "storylines": [
                 str(row["display_name"])
-                for row in sorted(storylines.values(), key=lambda item: str(item["storyline_id"]))
+                for row in sorted(
+                    storylines.values(), key=lambda item: str(item["storyline_id"])
+                )
             ],
             "columns_by_storyline": {
                 str(storyline["display_name"]): [
@@ -462,7 +780,16 @@ class Package7Runtime:
             },
             "topics": sorted(self.topic_by_label),
             "platforms": ["抖音", "视频号", "小红书", "公众号或图文", "其他"],
-            "durations": ["15秒左右", "30秒左右", "60秒左右", "1至3分钟", "由系统建议"],
+            "durations": [
+                "15秒左右",
+                "30秒左右",
+                "60秒左右",
+                "1至3分钟",
+                "5至15分钟",
+                "15至30分钟",
+                "30至60分钟",
+                "由系统建议",
+            ],
             "feelings": [
                 "真实记录",
                 "专业讲明白",
@@ -473,8 +800,54 @@ class Package7Runtime:
                 "质感画面",
                 "由系统建议",
             ],
-            "content_formats": ["短视频", "图文", "陈列搭配"],
-            "material_kinds": ["一个想法", "一段故事或概要", "商品或活动事实", "图片或视频", "什么都没有"],
+            "content_formats": list(self.content_formats),
+            "organization_levels": ["品牌总部", "区域组织", "门店"],
+            "content_identities": [
+                "品牌价值身份",
+                "专业身份",
+                "区域经营身份",
+                "门店关系身份",
+                "商品或栏目身份",
+            ],
+            "long_term_storylines": [
+                "品牌为什么存在",
+                "衣服如何服务真实生活",
+                "商品为什么这样设计",
+                "一群人如何把品牌做好",
+            ],
+            "content_directions": [
+                "品牌与价值叙事",
+                "商品专业解释",
+                "真实组织与幕后",
+                "消费者生活与穿搭判断",
+                "活动、交易与关系承接",
+            ],
+            "business_goals": [
+                "品牌认知",
+                "商品理解",
+                "建立信任",
+                "引发咨询",
+                "到店",
+                "复购",
+                "招商",
+                "招聘",
+            ],
+            "expression_methods": [
+                "故事",
+                "问答",
+                "对比",
+                "观察",
+                "幕后",
+                "演示",
+                "纪实",
+            ],
+            "material_kinds": [
+                "一个想法",
+                "一段故事或概要",
+                "商品或活动事实",
+                "图片或视频",
+                "什么都没有",
+            ],
             "simulation_only": True,
             "publish_allowed": False,
         }
@@ -516,12 +889,17 @@ class Package7Runtime:
             account_id=account_id,
             limit=6,
         )
-        run_id = self._new_run_id(principal_id, account_id, request.operation, request.message)
+        run_id = self._new_run_id(
+            principal_id, account_id, request.operation, request.message
+        )
         prompt = {
             "system": instruction,
             "user_message": request.message,
             "conversation_context": list(conversation_context),
-            "output_contract": {"kind": "CHAT_REPLY", "reply": "string", "candidates": []},
+            "output_contract": {
+                "server_bound_contract_version": AUTHOR_CONTRACT_VERSION,
+                "author_fields": {"reply": "非空字符串"},
+            },
         }
         self.repository.start_model_run(
             run_id=run_id,
@@ -532,7 +910,11 @@ class Package7Runtime:
             prompt_digest=digest_object(prompt),
             payload={"prompt": prompt, "private_retrieval_performed": False},
         )
-        return {"response_kind": "MODEL_REQUIRED", "run_id": run_id, "author_prompt": prompt}
+        return {
+            "response_kind": "MODEL_REQUIRED",
+            "run_id": run_id,
+            "author_prompt": prompt,
+        }
 
     def _prepare_creation(
         self,
@@ -544,6 +926,8 @@ class Package7Runtime:
         product_id = str(request.selected_content_product_id)
         if topic is None or product_id not in topic["internal_product_ids"]:
             return self._plain_action("COLLECT_MATERIAL")
+        if self._explicit_required_object_missing(request):
+            return self._missing_object_result()
         profile = self._brand_profile_for_account(str(account["brand_id"]))
         role_card = self._role_card(
             profile,
@@ -551,16 +935,22 @@ class Package7Runtime:
             request.speaker_role_id,
             request.speaker_role_name,
         )
-        storyline = self._storyline(profile, request.storyline_id, request.storyline_name)
+        storyline = self._storyline(
+            profile, request.storyline_id, request.storyline_name
+        )
         column = self._column(
             profile,
             request.column_id,
             request.column_name,
             str(storyline["storyline_id"]),
         )
-        if request.previous_content_ref is not None and not self.repository.candidate_belongs_to_account(
-            request.previous_content_ref,
-            str(account["account_id"]),
+        if (
+            request.previous_content_ref is not None
+            and not self.repository.candidate_belongs_to_account(
+                request.previous_content_ref,
+                principal_id,
+                str(account["account_id"]),
+            )
         ):
             return self._plain_action("BLOCK")
         now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
@@ -573,7 +963,9 @@ class Package7Runtime:
             "plain_language_summary": request.message,
             "tenant_id": account["tenant_id"],
             "content_account_id": account["account_id"],
-            "topic_category_id": topic["topic_category_id"],
+            "topic_category_id": topic.get(
+                "canonical_topic_category_id_by_product", {}
+            ).get(product_id, topic.get("topic_category_id")),
             "target_platform": request.target_platform,
             "confirmed_by_principal_id": principal_id,
             "confirmed_at": now,
@@ -595,10 +987,18 @@ class Package7Runtime:
             "duration_label": request.duration_label,
             "expression_feeling": request.expression_feeling,
             "content_format": request.content_format,
+            "organization_level": request.organization_level,
+            "content_identity": request.content_identity,
+            "long_term_storyline": request.long_term_storyline,
+            "content_direction": request.content_direction,
+            "business_goal": request.business_goal,
+            "expression_method": request.expression_method,
             "existing_material_kinds": list(request.existing_material_kinds),
             "user_material_refs": list(request.user_material_refs),
         }
-        self.repository.save_requirement(requirement, principal_id, str(account["account_id"]))
+        self.repository.save_requirement(
+            requirement, principal_id, str(account["account_id"])
+        )
         route = account["confirmation_routes"][0]
         task = ServerConfirmedProductionTask(
             server_task_ref=f"server-task://{requirement_id}",
@@ -614,35 +1014,35 @@ class Package7Runtime:
                 "confirmed_by_principal_id": principal_id,
                 "confirmed_by_role_ids": list(route["confirmer_role_ids"]),
                 "confirmation_scope": route["scope"],
-                "authorization_refs": [account["runtime_confirmation_authorization_ref"]],
+                "authorization_refs": [
+                    account["runtime_confirmation_authorization_ref"]
+                ],
                 "subject_confirmation_ref": None,
             },
             retrieval_query_text=request.message,
             precise_fact_queries=tuple(precise_queries),
-            requested_high_level_mode_refs=("expression-mode://documentary-observation/v1",),
+            requested_high_level_mode_refs=(
+                "expression-mode://documentary-observation/v1",
+            ),
             client_soft_preferences={
                 "rhythm": self._rhythm_for_duration(request.duration_label),
-                "emotional_intensity": self._intensity_for_feeling(request.expression_feeling),
+                "emotional_intensity": self._intensity_for_feeling(
+                    request.expression_feeling
+                ),
             },
             output_requirements={
                 "target_platform": request.target_platform,
                 "required_candidate_count": 3,
-                "audience_surface_fields": ["title", "body", "spoken_lines", "CTA"],
+                "audience_surface_fields": ["title", "body", "execution_payload"],
             },
         )
         result = self.adapter.prepare(task)
         if result.get("object_type") != "LIGHT_CONTENT_PLAN":
             return self._plain_action(str(result.get("action_type", "BLOCK")))
         plan_ref = str(result["composition_plan_ref"])
-        materials = self.adapter.author_materials(plan_ref, self._access(principal_id, str(account["account_id"])))
-        scope_identity_only = self._scope_identity_only_request(request)
-        if not materials.get("scoped_retrieval_fragments") and not scope_identity_only:
-            return self._plain_action("COLLECT_MATERIAL")
-        if scope_identity_only and not any(
-            isinstance(row, dict) and row.get("fact_kind") == "AUTHORIZATION"
-            for row in materials.get("verified_precise_facts", [])
-        ):
-            return self._plain_action("COLLECT_FACT")
+        materials = self.adapter.author_materials(
+            plan_ref, self._access(principal_id, str(account["account_id"]))
+        )
         return self._start_author_run(
             request,
             principal_id,
@@ -661,15 +1061,25 @@ class Package7Runtime:
         principal_id: str,
         account_id: str,
     ) -> JsonObject:
-        selected = self.repository.select_candidate(account_id, int(request.candidate_number or 0))
+        selected = self.repository.select_candidate(
+            principal_id,
+            account_id,
+            int(request.candidate_number or 0),
+        )
         if not selected.plan_ref:
             return self._plain_action("BLOCK")
         plan_record = self.adapter.expression_service.store.get(selected.plan_ref)
         if plan_record is None:
             return self._plain_action("BLOCK")
-        materials = self.adapter.author_materials(selected.plan_ref, self._access(principal_id, account_id))
+        materials = self.adapter.author_materials(
+            selected.plan_ref, self._access(principal_id, account_id)
+        )
         original_run = self.repository.model_run(selected.run_id)
-        task_brief = {} if original_run is None else copy.deepcopy(original_run.payload.get("task_brief", {}))
+        task_brief = (
+            {}
+            if original_run is None
+            else copy.deepcopy(original_run.payload.get("task_brief", {}))
+        )
         prompt = self._author_prompt(
             plan_record.plan,
             materials,
@@ -677,7 +1087,9 @@ class Package7Runtime:
             revision_instruction=request.message,
             selected_candidate=selected.candidate_payload,
         )
-        run_id = self._new_run_id(principal_id, account_id, request.operation, request.message)
+        run_id = self._new_run_id(
+            principal_id, account_id, request.operation, request.message
+        )
         self.repository.start_model_run(
             run_id=run_id,
             principal_id=principal_id,
@@ -691,7 +1103,25 @@ class Package7Runtime:
                 "task_brief": task_brief,
             },
         )
-        return {"response_kind": "MODEL_REQUIRED", "run_id": run_id, "author_prompt": prompt}
+        return {
+            "response_kind": "MODEL_REQUIRED",
+            "run_id": run_id,
+            "author_prompt": prompt,
+        }
+
+    def prepare_preserved_output_correction(
+        self,
+        source_run_id: str,
+        model_output_b64: str,
+        *,
+        trusted_scope: TrustedDatabaseScope,
+    ) -> JsonObject:
+        """Reject write-back from any historical or rejected author contract."""
+
+        del source_run_id, model_output_b64, trusted_scope
+        raise RuntimeContractError(
+            "Historical and rejected outputs are read-only replay evidence"
+        )
 
     def _start_author_run(
         self,
@@ -719,6 +1149,7 @@ class Package7Runtime:
                 if request.previous_content_ref is None
                 else self.repository.candidate_context(
                     request.previous_content_ref,
+                    principal_id,
                     account_id,
                 )
             ),
@@ -728,12 +1159,22 @@ class Package7Runtime:
             "expression_feeling": request.expression_feeling,
             "content_format": request.content_format,
             "primary_audience": request.primary_audience,
+            "organization_level": request.organization_level,
+            "content_identity": request.content_identity,
+            "long_term_storyline": request.long_term_storyline,
+            "content_direction": request.content_direction,
+            "business_goal": request.business_goal,
+            "expression_method": request.expression_method,
             "existing_material_kinds": list(request.existing_material_kinds),
-            "scope_identity_only_authoring_allowed": self._scope_identity_only_request(request),
+            "scope_identity_only_authoring_allowed": self._scope_identity_only_request(
+                request
+            ),
             "brand_guidance": self._public_brand_guidance(profile),
         }
         prompt = self._author_prompt(plan, materials, task_brief=task_brief)
-        run_id = self._new_run_id(principal_id, account_id, request.operation, request.message)
+        run_id = self._new_run_id(
+            principal_id, account_id, request.operation, request.message
+        )
         self.repository.start_model_run(
             run_id=run_id,
             principal_id=principal_id,
@@ -741,9 +1182,17 @@ class Package7Runtime:
             operation=request.operation,
             plan_ref=str(plan["composition_plan_ref"]),
             prompt_digest=digest_object(prompt),
-            payload={"prompt": prompt, "requirement_summary": request.message, "task_brief": task_brief},
+            payload={
+                "prompt": prompt,
+                "requirement_summary": request.message,
+                "task_brief": task_brief,
+            },
         )
-        return {"response_kind": "MODEL_REQUIRED", "run_id": run_id, "author_prompt": prompt}
+        return {
+            "response_kind": "MODEL_REQUIRED",
+            "run_id": run_id,
+            "author_prompt": prompt,
+        }
 
     @staticmethod
     def _author_prompt(
@@ -754,377 +1203,845 @@ class Package7Runtime:
         revision_instruction: str | None = None,
         selected_candidate: JsonObject | None = None,
     ) -> JsonObject:
-        format_payload = Package7Runtime._format_payload_contract(
-            str(task_brief.get("content_format", "短视频"))
-        )
-        author_materials = copy.deepcopy(materials)
-        precise_facts = author_materials.get("verified_precise_facts", [])
-        if isinstance(precise_facts, list):
-            scope_identity_only = bool(
+        content_format = str(task_brief.get("content_format", "短视频"))
+        if content_format not in {
+            "短视频",
+            "图文",
+            "直播内容包",
+            "私域沟通内容",
+            "门店线下物料",
+            "培训与门店话术",
+            "陈列搭配",
+        }:
+            raise RuntimeContractError("Unknown content format")
+        author_materials = Package7Runtime._author_material_projection(
+            materials,
+            scope_identity_only=bool(
                 task_brief.get("scope_identity_only_authoring_allowed")
-            )
-            projected_facts: list[JsonObject] = []
-            for row in precise_facts:
-                if not isinstance(row, dict):
-                    continue
-                if row.get("fact_kind") != "AUTHORIZATION":
-                    projected_facts.append(copy.deepcopy(row))
-                    continue
-                if not scope_identity_only:
-                    continue
-                value = row.get("value", {})
-                if not isinstance(value, dict):
-                    continue
-                projected_facts.append(
-                    {
-                        "fact_id": row.get("fact_id"),
-                        "fact_kind": "ACCOUNT_SCOPE_IDENTITY",
-                        "value": {
-                            "display_name": value.get("display_name"),
-                            "represented_scope": value.get("represented_scope"),
-                        },
-                        "use_boundary": (
-                            "只支持说明当前内容账号的名称和所代表的组织层级；"
-                            "不支持任何本地商品、库存、活动、人员、顾客或已发生事件。"
-                        ),
-                    }
-                )
-            author_materials["verified_precise_facts"] = projected_facts
-            author_materials["precise_fact_refs"] = [
-                str(row["fact_id"])
-                for row in author_materials["verified_precise_facts"]
-                if isinstance(row.get("fact_id"), str)
-            ]
-        return {
-            "system": (
-                "你是受控内容作者。不得把未提供的信息写成已经存在、已经发生或已经获得授权的事实。"
-                "标题、文案、口播、分镜、人物动作、拍摄和剪辑建议可以创意新写，但不得借创意补造品牌事实。"
-                "返回严格JSON，不要Markdown。输出2至3份候选，每份至少在核心创意、切入问题或场景、情绪钩子、"
-                "叙事视角、事实或证明路径、画面组织方法中的两项真正不同；换标题、换词或调段落不算差异。"
-                "每份候选分别列出实际使用的事实引用和资料引用；没使用就留空。引用只能从允许列表选择。"
-                "任何内部来源编号只能出现在used_fact_refs、used_material_refs和claim_bindings.source_refs中；"
-                "标题、正文、口播、结尾和execution_payload的所有文字都不得显示来源编号。"
-                "来源中的关键数值必须保持数值、单位含义和上下限不变；厘米/cm、合法范围连接符、空格和大小写"
-                "可以作有限等价格式转换，不得改值、换单位含义或扩大范围。"
-                "每份生产候选必须至少使用一条允许的资料或精确事实引用；资料不足且任务不属于明确允许的账号范围说明时不要生成候选。"
-                "不要输出任何内部编号、字段名或授权术语。所有合同中的string都必须填写非空文字，"
-                "图文必须至少给出两帧，短视频必须至少给出两个镜头。publishing_copy须明确写内部测试不可发布。"
-                "根对象必须且只能包含kind、reply、candidates三个键；kind固定为CANDIDATE_SET，reply固定为null。"
-                "短视频的shooting_notes和editing_notes必须写在video对象内，不能写在execution_payload同级。"
-                "历史事件没有现成影像时，不得把新设计的孩子、家长、员工、台词或动作冒充历史重演；"
-                "可以提出明确标为未来、条件性或示意性的拍摄方案。"
-                "资料只说感受存在差异时，不得改写成某人说了具体话或某个动作成功、失败。"
-                "不得把未提供的照片、视频、样衣、设计稿或记录写成已经存在；未来方案可用建议拍摄、计划拍摄、"
-                "可拍摄、如有条件、需准备、示意画面或假设方案等清楚状态表达。"
-                "陈列资料没有明确商品颜色、厚度、尺码交集、库存或空间关系时，不得自行配对或推断；"
-                "可以用证据卡和核对清单说明方法，并把未知项明确列为待确认。"
-                "短视频、图文、陈列搭配必须分别按合同给出可直接拍摄或制作的细节。"
-                "EVIDENCE_FIRST、QUESTION_ANSWER、OBJECT_OR_TIMELINE只作为可选创作建议，不按候选顺序固定，"
-                "也不要求每份候选必须使用不同骨架；真正差异由核心创意、问题、视角、信息顺序和视听组织体现。"
-                "claim_bindings只登记明确事实主张、关键数字、授权状态或真实事件；"
-                "普通标题、正文、口播、分镜和拍摄建议不需要逐项绑定。已登记项的surface_path和exact_text须逐字对应。"
-                "只有来源直接支持的陈述可标SOURCE_CLAIM并绑定来源；拍摄、剪辑和表达安排标CREATIVE_DIRECTION且不得绑定来源；"
-                "内部测试、不可发布、待确认等边界提示标DISCLOSURE且不得绑定来源。不得把事实误标成创作安排。"
-                "difference_dimensions只能逐项填写六个既有枚举之一，不得在枚举后加冒号、解释或例子。"
-                "visual、camera、action、image_brief等制作指令可以新写，但只能描述将来如何拍摄或排版；"
-                "不得暗示照片、视频、样衣、设计稿、截图、工作台、库存、颜色或人物已经存在，除非本次允许来源逐字支持。"
-                "如果来源没有明确提供这些素材，相关制作字段必须清楚表达未来、条件或示意状态，不能暗示素材已经存在。"
-                "如作者仍为execution_payload提供claim_bindings，"
-                "其路径必须以execution_payload.开头，例如execution_payload.story_or_full_script。"
-                "单条口播的路径也必须写spoken_lines[0]而不是spoken_lines。不得使用‘账号身份证据’这组连续文字，"
-                "应改写为‘账号身份依据’，避免被误读为身份证信息。"
-                "previous_content_context只用于延续上一次的创意方向，不是事实来源，不得从中新增事实。"
             ),
-            "plan": plan,
-            "author_materials": author_materials,
-            "task_brief": task_brief,
-            "revision_instruction": revision_instruction,
-            "selected_candidate": selected_candidate,
-            "output_contract": {
-                "kind": "CANDIDATE_SET",
-                "reply": None,
-                "candidates": [
-                    {
-                        "difference_label": "string",
-                        "narrative_architecture": "EVIDENCE_FIRST|QUESTION_ANSWER|OBJECT_OR_TIMELINE|null（可选建议）",
-                        "difference_dimensions": ["核心创意", "画面组织方法"],
-                        "surfaces": {
-                            "title": "string",
-                            "body": "string",
-                            "spoken_lines": ["string"],
-                            "CTA": "string",
-                            "execution_payload": {
-                                "production_format": "短视频|图文|陈列搭配（与任务一致）",
-                                "task_summary": "string",
-                                "content_direction": "string",
-                                "core_idea": "string",
-                                "cover_or_first_screen_copy": "string",
-                                "opening_hook": "string",
-                                "story_or_full_script": "string",
-                                "target_platform": "string",
-                                "duration_label": "string",
-                                "ending_and_action": "string",
-                                "publishing_copy": "string",
-                                "next_actions": ["换开头", "缩短", "提交审核"],
-                                **format_payload,
-                            },
-                            "surface_units": [],
+        )
+        selected_projection = None
+        if isinstance(selected_candidate, dict):
+            surfaces = selected_candidate.get("candidate_user_visible_surfaces")
+            selected_projection = (
+                copy.deepcopy(surfaces) if isinstance(surfaces, dict) else None
+            )
+        return cast(
+            JsonObject,
+            Package7Runtime._sanitize_author_projection(
+                {
+                    "system": (
+                        "你是受控内容作者，只负责把已给任务和资料写成内容。返回严格JSON，不要Markdown。"
+                        "一次写2至3份候选；每份在点子、切入、叙事视角或呈现方式上真正不同，换标题或同义改写不算不同。"
+                        "只填写当前成品合同列出的内容字段。不要填写企业、账号、组织、平台、时长、内部编号、引用路径、"
+                        "资料账本、组件编号，也不要输出其他六种成品的空分支。"
+                        "普通标题、正文、口播、分镜、未来拍摄和排版建议均可自由创作；明确的价格、库存、规格、商品功效、"
+                        "授权状态、企业承诺、真实事件和已有素材状态只能使用author_materials中实际提供且仍有效的信息，"
+                        "没有提供就不要写成事实。author_materials不是逐句真值证明，作者不要输出引用编号；服务端会记录本次参考范围。"
+                        "内容中写出‘已授权’不代表获得登录、账号或数据访问权限，也不得声称绕过这些权限。"
+                        "不得输出内部编号、密钥、身份证号、手机号等真实敏感信息。只有任务明确要求使用某个文件、图片、视频或"
+                        "其他实物而它没有提供时，才停止并请求补料。"
+                        "previous_candidate只用于按本次修改要求改内容。"
+                    ),
+                    "creative_plan": {
+                        "task_objective": plan.get("task_objective"),
+                        "primary_audience": plan.get("primary_audience"),
+                        "candidate_policy": copy.deepcopy(
+                            plan.get("candidate_policy", {})
+                        ),
+                        "expression_guidance": {
+                            key: copy.deepcopy(value)
+                            for key, value in dict(
+                                plan.get("expression_guidance", {})
+                            ).items()
+                            if key
+                            in {
+                                "tone_tendencies",
+                                "prohibited_expression_categories",
+                                "literal_prohibited_phrases",
+                                "client_soft_preferences",
+                                "material_mode",
+                            }
                         },
-                        "claim_bindings": [],
-                        "used_fact_refs": ["allowed fact ref"],
-                        "used_material_refs": ["allowed material ref"],
-                    }
-                ],
-            },
-        }
+                    },
+                    "author_materials": author_materials,
+                    "task_brief": {
+                        key: copy.deepcopy(value)
+                        for key, value in task_brief.items()
+                        if key
+                        in {
+                            "content_goal",
+                            "key_takeaway",
+                            "speaker_role",
+                            "speaker_boundary",
+                            "storyline",
+                            "storyline_purpose",
+                            "column",
+                            "previous_content_context",
+                            "localization_allowed",
+                            "target_platform",
+                            "duration_label",
+                            "expression_feeling",
+                            "content_format",
+                            "primary_audience",
+                            "organization_level",
+                            "content_identity",
+                            "long_term_storyline",
+                            "content_direction",
+                            "business_goal",
+                            "expression_method",
+                            "existing_material_kinds",
+                            "brand_guidance",
+                        }
+                    },
+                    "revision_instruction": revision_instruction,
+                    "previous_candidate": selected_projection,
+                    "output_contract": contract_descriptor(
+                        cast(ContentFormat, content_format)
+                    ),
+                }
+            ),
+        )
 
     @staticmethod
-    def _format_payload_contract(content_format: str) -> JsonObject:
-        if content_format == "短视频":
-            return {
-                "video": {
-                    "shots": [
-                        {
-                            "time_range": "string",
-                            "visual": "string",
-                            "action": "string",
-                            "camera": "string",
-                            "audio": "string",
-                            "subtitle": "string or empty",
-                            "scene_product_props": "string or empty",
-                            "edit_note": "string or empty",
-                        },
-                        {
-                            "time_range": "string",
-                            "visual": "string",
-                            "action": "string",
-                            "camera": "string",
-                            "audio": "string",
-                            "subtitle": "string or empty",
-                            "scene_product_props": "string or empty",
-                            "edit_note": "string or empty",
-                        },
-                    ],
-                    "shooting_notes": ["string"],
-                    "editing_notes": ["string"],
-                },
-                "article": None,
-                "display": None,
-            }
-        if content_format == "图文":
-            return {
-                "video": None,
-                "article": {
-                    "frames": [
-                        {"order": 1, "image_brief": "string", "accompanying_copy": "string"},
-                        {"order": 2, "image_brief": "string", "accompanying_copy": "string"},
-                    ],
-                    "cover_brief": "string",
-                    "layout_notes": ["string"],
-                },
-                "display": None,
-            }
-        if content_format == "陈列搭配":
-            return {
-                "video": None,
-                "article": None,
-                "display": {
-                    "referenced_items_or_facts": ["allowed fact or material description"],
-                    "arrangement_relationship": "string",
-                    "spatial_layers": "string",
-                    "color_relationship": "string",
-                    "availability_caution": "string",
-                    "shooting_angles": ["string"],
-                },
-            }
-        raise RuntimeContractError("Unknown content format")
+    def _sanitize_author_projection(value: object) -> Any:
+        """Remove server-only identifiers without altering business fact values."""
 
-    def finalize_model_output(self, run_id: str, model_output_b64: str) -> JsonObject:
-        run = self.repository.model_run(run_id)
-        if run is None or run.first_output_preserved:
-            raise RuntimeContractError("Unknown or already completed run")
+        if isinstance(value, str):
+            return INTERNAL_REFERENCE_PATTERN.sub("[内部标识已隐藏]", value)
+        if isinstance(value, list):
+            return [Package7Runtime._sanitize_author_projection(item) for item in value]
+        if isinstance(value, dict):
+            return {
+                str(key): Package7Runtime._sanitize_author_projection(item)
+                for key, item in value.items()
+            }
+        return copy.deepcopy(value)
+
+    @staticmethod
+    def _author_material_projection(
+        materials: JsonObject,
+        *,
+        scope_identity_only: bool,
+    ) -> JsonObject:
+        narrative: list[JsonObject] = []
+        for row in materials.get("scoped_retrieval_fragments", []):
+            if not isinstance(row, dict):
+                continue
+            text = row.get("text")
+            if not isinstance(text, str) or not text.strip():
+                continue
+            narrative.append(
+                {
+                    "content": text.strip(),
+                    "observed_at": row.get("observed_at"),
+                    "valid_from": row.get("valid_from"),
+                    "valid_until": row.get("valid_until"),
+                    "use_boundary": row.get("use_boundary"),
+                }
+            )
+        facts: list[JsonObject] = []
+        for row in materials.get("verified_precise_facts", []):
+            if not isinstance(row, dict):
+                continue
+            kind = row.get("fact_kind")
+            if kind == "AUTHORIZATION" and not scope_identity_only:
+                continue
+            value = row.get("value")
+            if not isinstance(value, dict):
+                continue
+            if kind == "AUTHORIZATION":
+                value = {
+                    "display_name": value.get("display_name"),
+                    "represented_scope": value.get("represented_scope"),
+                }
+                kind = "账号名称与代表范围"
+            facts.append(
+                {
+                    "kind": kind,
+                    "value": copy.deepcopy(value),
+                    "effective_at": row.get("effective_at"),
+                    "valid_until": row.get("valid_until"),
+                    "use_boundary": row.get("use_boundary"),
+                }
+            )
+        return {
+            "narrative_materials": narrative,
+            "precise_facts": facts,
+            "instruction": (
+                "这些内容只是本次创作参考，不是逐句真值证明。普通表达、假设场景和未来制作建议可自由创作；"
+                "明确的价格、库存、规格、商品功效、授权状态、企业承诺、真实事件、顾客证言和已有素材状态，"
+                "只能在这里实际提供且仍有效时写入，不得靠创意补造。服务端负责记录参考范围，作者不要输出引用编号；"
+                "文本中的授权措辞不授予任何登录或数据访问权限。"
+                "不得输出内部编号、密钥或真实敏感信息。"
+            ),
+        }
+
+    def finalize_model_output(
+        self,
+        run_id: str,
+        model_output_b64: str,
+        *,
+        trusted_scope: TrustedDatabaseScope,
+    ) -> JsonObject:
+        if not all(
+            isinstance(value, str) and value
+            for value in (
+                trusted_scope.principal_id,
+                trusted_scope.account_id,
+                trusted_scope.browser_session_id,
+            )
+        ):
+            raise RuntimeContractError("Trusted finalization scope is incomplete")
+        principal_id = cast(str, trusted_scope.principal_id)
+        account_id = cast(str, trusted_scope.account_id)
+        browser_session_id = cast(str, trusted_scope.browser_session_id)
+        with (
+            trusted_database_scope(trusted_scope),
+            runtime_browser_session(browser_session_id),
+        ):
+            run = self.repository.model_run_for_request(
+                run_id,
+                principal_id=principal_id,
+                account_id=account_id,
+                browser_session_id=browser_session_id,
+            )
+            if run is None or run.first_output_preserved:
+                raise RuntimeContractError("Unknown or already completed run")
+            try:
+                raw_bytes = base64.b64decode(model_output_b64, validate=True)
+            except ValueError as exc:
+                raise RuntimeContractError("Model output transport is invalid") from exc
+            raw_output_digest = hashlib.sha256(raw_bytes).hexdigest()
+            self.repository.receive_first_output(
+                run_id,
+                output_digest=raw_output_digest,
+                output_size_bytes=len(raw_bytes),
+            )
+            try:
+                return self._finalize_model_output_scoped(
+                    run,
+                    raw_bytes,
+                    raw_output_digest=raw_output_digest,
+                )
+            except Exception as exc:
+                received = self.repository.model_run_for_request(
+                    run_id,
+                    principal_id=principal_id,
+                    account_id=account_id,
+                    browser_session_id=browser_session_id,
+                )
+                if received is None or received.state != "FIRST_OUTPUT_RECEIVED":
+                    raise
+                self.repository.preserve_first_output(
+                    run_id,
+                    raw_output_digest,
+                    "FIRST_OUTPUT_REJECTED",
+                    {
+                        "result_class": "SYSTEM_OR_PROVIDER_ERROR",
+                        "failure_stage": "DOWNSTREAM_VALIDATION",
+                        "error_type": type(exc).__name__,
+                        "run_id": run_id,
+                        "first_output_preserved": True,
+                    },
+                )
+                return self._failure_result("SYSTEM_OR_PROVIDER_ERROR", run_id)
+
+    def _finalize_model_output_scoped(
+        self,
+        run: RuntimeModelRun,
+        raw_bytes: bytes,
+        *,
+        raw_output_digest: str,
+    ) -> JsonObject:
         try:
             self.repository.require_active_scope(run.principal_id, run.account_id)
         except ValueError as exc:
             raise RuntimeContractError("Run authority is no longer active") from exc
         try:
-            raw = base64.b64decode(model_output_b64, validate=True).decode("utf-8")
-            raw_output_digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()
+            raw = raw_bytes.decode("utf-8")
             normalized, normalization = normalize_model_json_text(raw)
-            parsed = json.loads(normalized)
-            if (
-                run.plan_ref is not None
-                and isinstance(parsed, dict)
-                and set(parsed) == {"candidates"}
-            ):
-                parsed = {
-                    "kind": "CANDIDATE_SET",
-                    "reply": None,
-                    "candidates": parsed["candidates"],
-                }
-                normalization = f"{normalization}+ADDED_FIXED_CANDIDATE_ENVELOPE"
-            relocated_video_notes = 0
-            if run.plan_ref is not None and isinstance(parsed, dict):
-                raw_candidates = parsed.get("candidates")
-                if isinstance(raw_candidates, list):
-                    for raw_candidate in raw_candidates:
-                        surfaces = (
-                            raw_candidate.get("surfaces")
-                            if isinstance(raw_candidate, dict)
-                            else None
-                        )
-                        production = (
-                            surfaces.get("execution_payload")
-                            if isinstance(surfaces, dict)
-                            else None
-                        )
-                        video = production.get("video") if isinstance(production, dict) else None
-                        if not isinstance(video, dict) or not isinstance(production, dict):
-                            continue
-                        for field in ("shooting_notes", "editing_notes"):
-                            if field in production and field not in video:
-                                video[field] = production.pop(field)
-                                relocated_video_notes += 1
-            if relocated_video_notes:
-                normalization = f"{normalization}+RELOCATED_VIDEO_NOTES"
-            for marker in self._normalize_known_model_contract_variants(parsed):
-                normalization = f"{normalization}+{marker}"
-            envelope = ModelEnvelope.model_validate(parsed)
-        except (ValueError, UnicodeDecodeError, json.JSONDecodeError):
-            digest = hashlib.sha256(model_output_b64.encode("utf-8")).hexdigest()
-            self.repository.preserve_first_output(run_id, digest, "FIRST_OUTPUT_REJECTED", {"parse_error": True})
-            return self._plain_action("BLOCK")
-        output = envelope.model_dump()
-        output_digest = raw_output_digest
-        if envelope.kind == "CHAT_REPLY":
+            try:
+                parsed = json.loads(normalized)
+            except json.JSONDecodeError:
+                escaped, replacement_count = escape_json_string_control_characters(
+                    normalized
+                )
+                if replacement_count == 0:
+                    raise
+                parsed = json.loads(escaped)
+                normalized = escaped
+                normalization = (
+                    "ESCAPED_RAW_JSON_STRING_CONTROLS"
+                    if normalization == "NONE"
+                    else f"{normalization}+ESCAPED_RAW_JSON_STRING_CONTROLS"
+                )
+        except (ValueError, UnicodeDecodeError, json.JSONDecodeError) as exc:
             self.repository.preserve_first_output(
-                run_id,
-                output_digest,
+                run.run_id,
+                raw_output_digest,
+                "FIRST_OUTPUT_REJECTED",
+                {
+                    "result_class": "MODEL_OUTPUT_CONTRACT_ERROR",
+                    "failure_stage": "DECODE_OR_JSON",
+                    "error_type": type(exc).__name__,
+                    "run_id": run.run_id,
+                    "first_output_preserved": True,
+                },
+            )
+            return self._failure_result("MODEL_OUTPUT_CONTRACT_ERROR", run.run_id)
+
+        if run.plan_ref is None:
+            try:
+                envelope = ChatEnvelope.model_validate(parsed)
+            except ValueError as exc:
+                self.repository.preserve_first_output(
+                    run.run_id,
+                    raw_output_digest,
+                    "FIRST_OUTPUT_REJECTED",
+                    {
+                        "result_class": "MODEL_OUTPUT_CONTRACT_ERROR",
+                        "failure_stage": "CHAT_CONTRACT",
+                        "error_type": type(exc).__name__,
+                        "run_id": run.run_id,
+                        "first_output_preserved": True,
+                    },
+                )
+                return self._failure_result("MODEL_OUTPUT_CONTRACT_ERROR", run.run_id)
+            output = envelope.model_dump()
+            self.repository.preserve_first_output(
+                run.run_id,
+                raw_output_digest,
                 "FIRST_OUTPUT_ACCEPTED",
                 {
                     "envelope": output,
+                    "server_bound_contract_version": AUTHOR_CONTRACT_VERSION,
                     "private_retrieval_performed": False,
                     "model_wrapper_normalization": normalization,
+                    "result_class": "SUCCESS",
                 },
             )
-            return {"response_kind": "DIRECT", "user_visible_text": str(envelope.reply)}
-        if run.plan_ref is None:
-            self.repository.preserve_first_output(run_id, output_digest, "FIRST_OUTPUT_REJECTED", output)
-            return self._plain_action("BLOCK")
-        return self._finalize_candidate_envelope(
+            return {"response_kind": "DIRECT", "user_visible_text": envelope.reply}
+
+        task_brief = run.payload.get("task_brief")
+        expected_format = (
+            task_brief.get("content_format") if isinstance(task_brief, dict) else None
+        )
+        if expected_format not in self.content_formats or not isinstance(
+            task_brief, dict
+        ):
+            self.repository.preserve_first_output(
+                run.run_id,
+                raw_output_digest,
+                "FIRST_OUTPUT_REJECTED",
+                {
+                    "result_class": "SYSTEM_OR_PROVIDER_ERROR",
+                    "failure_stage": "SERVER_TASK_CONTRACT",
+                    "run_id": run.run_id,
+                    "first_output_preserved": True,
+                },
+            )
+            return self._failure_result("SYSTEM_OR_PROVIDER_ERROR", run.run_id)
+        transport_markers = self._normalize_server_owned_author_echo(
+            parsed,
+            expected_format=expected_format,
+            task_brief=task_brief,
+        )
+        for marker in transport_markers:
+            normalization = (
+                marker if normalization == "NONE" else f"{normalization}+{marker}"
+            )
+        try:
+            candidates, schema_failures = parse_candidate_envelope(
+                parsed,
+                expected_format,
+            )
+        except ValueError as exc:
+            self.repository.preserve_first_output(
+                run.run_id,
+                raw_output_digest,
+                "FIRST_OUTPUT_REJECTED",
+                {
+                    "result_class": "MODEL_OUTPUT_CONTRACT_ERROR",
+                    "failure_stage": "CANDIDATE_ENVELOPE",
+                    "error_type": type(exc).__name__,
+                    "run_id": run.run_id,
+                    "first_output_preserved": True,
+                },
+            )
+            return self._failure_result("MODEL_OUTPUT_CONTRACT_ERROR", run.run_id)
+        return self._finalize_lightweight_candidates(
             run,
-            envelope,
-            output_digest=output_digest,
+            candidates,
+            schema_failures=schema_failures,
+            original_envelope=parsed,
+            output_digest=raw_output_digest,
             normalization=normalization,
         )
 
-    def revalidate_preserved_candidate_output(self, run_id: str) -> JsonObject:
-        """Re-run deterministic gates against one unchanged preserved first output."""
-        run = self.repository.model_run(run_id)
-        if (
-            run is None
-            or not run.first_output_preserved
-            or run.state != "FIRST_OUTPUT_REJECTED"
-            or not isinstance(run.model_output_digest, str)
-            or run.payload.get("parse_error") is True
+    @staticmethod
+    def _normalize_server_owned_author_echo(
+        parsed: object,
+        *,
+        expected_format: str,
+        task_brief: JsonObject,
+    ) -> list[str]:
+        """Remove only exact echoes of server-owned contract metadata."""
+
+        if not isinstance(parsed, dict) or not isinstance(
+            parsed.get("candidates"), list
         ):
-            raise RuntimeContractError("Run is not eligible for deterministic revalidation")
-        try:
-            envelope = ModelEnvelope.model_validate(
-                {
-                    "kind": copy.deepcopy(run.payload["kind"]),
-                    "reply": copy.deepcopy(run.payload["reply"]),
-                    "candidates": copy.deepcopy(run.payload["candidates"]),
-                }
+            return []
+        markers: list[str] = []
+        if parsed.get("contract_version") == AUTHOR_CONTRACT_VERSION:
+            del parsed["contract_version"]
+            markers.append("REMOVED_EXACT_SERVER_CONTRACT_VERSION_ECHO")
+        expected_duration = task_brief.get("duration_label")
+        if expected_format != "短视频" or not isinstance(expected_duration, str):
+            return markers
+        removed = 0
+        for candidate in parsed["candidates"]:
+            deliverable = (
+                candidate.get("deliverable") if isinstance(candidate, dict) else None
             )
-        except (KeyError, ValueError) as exc:
-            raise RuntimeContractError("Preserved candidate envelope is incomplete") from exc
-        if envelope.kind != "CANDIDATE_SET" or run.plan_ref is None:
-            raise RuntimeContractError("Preserved output is not a candidate set")
-        return self._finalize_candidate_envelope(
-            run,
-            envelope,
-            output_digest=run.model_output_digest,
-            normalization="PRESERVED_FIRST_OUTPUT_DETERMINISTIC_REVALIDATION",
-            preserved_revalidation=True,
+            if (
+                isinstance(deliverable, dict)
+                and deliverable.get("duration_label") == expected_duration
+            ):
+                del deliverable["duration_label"]
+                removed += 1
+        if removed:
+            markers.append(f"REMOVED_EXACT_SERVER_DURATION_ECHO:{removed}")
+        return markers
+
+    def _finalize_lightweight_candidates(
+        self,
+        run: RuntimeModelRun,
+        candidates: list[CandidateBase],
+        *,
+        schema_failures: list[JsonObject],
+        original_envelope: object,
+        output_digest: str,
+        normalization: str,
+    ) -> JsonObject:
+        if run.plan_ref is None:
+            raise RuntimeContractError("Candidate run has no composition plan")
+        access = self._access(run.principal_id, run.account_id)
+        materials = self.adapter.author_materials(run.plan_ref, access)
+        task_brief = run.payload.get("task_brief")
+        if not isinstance(task_brief, dict):
+            task_brief = {}
+        expected_format = str(task_brief.get("content_format", ""))
+        fact_refs, material_refs = self._server_reference_scope(materials, task_brief)
+        plan_record = self.adapter.expression_service.store.get(run.plan_ref)
+        if plan_record is None:
+            raise RuntimeContractError("Candidate plan is unavailable")
+        literal_prohibitions = tuple(
+            str(value)
+            for value in plan_record.plan["expression_guidance"].get(
+                "literal_prohibited_phrases", []
+            )
+            if isinstance(value, str) and value
         )
+        accepted: list[JsonObject] = []
+        validations: list[JsonObject] = []
+        candidate_failures = copy.deepcopy(schema_failures)
+        comparison_texts: list[str] = []
+        for ordinal, candidate in enumerate(candidates, 1):
+            try:
+                surfaces = self._server_candidate_surfaces(
+                    candidate,
+                    content_format=expected_format,
+                    task_brief=task_brief,
+                )
+            except ValueError as exc:
+                candidate_failures.append(
+                    {
+                        "candidate_ordinal": ordinal,
+                        "error_type": "SERVER_MATERIALIZATION_ERROR",
+                        "error_count": 1,
+                        "error_locations": [type(exc).__name__],
+                    }
+                )
+                continue
+            validator_surfaces = self._validator_surface_projection(
+                surfaces,
+                literal_prohibitions,
+            )
+            sensitive_failures = self._server_sensitive_surface_failures(surfaces)
+            if sensitive_failures:
+                candidate_failures.append(
+                    {
+                        "candidate_ordinal": ordinal,
+                        "error_type": "SENSITIVE_SURFACE_ERROR",
+                        "error_count": len(sensitive_failures),
+                        "error_locations": sensitive_failures,
+                    }
+                )
+                continue
+            candidate_id = f"CAND-{run.run_id[-16:]}-{len(accepted) + 1}"
+            payload: JsonObject = {
+                "candidate_id": candidate_id,
+                "candidate_version": 2,
+                "creative_difference": candidate.creative_difference,
+                "difference_label": candidate.creative_difference,
+                "candidate_user_visible_surfaces": surfaces,
+                "claim_bindings": [],
+                "author_declared_claim_bindings": [],
+                "used_fact_refs": list(fact_refs),
+                "used_material_refs": list(material_refs),
+                "evidence_panel": {
+                    "panel_label": "本次参考资料范围",
+                    "used_fact_count": len(fact_refs),
+                    "used_material_count": len(material_refs),
+                    "scope_and_authorization_checked": True,
+                    "machine_proves_every_sentence": False,
+                    "server_bound_explicit_fact_count": 0,
+                    "semantic_fact_review": "待人工确认",
+                    "publishable": False,
+                },
+            }
+            validator_candidate = {
+                "candidate_id": candidate_id,
+                "candidate_version": 2,
+                "candidate_user_visible_surfaces": validator_surfaces,
+            }
+            validation = self.adapter.validate_candidate(
+                run.plan_ref,
+                access,
+                validator_candidate,
+                actually_used_fact_refs=tuple(fact_refs),
+                actually_used_material_refs=tuple(material_refs),
+                evaluation_at=datetime.now(timezone.utc)
+                .isoformat()
+                .replace("+00:00", "Z"),
+            )
+            if validation.get("decision") != "PASS":
+                candidate_failures.append(
+                    {
+                        "candidate_ordinal": ordinal,
+                        "error_type": "REFERENCE_SCOPE_VALIDATION_ERROR",
+                        "error_count": 1,
+                        "error_locations": [str(validation.get("decision", "UNKNOWN"))],
+                    }
+                )
+                continue
+            accepted.append(payload)
+            validations.append(validation)
+            comparison_texts.append(
+                re.sub(
+                    r"\s+",
+                    "",
+                    json.dumps(surfaces, ensure_ascii=False, sort_keys=True),
+                )
+            )
+        similarity_hints = self._similarity_review_hints(comparison_texts)
+        for ordinal, payload in enumerate(accepted, 1):
+            evidence_panel = cast(JsonObject, payload["evidence_panel"])
+            evidence_panel["similarity_review_hints"] = [
+                row for row in similarity_hints if ordinal in row["candidate_ordinals"]
+            ]
+        if not accepted:
+            result_class = "MODEL_OUTPUT_CONTRACT_ERROR"
+            self.repository.preserve_first_output(
+                run.run_id,
+                output_digest,
+                "FIRST_OUTPUT_REJECTED",
+                {
+                    "result_class": result_class,
+                    "failure_stage": "CANDIDATE_VALIDATION",
+                    "candidate_failures": candidate_failures,
+                    "accepted_candidate_count": len(accepted),
+                    "original_envelope": copy.deepcopy(original_envelope),
+                    "run_id": run.run_id,
+                    "first_output_preserved": True,
+                },
+            )
+            return self._failure_result(result_class, run.run_id)
+        candidate_option_warning = "可选方案不足" if len(accepted) == 1 else None
+        self.repository.save_candidate_set(
+            run_id=run.run_id,
+            account_id=run.account_id,
+            plan_ref=run.plan_ref,
+            candidates=accepted,
+            validations=validations,
+        )
+        self.repository.preserve_first_output(
+            run.run_id,
+            output_digest,
+            "FIRST_OUTPUT_ACCEPTED",
+            {
+                "result_class": "SUCCESS",
+                "candidate_failures": candidate_failures,
+                "accepted_candidate_count": len(accepted),
+                "candidate_option_warning": candidate_option_warning,
+                "model_wrapper_normalization": normalization,
+                "similarity_review_hints": similarity_hints,
+                "first_output_preserved": True,
+            },
+        )
+        return {
+            "response_kind": "DIRECT",
+            "result_class": "SUCCESS",
+            "run_id": run.run_id,
+            "candidate_option_warning": candidate_option_warning,
+            "user_visible_text": (
+                ("可选方案不足\n\n" if candidate_option_warning else "")
+                + self._render_candidates(accepted)
+            ),
+        }
+
+    @staticmethod
+    def _server_reference_scope(
+        materials: JsonObject,
+        task_brief: JsonObject,
+    ) -> tuple[tuple[str, ...], tuple[str, ...]]:
+        scope_identity_only = bool(
+            task_brief.get("scope_identity_only_authoring_allowed")
+        )
+        fact_refs = tuple(
+            str(row["fact_id"])
+            for row in materials.get("verified_precise_facts", [])
+            if isinstance(row, dict)
+            and isinstance(row.get("fact_id"), str)
+            and (row.get("fact_kind") != "AUTHORIZATION" or scope_identity_only)
+        )
+        material_refs = tuple(
+            str(value)
+            for value in materials.get("retrieval_fragment_refs", [])
+            if isinstance(value, str)
+        )
+        return fact_refs, material_refs
+
+    @staticmethod
+    def _validator_surface_projection(
+        surfaces: JsonObject,
+        literal_prohibitions: tuple[str, ...],
+    ) -> JsonObject:
+        """Keep legacy brand wording preferences out of the runtime hard gate."""
+
+        def mask_clause(clause: str) -> str:
+            masked = clause
+            for phrase in literal_prohibitions:
+                if phrase:
+                    masked = masked.replace(phrase, "[表达偏好待人工审查]")
+            return masked
+
+        def visit(value: object) -> object:
+            if isinstance(value, str):
+                parts = re.split(r"([，,。；;！？!?：:\n]+)", value)
+                return "".join(
+                    part if index % 2 else mask_clause(part)
+                    for index, part in enumerate(parts)
+                )
+            if isinstance(value, list):
+                return [visit(item) for item in value]
+            if isinstance(value, dict):
+                return {str(key): visit(item) for key, item in value.items()}
+            return copy.deepcopy(value)
+
+        projected = visit(surfaces)
+        if not isinstance(projected, dict):
+            raise RuntimeContractError("Validator surface projection is invalid")
+        return projected
+
+    @staticmethod
+    def _server_candidate_surfaces(
+        candidate: CandidateBase,
+        *,
+        content_format: str,
+        task_brief: JsonObject,
+    ) -> JsonObject:
+        deliverable = candidate.deliverable_payload()
+        branches: JsonObject = {
+            "video": None,
+            "article": None,
+            "live": None,
+            "private_communication": None,
+            "offline_material": None,
+            "training": None,
+            "display": None,
+        }
+        if content_format == "短视频":
+            branches["video"] = {
+                "shots": [
+                    {
+                        "time_range": f"镜头{index}",
+                        "visual": row["visual"],
+                        "action": "",
+                        "camera": row["camera"],
+                        "audio": row["audio"],
+                        "subtitle": row.get("subtitle", ""),
+                        "scene_product_props": "",
+                        "edit_note": "",
+                    }
+                    for index, row in enumerate(deliverable["shots"], 1)
+                ],
+                "shooting_notes": deliverable["shooting_notes"],
+                "editing_notes": deliverable["editing_notes"],
+            }
+        elif content_format == "图文":
+            branches["article"] = {
+                "frames": [
+                    {"order": index, **row}
+                    for index, row in enumerate(deliverable["frames"], 1)
+                ],
+                "cover_brief": deliverable["cover_brief"],
+                "layout_notes": deliverable["layout_notes"],
+            }
+        elif content_format == "直播内容包":
+            branches["live"] = deliverable
+        elif content_format == "私域沟通内容":
+            branches["private_communication"] = deliverable
+        elif content_format == "门店线下物料":
+            branches["offline_material"] = deliverable
+        elif content_format == "培训与门店话术":
+            branches["training"] = deliverable
+        elif content_format == "陈列搭配":
+            branches["display"] = {
+                "referenced_items_or_facts": ["以本次参考资料范围为准"],
+                **deliverable,
+            }
+        else:
+            raise RuntimeContractError("Unknown content format")
+        spoken = list(candidate.spoken_lines)
+        opening = spoken[0] if spoken else candidate.body[:500]
+        ending = candidate.cta or "请先人工核对，再决定是否继续使用。"
+        production = ProductionPackage.model_validate(
+            {
+                "production_format": content_format,
+                "task_summary": str(
+                    task_brief.get("content_goal")
+                    or task_brief.get("key_takeaway")
+                    or "完成当前内部内容任务"
+                ),
+                "content_direction": str(
+                    task_brief.get("content_direction") or candidate.creative_difference
+                ),
+                "core_idea": candidate.creative_difference,
+                "cover_or_first_screen_copy": candidate.title,
+                "opening_hook": opening,
+                "story_or_full_script": candidate.body,
+                "target_platform": str(task_brief.get("target_platform") or "内部测试"),
+                "duration_label": str(task_brief.get("duration_label") or "由系统建议"),
+                "ending_and_action": ending,
+                "publishing_copy": f"{candidate.body}\n\n内部测试稿，不可直接发布。",
+                "next_actions": ["选择候选", "提出局部修改", "人工审核"],
+                **branches,
+            }
+        )
+        return CandidateSurfaces.model_validate(
+            {
+                "title": candidate.title,
+                "body": candidate.body,
+                "spoken_lines": spoken,
+                "CTA": candidate.cta,
+                "execution_payload": production.model_dump(by_alias=True),
+                "surface_units": [],
+            }
+        ).model_dump(by_alias=True)
+
+    @staticmethod
+    def _server_fact_resolution(
+        surfaces: JsonObject,
+        *,
+        classification_surfaces: JsonObject,
+        source_corpus: dict[str, str],
+    ) -> tuple[list[JsonObject], list[str]]:
+        """Bind supported explicit facts and reject unsupported or sensitive claims."""
+
+        failures: set[str] = set()
+        bindings: list[JsonObject] = []
+        classification_text = audience_surface_text_map(classification_surfaces)
+        for path, text in audience_surface_text_map(surfaces).items():
+            supporting_refs: set[str] = set()
+            unsupported = False
+            for clause in high_risk_fact_clauses(
+                path,
+                classification_text.get(path, text),
+            ):
+                clause_refs = {
+                    ref
+                    for ref, source_text in source_corpus.items()
+                    if source_supports_fact_clause(clause, source_text)
+                }
+                if not clause_refs:
+                    unsupported = True
+                    failures.add(f"{path}:UNSUPPORTED_EXPLICIT_FACT")
+                    continue
+                supporting_refs.update(clause_refs)
+            if supporting_refs and not unsupported:
+                bindings.append(
+                    {
+                        "surface_path": path,
+                        "exact_text": text,
+                        "claim_class": "SOURCE_CLAIM",
+                        "source_refs": sorted(supporting_refs),
+                        "binding_origin": "SERVER_PATH_CLASSIFICATION",
+                    }
+                )
+        return sorted(bindings, key=lambda row: str(row["surface_path"])), sorted(
+            failures
+        )
+
+    @staticmethod
+    def _server_sensitive_surface_failures(surfaces: JsonObject) -> list[str]:
+        """Reject only internal identifiers, direct PII, and credential material."""
+
+        failures: set[str] = set()
+        for path, text in audience_surface_text_map(surfaces).items():
+            if INTERNAL_REFERENCE_PATTERN.search(text):
+                failures.add(f"{path}:INTERNAL_REFERENCE")
+            if PERSONAL_INFORMATION_PATTERN.search(text):
+                failures.add(f"{path}:PERSONAL_INFORMATION")
+            if any(pattern.search(text) for pattern in SECRET_SURFACE_PATTERNS):
+                failures.add(f"{path}:SECRET")
+        return sorted(failures)
+
+    @staticmethod
+    def _similarity_review_hints(texts: list[str]) -> list[JsonObject]:
+        return [
+            {
+                "candidate_ordinals": [index + 1, other_index + 1],
+                "similarity_ratio": round(
+                    SequenceMatcher(None, left, right, autojunk=False).ratio(),
+                    4,
+                ),
+                "review_required": SequenceMatcher(
+                    None,
+                    left,
+                    right,
+                    autojunk=False,
+                ).ratio()
+                >= 0.90,
+                "runtime_rejection": False,
+            }
+            for index, left in enumerate(texts)
+            for other_index, right in enumerate(texts[index + 1 :], start=index + 1)
+        ]
+
+    def revalidate_preserved_candidate_output(self, run_id: str) -> JsonObject:
+        """Keep legacy candidate contracts as read-only historical evidence."""
+
+        del run_id
+        raise RuntimeContractError("Legacy contract replay cannot write runtime state")
 
     def revalidate_preserved_parse_error(
         self,
         run_id: str,
         model_output_b64: str,
     ) -> JsonObject:
-        """Recover one exact first output after a deterministic parser repair."""
-        run = self.repository.model_run(run_id)
-        encoded_digest = hashlib.sha256(model_output_b64.encode("utf-8")).hexdigest()
-        if (
-            run is None
-            or not run.first_output_preserved
-            or run.state != "FIRST_OUTPUT_REJECTED"
-            or run.payload.get("parse_error") is not True
-            or run.model_output_digest != encoded_digest
-            or run.plan_ref is None
-        ):
-            raise RuntimeContractError("Parse-rejected run is not eligible for revalidation")
-        try:
-            raw = base64.b64decode(model_output_b64, validate=True).decode("utf-8")
-            normalized, normalization = normalize_model_json_text(raw)
-            provider_json_b64 = base64.b64encode(normalized.encode("utf-8")).decode("ascii")
-            parsed = json.loads(normalized)
-            if isinstance(parsed, dict) and set(parsed) == {"candidates"}:
-                parsed = {
-                    "kind": "CANDIDATE_SET",
-                    "reply": None,
-                    "candidates": parsed["candidates"],
-                }
-                normalization = f"{normalization}+ADDED_FIXED_CANDIDATE_ENVELOPE"
-            relocated_video_notes = 0
-            if isinstance(parsed, dict) and isinstance(parsed.get("candidates"), list):
-                for raw_candidate in parsed["candidates"]:
-                    surfaces = raw_candidate.get("surfaces") if isinstance(raw_candidate, dict) else None
-                    production = (
-                        surfaces.get("execution_payload")
-                        if isinstance(surfaces, dict)
-                        else None
-                    )
-                    video = production.get("video") if isinstance(production, dict) else None
-                    if not isinstance(video, dict) or not isinstance(production, dict):
-                        continue
-                    for field in ("shooting_notes", "editing_notes"):
-                        if field in production and field not in video:
-                            video[field] = production.pop(field)
-                            relocated_video_notes += 1
-            if relocated_video_notes:
-                normalization = f"{normalization}+RELOCATED_VIDEO_NOTES"
-            markers = self._normalize_known_model_contract_variants(parsed)
-            for marker in markers:
-                normalization = f"{normalization}+{marker}"
-            envelope = ModelEnvelope.model_validate(parsed)
-        except (ValueError, UnicodeDecodeError, json.JSONDecodeError) as exc:
-            raise RuntimeContractError("Preserved parse error remains invalid") from exc
-        if envelope.kind != "CANDIDATE_SET":
-            raise RuntimeContractError("Preserved output is not a candidate set")
-        return self._finalize_candidate_envelope(
-            run,
-            envelope,
-            output_digest=run.model_output_digest,
-            normalization=normalization,
-            preserved_revalidation=True,
-            preserved_revalidation_details={
-                "repair_id": "PKG7-NARROW-MODEL-CONTRACT-NORMALIZATION-001",
-                "provider_response_sha256": hashlib.sha256(raw.encode("utf-8")).hexdigest(),
-                "provider_candidate_json_b64": provider_json_b64,
-                "private_reasoning_retained": False,
-                "provider_output_digest_unchanged": True,
-                "user_visible_content_unchanged": True,
-                "contract_normalizations": markers,
-            },
-        )
+        """Keep malformed legacy envelopes immutable and out of current state."""
+
+        del run_id, model_output_b64
+        raise RuntimeContractError("Legacy contract replay cannot write runtime state")
 
     @staticmethod
     def _normalize_known_model_contract_variants(parsed: object) -> list[str]:
         """Normalize only closed, semantics-preserving provider contract variants."""
-        if not isinstance(parsed, dict) or not isinstance(parsed.get("candidates"), list):
+        if not isinstance(parsed, dict) or not isinstance(
+            parsed.get("candidates"), list
+        ):
             return []
         dimension_alias_count = 0
         dimension_detail_suffix_count = 0
@@ -1174,7 +2091,9 @@ class Package7Runtime:
             fact_refs = candidate.get("used_fact_refs")
             material_refs = candidate.get("used_material_refs")
             if isinstance(fact_refs, list) and isinstance(material_refs, list):
-                material_ref_set = set(value for value in material_refs if isinstance(value, str))
+                material_ref_set = set(
+                    value for value in material_refs if isinstance(value, str)
+                )
                 normalized_fact_refs = []
                 for value in fact_refs:
                     if (
@@ -1188,7 +2107,9 @@ class Package7Runtime:
                 candidate["used_fact_refs"] = normalized_fact_refs
             surfaces = candidate.get("surfaces")
             execution_payload = (
-                surfaces.get("execution_payload") if isinstance(surfaces, dict) else None
+                surfaces.get("execution_payload")
+                if isinstance(surfaces, dict)
+                else None
             )
             ending_and_action = (
                 execution_payload.get("ending_and_action")
@@ -1214,13 +2135,16 @@ class Package7Runtime:
                             row
                             for row in bindings
                             if isinstance(row, dict)
-                            and row.get("surface_path") == "execution_payload.ending_and_action"
+                            and row.get("surface_path")
+                            == "execution_payload.ending_and_action"
                             and row.get("exact_text") == ending_and_action.strip()
                         ),
                         None,
                     )
                     if ending_binding is not None:
-                        bindings.append({**copy.deepcopy(ending_binding), "surface_path": "CTA"})
+                        bindings.append(
+                            {**copy.deepcopy(ending_binding), "surface_path": "CTA"}
+                        )
                 empty_cta_mapping_count += 1
             bindings = candidate.get("claim_bindings")
             if isinstance(bindings, list):
@@ -1231,8 +2155,7 @@ class Package7Runtime:
                     if (
                         isinstance(path, str)
                         and path
-                        and path.split(".", 1)[0].split("[", 1)[0]
-                        in execution_roots
+                        and path.split(".", 1)[0].split("[", 1)[0] in execution_roots
                     ):
                         binding["surface_path"] = f"execution_payload.{path}"
                         execution_path_prefix_count += 1
@@ -1264,26 +2187,7 @@ class Package7Runtime:
     def _surface_text_map(candidate: ModelCandidate) -> dict[str, str]:
         """Enumerate every non-empty audience-facing text leaf exactly once."""
 
-        result: dict[str, str] = {}
-
-        def visit(value: object, path: str) -> None:
-            if isinstance(value, str):
-                normalized = value.strip()
-                if normalized:
-                    result[path] = normalized
-                return
-            if isinstance(value, list):
-                for index, child in enumerate(value):
-                    visit(child, f"{path}[{index}]")
-                return
-            if isinstance(value, dict):
-                for key, child in value.items():
-                    if key == "surface_units":
-                        continue
-                    visit(child, f"{path}.{key}" if path else str(key))
-
-        visit(candidate.surfaces.model_dump(), "")
-        return result
+        return audience_surface_text_map(candidate.surfaces.model_dump())
 
     @staticmethod
     def _source_corpus_by_ref(materials: JsonObject) -> dict[str, str]:
@@ -1335,10 +2239,14 @@ class Package7Runtime:
                 return None
             if binding.claim_class == "SOURCE_CLAIM":
                 cited_refs.update(binding.source_refs)
-                support_text = "\n".join(source_corpus[ref] for ref in binding.source_refs)
+                support_text = "\n".join(
+                    source_corpus[ref] for ref in binding.source_refs
+                )
                 if any(
                     not protected_detail_is_supported(token, support_text)
-                    for token in PROTECTED_SOURCE_DETAIL_PATTERN.findall(binding.exact_text)
+                    for token in PROTECTED_SOURCE_DETAIL_PATTERN.findall(
+                        binding.exact_text
+                    )
                 ):
                     return None
             elif surface_requires_evidence_binding(
@@ -1356,7 +2264,9 @@ class Package7Runtime:
                 continue
             if surface_requires_evidence_binding(path, exact_text):
                 return None
-        declared_refs = set(candidate.used_fact_refs) | set(candidate.used_material_refs)
+        declared_refs = set(candidate.used_fact_refs) | set(
+            candidate.used_material_refs
+        )
         if not cited_refs.issubset(declared_refs):
             return None
         return sorted(effective, key=lambda row: str(row["surface_path"]))
@@ -1390,12 +2300,20 @@ class Package7Runtime:
             "story_or_full_script": production.story_or_full_script,
             "ending_and_action": production.ending_and_action,
             "format_payload": {
-                "video": None if production.video is None else production.video.model_dump(),
-                "article": None if production.article is None else production.article.model_dump(),
-                "display": None if production.display is None else production.display.model_dump(),
+                "video": None
+                if production.video is None
+                else production.video.model_dump(),
+                "article": None
+                if production.article is None
+                else production.article.model_dump(),
+                "display": None
+                if production.display is None
+                else production.display.model_dump(),
             },
         }
-        return re.sub(r"\s+", "", json.dumps(selected, ensure_ascii=False, sort_keys=True))
+        return re.sub(
+            r"\s+", "", json.dumps(selected, ensure_ascii=False, sort_keys=True)
+        )
 
     def _finalize_candidate_envelope(
         self,
@@ -1437,7 +2355,9 @@ class Package7Runtime:
         }
         allowed_material_refs = set(materials["retrieval_fragment_refs"])
         source_corpus = self._source_corpus_by_ref(materials)
-        expected_format = task_brief.get("content_format") if isinstance(task_brief, dict) else None
+        expected_format = (
+            task_brief.get("content_format") if isinstance(task_brief, dict) else None
+        )
         candidates: list[JsonObject] = []
         validations: list[JsonObject] = []
         comparison_texts: list[str] = []
@@ -1461,7 +2381,9 @@ class Package7Runtime:
                 allowed_fact_refs=allowed_fact_refs,
                 allowed_material_refs=allowed_material_refs,
                 source_corpus=source_corpus,
-                trusted_task_text=json.dumps(task_brief, ensure_ascii=False, sort_keys=True),
+                trusted_task_text=json.dumps(
+                    task_brief, ensure_ascii=False, sort_keys=True
+                ),
             )
             if effective_claim_bindings is None:
                 return reject(output)
@@ -1484,7 +2406,9 @@ class Package7Runtime:
                     "used_fact_count": len(candidate.used_fact_refs),
                     "used_material_count": len(candidate.used_material_refs),
                     "surface_claim_binding_count": len(effective_claim_bindings),
-                    "author_declared_claim_binding_count": len(candidate.claim_bindings),
+                    "author_declared_claim_binding_count": len(
+                        candidate.claim_bindings
+                    ),
                     "server_derived_claim_binding_count": (
                         len(effective_claim_bindings) - len(candidate.claim_bindings)
                     ),
@@ -1505,11 +2429,13 @@ class Package7Runtime:
                 validator_candidate,
                 actually_used_fact_refs=tuple(candidate.used_fact_refs),
                 actually_used_material_refs=tuple(candidate.used_material_refs),
-                evaluation_at=datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+                evaluation_at=datetime.now(timezone.utc)
+                .isoformat()
+                .replace("+00:00", "Z"),
             )
             candidates.append(payload)
             validations.append(validation)
-        similarity_review_hints = [
+        similarity_review_hints: list[JsonObject] = [
             {
                 "candidate_ordinals": [index + 1, other_index + 1],
                 "similarity_ratio": round(
@@ -1532,7 +2458,8 @@ class Package7Runtime:
             )
         ]
         for ordinal, payload in enumerate(candidates, 1):
-            payload["evidence_panel"]["similarity_review_hints"] = [
+            evidence_panel = cast(JsonObject, payload["evidence_panel"])
+            evidence_panel["similarity_review_hints"] = [
                 row
                 for row in similarity_review_hints
                 if ordinal in row["candidate_ordinals"]
@@ -1615,6 +2542,45 @@ class Package7Runtime:
                     f"{frame['order']}. {frame['image_brief']}｜{frame['accompanying_copy']}"
                 )
             return "\n".join(lines)
+        if package.get("production_format") == "直播内容包":
+            live = package.get("live", {})
+            segments = "\n".join(
+                f"{index}. {row.get('segment_title', '')}｜"
+                f"{'；'.join(row.get('talking_points', []))}｜互动：{row.get('interaction_prompt', '')}"
+                for index, row in enumerate(live.get("segments", []), 1)
+            )
+            return (
+                f"直播主题：{live.get('theme', '')}\n开场：{live.get('opening', '')}\n"
+                f"环节：\n{segments}\n收束：{live.get('closing', '')}"
+            )
+        if package.get("production_format") == "私域沟通内容":
+            private = package.get("private_communication", {})
+            messages = "\n".join(
+                f"{row.get('channel', '')}：{row.get('copy', '')}"
+                for row in private.get("messages", [])
+            )
+            return (
+                f"适用场景：{private.get('applicable_scenario', '')}\n{messages}\n"
+                f"边界：{'；'.join(private.get('communication_boundaries', []))}"
+            )
+        if package.get("production_format") == "门店线下物料":
+            offline = package.get("offline_material", {})
+            return (
+                f"核心文案：{offline.get('core_copy', '')}\n"
+                f"信息顺序：{' → '.join(offline.get('information_hierarchy', []))}\n"
+                f"行动提示：{offline.get('action_guidance', '')}\n"
+                f"有效边界：{offline.get('validity_boundary', '')}"
+            )
+        if package.get("production_format") == "培训与门店话术":
+            training = package.get("training", {})
+            questions = "\n".join(
+                f"问：{row.get('question', '')}\n答：{row.get('suggested_answer', '')}"
+                for row in training.get("situational_qa", [])
+            )
+            return (
+                f"培训目标：{training.get('training_goal', '')}\n"
+                f"提纲：{'；'.join(training.get('outline', []))}\n{questions}"
+            )
         display = package.get("display", {})
         return (
             "陈列执行：\n"
@@ -1624,23 +2590,34 @@ class Package7Runtime:
             f"待核对：{display.get('availability_caution', '')}"
         )
 
-    def _review_selected(self, account_id: str) -> JsonObject:
-        selected = self.repository.selected_candidate(account_id)
+    def _review_selected(self, principal_id: str, account_id: str) -> JsonObject:
+        selected = self.repository.selected_candidate(principal_id, account_id)
         if selected is None:
-            return self._plain_action("BLOCK")
+            return self._failure_result("AUTHORIZATION_OR_SCOPE_BLOCK", None)
+        self.repository.record_selected_candidate_activity(
+            principal_id=principal_id,
+            account_id=account_id,
+            operation="REVIEW",
+        )
         return {
             "response_kind": "DIRECT",
             "user_visible_text": (
-                f"审核状态\n已核对范围和引用结构。使用"
+                f"审核状态\n已核对本次参考资料范围："
                 f"{len(selected.used_material_refs)}份资料、{len(selected.used_fact_refs)}项精确事实。\n"
-                "事实与来源语义：待人工确认。\n发布状态：内部测试，不可直接发布。"
+                "这不代表机器逐句证明全文；事实语义仍待人工确认。\n"
+                "发布状态：内部测试，不可直接发布。"
             ),
         }
 
-    def _export_selected(self, account_id: str) -> JsonObject:
-        selected = self.repository.selected_candidate(account_id)
+    def _export_selected(self, principal_id: str, account_id: str) -> JsonObject:
+        selected = self.repository.selected_candidate(principal_id, account_id)
         if selected is None:
-            return self._plain_action("BLOCK")
+            return self._failure_result("AUTHORIZATION_OR_SCOPE_BLOCK", None)
+        self.repository.record_selected_candidate_activity(
+            principal_id=principal_id,
+            account_id=account_id,
+            operation="EXPORT",
+        )
         surfaces = selected.candidate_payload["candidate_user_visible_surfaces"]
         package = surfaces["execution_payload"]
         spoken = "\n".join(f"- {line}" for line in surfaces.get("spoken_lines", []))
@@ -1656,10 +2633,15 @@ class Package7Runtime:
             ),
         }
 
-    def _source_lookup(self, account_id: str) -> JsonObject:
-        selected = self.repository.selected_candidate(account_id)
+    def _source_lookup(self, principal_id: str, account_id: str) -> JsonObject:
+        selected = self.repository.selected_candidate(principal_id, account_id)
         if selected is None:
-            return self._plain_action("BLOCK")
+            return self._failure_result("AUTHORIZATION_OR_SCOPE_BLOCK", None)
+        self.repository.record_selected_candidate_activity(
+            principal_id=principal_id,
+            account_id=account_id,
+            operation="REFERENCE_LOOKUP",
+        )
         rows = self.repository.narrative_fragments(list(selected.used_material_refs))
         facts = {row["fact_id"]: row for row in self.repository.precise_facts()}
         labels = [
@@ -1683,24 +2665,71 @@ class Package7Runtime:
         )
         return {
             "response_kind": "DIRECT",
-            "user_visible_text": "来源回查：\n" + ("\n".join(labels) if labels else "这份候选没有使用品牌资料。"),
+            "user_visible_text": (
+                "本次参考资料范围（不代表逐句证明全文）：\n"
+                + ("\n".join(labels) if labels else "这份候选没有使用品牌资料。")
+            ),
         }
 
     def _plain_action(self, action_type: str) -> JsonObject:
+        if action_type in {
+            "COLLECT_FACT",
+            "COLLECT_MATERIAL",
+            "INTERVIEW",
+            "RESHOOT",
+            "DEGRADE",
+        }:
+            result_class = "MATERIAL_GAP"
+        elif action_type in {"REQUEST_AUTHORIZATION", "ANONYMIZE", "BLOCK"}:
+            result_class = "AUTHORIZATION_OR_SCOPE_BLOCK"
+        else:
+            return self._failure_result("SYSTEM_OR_PROVIDER_ERROR", None)
         card = self.action_cards.get(action_type)
         if card is None:
-            return {
-                "response_kind": "DIRECT",
-                "user_visible_text": str(self.unknown_action["user_visible_reason"]),
-                "action_card": True,
-            }
+            return self._failure_result("SYSTEM_OR_PROVIDER_ERROR", None)
         return {
             "response_kind": "DIRECT",
+            "result_class": result_class,
             "user_visible_text": (
                 f"{card['user_visible_title']}\n{card['user_visible_reason']}\n"
                 f"下一步：{card['user_visible_next_action']}"
             ),
+            "action_card": result_class == "MATERIAL_GAP",
+        }
+
+    @staticmethod
+    def _missing_object_result() -> JsonObject:
+        return {
+            "response_kind": "DIRECT",
+            "result_class": "MATERIAL_GAP",
+            "user_visible_text": (
+                "补充指定素材\n本次任务明确要求使用的文件、图片或视频尚未提供。\n"
+                "下一步：上传对应对象后再继续；普通创作不受影响。"
+            ),
             "action_card": True,
+        }
+
+    @staticmethod
+    def _failure_result(
+        result_class: str,
+        run_id: str | None,
+    ) -> JsonObject:
+        messages = {
+            "MATERIAL_GAP": "现有资料还不足以完成这项内容，请按补料提示补充后再继续。",
+            "AUTHORIZATION_OR_SCOPE_BLOCK": "当前账号、使用范围或授权条件不成立，已停止本次操作。",
+            "MODEL_OUTPUT_CONTRACT_ERROR": "内容模型已经返回，但系统未能稳定接收其格式；无需补资料，请由系统处理。",
+            "HARD_FACT_REFERENCE_ERROR": "候选中出现当前资料无法支持的明确事实、内部编号或真实敏感信息，已停止使用。",
+            "SYSTEM_OR_PROVIDER_ERROR": "当前系统或模型服务未完成处理，请稍后重试或由系统维护人员处理。",
+        }
+        message = messages.get(result_class, messages["SYSTEM_OR_PROVIDER_ERROR"])
+        if run_id is not None:
+            message = f"{message}\n运行记录：{run_id}"
+        return {
+            "response_kind": "DIRECT",
+            "result_class": result_class,
+            "run_id": run_id,
+            "user_visible_text": message,
+            "action_card": result_class == "MATERIAL_GAP",
         }
 
     @staticmethod
@@ -1728,7 +2757,11 @@ class Package7Runtime:
         requested_role_name: str | None,
     ) -> JsonObject:
         account_card = next(
-            (row for row in profile.get("account_role_cards", []) if row.get("account_id") == account_id),
+            (
+                row
+                for row in profile.get("account_role_cards", [])
+                if row.get("account_id") == account_id
+            ),
             None,
         )
         if not isinstance(account_card, dict):
@@ -1737,19 +2770,28 @@ class Package7Runtime:
             (
                 row
                 for row in profile.get("principal_roles", [])
-                if requested_role_name is not None and row.get("display_name") == requested_role_name
+                if requested_role_name is not None
+                and row.get("display_name") == requested_role_name
             ),
             None,
         )
         if requested_role_name is not None and not isinstance(named_role, dict):
             raise RuntimeContractError("Requested role name is unavailable")
         role_id = requested_role_id or (
-            str(named_role["role_id"]) if isinstance(named_role, dict) else str(account_card["default_role_id"])
+            str(named_role["role_id"])
+            if isinstance(named_role, dict)
+            else str(account_card["default_role_id"])
         )
         if role_id != account_card["default_role_id"]:
-            raise RuntimeContractError("Requested role is outside the account role card")
+            raise RuntimeContractError(
+                "Requested role is outside the account role card"
+            )
         role = next(
-            (row for row in profile.get("principal_roles", []) if row.get("role_id") == role_id),
+            (
+                row
+                for row in profile.get("principal_roles", [])
+                if row.get("role_id") == role_id
+            ),
             None,
         )
         if not isinstance(role, dict):
@@ -1765,12 +2807,20 @@ class Package7Runtime:
         rows = profile.get("storylines", [])
         if requested_storyline_id is not None:
             row = next(
-                (item for item in rows if item.get("storyline_id") == requested_storyline_id),
+                (
+                    item
+                    for item in rows
+                    if item.get("storyline_id") == requested_storyline_id
+                ),
                 None,
             )
         elif requested_storyline_name is not None:
             row = next(
-                (item for item in rows if item.get("display_name") == requested_storyline_name),
+                (
+                    item
+                    for item in rows
+                    if item.get("display_name") == requested_storyline_name
+                ),
                 None,
             )
         else:
@@ -1806,7 +2856,9 @@ class Package7Runtime:
             None,
         )
         if not isinstance(row, dict) or row.get("storyline_id") != storyline_id:
-            raise RuntimeContractError("Column does not belong to the selected storyline")
+            raise RuntimeContractError(
+                "Column does not belong to the selected storyline"
+            )
         return copy.deepcopy(row)
 
     @staticmethod
@@ -1830,7 +2882,9 @@ class Package7Runtime:
         }
 
     @staticmethod
-    def _precise_fact_queries(request: BridgePrepareRequest, account: JsonObject) -> list[JsonObject]:
+    def _precise_fact_queries(
+        request: BridgePrepareRequest, account: JsonObject
+    ) -> list[JsonObject]:
         queries = [
             {
                 "fact_kind": "AUTHORIZATION",
@@ -1865,14 +2919,37 @@ class Package7Runtime:
         )
 
     @staticmethod
+    def _explicit_required_object_missing(request: BridgePrepareRequest) -> bool:
+        """Ask for material only when the task names an unavailable concrete object."""
+
+        if request.user_material_refs:
+            return False
+        text = " ".join(
+            value
+            for value in (request.message, request.content_goal, request.key_takeaway)
+            if isinstance(value, str)
+        )
+        return EXPLICIT_REQUIRED_OBJECT_PATTERN.search(text) is not None
+
+    @staticmethod
     def _rhythm_for_duration(duration_label: str) -> str:
         return "compact" if duration_label in {"15秒左右", "30秒左右"} else "natural"
 
     @staticmethod
     def _intensity_for_feeling(expression_feeling: str) -> str:
-        return "warm" if expression_feeling in {"生活分享", "情绪故事"} else "restrained"
+        return (
+            "warm" if expression_feeling in {"生活分享", "情绪故事"} else "restrained"
+        )
 
     @staticmethod
-    def _new_run_id(principal_id: str, account_id: str, operation: str, message: str) -> str:
-        seed = [principal_id, account_id, operation, message, datetime.now(timezone.utc).isoformat()]
+    def _new_run_id(
+        principal_id: str, account_id: str, operation: str, message: str
+    ) -> str:
+        seed = [
+            principal_id,
+            account_id,
+            operation,
+            message,
+            datetime.now(timezone.utc).isoformat(),
+        ]
         return f"RUN-{digest_object(seed)[:24].upper()}"

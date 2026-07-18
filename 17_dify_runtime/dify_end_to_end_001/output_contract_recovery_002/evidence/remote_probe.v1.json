@@ -1,0 +1,233 @@
+{
+  "schema": "diyu.package7.output_contract_recovery.remote_probe.v1",
+  "task_id": "DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002",
+  "founder_override_sha256": "eb543d9d97e8685b866cf3b0432478a610773fd92da5f7dd0e4bb3ff00b0eac7",
+  "existing_objects": {
+    "dify_app_count": 1,
+    "dataset_count": 1,
+    "runtime_database_count": 1,
+    "runtime_bridge_count": 1,
+    "parallel_object_count": 0,
+    "reused_in_place": true
+  },
+  "existing_object_refs": {
+    "dify_app_id": "98eb36f1-50b7-42ca-8184-976512fbef9d",
+    "dataset_id": "3c9d73cc-c120-4f84-81a1-1bc95f7b6d4b",
+    "document_count": 30,
+    "bridge_service": "diyu-package7-bridge"
+  },
+  "deployment": {
+    "backup_before_update": true,
+    "in_place_update": true,
+    "migration_pass": true,
+    "rollback_test_pass": true,
+    "post_rollback_redeploy_pass": true,
+    "final_service_health": "healthy",
+    "simulation_only": true,
+    "production_ready": false
+  },
+  "model_call_audit": {
+    "new_content_model_call_count": 10,
+    "founder_override_baseline_cumulative_upper_bound": 197,
+    "founder_override_additional_call_limit": 10,
+    "final_cumulative_upper_bound": 207,
+    "new_cost_rmb": "5",
+    "new_cost_value_kind": "CONSERVATIVE_AUTHORIZED_CEILING_NOT_EXACT_SPEND",
+    "exact_cost_unavailable_reason": "The tenth bridge process exited before the application ledger received the completed provider response metadata.",
+    "content_quality_reroll_count": 0,
+    "defect_regression_replay_count": 2,
+    "failed_calls_retained": true,
+    "failed_or_unknown_billing_increment": 1,
+    "ledger_digest": "94e37bbdd9bfb56a4c0e560710160e2d9a590c08558bb2cefd8e3f52367ce89b"
+  },
+  "format_probes": [
+    {
+      "content_format": "短视频",
+      "candidate_count": 3,
+      "candidate_option_warning": null,
+      "first_output_retained": true,
+      "creative_difference_pass": true,
+      "selection_pass": true,
+      "review_pass": true,
+      "export_pass": true,
+      "reference_scope_pass": true,
+      "internal_identifier_leak_free": true,
+      "private_evidence_sha256": "bd418d4aeb9d5e1c6228ccc5a4726ee246cab79764ba8fdebb559fdfe6e40f71",
+      "run_id": "RUN-BC70E5D8CB4C1DCA06E630E7"
+    },
+    {
+      "content_format": "图文",
+      "candidate_count": 3,
+      "candidate_option_warning": null,
+      "first_output_retained": true,
+      "creative_difference_pass": true,
+      "selection_pass": true,
+      "review_pass": true,
+      "export_pass": true,
+      "reference_scope_pass": true,
+      "internal_identifier_leak_free": true,
+      "private_evidence_sha256": "5a848c7501e59e9707f0de61828df74de660dbd16ec331a8e9938fef45f6cf06",
+      "run_id": "RUN-DFF57AA6FA02DCD99F76A8E3"
+    },
+    {
+      "content_format": "直播内容包",
+      "candidate_count": 3,
+      "candidate_option_warning": null,
+      "first_output_retained": true,
+      "creative_difference_pass": true,
+      "selection_pass": true,
+      "review_pass": true,
+      "export_pass": true,
+      "reference_scope_pass": true,
+      "internal_identifier_leak_free": true,
+      "private_evidence_sha256": "b5fef1f22a44daec3bbaec4ec8ca5427ff2e8b8168a71bf5bc7dfddebd716b89",
+      "run_id": "RUN-401C39F0EB928733BD3FDCDA"
+    },
+    {
+      "content_format": "私域沟通内容",
+      "candidate_count": 3,
+      "candidate_option_warning": null,
+      "first_output_retained": true,
+      "creative_difference_pass": true,
+      "selection_pass": true,
+      "review_pass": true,
+      "export_pass": true,
+      "reference_scope_pass": true,
+      "internal_identifier_leak_free": true,
+      "private_evidence_sha256": "26c0500d9eddbd20afc387e42d7087cc8957dd0ccdcd7893aa44478fda544f15",
+      "run_id": "RUN-FBF205CF8C53681538213714"
+    },
+    {
+      "content_format": "门店线下物料",
+      "candidate_count": 0,
+      "candidate_option_warning": null,
+      "first_output_retained": true,
+      "creative_difference_pass": false,
+      "selection_pass": false,
+      "review_pass": false,
+      "export_pass": false,
+      "reference_scope_pass": false,
+      "internal_identifier_leak_free": null,
+      "private_evidence_sha256": "34ea43c0dd1647c5edb0a9e5f69cd56c5ffc819d97c1e8ef1a17459e5afc6cd9",
+      "run_id": "RUN-30506A399546E2980E2C16F0",
+      "blocking_item": "REMOTE_OFFLINE_DELIVERABLE_NOT_FINALIZED"
+    },
+    {
+      "content_format": "培训与门店话术",
+      "candidate_count": 3,
+      "candidate_option_warning": null,
+      "first_output_retained": true,
+      "creative_difference_pass": true,
+      "selection_pass": true,
+      "review_pass": true,
+      "export_pass": true,
+      "reference_scope_pass": true,
+      "internal_identifier_leak_free": true,
+      "private_evidence_sha256": "04ac3b07e107614947ccb08a1ba9df2ebce647e9fbff9928aa288d3365b50c1e",
+      "run_id": "RUN-03619742E607B2F045C5F40C"
+    },
+    {
+      "content_format": "陈列搭配",
+      "candidate_count": 3,
+      "candidate_option_warning": null,
+      "first_output_retained": true,
+      "creative_difference_pass": true,
+      "selection_pass": true,
+      "review_pass": true,
+      "export_pass": true,
+      "reference_scope_pass": true,
+      "internal_identifier_leak_free": true,
+      "private_evidence_sha256": "210df036a626df65b05255ce72b42b493178e2f94de2338a7d9f34f4db358978",
+      "run_id": "RUN-1C2933495C0E9A347DF64EB6"
+    }
+  ],
+  "retained_failures": [
+    {
+      "case": "short_video_initial",
+      "result_class": "MODEL_OUTPUT_CONTRACT_ERROR",
+      "failure_stage": "DECODE_OR_JSON",
+      "private_evidence_sha256": "4ae84a4d08d7e1b8e789acd844e1700a09062cc75cf3c711155601d8ee04636b",
+      "repair": "WRAPPED_TOP_LEVEL_CANDIDATE_ARRAY",
+      "regression_result": "SUCCESS"
+    },
+    {
+      "case": "offline_initial",
+      "result_class": "HARD_FACT_REFERENCE_ERROR",
+      "historical_gate_only": true,
+      "private_evidence_sha256": "34ea43c0dd1647c5edb0a9e5f69cd56c5ffc819d97c1e8ef1a17459e5afc6cd9",
+      "repair": "CURRENT_FACT_GATE_REMOVED",
+      "regression_result": "SYSTEM_OR_PROVIDER_ERROR"
+    },
+    {
+      "case": "article_revision_transport",
+      "result_class": "PORTAL_INPUT_ERROR",
+      "status_code": 400,
+      "model_call_increment": 0,
+      "repair": "USE_PUBLIC_OPERATION_NAME",
+      "regression_result": "SUCCESS_ON_LIVE_SAMPLE"
+    },
+    {
+      "case": "offline_defect_regression",
+      "result_class": "SYSTEM_OR_PROVIDER_ERROR",
+      "bridge_exit_code": 137,
+      "provider_message_status": "normal",
+      "provider_answer_length": 6700,
+      "response_recovery_performed": false,
+      "invocation_terminal_state": "FAILED_OR_UNKNOWN_BILLING",
+      "runtime_terminal_state": "PROVIDER_FAILED_BEFORE_OUTPUT",
+      "private_evidence_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "representative_journeys": {
+    "revision": {
+      "result_class": "SUCCESS",
+      "first_output_retained": true,
+      "operation": "把已有内容改好",
+      "status_code": 200
+    },
+    "material_gap": {
+      "result_class": "MATERIAL_GAP",
+      "action_card": true,
+      "explicit_missing_object_only": true,
+      "model_call_increment": 0
+    },
+    "authorization_block": {
+      "result_class": "AUTHORIZATION_OR_SCOPE_BLOCK",
+      "action_card": false,
+      "model_call_increment": 0
+    },
+    "two_browser_sessions": {
+      "chat_isolated": true,
+      "candidates_isolated": true,
+      "selection_isolated": true,
+      "revision_isolated": true,
+      "review_isolated": true,
+      "export_isolated": true,
+      "reference_scope_isolated": true,
+      "same_session_continuity_pass": true,
+      "revoked_session_rejected": true,
+      "evidence_kind": "LOCAL_DETERMINISTIC_TEST_PLUS_REMOTE_RLS_DEPLOYMENT"
+    }
+  },
+  "package10_replay_new_model_calls": 0,
+  "core_numbers": {
+    "300": 300,
+    "120": 120,
+    "86": 86,
+    "changed": false
+  },
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "generator_qualified": false,
+    "retrieval_ready": false,
+    "runtime_ready": false,
+    "release_ready": false,
+    "production_ready": false
+  }
+}

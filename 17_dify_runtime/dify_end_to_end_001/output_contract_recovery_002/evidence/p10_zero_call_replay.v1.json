@@ -1,0 +1,582 @@
+{
+  "schema": "diyu.package7.output_contract_recovery.p10_zero_call_replay.v1",
+  "task_id": "DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002",
+  "source_failure_task_id": "DIYU_INTERNAL_PILOT_RELEASE_EVALUATION_001",
+  "source_failed_commit": "82b253c2b0ac362f1c5397bafb789ee400453944",
+  "source_restricted_evidence_sha256": "46147ee16d9ae70a1d93d0f0689ae5e8de229608978d299fc0d312998e991cea",
+  "source_public_diagnostics_sha256": "5ac86b2911638f01414f18f210a133ff644321d5b2fac209fae332ced4e19ec0",
+  "source_public_summary_sha256": "c95767bc1af73f74086e0ea0c96256d54a3e1e8427cffe2e8062960ae0bd942c",
+  "source_private_bytes_modified": false,
+  "replay_method": "READ_ONLY_STORED_FIRST_OUTPUT_METADATA_AND_FROZEN_RUNTIME_DIAGNOSTICS",
+  "new_content_model_call_increment": 0,
+  "old_output_body_copied_to_repository": false,
+  "old_output_digest_preserved": true,
+  "aggregate_classification": {
+    "task_count": 30,
+    "MATERIAL_GAP": 1,
+    "AUTHORIZATION_OR_SCOPE_BLOCK": 0,
+    "MODEL_OUTPUT_CONTRACT_ERROR": 20,
+    "HARD_FACT_REFERENCE_ERROR": 8,
+    "SYSTEM_OR_PROVIDER_ERROR": 1
+  },
+  "evidence_limit": {
+    "per_task_material_gap_binding_retained": true,
+    "per_task_output_contract_family_binding_retained": true,
+    "per_task_model_vs_hard_fact_subclass_binding_retained": false,
+    "handling": "DO_NOT_GUESS; retain frozen aggregate 20/8 and mark each affected task as unresolved between the two proven classes"
+  },
+  "cases": [
+    {
+      "task_id": "DAY-01",
+      "day": 1,
+      "account_display_name": "许闻川的产品记录",
+      "content_format": "短视频",
+      "expected_internal_product_id": "CP01",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-02",
+      "day": 2,
+      "account_display_name": "笛语杭州滨江店",
+      "content_format": "短视频",
+      "expected_internal_product_id": "CP02",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-03",
+      "day": 3,
+      "account_display_name": "周静宜｜门店与陈列",
+      "content_format": "短视频",
+      "expected_internal_product_id": "CP03",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-04",
+      "day": 4,
+      "account_display_name": "唐予安｜内容现场",
+      "content_format": "图文",
+      "expected_internal_product_id": "CP04",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-05",
+      "day": 5,
+      "account_display_name": "林知远｜笛语",
+      "content_format": "图文",
+      "expected_internal_product_id": "CP05",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-06",
+      "day": 6,
+      "account_display_name": "许闻川的产品记录",
+      "content_format": "培训与门店话术",
+      "expected_internal_product_id": "CP06",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-07",
+      "day": 7,
+      "account_display_name": "许知宁｜搭配与门店服务",
+      "content_format": "私域沟通内容",
+      "expected_internal_product_id": "CP07",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-08",
+      "day": 8,
+      "account_display_name": "许闻川的产品记录",
+      "content_format": "图文",
+      "expected_internal_product_id": "CP08",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-09",
+      "day": 9,
+      "account_display_name": "许知宁｜搭配与门店服务",
+      "content_format": "私域沟通内容",
+      "expected_internal_product_id": "CP09",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "94e200ea24fed675bc39a32a883c494a59f95f1be0f523d6081f50bb695313f7",
+      "old_answer_length": 336,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": "MATERIAL_GAP",
+      "proven_candidate_classes": [
+        "MATERIAL_GAP"
+      ],
+      "classification_resolution": "CURRENT_REMOTE_RETRIEVAL_CONFIRMED_MATERIAL_GAP",
+      "current_remote_retrieval_retested": true,
+      "current_remote_retrieval_retested_at": "2026-07-18T10:58:01Z",
+      "current_remote_retrieval_query_sha256": "32dc72f67036903e551dafae5fb1d465f20bcd126a80eb3cc3030ea5afc76b45",
+      "current_remote_retrieval_account_id": "ACCOUNT-DIYU-JS-STYLING-SERVICE",
+      "current_remote_retrieval_accepted_fragment_count": 0,
+      "current_remote_retrieval_fragment_ids": [],
+      "current_remote_retrieval_gap_codes": [
+        "MATERIAL_MISSING_FOR_SCOPE"
+      ],
+      "current_remote_retrieval_prefilter_applied": true,
+      "current_remote_retrieval_content_model_call_count": 0
+    },
+    {
+      "task_id": "DAY-10",
+      "day": 10,
+      "account_display_name": "许闻川的产品记录",
+      "content_format": "图文",
+      "expected_internal_product_id": "CP10",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-11",
+      "day": 11,
+      "account_display_name": "笛语童装",
+      "content_format": "图文",
+      "expected_internal_product_id": "CP11",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-12",
+      "day": 12,
+      "account_display_name": "许闻川的产品记录",
+      "content_format": "短视频",
+      "expected_internal_product_id": "CP12",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-13",
+      "day": 13,
+      "account_display_name": "许知宁｜搭配与门店服务",
+      "content_format": "图文",
+      "expected_internal_product_id": "CP13",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "a60c4387e2b9a1ef82c01e05286ee1c7e339aadf3647e9b335326a0a781071d2",
+      "old_answer_length": 329,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": "SYSTEM_OR_PROVIDER_ERROR",
+      "proven_candidate_classes": [
+        "SYSTEM_OR_PROVIDER_ERROR"
+      ],
+      "classification_resolution": "SOURCE_PERSON_ACCOUNT_MAPPING_ERROR",
+      "stale_source_ref": "snapshot://SOURCE-08/L606-L641",
+      "correct_person_source_ref": "snapshot://SOURCE-08/L570-L605",
+      "source_bytes_modified": false
+    },
+    {
+      "task_id": "DAY-14",
+      "day": 14,
+      "account_display_name": "周静宜｜门店与陈列",
+      "content_format": "短视频",
+      "expected_internal_product_id": "CP14",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-15",
+      "day": 15,
+      "account_display_name": "笛语杭州滨江店",
+      "content_format": "门店线下物料",
+      "expected_internal_product_id": "CP15",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-16",
+      "day": 16,
+      "account_display_name": "笛语苏州园区店",
+      "content_format": "私域沟通内容",
+      "expected_internal_product_id": "CP16",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-17",
+      "day": 17,
+      "account_display_name": "笛语无锡滨湖店",
+      "content_format": "陈列搭配",
+      "expected_internal_product_id": "CP17",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-18",
+      "day": 18,
+      "account_display_name": "笛语杭州滨江店",
+      "content_format": "短视频",
+      "expected_internal_product_id": "CP18",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-19",
+      "day": 19,
+      "account_display_name": "顾知夏｜江苏笛语",
+      "content_format": "图文",
+      "expected_internal_product_id": "CP19",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-20",
+      "day": 20,
+      "account_display_name": "笛语童装",
+      "content_format": "培训与门店话术",
+      "expected_internal_product_id": "CP20",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-21",
+      "day": 21,
+      "account_display_name": "林知远｜笛语",
+      "content_format": "直播内容包",
+      "expected_internal_product_id": "CP19",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-22",
+      "day": 22,
+      "account_display_name": "笛语无锡滨湖店",
+      "content_format": "私域沟通内容",
+      "expected_internal_product_id": "CP16",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-23",
+      "day": 23,
+      "account_display_name": "笛语苏州园区店",
+      "content_format": "门店线下物料",
+      "expected_internal_product_id": "CP15",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-24",
+      "day": 24,
+      "account_display_name": "许知宁｜搭配与门店服务",
+      "content_format": "培训与门店话术",
+      "expected_internal_product_id": "CP06",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-25",
+      "day": 25,
+      "account_display_name": "笛语杭州滨江店",
+      "content_format": "陈列搭配",
+      "expected_internal_product_id": "CP17",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-26",
+      "day": 26,
+      "account_display_name": "笛语童装",
+      "content_format": "图文",
+      "expected_internal_product_id": "CP05",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-27",
+      "day": 27,
+      "account_display_name": "林知远｜笛语",
+      "content_format": "短视频",
+      "expected_internal_product_id": "CP01",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-28",
+      "day": 28,
+      "account_display_name": "许闻川的产品记录",
+      "content_format": "短视频",
+      "expected_internal_product_id": "CP14",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-29",
+      "day": 29,
+      "account_display_name": "笛语江苏",
+      "content_format": "图文",
+      "expected_internal_product_id": "CP04",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    },
+    {
+      "task_id": "DAY-30",
+      "day": 30,
+      "account_display_name": "顾知夏｜江苏笛语",
+      "content_format": "直播内容包",
+      "expected_internal_product_id": "CP20",
+      "old_outcome": "ACTION_CARD",
+      "old_answer_sha256": "d867eb84a648d2e5273496b5e681471d458e082f2346303b8c8c01745cf37a96",
+      "old_answer_length": 58,
+      "old_http_status": 200,
+      "new_model_call_increment": 0,
+      "replay_class": null,
+      "proven_candidate_classes": [
+        "MODEL_OUTPUT_CONTRACT_ERROR",
+        "HARD_FACT_REFERENCE_ERROR"
+      ],
+      "classification_resolution": "OUTPUT_CONTRACT_FAMILY_PER_TASK; SUBCLASS_ONLY_AGGREGATE"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "diyu.package7.output_contract_recovery.local_acceptance.v1",
+  "task_id": "DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002",
+  "author_contract_version": "diyu.author-output.v2.0",
+  "content_formats": [
+    "短视频",
+    "图文",
+    "直播内容包",
+    "私域沟通内容",
+    "门店线下物料",
+    "培训与门店话术",
+    "陈列搭配"
+  ],
+  "public_topic_count": 10,
+  "unit_tests": {
+    "count": 32,
+    "pass": true
+  },
+  "action_card_by_result_class": {
+    "MATERIAL_GAP": true,
+    "AUTHORIZATION_OR_SCOPE_BLOCK": false,
+    "MODEL_OUTPUT_CONTRACT_ERROR": false,
+    "SYSTEM_OR_PROVIDER_ERROR": false
+  },
+  "single_bad_candidate_preserves_two_safe_siblings": true,
+  "server_owned_reference_scope": true,
+  "anonymous_daily_scene_allowed": true,
+  "future_shooting_scene_allowed": true,
+  "similarity_is_review_hint_only": true,
+  "creative_fact_claims_runtime_allowed": true,
+  "internal_and_sensitive_reference_leakage_blocked": true,
+  "concurrent_budget_reservation_atomic": true,
+  "managed_migration_transaction_and_rollback_declared": true,
+  "legacy_contract_replay_read_only": true,
+  "two_browser_candidate_isolation": true,
+  "two_browser_chat_isolation": true,
+  "logout_revokes_session": true,
+  "historical_package7_bytes_unchanged": true,
+  "package10_zero_call_replay_pass": true,
+  "package10_replay_model_call_increment": 0,
+  "core_numbers": {
+    "300": 300,
+    "120": 120,
+    "86": 86,
+    "changed": false
+  },
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "generator_qualified": false,
+    "retrieval_ready": false,
+    "runtime_ready": false,
+    "release_ready": false,
+    "production_ready": false
+  }
+}

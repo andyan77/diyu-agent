@@ -8,6 +8,7 @@ import hashlib
 import ipaddress
 import json
 import os
+import secrets
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -36,7 +37,12 @@ from persistence import (
 from runtime_models import RuntimeAccount
 from runtime_retrieval import RuntimeBrandFactRetrievalService
 from runtime_service import Package7Runtime, RuntimeContractError
-from security import issue_session, verify_bridge_secret, verify_password, verify_session
+from security import (
+    issue_session,
+    verify_bridge_secret,
+    verify_password,
+    verify_session,
+)
 from seed_runtime import seed_database
 
 
@@ -69,6 +75,7 @@ def selected_account_database_scope(
     *,
     trusted_tenant_id: str,
     principal_id: str,
+    browser_session_id: str,
     account: RuntimeAccount,
 ) -> TrustedDatabaseScope:
     """Build the complete server-owned scope for one selected content account."""
@@ -82,6 +89,7 @@ def selected_account_database_scope(
         store_id=account.store_id,
         account_id=account.account_id,
         principal_id=principal_id,
+        browser_session_id=browser_session_id,
     )
 
 
@@ -101,9 +109,13 @@ def build_runtime() -> tuple[Package7Runtime, RuntimeRepository, DifyChatClient]
             username=required_env("DIYU_SIM_USERNAME"),
             password=required_env("DIYU_SIM_PASSWORD", minimum_length=12),
         )
+    else:
+        repository.migrate_browser_session_scope(engine)
     state_path = Path(required_env("DIYU_DIFY_STATE_PATH"))
     state = json.loads(state_path.read_text(encoding="utf-8"))
-    document_mapping = state.get("fragment_document_ids") if isinstance(state, dict) else None
+    document_mapping = (
+        state.get("fragment_document_ids") if isinstance(state, dict) else None
+    )
     if not isinstance(document_mapping, dict) or any(
         not isinstance(key, str)
         or not isinstance(value, dict)
@@ -113,10 +125,18 @@ def build_runtime() -> tuple[Package7Runtime, RuntimeRepository, DifyChatClient]
         for key, value in document_mapping.items()
     ):
         raise RuntimeError("The Dify fragment mapping is invalid")
-    mapping_digest = state.get("fragment_document_mapping_digest") if isinstance(state, dict) else None
-    if not isinstance(mapping_digest, str) or mapping_digest != digest_object(document_mapping):
+    mapping_digest = (
+        state.get("fragment_document_mapping_digest")
+        if isinstance(state, dict)
+        else None
+    )
+    if not isinstance(mapping_digest, str) or mapping_digest != digest_object(
+        document_mapping
+    ):
         raise RuntimeError("The Dify fragment mapping digest is invalid")
-    dataset_api_token = state.get("dataset_api_token") if isinstance(state, dict) else None
+    dataset_api_token = (
+        state.get("dataset_api_token") if isinstance(state, dict) else None
+    )
     app_api_token = state.get("app_api_token") if isinstance(state, dict) else None
     if not isinstance(dataset_api_token, str) or len(dataset_api_token) < 16:
         raise RuntimeError("The Dify dataset API credential is invalid")
@@ -159,11 +179,13 @@ def create_app(
 
     def install_selected_account_scope(
         principal_id: str,
+        browser_session_id: str,
         account: RuntimeAccount,
-    ) -> None:
+    ) -> TrustedDatabaseScope:
         scope = selected_account_database_scope(
             trusted_tenant_id=trusted_tenant_id,
             principal_id=principal_id,
+            browser_session_id=browser_session_id,
             account=account,
         )
         current_manager = getattr(g, "diyu_database_scope_manager", None)
@@ -173,20 +195,26 @@ def create_app(
         manager = trusted_database_scope(scope)
         manager.__enter__()
         g.diyu_database_scope_manager = manager
+        return scope
 
     @app.before_request
     def establish_database_scope() -> None:
         principal_id = None
+        browser_session_id = None
         token = request.cookies.get(SESSION_COOKIE, "")
         if token:
             try:
-                principal_id = str(verify_session(token, signing_key)["principal_id"])
+                verified = verify_session(token, signing_key)
+                principal_id = str(verified["principal_id"])
+                browser_session_id = str(verified["browser_session_id"])
             except ValueError:
                 principal_id = None
+                browser_session_id = None
         manager = trusted_database_scope(
             TrustedDatabaseScope(
                 tenant_id=trusted_tenant_id,
                 principal_id=principal_id,
+                browser_session_id=browser_session_id,
             )
         )
         manager.__enter__()
@@ -245,7 +273,9 @@ def create_app(
 
     @app.get("/portal.js")
     def portal_javascript() -> Any:
-        return send_from_directory(PACKAGE_ROOT, "portal.js", mimetype="application/javascript")
+        return send_from_directory(
+            PACKAGE_ROOT, "portal.js", mimetype="application/javascript"
+        )
 
     @app.get("/portal.css")
     def portal_stylesheet() -> Any:
@@ -254,7 +284,9 @@ def create_app(
     @app.post("/login")
     def login() -> Any:
         try:
-            payload = LoginRequest.model_validate(request.get_json(force=True, silent=False))
+            payload = LoginRequest.model_validate(
+                request.get_json(force=True, silent=False)
+            )
         except (ValidationError, ValueError):
             return _plain_error("登录信息格式不正确。"), 400
         principal = active_repository.principal_by_username(payload.username)
@@ -264,11 +296,29 @@ def create_app(
             or not verify_password(payload.password, principal.password_hash)
         ):
             return _plain_error("登录信息不匹配。"), 401
+        browser_session_id = f"BRS-{secrets.token_urlsafe(18)}"
         token = issue_session(
             principal_id=principal.principal_id,
             allowed_account_ids=principal.allowed_account_ids,
             signing_key=signing_key,
+            browser_session_id=browser_session_id,
         )
+        token_payload = verify_session(token, signing_key)
+        with trusted_database_scope(
+            TrustedDatabaseScope(
+                tenant_id=trusted_tenant_id,
+                principal_id=principal.principal_id,
+                browser_session_id=browser_session_id,
+            )
+        ):
+            active_repository.start_browser_session(
+                browser_session_id=browser_session_id,
+                principal_id=principal.principal_id,
+                expires_at=datetime.fromtimestamp(
+                    int(token_payload["exp"]),
+                    tz=timezone.utc,
+                ),
+            )
         with trusted_database_scope(
             TrustedDatabaseScope(
                 tenant_id=trusted_tenant_id,
@@ -298,6 +348,14 @@ def create_app(
     def logout() -> Any:
         if request.headers.get("X-Diyu-Portal") != PORTAL_HEADER:
             return _plain_error("当前访问未通过页面确认。"), 404
+        try:
+            session = _portal_session(signing_key, active_repository)
+            active_repository.revoke_browser_session(
+                browser_session_id=str(session["browser_session_id"]),
+                principal_id=str(session["principal_id"]),
+            )
+        except ValueError:
+            pass
         response = jsonify({"logged_out": True})
         response.delete_cookie(SESSION_COOKIE, path="/")
         return response
@@ -305,7 +363,7 @@ def create_app(
     @app.get("/v1/portal/options")
     def portal_options() -> Any:
         try:
-            session = _portal_session(signing_key)
+            session = _portal_session(signing_key, active_repository)
             return jsonify(active_runtime.portal_options(str(session["principal_id"])))
         except ValueError:
             return _plain_error("登录已失效，请重新登录。"), 401
@@ -316,23 +374,61 @@ def create_app(
             return _plain_error("当前访问未通过页面确认。"), 404
         if active_chat is None:
             return _plain_error("Dify内部入口尚未连接。"), 503
+        failure_stage = "REQUEST_VALIDATION"
+        run_id: str | None = None
         try:
-            session = _portal_session(signing_key)
-            payload = PortalTaskRequest.model_validate(request.get_json(force=True, silent=False))
-            principal_id = str(session["principal_id"])
-            runtime_request = _portal_inputs(payload, principal_id, active_repository)
-            _, account = active_repository.require_active_scope_by_display_name(
-                principal_id,
-                payload.account_display_name,
+            session = _portal_session(signing_key, active_repository)
+            payload = PortalTaskRequest.model_validate(
+                request.get_json(force=True, silent=False)
             )
-            install_selected_account_scope(principal_id, account)
+            principal_id = str(session["principal_id"])
+            browser_session_id = str(session["browser_session_id"])
+            failure_stage = "PORTAL_INPUT_PROJECTION"
+            runtime_request = _portal_inputs(payload, principal_id, active_repository)
+            failure_stage = "ACCOUNT_SCOPE"
+            try:
+                _, account = active_repository.require_active_scope_by_display_name(
+                    principal_id,
+                    payload.account_display_name,
+                )
+            except ValueError:
+                unselected_scope = TrustedDatabaseScope(
+                    tenant_id=trusted_tenant_id,
+                    principal_id=principal_id,
+                    browser_session_id=browser_session_id,
+                )
+                prepared = active_runtime.prepare(
+                    BridgePrepareRequest.model_validate(runtime_request),
+                    principal_id,
+                    trusted_scope=unselected_scope,
+                )
+                return jsonify(
+                    {
+                        "answer": str(
+                            prepared.get("user_visible_text", "当前请求已停止。")
+                        ),
+                        "simulation_only": True,
+                        "publish_allowed": False,
+                    }
+                )
+            selected_scope = install_selected_account_scope(
+                principal_id,
+                browser_session_id,
+                account,
+            )
             conversation_scope = account.account_id
             user_key = hashlib.sha256(
-                f"package7-dify-user:{principal_id}:{conversation_scope}".encode("utf-8")
+                (
+                    f"package7-dify-user:{principal_id}:{conversation_scope}:"
+                    f"{browser_session_id}"
+                ).encode("utf-8")
             ).hexdigest()
             if runtime_request["operation"] == "确认制作":
+                failure_stage = "CLASSIFIER_INVOKE"
                 classifier = active_chat.invoke(
-                    invocation_id=_invocation_id(principal_id, payload.message, "CLASSIFY"),
+                    invocation_id=_invocation_id(
+                        principal_id, payload.message, "CLASSIFY"
+                    ),
                     principal_id=principal_id,
                     conversation_scope=conversation_scope,
                     user_key=f"pkg7-{user_key[:24]}",
@@ -351,30 +447,39 @@ def create_app(
                     },
                     reuse_conversation=False,
                 )
+                failure_stage = "CLASSIFIER_RESULT"
                 runtime_request["selected_content_product_id"] = _selected_product(
                     classifier["answer"]
                 )
+            failure_stage = "RUNTIME_PREPARE"
             prepared = active_runtime.prepare(
                 BridgePrepareRequest.model_validate(runtime_request),
                 principal_id,
+                trusted_scope=selected_scope,
             )
             if prepared.get("response_kind") != "MODEL_REQUIRED":
                 return jsonify(
                     {
-                        "answer": str(prepared.get("user_visible_text", "当前请求已停止。")),
+                        "answer": str(
+                            prepared.get("user_visible_text", "当前请求已停止。")
+                        ),
                         "simulation_only": True,
                         "publish_allowed": False,
                     }
                 )
             author_prompt = prepared.get("author_prompt")
-            run_id = prepared.get("run_id")
-            if not isinstance(author_prompt, dict) or not isinstance(run_id, str):
+            prepared_run_id = prepared.get("run_id")
+            if not isinstance(author_prompt, dict) or not isinstance(
+                prepared_run_id, str
+            ):
                 raise RuntimeContractError("Prepared model run is incomplete")
+            run_id = prepared_run_id
             author_query = (
                 payload.message
                 if runtime_request["operation"] in {"普通聊天", "找灵感"}
                 else "执行服务端受控的首次内部内容任务。"
             )
+            failure_stage = "AUTHOR_INVOKE"
             result = active_chat.invoke(
                 invocation_id=_invocation_id(principal_id, run_id, "AUTHOR"),
                 principal_id=principal_id,
@@ -396,41 +501,101 @@ def create_app(
                 reuse_conversation=runtime_request["operation"]
                 in {"普通聊天", "找灵感"},
             )
+            failure_stage = "MODEL_OUTPUT_FINALIZE"
             finalized = active_runtime.finalize_model_output(
                 run_id,
                 base64.b64encode(result["answer"].encode("utf-8")).decode("ascii"),
+                trusted_scope=selected_scope,
             )
             return jsonify(
                 {
-                    "answer": str(finalized.get("user_visible_text", "当前结果已停止。")),
+                    "answer": str(
+                        finalized.get("user_visible_text", "当前结果已停止。")
+                    ),
                     "simulation_only": True,
                     "publish_allowed": False,
                 }
             )
-        except (
-            ValidationError,
-            RuntimeContractError,
-            DifyChatError,
-            KnowledgeRetrievalError,
-            ValueError,
-            KeyError,
-        ):
+        except DifyChatError as exc:
+            if failure_stage == "AUTHOR_INVOKE" and run_id is not None:
+                try:
+                    active_repository.fail_model_run_before_output(
+                        run_id,
+                        failure_stage=failure_stage,
+                        error_type=type(exc).__name__,
+                    )
+                except (KeyError, RuntimeError, ValueError):
+                    app.logger.exception("provider_failure_run_close_failed")
+            app.logger.warning(
+                "portal_chat_failed stage=%s error_type=%s",
+                failure_stage,
+                type(exc).__name__,
+            )
+            return _plain_error(
+                "内容服务当前未完成响应，请稍后重试；无需补充品牌资料。"
+            ), 503
+        except (ValidationError, RuntimeContractError) as exc:
+            app.logger.warning(
+                "portal_chat_failed stage=%s error_type=%s",
+                failure_stage,
+                type(exc).__name__,
+            )
+            return _plain_error(
+                "本次结果未通过结构检查，首次结果已保留；无需补充品牌资料。"
+            ), 400
+        except (KnowledgeRetrievalError, ValueError, KeyError) as exc:
+            app.logger.warning(
+                "portal_chat_failed stage=%s error_type=%s",
+                failure_stage,
+                type(exc).__name__,
+            )
             return _plain_error("当前操作无法继续，请核对账号、题材和已确认信息。"), 400
 
     @app.post("/v1/workflow/prepare")
     def workflow_prepare() -> Any:
-        if not verify_bridge_secret(request.headers.get("X-Diyu-Bridge-Key"), bridge_secret):
+        if not verify_bridge_secret(
+            request.headers.get("X-Diyu-Bridge-Key"), bridge_secret
+        ):
             return _plain_error("当前访问未通过可信入口确认。"), 404
         try:
-            payload = BridgePrepareRequest.model_validate(request.get_json(force=True, silent=False))
+            payload = BridgePrepareRequest.model_validate(
+                request.get_json(force=True, silent=False)
+            )
             session = verify_session(payload.session_token, signing_key)
             principal_id = str(session["principal_id"])
-            _, account = active_repository.require_active_scope_by_display_name(
-                principal_id,
-                payload.account_display_name,
+            browser_session_id = str(session["browser_session_id"])
+            active_repository.require_browser_session(
+                browser_session_id=browser_session_id,
+                principal_id=principal_id,
             )
-            install_selected_account_scope(principal_id, account)
-            result = active_runtime.prepare(payload, principal_id)
+            try:
+                _, account = active_repository.require_active_scope_by_display_name(
+                    principal_id,
+                    payload.account_display_name,
+                )
+            except ValueError:
+                unselected_scope = TrustedDatabaseScope(
+                    tenant_id=trusted_tenant_id,
+                    principal_id=principal_id,
+                    browser_session_id=browser_session_id,
+                )
+                return jsonify(
+                    active_runtime.prepare(
+                        payload,
+                        principal_id,
+                        trusted_scope=unselected_scope,
+                    )
+                )
+            selected_scope = install_selected_account_scope(
+                principal_id,
+                browser_session_id,
+                account,
+            )
+            result = active_runtime.prepare(
+                payload,
+                principal_id,
+                trusted_scope=selected_scope,
+            )
             return jsonify(result)
         except (
             ValidationError,
@@ -443,24 +608,43 @@ def create_app(
 
     @app.post("/v1/workflow/finalize")
     def workflow_finalize() -> Any:
-        if not verify_bridge_secret(request.headers.get("X-Diyu-Bridge-Key"), bridge_secret):
+        if not verify_bridge_secret(
+            request.headers.get("X-Diyu-Bridge-Key"), bridge_secret
+        ):
             return _plain_error("当前访问未通过可信入口确认。"), 404
         try:
-            payload = BridgeFinalizeRequest.model_validate(request.get_json(force=True, silent=False))
+            payload = BridgeFinalizeRequest.model_validate(
+                request.get_json(force=True, silent=False)
+            )
             session = verify_session(payload.session_token, signing_key)
             principal_id = str(session["principal_id"])
-            run = active_repository.model_run(payload.run_id)
-            if run is None or run.principal_id != session["principal_id"]:
+            browser_session_id = str(session["browser_session_id"])
+            active_repository.require_browser_session(
+                browser_session_id=browser_session_id,
+                principal_id=principal_id,
+            )
+            run = active_repository.model_run_for_request(
+                payload.run_id,
+                principal_id=principal_id,
+                account_id=None,
+                browser_session_id=browser_session_id,
+            )
+            if run is None:
                 raise RuntimeContractError("Run scope mismatch")
             _, account = active_repository.require_active_scope(
                 principal_id,
                 run.account_id,
             )
-            install_selected_account_scope(principal_id, account)
+            selected_scope = install_selected_account_scope(
+                principal_id,
+                browser_session_id,
+                account,
+            )
             return jsonify(
                 active_runtime.finalize_model_output(
                     payload.run_id,
                     payload.model_output_b64,
+                    trusted_scope=selected_scope,
                 )
             )
         except (ValidationError, RuntimeContractError, ValueError, KeyError):
@@ -469,9 +653,17 @@ def create_app(
     return app
 
 
-def _portal_session(signing_key: str) -> JsonObject:
+def _portal_session(
+    signing_key: str,
+    repository: RuntimeRepository,
+) -> JsonObject:
     token = request.cookies.get(SESSION_COOKIE, "")
-    return verify_session(token, signing_key)
+    session = verify_session(token, signing_key)
+    repository.require_browser_session(
+        browser_session_id=str(session["browser_session_id"]),
+        principal_id=str(session["principal_id"]),
+    )
+    return session
 
 
 def _portal_inputs(
@@ -479,18 +671,22 @@ def _portal_inputs(
     principal_id: str,
     repository: RuntimeRepository,
 ) -> JsonObject:
-    try:
-        _, account = repository.require_active_scope_by_display_name(
-            principal_id,
-            payload.account_display_name,
-        )
-    except ValueError as exc:
-        raise RuntimeContractError("Portal account is outside the current scope") from exc
     previous_ref = None
     if payload.continue_previous or payload.operation == "继续一个系列":
-        previous = repository.latest_candidate(account.account_id)
+        try:
+            _, account = repository.require_active_scope_by_display_name(
+                principal_id,
+                payload.account_display_name,
+            )
+        except ValueError as exc:
+            raise RuntimeContractError(
+                "Portal account is outside the current scope"
+            ) from exc
+        previous = repository.latest_candidate(principal_id, account.account_id)
         if previous is None:
-            raise RuntimeContractError("No previous content is available for this account")
+            raise RuntimeContractError(
+                "No previous content is available for this account"
+            )
         previous_ref = previous.candidate_id
     operation = PORTAL_OPERATION_MAP[payload.operation]
     candidate_number = payload.candidate_number
@@ -516,6 +712,12 @@ def _portal_inputs(
         "duration_label": payload.duration_label,
         "expression_feeling": payload.expression_feeling,
         "content_format": payload.content_format,
+        "organization_level": payload.organization_level,
+        "content_identity": payload.content_identity,
+        "long_term_storyline": payload.long_term_storyline,
+        "content_direction": payload.content_direction,
+        "business_goal": payload.business_goal,
+        "expression_method": payload.expression_method,
         "existing_material_kinds": payload.existing_material_kinds,
     }
 
@@ -531,13 +733,25 @@ def _selected_product(answer: str) -> str | None:
         value = json.loads(normalized).get("selected_content_product_id")
     except (AttributeError, ValueError, json.JSONDecodeError):
         return None
-    if isinstance(value, str) and len(value) == 4 and value.startswith("CP") and value[2:].isdigit():
+    if (
+        isinstance(value, str)
+        and len(value) == 4
+        and value.startswith("CP")
+        and value[2:].isdigit()
+    ):
         return value
     return None
 
 
 def _plain_error(message: str) -> Any:
-    return jsonify({"response_kind": "DIRECT", "user_visible_text": message, "action_card": True})
+    return jsonify(
+        {
+            "response_kind": "DIRECT",
+            "result_class": "SYSTEM_OR_PROVIDER_ERROR",
+            "user_visible_text": message,
+            "action_card": False,
+        }
+    )
 
 
 def main() -> int:

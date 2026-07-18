@@ -8,6 +8,7 @@ import hashlib
 import hmac
 import json
 import os
+import secrets
 import time
 from typing import Any
 
@@ -66,14 +67,24 @@ def issue_session(
     principal_id: str,
     allowed_account_ids: list[str],
     signing_key: str,
+    browser_session_id: str | None = None,
     lifetime_seconds: int = 3_600,
     now: int | None = None,
 ) -> str:
     if len(signing_key) < 32:
         raise ValueError("A session signing key of at least 32 characters is required")
     issued_at = int(time.time() if now is None else now)
+    effective_browser_session_id = (
+        browser_session_id or f"BRS-{secrets.token_urlsafe(18)}"
+    )
+    if (
+        not effective_browser_session_id.startswith("BRS-")
+        or len(effective_browser_session_id) > 160
+    ):
+        raise ValueError("A valid server-generated browser session id is required")
     payload = {
         "principal_id": principal_id,
+        "browser_session_id": effective_browser_session_id,
         "allowed_account_ids": sorted(set(allowed_account_ids)),
         "iat": issued_at,
         "exp": issued_at + lifetime_seconds,
@@ -99,6 +110,13 @@ def verify_session(token: str, signing_key: str, *, now: int | None = None) -> d
         if not isinstance(payload, dict) or payload.get("simulation_only") is not True:
             raise ValueError("invalid session")
         if not isinstance(payload.get("principal_id"), str):
+            raise ValueError("invalid session")
+        browser_session_id = payload.get("browser_session_id")
+        if (
+            not isinstance(browser_session_id, str)
+            or not browser_session_id.startswith("BRS-")
+            or len(browser_session_id) > 160
+        ):
             raise ValueError("invalid session")
         account_ids = payload.get("allowed_account_ids")
         if not isinstance(account_ids, list) or any(not isinstance(item, str) for item in account_ids):
