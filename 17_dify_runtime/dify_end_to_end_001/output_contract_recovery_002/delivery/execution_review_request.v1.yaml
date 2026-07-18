@@ -1,40 +1,64 @@
-task_id: DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002
-status: REQUESTING_GUARDIAN_REVIEW_OF_STOPPED_CANDIDATE
-candidate_commit: b14a3bfc2ffe1acdb9b56337f16fc07493e0f374
-candidate_tree: 4a4e3ddf7b75e4a1451571e5640ed513044c7b89
-result_state: STOPPED_INDEPENDENT_REVIEWS_FAILED
-requested_root_decision: REVIEW_STOPPED_CANDIDATE_AND_DEFINE_MINIMUM_RECOVERY_AUTHORIZATION
-merge_authorization: NOT_GRANTED
-draft_pull_request_required: true
-package10_started: false
-implementation_repairs_paused_by_founder: true
-summary:
-  successful_remote_formats: 6
-  required_remote_formats: 7
-  failed_remote_formats:
-    - 门店线下物料
-  content_review_score: 76
-  trust_review_score: 68
-  both_reviews_passed: false
-  hard_veto_count: 2
-  new_content_model_calls: 10
-  authorized_call_limit: 10
-  core_numbers_300_120_86_changed: false
-  all_readiness_flags_remain_false: true
-successful_capabilities:
-  - 六类成品均有真实远端三候选结果及选择、审核、导出、参考范围回查记录。
-  - 直播代表旅程完成一次自然语言局部修改。
-  - 明确对象缺失和登录或数据访问阻断均以零模型调用返回正确结果。
-  - 双浏览器隔离、同会话连续性、撤销拒绝、数据库迁移和回滚测试通过。
-  - 无自动发布，失败记录完整保留，新增调用没有超过授权上限。
-failed_or_unproven_capabilities:
-  - 门店线下物料未形成可审、可选、可导出的最终候选。
-  - Founder取消普通正文证据绑定的裁决尚未在冻结候选中完整闭合。
-  - 单份候选展示、失败页面内部编号和provider完成事务恢复仍有直接缺口。
-  - 20项内容产品仅有结构支持，不具备20/20真实远端覆盖证明。
-submission_boundary:
-  no_more_model_calls: true
-  no_implementation_change_after_founder_pause: true
-  no_merge: true
-  no_package10_start: true
-  wait_for_guardian_and_root_review: true
+execution_review_request:
+  schema: diyu.package7.output_contract_recovery.execution_review_request.v1
+  task_id: DIYU_DIFY_END_TO_END_OUTPUT_CONTRACT_RECOVERY_002
+  status: STOPPED_MODEL_CALL_LIMIT_EXCEEDED
+  candidate_commit: b7d61ef086e5d1ac618f4660117f7b161e387b25
+  candidate_tree: 7c80feeb4e2c3365f9817d5b996c59b7b4def552
+  requested_root_decision: ACKNOWLEDGE_PACKAGE_7_RECOVERY_STOP
+  merge_authorization: NOT_REQUESTED
+  draft_pull_request_required: true
+  package10_started: false
+  blocking_items:
+    - P7R-A03_OFFLINE_FORMAT_NOT_FINALIZED
+    - P7R-A10_MODEL_CALL_LIMIT_EXCEEDED
+    - P7R-A12_CURRENT_CANDIDATE_NOT_REVIEWED
+  completed_scope:
+    - The single author contract and seven output schemas are implemented.
+    - Explicit hard facts remain source-bound while ordinary creative surfaces remain free.
+    - Two to three accepted candidates are required for a successful content task.
+    - Internal run IDs remain in structured audit records and not in user-visible failures.
+    - Paid author responses are durably staged and recover without another model call.
+    - Local and remote deterministic suites pass with zero post-repair model calls.
+  historical_review_status:
+    evidence_commit: dfe35f82e09e9bc190a1b99e543b2ab0a109291a
+    reviewed_candidate_commit: b14a3bfc2ffe1acdb9b56337f16fc07493e0f374
+    review_ids:
+      - P7R-CONTENT-REVIEW-001
+      - P7R-TRUST-REVIEW-001
+    interpretation: HISTORICAL_FAILED_REVIEWS_NOT_CURRENT_APPROVAL
+  current_candidate_review_count: 0
+  model_call_audit:
+    authorized_new_content_model_call_limit: 40
+    actual_new_content_model_call_count: 50
+    excess_model_call_upper_bound: 10
+    final_cumulative_model_call_upper_bound: 207
+    post_repair_model_call_increment: 0
+    ledger_digest: 2f05970d0c30ddd49ae1347933e62d512aaa28f780140b49c3eb9c3084355a3c
+  checks:
+    local_package7_unit_tests: PASS_35_OF_35
+    remote_package7_unit_tests: PASS_35_OF_35
+    current_checker_selftest: PASS_13_NEGATIVE_CASES
+    optimized_mode_fail_closed: PASS_EXIT_2
+    package2_regression: PASS
+    package6_regression: PASS
+    public_foundation_and_gate1: PASS
+    secret_scan: PASS_NO_LEAKS
+    final_remote_branch_ci: PENDING
+  core_numbers:
+    '300': 300
+    '120': 120
+    '86': 86
+    changed: false
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    generator_qualified: false
+    retrieval_ready: false
+    runtime_ready: false
+    release_ready: false
+    production_ready: false
