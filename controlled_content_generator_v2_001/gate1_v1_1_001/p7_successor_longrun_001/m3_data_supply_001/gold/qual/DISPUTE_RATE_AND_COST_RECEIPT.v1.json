@@ -1,0 +1,58 @@
+{
+ "schema_version": "p7-m3-dispute-rate-and-cost-recomputable-v1",
+ "milestone_id": "M3",
+ "authority": "MILESTONE_EXIT_CONTRACT.M3 键 DISPUTE_RATE_AND_COST_RECOMPUTABLE",
+ "recompute_principle": "每个分歧率/成本数字标注其源文件与复算方式；审计者可从 registry/受审回执独立复算，本件不作唯一真源",
+ "dispute_rates": {
+  "G1_REFERENCE_GOLD": {
+   "metric": "confirm_dispute_rate",
+   "value": 0.0693,
+   "count": 21,
+   "recompute": "gold/g1/G1_RECEIPT.v1.json.confirm_dispute_rate；或从 gold/g1/confirm_A/*+confirm_B/* 双席确认逐条比对"
+  },
+  "G2_DEV_GOLD": {
+   "metric": "cross_model_fresh_dispute_rate",
+   "value": 0.4554,
+   "note": "224 新段跨模型双盲",
+   "recompute": "gold/g2/G2_RECEIPT.v1.json.risk_entailment；或 gold/g2/batches/*(A/B席)逐条 risk/entailment 比对"
+  },
+  "QUAL_A": {
+   "metric": "dispute_rate",
+   "value": 0.4166,
+   "count": 302,
+   "denom": 725,
+   "recompute": "gold/qual/QUAL_A_DOUBLE_BLIND_RECEIPT.v1.json；或密封区 labels_A∩labels_B 逐条比对(保全区)"
+  },
+  "QUAL_B": {
+   "metric": "dispute_rate",
+   "value": 0.4494,
+   "count": 315,
+   "denom": 701,
+   "recompute": "gold/qual/QUAL_B_DOUBLE_BLIND_RECEIPT.v1.json；或密封区 labels_A∩labels_B 逐条比对(保全区)"
+  }
+ },
+ "dispute_interpretation": "跨模型(Codex-GPT vs Opus/Fable)双盲分歧率显著高于同席确认率(G1 0.0693)，属跨架构标注分歧的预期；全部分歧经仲裁终裁，金标零未决",
+ "cost": {
+  "G1_gold_build": {
+   "calls": 97,
+   "total_usd": 58.3843,
+   "total_wall_clock_ms": 7642857
+  },
+  "G2_gold_build": {
+   "calls": 83,
+   "total_usd": 48.6311,
+   "total_wall_clock_ms": 8765539
+  },
+  "QUAL_sealed_pipeline": {
+   "calls": 464,
+   "total_usd": 257.6375,
+   "total_wall_clock_ms": 84476211
+  },
+  "claude_side_total_usd": 364.65,
+  "budget_cap_usd": 1500,
+  "headroom_usd": 1135.35,
+  "codex_side": "订阅计量，cost_usd=0（scope v1 §4 只记账不设门）",
+  "recompute": "各 SESSION_REGISTRY.v1.jsonl 逐行 cost_usd 求和(跳过撕裂行)；labeling_lib.registry_cost 可复算"
+ },
+ "generated_at": "2026-07-18T00:00:00+00:00"
+}

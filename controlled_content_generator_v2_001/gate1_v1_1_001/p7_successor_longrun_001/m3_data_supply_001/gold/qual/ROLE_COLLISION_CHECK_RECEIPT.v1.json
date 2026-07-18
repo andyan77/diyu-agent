@@ -1,0 +1,34 @@
+{
+ "schema_version": "p7-m3-role-collision-check-receipt-v1",
+ "milestone_id": "M3",
+ "authority": "MILESTONE_EXIT_CONTRACT.M3 键 ROLE_COLLISION_CHECK_RECEIPT",
+ "invariants": {
+  "single_writer_per_artifact": {
+   "pass": true,
+   "note": "每金标工件单写者：g1/g2/qual 各 runner 顺序写，无并发写同一 receipt；密封区 labels_A/labels_B/adjudication 分目录"
+  },
+  "labeler_seats_disjoint_sessions": {
+   "pass": true,
+   "note": "A席=Codex-GPT ephemeral 线程、B席=Opus-4.8 全新headless会话，逐叫独立 session/thread_id（registry可复算），互不见对方标签"
+  },
+  "orchestrator_not_gold_author": {
+   "pass": true,
+   "note": "M3 编排会话(374b677b)零标注/零裁决决定；全部金标出自 headless 席位，registry visible_material_count 仅计数、编排会话零接触密封明文"
+  },
+  "cross_model": {
+   "pass": true,
+   "note": "G2/QUAL 跨模型双盲：A=Codex-GPT(OpenAI gpt-5.6-sol) vs B=Anthropic(G2=Fable-5 / QUAL=Opus-4.8 载体裁决后)；两供应商两架构"
+  },
+  "adjudicator_disclosure": {
+   "pass": true,
+   "note": "仲裁员与B席同模型(G2/QUAL-Opus同为Opus)，分歧材料匿名化送裁；披露于 annotation_protocol_amendment1/2 与 ROLE_MODEL_MATRIX_ADDENDUM.M3.v1/v2"
+  }
+ },
+ "per_build_source": {
+  "G2": "gold/g2/G2_RECEIPT.v1.json.role_collision_check（内嵌，本件汇总并扩展至 QUAL）",
+  "QUAL": "gold/qual/SEALED_CUSTODY_RECEIPT.v1.json.custodian_discipline + SESSION_REGISTRY 逐叫 seat/session_id"
+ },
+ "recompute": "gold/{g1,g2,qual}/SESSION_REGISTRY.v1.jsonl 按 seat 分组核 session_id 互异；编排会话 id 不得出现在任何金标作者字段",
+ "verdict": "PASS",
+ "generated_at": "2026-07-18T00:00:00+00:00"
+}
