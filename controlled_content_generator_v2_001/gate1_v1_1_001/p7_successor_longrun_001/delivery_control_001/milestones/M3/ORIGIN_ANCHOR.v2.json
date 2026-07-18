@@ -1,0 +1,49 @@
+{
+ "schema_version": "p7-origin-anchor-v2",
+ "milestone_id": "M3",
+ "remote": "origin = https://github.com/andyan77/diyu-agent.git",
+ "branch": "agent/gate1-v1-1-successor-longrun",
+ "candidate_commit": "84f8fc503e487d4291411f5b9b616595467c138e",
+ "closeout_commit": "074141727ed6daf4d1adc70e6d402fca75d79eab",
+ "anchor_rule": "引入本文件的提交（锚提交）的第一父提交必须 == closeout_commit；closeout_commit 树内工件字节摘要必须 == closeout_artifact_digests 逐项；candidate_commit 必须为 closeout_commit 祖先且 == 该树内 HANDOFF.accepted_candidate_commit",
+ "plan_anchors": {
+  "m3_c0_open": "1e2c726921266ab1da3df74876a53b5d5fd20820",
+  "m3_c5_qual_complete": "326bf6e56a2c0c55d772a1604a5fcba4f858e65b",
+  "m3_c6_candidate": "84f8fc503e487d4291411f5b9b616595467c138e",
+  "m3_c7_closeout": "074141727ed6daf4d1adc70e6d402fca75d79eab",
+  "input_commit_from_m2": "5ce595de7eb48fcf04178651f84400b0411134be"
+ },
+ "closeout_artifact_digests": {
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/CLOSEOUT_RECEIPT.v1.json": "5bc7766b6a48db94588a7165245d2e595a224f66b288877c93e612a29f6de758",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/CLOSEOUT_REPORT.v1.md": "235587405d106bef0da42589d35821b12a02b7b5767e4eb0fa4105eaecd1888f",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/CODEX_GPT_EXTERNAL_REVIEW_SIGNER.9abcf7b232eb.signer_receipt.json": "f81396ca98d7b92d8adc7454a6a8765cd10912f088d6b0dc4c87dd8cb6536790",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/CODEX_REVIEW_PROMPT.v1.md": "5e0cde42022fec26c61b097fb6ea32604be2e9c28612eb4c33ad7b75544faa7e",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/EVIDENCE_MANIFEST.v1.json": "ff438a2d050d8887ae8274911393b64c6e1b1e3350014ac85f0dcdad4cfc6865",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/FABLE_ADVERSARIAL_REVIEW.v1.json": "e6a8450c62b54fbce29a7e6c77312d8242e177873a12aecdbee3fd901f16a77e",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/HANDOFF.v1.json": "92b2288412f203067d9b3ea22f09ceb68c2138a0a50def7b55d534f8c9e84a68",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/INDEPENDENT_CLAUDE_FABLE_ADVERSARIAL_REVIEWER.5f2a47c676da.signer_receipt.json": "1b12f34796ab0253ce23bdfef81196cc9d94d4e4b727b809abfe78879337c639",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/INPUT_MANIFEST.v1.json": "dd71d5d540138bdada4c38d202aeb8303cc8839adcb7103f77d95a8e825e3f5a",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/MILESTONE_CONTRACT.v1.md": "06df92d20855fb38d734d09cbac42418a55b82dbe7c756ec780579611a35cbd0",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/MILESTONE_EXIT_EVIDENCE.v1.json": "d67bfb92bfb30aef31d9f698d8a426d0e7fbf7098847a4eb1caa177277b7ba5d",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/OUTPUT_MANIFEST.v1.json": "05bef36aac5eb409ed958635620e225954226c0989eebe1d4180eb58f59fe8aa",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/READY_SET_RESULT.v1.json": "02b93e6745076fbf6b7f672938d5a525b089a70f7c5dc1e70e9f79c72ba3e003",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/RENDERED_PROMPT.v1.md": "ae16ac3fa4669a56f1a5ff197836b2a18d044568604b7f324033c677299eeb54",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/REVIEW_REQUEST.v1.md": "4653654f95c8a42bd25489464436b58ac739bdff9d053fcca26b67ce6c0e5d16",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/STAGE_DECISION.v1.json": "1a5b7dc07b8702a38befb107312020fc6c097d82370f60e859719daa3080108d",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/codex_review_r1_events.jsonl": "111c87b764474384441f63f24841946148c86189d9dedf58e1bf66750f709de7",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/codex_review_r1_last_message.json": "1bd3d0ca7a691c52015c35bb1b7d1072d8532a980fef0ba14454080e59831547",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/codex_review_r1_stderr.log": "b373c31d0dd8d7a3b46ddbc308ef9e74c6d9cc4cee478a516d4e3998140d0a08",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/snapshots/close/RUN_JOURNAL.v1.jsonl": "132084d63ca005af31787033dfeadb0c5a7c60c77b8a88327e7f12f7ba8fdaf0",
+  "controlled_content_generator_v2_001/gate1_v1_1_001/p7_successor_longrun_001/delivery_control_001/milestones/M3/snapshots/close/candidate_manifest.v1.json": "56241696b66696c5398ac278765123f4b80c9e71f5bfde50482c3303cef8a3db"
+ },
+ "handoff_digest": "a343b7ae37b34751691b03e92fcbc28a840ee1929e6991ff55c6ad5511c11132",
+ "closeout_receipt_digest": "4cee2cdf15f9a05d95ce2524648a243489b96ec6851a79e180ace6ac0e77cbbb",
+ "remote_verification": {
+  "method": "git ls-remote origin agent/gate1-v1-1-successor-longrun（C7 推送后独立查询）",
+  "remote_head": "074141727ed6daf4d1adc70e6d402fca75d79eab",
+  "matches_closeout_commit": true,
+  "verified_at": "2026-07-18T16:28:04+00:00"
+ },
+ "forbidden_actions_honored": "零 tag / 零 force-push / 零 rebase / 零 merge-master / 零新产品 remote / 零发布部署",
+ "record_digest": "46a29b3d0c66fdba5918e736271a3e24faabd80ae507c1bf7d85375a2ca64495"
+}
