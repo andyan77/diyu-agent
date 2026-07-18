@@ -44,7 +44,7 @@ CHECKER_PATH = Path("ci/checkers/check_product_foundation.py")
 WORKFLOW_PATH = Path(".github/workflows/ci.yml")
 FROZEN_REVIEWED_COMMIT = "3f610726943dee5545d4d310f107239f2eeb9234"
 AUTHORIZED_CURRENT_LIVE_PATHS = frozenset(
-    {LEGACY_GATE1_CHECKER_PATH, CHECKER_PATH, WORKFLOW_PATH}
+    {Path("AGENTS.md"), LEGACY_GATE1_CHECKER_PATH, CHECKER_PATH, WORKFLOW_PATH}
 )
 SUCCESSOR_PACKAGES = (
     (
@@ -155,6 +155,10 @@ REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
         ),
         Path(
             "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "delivery/execution_review_request.v2.yaml"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
             "evidence/local_acceptance.v1.json"
         ),
         Path(
@@ -167,7 +171,15 @@ REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
         ),
         Path(
             "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "evidence/remote_probe.v2.json"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
             "result/output_contract_recovery_result.v1.json"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "result/output_contract_recovery_result.v2.json"
         ),
         Path(
             "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
@@ -175,7 +187,15 @@ REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
         ),
         Path(
             "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "review/content_novice_review.v2.yaml"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
             "review/trust_isolation_review.v1.yaml"
+        ),
+        Path(
+            "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
+            "review/trust_isolation_review.v2.yaml"
         ),
     },
 }
