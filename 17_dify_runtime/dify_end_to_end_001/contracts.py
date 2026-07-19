@@ -135,6 +135,38 @@ def escape_unambiguous_json_string_quotes(value: str) -> tuple[str, int]:
     return "".join(output), replacement_count
 
 
+def remove_unambiguous_json_trailing_commas(value: str) -> tuple[str, int]:
+    """Remove commas outside strings only when a JSON closer follows."""
+
+    output: list[str] = []
+    inside_string = False
+    escaped = False
+    replacement_count = 0
+    for index, character in enumerate(value):
+        if inside_string:
+            output.append(character)
+            if escaped:
+                escaped = False
+            elif character == "\\":
+                escaped = True
+            elif character == '"':
+                inside_string = False
+            continue
+        if character == '"':
+            output.append(character)
+            inside_string = True
+            continue
+        if character == ",":
+            cursor = index + 1
+            while cursor < len(value) and value[cursor].isspace():
+                cursor += 1
+            if cursor < len(value) and value[cursor] in "]}":
+                replacement_count += 1
+                continue
+        output.append(character)
+    return "".join(output), replacement_count
+
+
 def rebuild_fragmented_candidate_envelope(value: str) -> tuple[str, int]:
     """Rebuild only complete candidate objects split by redundant root closers."""
 

@@ -37,6 +37,7 @@ from contracts import (
     escape_unambiguous_json_string_quotes,
     normalize_model_json_text,
     rebuild_fragmented_candidate_envelope,
+    remove_unambiguous_json_trailing_commas,
 )
 from persistence import (
     RuntimeRepository,
@@ -119,6 +120,11 @@ KEY_NUMBER_PATTERN = re.compile(
     r"(?:厘米|cm|毫米|mm|米|m|元|折|%|天|月|年|号|码)"
     r"|(?:\d+(?:\.\d+)?|[零〇一二两三四五六七八九十百千万]+)\s*"
     r"(?:件|款).{0,8}(?:库存|现货|可售|售罄|剩余)"
+)
+NATURAL_DIALOGUE_AUDIO_PATTERN = re.compile(
+    r"^(?:[^：:\n]{0,16}(?:员|同事|店长|主持人|主理人|创始人|顾客|家长|妈妈|爸爸|孩子|老师|负责人|记录者|观察者|设计师|陈列师))[：:]\s*\S"
+    r"|[“\"][^”\"]+[”\"]"
+    r"|(?:说|问|回应|回答|自言自语|话语|对话|问候)[：:]?\s*[“\"]"
 )
 PRODUCT_FACT_ASSERTION_PATTERN = re.compile(
     r"(?:这款|该款|本款|这件|该件|商品|产品|上衣|童装|样衣|面料|材质|尺码|颜色|厚度|售价|价格|库存)"
@@ -1507,10 +1513,18 @@ class Package7Runtime:
                 repaired, quote_count = escape_unambiguous_json_string_quotes(
                     repaired
                 )
+                repaired, trailing_comma_count = (
+                    remove_unambiguous_json_trailing_commas(repaired)
+                )
                 if control_count:
                     repair_markers.append("ESCAPED_RAW_JSON_STRING_CONTROLS")
                 if quote_count:
                     repair_markers.append("ESCAPED_UNAMBIGUOUS_JSON_STRING_QUOTES")
+                if trailing_comma_count:
+                    repair_markers.append(
+                        "REMOVED_UNAMBIGUOUS_JSON_TRAILING_COMMAS:"
+                        f"{trailing_comma_count}"
+                    )
                 try:
                     parsed = json.loads(repaired)
                 except json.JSONDecodeError:
@@ -1711,6 +1725,43 @@ class Package7Runtime:
         if parsed.get("contract_version") == AUTHOR_CONTRACT_VERSION:
             del parsed["contract_version"]
             markers.append("REMOVED_EXACT_SERVER_CONTRACT_VERSION_ECHO")
+        if expected_format == "短视频":
+            dialogue_count = 0
+            ambient_count = 0
+            for candidate in candidates:
+                deliverable = (
+                    candidate.get("deliverable")
+                    if isinstance(candidate, dict)
+                    else None
+                )
+                shots = (
+                    deliverable.get("shots")
+                    if isinstance(deliverable, dict)
+                    else None
+                )
+                if not isinstance(shots, list):
+                    continue
+                for shot in shots:
+                    audio = shot.get("audio") if isinstance(shot, dict) else None
+                    if not isinstance(audio, str):
+                        continue
+                    normalized_audio = audio.strip()
+                    if not normalized_audio or any(
+                        label in normalized_audio
+                        for label in ("台词", "旁白", "纯画面", "环境声")
+                    ):
+                        continue
+                    if NATURAL_DIALOGUE_AUDIO_PATTERN.search(normalized_audio):
+                        shot["audio"] = f"台词：{normalized_audio}"
+                        dialogue_count += 1
+                    else:
+                        shot["audio"] = f"环境声：{normalized_audio}"
+                        ambient_count += 1
+            if dialogue_count or ambient_count:
+                markers.append(
+                    "CLASSIFIED_UNLABELED_SHOT_AUDIO:"
+                    f"dialogue={dialogue_count},ambient={ambient_count}"
+                )
         expected_duration = task_brief.get("duration_label")
         if expected_format != "短视频" or not isinstance(expected_duration, str):
             return markers

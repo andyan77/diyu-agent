@@ -967,6 +967,29 @@ class Package7RecoveryTests(unittest.TestCase):
             quoted_run.payload["model_wrapper_normalization"],
         )
 
+        trailing_comma_prepared = self.prepare("短视频")
+        trailing_comma_raw = json.dumps(
+            candidate_envelope("短视频"),
+            ensure_ascii=False,
+            separators=(",", ":"),
+        ).replace(
+            '"edit_note":"保留自然停顿后结束。"}',
+            '"edit_note":"保留自然停顿后结束。",}',
+            1,
+        )
+        trailing_comma_result = self.scoped_finalize(
+            str(trailing_comma_prepared["run_id"]),
+            base64.b64encode(trailing_comma_raw.encode()).decode("ascii"),
+        )
+        self.assertEqual(trailing_comma_result["result_class"], "SUCCESS")
+        trailing_comma_run = self.repository.model_run(
+            str(trailing_comma_prepared["run_id"])
+        )
+        self.assertIn(
+            "REMOVED_UNAMBIGUOUS_JSON_TRAILING_COMMAS:1",
+            trailing_comma_run.payload["model_wrapper_normalization"],
+        )
+
         fragmented_prepared = self.prepare("短视频")
         fragmented_candidates = candidate_envelope("短视频")["candidates"]
         for candidate in fragmented_candidates:
@@ -1041,6 +1064,27 @@ class Package7RecoveryTests(unittest.TestCase):
         self.assertEqual(
             unknown_bare_result["result_class"],
             "MODEL_OUTPUT_CONTRACT_ERROR",
+        )
+
+    def test_unlabeled_short_video_audio_is_classified_without_content_loss(
+        self,
+    ) -> None:
+        prepared = self.prepare("短视频")
+        envelope = candidate_envelope("短视频")
+        envelope["candidates"][0]["deliverable"]["shots"][0]["audio"] = (
+            "检验员：这颗按扣需要再确认。"
+        )
+        envelope["candidates"][1]["deliverable"]["shots"][0]["audio"] = (
+            "按扣声，脚步声。"
+        )
+        result = self.finalize(prepared, "短视频", envelope=envelope)
+        self.assertEqual(result["result_class"], "SUCCESS")
+        self.assertIn("台词：检验员：这颗按扣需要再确认。", result["user_visible_text"])
+        self.assertIn("环境声：按扣声，脚步声。", result["user_visible_text"])
+        run = self.repository.model_run(str(prepared["run_id"]))
+        self.assertIn(
+            "CLASSIFIED_UNLABELED_SHOT_AUDIO:dialogue=1,ambient=1",
+            run.payload["model_wrapper_normalization"],
         )
 
     def test_internal_identifiers_sensitive_data_and_secrets_are_blocked(
