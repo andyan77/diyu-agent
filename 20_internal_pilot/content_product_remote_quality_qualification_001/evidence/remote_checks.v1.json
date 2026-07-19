@@ -1,0 +1,35 @@
+{
+  "schema": "diyu.q20.remote_checks.v1",
+  "task_id": "DIYU_20_CONTENT_PRODUCTS_REMOTE_QUALITY_QUALIFICATION_001",
+  "recorded_at": "2026-07-19T02:03:07Z",
+  "draft_pull_request": {
+    "number": 28,
+    "url": "https://github.com/andyan77/diyu-agent/pull/28",
+    "draft": true
+  },
+  "verified_candidate_head": "ec629dccdd64ea17d108a9f13f03b0cdb4541d0a",
+  "successful_run": {
+    "run_id": 29669287804,
+    "url": "https://github.com/andyan77/diyu-agent/actions/runs/29669287804",
+    "checker_compatibility": "SUCCESS",
+    "secret_scan": "SUCCESS"
+  },
+  "preserved_prior_runs": [
+    {
+      "run_id": 29668568001,
+      "candidate_head": "9d8582b5a264d53ffd7b43df4292a6555c1369f5",
+      "checker_compatibility": "FAILURE",
+      "secret_scan": "SUCCESS",
+      "first_failure_step": "Run governance checkers"
+    },
+    {
+      "run_id": 29668863433,
+      "candidate_head": "87a8d794827f2db69b095003f11fab16b72ac18b",
+      "checker_compatibility": "FAILURE",
+      "secret_scan": "SUCCESS",
+      "first_failure_step": "Run reserved downstream package checks"
+    }
+  ],
+  "automatic_publish": false,
+  "readiness_transition_authorized": false
+}
