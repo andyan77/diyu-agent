@@ -1,0 +1,25 @@
+{
+ "schema_version": "p7-session-identity-m3r1-v2",
+ "milestone_id": "M3",
+ "capsule": "M3_R1_RESUME_R3_R6",
+ "supersedes_note": "不覆盖 v1（上一段 /compact 会话身份，封存不改）；本 v2 = 从磁盘 8d93441 恢复的全新顶层会话身份，追加式登记",
+ "requested_model": "claude-opus-4-8 — per『Opus 4.8 完整替换版』RESUME Prompt header",
+ "actual_model": "claude-opus-4-8",
+ "actual_model_series": "opus (NOT fable-5)",
+ "session_id": "b1bd76df-1e9c-4660-af9d-a5450c5e638c",
+ "session_kind": "FRESH_TOP_LEVEL_SESSION_RESUMED_FROM_DISK_CHECKPOINT",
+ "resumed_from_head": "8d934414185c5c2f231d09b76e908e4d9ce970af",
+ "run_id": {
+  "value": "UNAVAILABLE",
+  "unavailable_reason": "Claude Code 未暴露独立 run 标识",
+  "evidence_ref": "本文件即会话身份证据 + journal seq49 RESUME 事件"
+ },
+ "model_substitution_authorization": {
+  "ruling": "发起人在『Opus 4.8 完整替换版』RESUME Prompt 明确授权 Opus 4.8 完全替代 Fable 5；不得继续探测/等待/请求恢复 Fable 5，也不得再次询问模型替换授权",
+  "effect": "本恢复主执行者 = claude-opus-4-8；Fable 5 请求条款以本 Prompt 为准被替换",
+  "precedent": "SUPERSESSION_LEDGER §7/§8（Fable→Opus 载体等价，EQUIVALENT_IN_ALL_VALIDITY_BEARING_PROPERTIES，自 M3-C5）"
+ },
+ "review_independence_note": "本会话仅承担 R3-R6 编排/构造/门禁角色；独立性关键角色（两标注席跨模型双盲 A=Codex-GPT/B=Opus-4.8、仲裁席、两终审 Claude 对抗+Codex 复算）全部为隔离子进程/全新会话，与本编排会话相互独立；主编排会话全程零接触 QUAL 明文（工具 stdout 纪律）",
+ "opened_at": "RESUME_SESSION_2026-07-18",
+ "prompt_conflict_resolution": "『Opus 4.8 完整替换版』明示：与旧 RESUME_PROMPT.M3_R1.v1 冲突的模型/基线/预算停止/关闭顺序条款以本 Prompt 为准；不冲突的磁盘真源继续有效"
+}

@@ -13,6 +13,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.util
 import json
 import sys
@@ -31,6 +32,79 @@ def _load(path: Path, name: str):
 
 receipts = _load(DC / "tools/receipts.py", "p7_receipts")
 
+# CLOSED_PASS 放行硬绑定（M3-R1 §5.5 M4 互锁加固）：仅把 state 改成 CLOSED_PASS 并
+# 重算 record_digest 不足以放行 M4——必须同时携带以下绑定，且 launcher/ready-set 侧
+# 逐条复核绑定所指工件在盘且摘要吻合、两套就绪回执 verdict==PASS。缺任一 → fail-closed。
+#   文件绑定（path+digest，逐字节复算）：new closeout / QUAL-A 就绪 / QUAL-B 就绪 / HANDOFF
+#   标量绑定（并入 record_digest，防篡改）：两套 active generation / qualification index 摘要 /
+#                                          closure candidate 提交
+_CLOSED_PASS_FILE_BINDINGS = (
+    ("closeout_receipt_path", "closeout_receipt_digest"),
+    ("qual_a_readiness_path", "qual_a_readiness_digest"),
+    ("qual_b_readiness_path", "qual_b_readiness_digest"),
+    ("handoff_path", "handoff_digest"),
+)
+_CLOSED_PASS_SCALAR_BINDINGS = (
+    "qual_a_active_generation", "qual_b_active_generation",
+    "qualification_index_digest", "closure_candidate_commit",
+)
+_READINESS_PATH_KEYS = ("qual_a_readiness_path", "qual_b_readiness_path")
+
+
+def _sha256_file(path: Path) -> str | None:
+    try:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    except OSError:
+        return None
+
+
+def _readiness_verdict_pass(receipt: dict) -> bool:
+    """就绪回执 PASS 复核：不只信 verdict 字段，另复算 failing_keys 为空。"""
+    if not isinstance(receipt, dict):
+        return False
+    if receipt.get("verdict") != "PASS":
+        return False
+    failing = receipt.get("failing_keys")
+    return isinstance(failing, list) and len(failing) == 0
+
+
+def _verify_closed_pass_binding(status: dict,
+                                milestones_dir: Path) -> tuple[bool, str]:
+    """CLOSED_PASS 硬绑定复核。绑定路径相对 p7 根解析（milestones_dir.parents[1]）。"""
+    binding = status.get("closed_pass_binding")
+    if not isinstance(binding, dict):
+        return False, ("CLOSED_PASS lacks closed_pass_binding block "
+                       "(status-only forge insufficient) -> fail-closed")
+    p7 = milestones_dir.parents[1]
+    for path_key, digest_key in _CLOSED_PASS_FILE_BINDINGS:
+        rel = binding.get(path_key)
+        want = binding.get(digest_key)
+        if not isinstance(rel, str) or not rel or not isinstance(want, str):
+            return False, f"closed_pass_binding.{path_key}/{digest_key} missing"
+        target = p7 / rel
+        got = _sha256_file(target)
+        if got is None:
+            return False, (f"closed_pass_binding target absent: {rel} "
+                           "-> fail-closed")
+        if got != want:
+            return False, (f"closed_pass_binding digest mismatch for {rel} "
+                           f"({got[:12]}!={str(want)[:12]}) -> fail-closed")
+    for scalar_key in _CLOSED_PASS_SCALAR_BINDINGS:
+        val = binding.get(scalar_key)
+        if not isinstance(val, str) or not val.strip():
+            return False, f"closed_pass_binding.{scalar_key} missing/empty"
+    # 两套就绪回执必须 verdict==PASS（且 failing_keys 空）
+    for rk in _READINESS_PATH_KEYS:
+        target = p7 / binding[rk]
+        try:
+            receipt = json.loads(target.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            return False, f"readiness receipt unreadable {binding[rk]} ({exc})"
+        if not _readiness_verdict_pass(receipt):
+            return False, (f"readiness receipt {binding[rk]} not PASS "
+                           "-> fail-closed")
+    return True, "closed_pass_binding verified (files+digests+readiness PASS)"
+
 
 def m3_recovery_active(milestones_dir: Path | None = None) -> tuple[bool, str]:
     """M3-R1 恢复活动态硬门（fail-closed）。
@@ -40,7 +114,10 @@ def m3_recovery_active(milestones_dir: Path | None = None) -> tuple[bool, str]:
       - 存在但不可读 / record_digest 被篡改 → (True)：不安全，一律 fail-closed。
       - state != CLOSED_PASS（ACTIVE / HONEST_STOP）→ (True)：M3 v1 关闭被暂停，
         凡以 M3 为前置的里程碑（M4 首当其冲）不得放行。
-      - state == CLOSED_PASS 且摘要自洽 → (False)：恢复已诚实关闭，正常放行。
+      - state == CLOSED_PASS 但缺/坏 closed_pass_binding → (True)：仅伪造状态文件
+        不足以放行 M4（§5.5 加固）；必须绑定 new closeout/两套就绪 PASS/HANDOFF/
+        active generation/qualification index/closure candidate 且逐条在盘吻合。
+      - state == CLOSED_PASS 且摘要自洽 且绑定复核通过 → (False)：诚实关闭，正常放行。
     """
     if milestones_dir is None:
         milestones_dir = DC / "milestones"
@@ -58,7 +135,10 @@ def m3_recovery_active(milestones_dir: Path | None = None) -> tuple[bool, str]:
     if state != "CLOSED_PASS":
         return True, (f"M3-R1 recovery state={state} (not CLOSED_PASS): "
                       "M3 v1 close superseded, downstream fail-closed")
-    return False, "M3-R1 recovery CLOSED_PASS"
+    binding_ok, binding_why = _verify_closed_pass_binding(status, milestones_dir)
+    if not binding_ok:
+        return True, f"M3-R1 CLOSED_PASS binding unverified: {binding_why}"
+    return False, f"M3-R1 recovery CLOSED_PASS ({binding_why})"
 
 
 def compute_ready_set(root: Path, milestones_dir: Path | None = None,
