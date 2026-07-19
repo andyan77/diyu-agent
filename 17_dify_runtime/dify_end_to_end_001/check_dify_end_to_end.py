@@ -2045,7 +2045,7 @@ def validate_recovery_source_contract(root: Path) -> None:
         "_explicit_required_object_missing(",
         "NO_COMPLETE_SAFE_CANDIDATE",
         "本轮可选方案不足",
-        "都可作为待人审正文创作",
+        "都可作为待人工审核的创意候选",
         "不授予任何登录或数据访问权限",
     ):
         require(marker in runtime, f"E_RECOVERY_RUNTIME_MARKER:{marker}")
@@ -2083,12 +2083,12 @@ def validate_recovery_source_contract(root: Path) -> None:
     portal = sources["portal.js"]
     deploy = sources["deploy_remote.sh"]
     chat = sources["dify_chat.py"]
-    for marker in (
-        'value === "门店线下物料"',
-        "（暂未开放）",
-        "option.disabled = temporarilyUnavailable",
-    ):
-        require(marker in portal, f"E_RECOVERY_OFFLINE_ENTRY_DISABLED:{marker}")
+    require(
+        'fillSelect("content_format", value.content_formats);' in portal,
+        "E_RECOVERY_FORMAT_ENTRY_ENABLED",
+    )
+    for marker in ("（暂未开放）", "temporarilyUnavailable"):
+        require(marker not in portal, f"E_RECOVERY_FORMAT_ENTRY_DISABLED:{marker}")
     for marker in (
         "runtime_browser_session",
         "start_browser_session",
