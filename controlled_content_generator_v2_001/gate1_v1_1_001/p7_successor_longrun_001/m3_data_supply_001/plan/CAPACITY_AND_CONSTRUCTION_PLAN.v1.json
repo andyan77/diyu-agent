@@ -250,7 +250,10 @@
   "high_risk_bias": 0.6,
   "k_variants_per_claim": 2,
   "traceability": "每变体绑 base_case_id + source_group_id；只可追溯矛盾注入/边界省略/风险提升/合法负控；禁编造新领域事实",
-  "no_fixed_ratio": true
+  "no_fixed_ratio": true,
+  "variants_add_effective_N": false,
+  "variants_purpose": "变体继承 base 的 source_group_id/source_evidence_digest，只提升每类 RECORD 体量（覆盖/鲁棒/CI 收紧），不增加有效独立统计 N；custody 按 source_group 去重（同源变体计 1 个独立单位），故 k>=2 不可用于凑分母",
+  "effective_n_rule_ref": "qual_custody_recompute._independent_key / _reject_pseudo_independent（§六B）"
  },
  "f5_tier1_topup": {
   "trigger": "F5 逐族下限（per-family floors 20-40）或高风险类不达标时启动",
@@ -285,10 +288,27 @@
   "public_aggregates_only_to_main_session": true
  },
  "per_set_capacity_feasibility": {
-  "per_set_reuse_demand_claim_anchor": 760,
-  "per_set_capacity_natural_plus_k2": 1530,
+  "legal_independent_unit": {
+   "default": "source_group_id（scenario/claim 级，跨可见性分区不可拆）",
+   "finer_unit_allowed_when": "记录显式标 independent_evidence_unit=true 且带互异 source_evidence_digest（分别有源、可追溯可复算）",
+   "forbidden": "把一个 source_group 切成 per-claim/per-variant 伪独立样本；k>=2 同源变体凑分母",
+   "enforced_by": "qual_custody_recompute._independent_key + _reject_pseudo_independent（§六B）"
+  },
+  "binomial_denominator_rule": {
+   "confidence_method": "CLOPPER_PEARSON",
+   "N_per_class_per_set": "该类 distinct 合法独立单位数（默认 distinct source_group），非 record 数",
+   "correlated_variants": "同一 source_group 的相关变体在同一分母只计 1，禁重复计数",
+   "cluster_aware_required_when": "若采用 evidence-unit 细化且组内保留相关性 → 运行前固定 cluster-aware CI（cluster=source_group），须有测试与复算实现"
+  },
+  "deprecated_k2_capacity": {
+   "old_per_set_reuse_demand_claim_anchor": 760,
+   "old_per_set_capacity_natural_plus_k2": 1530,
+   "reason": "1530=510×3(原生+k2变体) 系伪独立虚数——变体继承 base 的 source_group，custody 去重后不增有效 N；760 之和亦非真需求（cross-module reuse 使一 claim 覆盖多类分母，所需 distinct claim ≈ 各类下限上确界 345，非各类之和）"
+  },
+  "per_set_distinct_claim_source_groups_approx": 510,
+  "max_per_class_minimum": 345,
   "feasible": true,
-  "verdict": "CONDITIONALLY_FEASIBLE（复用+k2；F5 为绑定家族，可能触发 Tier1）",
+  "verdict": "FEASIBLE_BY_DISTINCT_INDEPENDENT_UNITS（每类下限 ≤ ~510 distinct claim source_group/套；一 claim 经 cross-module reuse + challenge 扰动可为多类分母各计 1 独立单位；变体只增体量不增有效 N）",
   "corpus": {
    "distinct_claims_total": 1356,
    "qual_pool_groups": 90,
@@ -306,9 +326,47 @@
    },
    "binding_family": "F5_ENTERPRISE_LONG_TERM_TRUST (最薄，~5 QUAL 组/套)"
   },
-  "insufficiency_would_be": "若复用后仍机械证明 < 下限 且 Tier1 F5 补量后仍不足 → 合法 HONEST_STOP（容量不足）"
+  "per_class_feasibility": {
+   "risk_classification_high_risk": {
+    "min": 300,
+    "distinct_unit_supply_approx": 510,
+    "ok": true
+   },
+   "risk_classification_legal_control": {
+    "min": 300,
+    "distinct_unit_supply_approx": 510,
+    "ok": true
+   },
+   "high_risk_contradicted": {
+    "min": 300,
+    "distinct_unit_supply_approx": 510,
+    "ok": true
+   },
+   "high_risk_unknown": {
+    "min": 100,
+    "distinct_unit_supply_approx": 510,
+    "ok": true
+   },
+   "natural_legal_supported": {
+    "min": 300,
+    "distinct_unit_supply_approx": 510,
+    "ok": true
+   },
+   "fact_chain_high_risk_unsafe": {
+    "min": 300,
+    "distinct_unit_supply_approx": 510,
+    "ok": true
+   },
+   "fact_chain_natural_legal": {
+    "min": 300,
+    "distinct_unit_supply_approx": 510,
+    "ok": true
+   }
+  },
+  "binding_family_note": "F5 ~65/套（129 total÷2）；F5 逐族下限 20-40 ≤ 65，可行但最薄；不足先 Tier1 F5 定向补量（预授权，非发起人门）",
+  "insufficiency_would_be": "若某类 distinct 独立单位 < 下限，先自动用既有真源合法定向/整轮补量（Tier1/Tier2 名称非发起人门）；仅穷尽既有真源内合法、统计独立补量后仍不足，才 HONEST_STOP（容量不足），绝不以同源变体凑数"
  },
  "does_not_lower_standard": "本计划只规划如何达到 measurement_qualification.v2 全部下限，零降标；目标含安全余量以抗淘汰",
  "generated_at": "2026-07-18T23:28:02.899579+00:00",
- "record_digest": "028b8b301b9a4577b24ca9e5487119e77066f402e8e241da914b3f3fc0b042f3"
+ "record_digest": "e8621a65496326daa4974af88b958bec7dfb9971b971a7a32374db4937c407b6"
 }

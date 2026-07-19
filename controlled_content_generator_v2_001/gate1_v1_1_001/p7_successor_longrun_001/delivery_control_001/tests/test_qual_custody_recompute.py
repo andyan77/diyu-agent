@@ -217,6 +217,63 @@ class QualCustodyRecompute(unittest.TestCase):
         self.assertEqual(pc["counts"]["review_double_reviewed_items"], 0,
                          "无 item 具 >=2 reviewer → 双审 item=0（非 40）")
 
+    # ---- §六B：统计独立单位（默认 source_group；仅显式独立证据单位细化；反伪独立） ----
+
+    def _entail_hi(self, case_id, source_group, ev_digest, *, independent=None,
+                   extra=None):
+        payload = {"module": "entailment", "family_id": "F1_PEOPLE_AND_REAL_SCENE",
+                   "record_role": "qualification_case", "case_origin": "CHALLENGE"}
+        if independent is not None:
+            payload["independent_evidence_unit"] = independent
+        payload.update(extra or {})
+        return asm.assemble_gold_record(
+            case_id=case_id, source_group_id=source_group,
+            source_evidence_digest=ev_digest, dataset_manifest_digest=DMD,
+            gold_fields={"gold_label": "CONTRADICTED", "gold_risk": "HIGH"},
+            payload_fields=payload,
+            reviews_meta=[
+                {"review_id": f"A-{case_id}", "reviewer_identity": "SEAT_A::codex-gpt",
+                 "reviewer_kind": "AI", "model_revision": "gpt-5.6-sol",
+                 "prompt_digest": digest_json({"p": "A"}),
+                 "evidence_digest": digest_json({"e": case_id, "s": "A"})},
+                {"review_id": f"B-{case_id}", "reviewer_identity": "SEAT_B::opus-4-8",
+                 "reviewer_kind": "AI", "model_revision": "claude-opus-4-8",
+                 "prompt_digest": digest_json({"p": "B"}),
+                 "evidence_digest": digest_json({"e": case_id, "s": "B"})}])
+
+    def test_unflagged_same_source_variants_dedup_to_one(self) -> None:
+        # 同 source_group、无 independent_evidence_unit 标记 → 只计 1（默认 source_group 去重）
+        recs = [self._entail_hi(f"QA-u-{k}", "sg-shared", digest_json({"ev": k}),
+                                extra={"variant_k": k}) for k in range(3)]
+        pc = _recompute(recs)
+        self.assertTrue(pc["custody_binding"]["core_validation_passed"])
+        self.assertEqual(pc["counts"]["high_risk_contradicted_cases"], 1,
+                         "无独立证据标记 → 同源 3 变体计 1")
+
+    def test_flagged_independent_evidence_units_count_finer(self) -> None:
+        # 同 source_group 但显式标 independent_evidence_unit=true + 互异 source_evidence_digest
+        # → 各计 1 独立单位（分别有源，可追溯可复算）
+        recs = [self._entail_hi(f"QA-iu-{k}", "sg-shared", digest_json({"ev": k}),
+                                independent=True) for k in range(3)]
+        pc = _recompute(recs)
+        self.assertTrue(pc["custody_binding"]["core_validation_passed"],
+                        pc["custody_binding"]["core_validation_errors"][:5])
+        self.assertEqual(pc["counts"]["high_risk_contradicted_cases"], 3,
+                         "分别有源的 3 个独立证据单位各计 1")
+
+    def test_pseudo_independent_same_evidence_rejected(self) -> None:
+        # 同 source_group + 标 independent_evidence_unit=true + 相同 source_evidence_digest
+        # → 把一份证据切成伪独立样本 → core 校验 fail-closed
+        shared = digest_json({"ev": "same"})
+        recs = [self._entail_hi(f"QA-pi-{k}", "sg-shared", shared,
+                                independent=True, extra={"variant_k": k})
+                for k in range(2)]
+        pc = _recompute(recs)
+        self.assertFalse(pc["custody_binding"]["core_validation_passed"],
+                         "同源伪独立必须 fail-closed")
+        errs = cust.verify_binding(pc, recs)
+        self.assertTrue(any(e.startswith("core_validation_failed") for e in errs), errs)
+
 
 if __name__ == "__main__":
     unittest.main()

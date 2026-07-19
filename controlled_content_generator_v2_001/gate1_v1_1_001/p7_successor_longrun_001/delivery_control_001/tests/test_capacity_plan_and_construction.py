@@ -71,16 +71,26 @@ class CapacityPlan(unittest.TestCase):
         self.assertEqual(covered, nine, covered ^ nine)
 
     def test_capacity_feasible(self) -> None:
+        # §六B：按每类『distinct 合法独立单位供给 ≥ 下限』判可行（非 sum/k2 伪独立虚数）
         f = self.plan["per_set_capacity_feasibility"]
         self.assertTrue(f["feasible"])
-        self.assertLessEqual(f["per_set_reuse_demand_claim_anchor"],
-                             f["per_set_capacity_natural_plus_k2"])
+        self.assertNotIn("per_set_capacity_natural_plus_k2", f,
+                         "k2 变体倍增虚数必须已作废（变体不增有效 N）")
+        supply = f["per_set_distinct_claim_source_groups_approx"]
+        self.assertIn("legal_independent_unit", f)
+        self.assertIn("binomial_denominator_rule", f)
+        for cls_key, row in f["per_class_feasibility"].items():
+            self.assertGreaterEqual(supply, row["min"], cls_key)
+            self.assertGreaterEqual(row["distinct_unit_supply_approx"], row["min"], cls_key)
+            self.assertTrue(row["ok"], cls_key)
 
     def test_variant_construction_no_fixed_ratio_k_ge_2(self) -> None:
         vc = self.plan["variant_construction"]
         self.assertTrue(vc["no_fixed_ratio"])
         self.assertGreaterEqual(vc["k_variants_per_claim"], 2)
         self.assertGreaterEqual(len(vc["kinds"]), 4)
+        # §六B：变体只增 RECORD 体量，不增有效独立 N
+        self.assertFalse(vc["variants_add_effective_N"])
 
 
 class GoldSchema(unittest.TestCase):

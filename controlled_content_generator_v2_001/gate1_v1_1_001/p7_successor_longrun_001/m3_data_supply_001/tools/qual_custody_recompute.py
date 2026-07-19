@@ -101,13 +101,37 @@ CLASS_PREDICATES: dict[str, tuple[Callable[[dict], bool], str]] = {
 }
 
 
+def _independent_key(rec: dict) -> tuple[str, str]:
+    """§六B 合法独立统计单位：默认 = source_group_id（同一 source_group 的变体/记录只计一个
+    独立单位——同源变体不虚增有效 N）；仅当记录显式标 independent_evidence_unit=true 且带
+    非空 source_evidence_digest（分别有源、可追溯可复算）时，才细化到 evidence 单位。
+    禁止把一个 source_group 随意切成 per-claim/per-variant 伪独立样本（见 _reject_pseudo_independent）。"""
+    if rec.get("independent_evidence_unit") is True:
+        ev = rec.get("source_evidence_digest")
+        if isinstance(ev, str) and ev:
+            return ("EV", ev)
+    return ("SG", str(rec.get("source_group_id")))
+
+
+def _reject_pseudo_independent(records: list[dict]) -> list[str]:
+    """§六B 反伪独立：同一 source_group 内被标 independent_evidence_unit=true 的记录，必须
+    各带互异 source_evidence_digest（分别有源）。重复=把一份证据切成伪独立样本 → 报错 fail-closed。"""
+    by_group: dict[str, list[str]] = {}
+    for r in records:
+        if r.get("independent_evidence_unit") is True:
+            by_group.setdefault(str(r.get("source_group_id")), []).append(
+                str(r.get("source_evidence_digest")))
+    return sorted({f"pseudo_independent_evidence_unit:{sg}"
+                   for sg, evs in by_group.items() if len(evs) != len(set(evs))})
+
+
 def _count_class(records: list[dict], predicate: Callable[[dict], bool],
                  count_mode: str) -> int:
-    """按 count_mode 计该分母的合法独立统计单位（§5.3 + §六A）。"""
+    """按 count_mode 计该分母的合法独立统计单位（§5.3 + §六A + §六B）。"""
     matched = [r for r in records if predicate(r)]
     if count_mode == "source_group":
-        # §5.3：distinct source_group_id（同源变体不虚增独立 N）
-        return len({str(r.get("source_group_id")) for r in matched})
+        # §5.3+§六B：distinct 合法独立单位（默认 source_group；仅显式独立证据单位才细化）
+        return len({_independent_key(r) for r in matched})
     if count_mode == "judgment_record":
         # §六A：独立单位=(被评单元, reviewer_id)；同一 reviewer 对同一单元重复提交只计一次
         return len({(str(r.get("pair_id") or r.get("item_id") or r.get("case_id")),
@@ -184,6 +208,11 @@ def recompute_public_counts(records: list[dict], *, set_id: str,
         val_passed &= grp_val["passed"]
         val_errors.extend(f"{module}/{role}:{e}" for e in grp_val["errors"])
         total_unique += grp_val["unique_case_count"]
+    # §六B 反伪独立：同源被切成伪独立样本 → core 校验失败 fail-closed
+    pseudo_errors = _reject_pseudo_independent(records)
+    if pseudo_errors:
+        val_passed = False
+        val_errors.extend(pseudo_errors)
     validation = {"passed": val_passed, "errors": sorted(set(val_errors)),
                   "unique_case_count": total_unique}
 
