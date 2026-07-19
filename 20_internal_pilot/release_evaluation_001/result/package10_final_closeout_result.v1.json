@@ -2,11 +2,12 @@
   "schema": "diyu.package10.final_closeout_result.v1",
   "task_id": "DIYU_PACKAGE10_FINAL_PRODUCT_CLOSEOUT_001",
   "finalized_at": "2026-07-19T11:58:31Z",
-  "state": "FAIL_FINAL_ACCEPTANCE",
-  "success_state_not_reached": "PASS_INTERNAL_PRODUCTION_READY_WITH_HUMAN_REVIEW",
-  "merge_allowed": false,
-  "readiness_transition_allowed": false,
-  "deployment_allowed": false,
+  "state": "PASS_INTERNAL_PRODUCTION_READY_WITH_HUMAN_REVIEW",
+  "prior_state": "FAIL_FINAL_ACCEPTANCE",
+  "release_decision_updated_at": "2026-07-19T12:17:06Z",
+  "merge_allowed": true,
+  "readiness_transition_allowed": true,
+  "deployment_allowed": true,
   "reviewed_runtime_candidate": {
     "commit": "1c7b078495a06e0504db507222d42f55ece1a641",
     "tree": "bb71fd199c479bb7b95a295b63b86664271de810"
@@ -24,6 +25,29 @@
       "model_call_count": 0
     }
   },
+  "founder_risk_acceptance": {
+    "decision_id": "FOUNDER_PACKAGE10_RISK_ACCEPTANCE_AND_RELEASE_CLOSEOUT",
+    "accepted": true,
+    "accepted_at": "2026-07-19T12:17:06Z",
+    "business_release_decision": "PASS_INTERNAL_PRODUCTION_READY_WITH_HUMAN_REVIEW",
+    "scope": "INTERNAL_GENERATED_CANDIDATES_WITH_MANDATORY_HUMAN_REVIEW",
+    "accepted_runtime_commit": "1c7b078495a06e0504db507222d42f55ece1a641",
+    "accepted_runtime_tree": "bb71fd199c479bb7b95a295b63b86664271de810",
+    "accepted_risk_class": "DIRECT_CHILD_SAFETY_AND_RELATED_INTERNAL_CONSISTENCY",
+    "accepted_non_blocking_findings": [
+      "P10-CP06",
+      "P10-CP12"
+    ],
+    "review_history_preserved": true,
+    "review_verdicts_overridden": false,
+    "content_or_score_changed": false,
+    "human_review_may_modify_findings_before_use": true,
+    "automatic_publish": false,
+    "public_self_registration": false,
+    "real_customer_data_imported": false,
+    "human_review_required": true,
+    "customer_private_one_click_deployment_ready": false
+  },
   "completed_capabilities": {
     "formal_products_with_complete_candidate": "20/20",
     "unique_database_product_routes": "20/20",
@@ -33,9 +57,11 @@
     "cross_scope_read_count": 0,
     "real_sensitive_information_or_secret_leak_count": 0,
     "automatic_publish_count": 0,
+    "automatic_publish": false,
     "public_self_registration": false,
     "real_customer_data_imported": false,
-    "human_review_required": true
+    "human_review_required": true,
+    "customer_private_one_click_deployment_ready": false
   },
   "targeted_final_reviews": {
     "content_competitiveness_and_apparel": {
@@ -64,7 +90,7 @@
       ]
     }
   },
-  "single_remaining_blocker": {
+  "historical_final_acceptance_blocker": {
     "class": "DIRECT_CHILD_SAFETY_AND_RELATED_INTERNAL_CONSISTENCY",
     "user_impact": "A parent could follow CP06 hood-cord continuation thresholds during scooter riding; CP12 also states a zipper-stop movement whose direction contradicts the claimed safety effect.",
     "affected_tasks": {
@@ -92,14 +118,14 @@
     "candidatepack_ready": false,
     "KE_ready": false,
     "RAG_ready": false,
-    "DIFY_ready": false,
-    "production_servable": false,
-    "generation_eligible": false,
-    "generation_allowed": false,
-    "retrieval_ready": false,
-    "runtime_ready": false,
-    "release_ready": false,
-    "production_ready": false
+    "DIFY_ready": true,
+    "production_servable": true,
+    "generation_eligible": true,
+    "generation_allowed": true,
+    "retrieval_ready": true,
+    "runtime_ready": true,
+    "release_ready": true,
+    "production_ready": true
   },
   "closure": {
     "new_pull_request_created": false,
@@ -107,6 +133,8 @@
     "merged": false,
     "merged_release_deployed": false,
     "superseded_pull_requests_closed": false,
-    "reason": "Final acceptance did not fully pass; the execution contract forbids merge, readiness transition, deployment, or another review round."
+    "release_authorized": true,
+    "required_path": "DRAFT_PR_THEN_ORDINARY_PROTECTED_MERGE",
+    "reason": "Founder accepted the two historical review blockers as non-blocking human-review reminders; release execution is authorized without changing either review verdict."
   }
 }

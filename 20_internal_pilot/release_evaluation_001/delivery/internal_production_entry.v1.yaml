@@ -1,0 +1,59 @@
+internal_production_entry:
+  schema: diyu.package10.internal_production_entry.v1
+  task_id: DIYU_PACKAGE10_FINAL_PRODUCT_CLOSEOUT_001
+  state: PASS_INTERNAL_PRODUCTION_READY_WITH_HUMAN_REVIEW
+  scope: INTERNAL_GENERATED_CANDIDATES_WITH_MANDATORY_HUMAN_REVIEW
+  result_path: 20_internal_pilot/release_evaluation_001/result/package10_final_closeout_result.v1.json
+  reviewed_runtime_candidate:
+    commit: 1c7b078495a06e0504db507222d42f55ece1a641
+    tree: bb71fd199c479bb7b95a295b63b86664271de810
+  reviews:
+    content:
+      path: 20_internal_pilot/release_evaluation_001/review/content_competitiveness_apparel_review.v1.json
+      sha256: 14ca1faf346f29bf6390e032f821b16f598d27aeb4aa0fa8f50c9ef9fb10fc14
+    novice_operations:
+      path: 20_internal_pilot/release_evaluation_001/review/novice_isolation_operations_review.v1.json
+      sha256: a07efdc2f41bf49a5841d3aa59e376e20a7e558c2489774cf72c09a090e0202f
+  release:
+    status: AUTHORIZED_ORDINARY_PROTECTED_MERGE
+    merge_method: MERGE_COMMIT
+    administrator_bypass: false
+    force_push: false
+    rebase: false
+    squash: false
+  entrypoints:
+    user_web: https://dify.diyuai.cc/apps
+    dify_admin: https://dify.diyuai.cc/
+    account_delivery: credentials_only_via_secure_channel
+  acceptance:
+    complete_content_products: 20/20
+    deliverable_format_count: 7
+    novice_journey: PASS
+    browser_session_isolation: PASS
+    market_comparable_or_stronger: 16/20
+  review_history:
+    content_review_verdict: FAIL
+    content_review_average: 85.75
+    novice_operations_review_verdict: FAIL
+    novice_operations_review_average: 86.0
+    founder_accepted_non_blocking_findings:
+    - P10-CP06
+    - P10-CP12
+  controls:
+    automatic_publish: false
+    public_self_registration: false
+    real_customer_data_imported: false
+    human_review_required: true
+  model_budget:
+    model: langgenius/deepseek/deepseek / deepseek-v4-flash
+    package10_calls: 96
+    package10_cost_cny: 0.383946
+    cumulative_call_upper_bound: 689
+    cumulative_call_limit: 1000
+  rollback:
+    runbook: 19_cloud_cutover/ecs_migration_001/RUNBOOK.md
+    prior_release_preserved_in_server_external_backup: true
+  historical_invariants:
+    golden_baseline_300_changed: false
+    frozen_reference_inventory_120_changed: false
+    historical_component_inventory_86_changed: false
