@@ -271,7 +271,8 @@ SUCCESSOR_NORMAL_RUN_LINES = (
         for _, package_root, checker, _ in CHECKED_DOWNSTREAM_PACKAGES
     ),
     'run_downstream_package_checker "17_dify_runtime/dify_end_to_end_001" '
-    '"17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py" "true"',
+    '"17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py" "true" '
+    '"a588ca5c44d8243927f1d0b2d2349c29f14f8a4a"',
 )
 SUCCESSOR_OPTIMIZED_RUN_LINES = (
     "set -euo pipefail",
@@ -321,7 +322,8 @@ SUCCESSOR_OPTIMIZED_RUN_LINES = (
     ),
     'run_downstream_package_checker_optimized '
     '"17_dify_runtime/dify_end_to_end_001" '
-    '"17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py" "true"',
+    '"17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py" "true" '
+    '"a588ca5c44d8243927f1d0b2d2349c29f14f8a4a"',
 )
 
 BASE_FOUNDATION_FILES = frozenset(
