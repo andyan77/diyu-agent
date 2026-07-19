@@ -1,0 +1,43 @@
+{
+  "schema": "diyu.q20.cap_recovery.v1",
+  "task_id": "DIYU_20_CONTENT_PRODUCTS_REMOTE_QUALITY_QUALIFICATION_001",
+  "recorded_at": "2026-07-19T02:42:59Z",
+  "authorization": {
+    "configured_limit_before": 209,
+    "configured_limit_after": 600,
+    "q20_maximum_new_model_calls_unchanged": 300,
+    "q20_maximum_new_cost_cny_unchanged": 5
+  },
+  "configuration_change": {
+    "runtime_environment_name": "DIYU_PKG7_MAX_MODEL_CALLS",
+    "state_file": "/opt/diyu/package7/state/bridge.env",
+    "runtime_container": "diyu-package7-bridge",
+    "only_semantic_difference": "CUMULATIVE_MODEL_CALL_LIMIT_209_TO_600",
+    "product_code_or_database_change": false
+  },
+  "post_change_reverification": {
+    "captured_at": "2026-07-19T02:39:28Z",
+    "ledger_row_count": 204,
+    "cumulative_model_call_upper_bound": 208,
+    "dify_successful_llm_nodes": 193,
+    "dify_historical_tokens": 754753,
+    "dify_historical_cost_cny": 1.125305,
+    "runtime_files_match": "24_OF_24",
+    "canonical_runtime_sha256_preserved": "ec3e880784ab1c1ce3ed4a1689ba072b077074be8dfd2189a4c8d19008cfd949",
+    "model_configuration_sha256_preserved": "c39607da450791e626151b5c18f6735b6c9bbfe3515cbe4fe914832c8f929a3f",
+    "model_provider": "langgenius/deepseek/deepseek",
+    "model_name": "deepseek-v4-flash",
+    "https_health_status": 200,
+    "login_options_logout_preflight": "PASS",
+    "model_calls_started": 0,
+    "content_account_count": 11
+  },
+  "security": {
+    "credentials_recorded": false,
+    "cookies_recorded": false,
+    "direct_dify_api_used": false,
+    "direct_model_api_used": false,
+    "automatic_publish": false,
+    "old_package10_results_consumed": false
+  }
+}

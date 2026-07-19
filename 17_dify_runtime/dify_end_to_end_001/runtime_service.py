@@ -19,10 +19,12 @@ import yaml  # type: ignore[import-untyped]
 
 from author_contract import (
     AUTHOR_CONTRACT_VERSION,
+    CANDIDATE_MODELS,
     CandidateBase,
     ChatEnvelope,
     ContentFormat,
     contract_descriptor,
+    deliverable_field_names,
     parse_candidate_envelope,
 )
 from contracts import (
@@ -32,7 +34,9 @@ from contracts import (
     ModelEnvelope,
     ProductionPackage,
     escape_json_string_control_characters,
+    escape_unambiguous_json_string_quotes,
     normalize_model_json_text,
+    rebuild_fragmented_candidate_envelope,
 )
 from persistence import (
     RuntimeRepository,
@@ -1479,18 +1483,38 @@ class Package7Runtime:
             try:
                 parsed = json.loads(normalized)
             except json.JSONDecodeError:
-                escaped, replacement_count = escape_json_string_control_characters(
+                repair_markers: list[str] = []
+                repaired, control_count = escape_json_string_control_characters(
                     normalized
                 )
-                if replacement_count == 0:
-                    raise
-                parsed = json.loads(escaped)
-                normalized = escaped
-                normalization = (
-                    "ESCAPED_RAW_JSON_STRING_CONTROLS"
-                    if normalization == "NONE"
-                    else f"{normalization}+ESCAPED_RAW_JSON_STRING_CONTROLS"
+                repaired, quote_count = escape_unambiguous_json_string_quotes(
+                    repaired
                 )
+                if control_count:
+                    repair_markers.append("ESCAPED_RAW_JSON_STRING_CONTROLS")
+                if quote_count:
+                    repair_markers.append("ESCAPED_UNAMBIGUOUS_JSON_STRING_QUOTES")
+                try:
+                    parsed = json.loads(repaired)
+                except json.JSONDecodeError:
+                    rebuilt, candidate_count = rebuild_fragmented_candidate_envelope(
+                        repaired
+                    )
+                    if candidate_count == 0:
+                        raise
+                    parsed = json.loads(rebuilt)
+                    repaired = rebuilt
+                    repair_markers.append(
+                        "REBUILT_FRAGMENTED_CANDIDATE_ENVELOPE:"
+                        f"{candidate_count}"
+                    )
+                normalized = repaired
+                for marker in repair_markers:
+                    normalization = (
+                        marker
+                        if normalization == "NONE"
+                        else f"{normalization}+{marker}"
+                    )
         except (ValueError, UnicodeDecodeError, json.JSONDecodeError) as exc:
             self.repository.preserve_first_output(
                 run.run_id,
@@ -1557,11 +1581,25 @@ class Package7Runtime:
                 },
             )
             return self._failure_result("SYSTEM_OR_PROVIDER_ERROR", run.run_id)
-        transport_markers = self._normalize_server_owned_author_echo(
+        transport_markers: list[str] = []
+        candidate_fields = CANDIDATE_MODELS[
+            cast(ContentFormat, expected_format)
+        ].model_fields
+        if isinstance(parsed, dict) and "candidates" not in parsed:
+            parsed_fields = set(parsed)
+            required_fields = {
+                field
+                for field, descriptor in candidate_fields.items()
+                if descriptor.is_required()
+            }
+            if required_fields <= parsed_fields <= set(candidate_fields):
+                parsed = {"candidates": [parsed]}
+                transport_markers.append("WRAPPED_BARE_CANDIDATE_OBJECT")
+        transport_markers.extend(self._normalize_server_owned_author_echo(
             parsed,
             expected_format=expected_format,
             task_brief=task_brief,
-        )
+        ))
         for marker in transport_markers:
             normalization = (
                 marker if normalization == "NONE" else f"{normalization}+{marker}"
@@ -1608,6 +1646,51 @@ class Package7Runtime:
         ):
             return []
         markers: list[str] = []
+        candidates = cast(list[object], parsed["candidates"])
+        removed_defaults: list[str] = []
+        for field, empty_value in (("cta", ""), ("spoken_lines", [])):
+            if parsed.get(field) == empty_value and all(
+                isinstance(candidate, dict) and field not in candidate
+                for candidate in candidates
+            ):
+                del parsed[field]
+                removed_defaults.append(field)
+        if removed_defaults:
+            markers.append(
+                "REMOVED_EMPTY_ROOT_CANDIDATE_DEFAULTS:"
+                + ",".join(removed_defaults)
+            )
+        replaced_null_defaults = 0
+        for candidate in candidates:
+            if not isinstance(candidate, dict):
+                continue
+            for field in ("cta", "spoken_lines"):
+                if field in candidate and candidate[field] is None:
+                    candidate[field] = "" if field == "cta" else []
+                    replaced_null_defaults += 1
+        if replaced_null_defaults:
+            markers.append(
+                "REPLACED_NULL_CANDIDATE_DEFAULTS:"
+                f"{replaced_null_defaults}"
+            )
+        deliverable_fields = deliverable_field_names(
+            cast(ContentFormat, expected_format)
+        )
+        moved_fields = 0
+        for candidate in candidates:
+            deliverable = (
+                candidate.get("deliverable") if isinstance(candidate, dict) else None
+            )
+            if not isinstance(candidate, dict) or not isinstance(deliverable, dict):
+                continue
+            for field in deliverable_fields:
+                if field in candidate and field not in deliverable:
+                    deliverable[field] = candidate.pop(field)
+                    moved_fields += 1
+        if moved_fields:
+            markers.append(
+                f"MOVED_CANDIDATE_ROOT_DELIVERABLE_FIELDS:{moved_fields}"
+            )
         if parsed.get("contract_version") == AUTHOR_CONTRACT_VERSION:
             del parsed["contract_version"]
             markers.append("REMOVED_EXACT_SERVER_CONTRACT_VERSION_ECHO")
@@ -1615,7 +1698,7 @@ class Package7Runtime:
         if expected_format != "短视频" or not isinstance(expected_duration, str):
             return markers
         removed = 0
-        for candidate in parsed["candidates"]:
+        for candidate in candidates:
             deliverable = (
                 candidate.get("deliverable") if isinstance(candidate, dict) else None
             )

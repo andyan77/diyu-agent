@@ -26,23 +26,16 @@ EVIDENCE_ROOT = PACKAGE_ROOT / "evidence"
 DEFAULT_TASKS = PACKAGE_ROOT / "frozen_tasks.v1.jsonl"
 DEFAULT_MANIFEST = PACKAGE_ROOT / "freeze_manifest.v1.json"
 DEFAULT_SNAPSHOT = EVIDENCE_ROOT / "run_boundary_snapshot.v1.json"
-DEFAULT_EVIDENCE_DIR = EVIDENCE_ROOT / "official_remote_run"
 MAX_RESPONSE_BYTES = 4 * 1024 * 1024
-MAX_CALLS = 300
+MAX_CALLS = 600
 MAX_COST_CNY = Decimal("5")
 TASKS_PER_PROCESS = 1
 BROWSER_GROUPS = frozenset(f"BROWSER-{index:02d}" for index in range(1, 6))
 PORTAL_SUFFIXES = frozenset({"/login", "/logout", "/v1/portal/options", "/v1/portal/chat"})
 PORTAL_OPERATIONS = frozenset({"找点灵感", "直接做内容", "把已有内容改好", "选择候选", "审核", "导出"})
-PORTAL_KEYS = frozenset(
-    {
-        "account_display_name", "operation", "topic_label", "primary_audience", "message", "target_platform",
-        "candidate_number", "content_goal", "key_takeaway", "speaker_role_name", "storyline_name", "column_name",
-        "continue_previous", "localization_allowed", "duration_label", "expression_feeling", "content_format",
-        "organization_level", "content_identity", "long_term_storyline", "content_direction", "business_goal",
-        "expression_method", "existing_material_kinds",
-    }
-)
+PORTAL_KEYS = frozenset({
+    "account_display_name", "operation", "topic_label", "primary_audience", "message", "target_platform", "candidate_number", "content_goal", "key_takeaway", "speaker_role_name", "storyline_name", "column_name", "continue_previous",
+    "localization_allowed", "duration_label", "expression_feeling", "content_format", "organization_level", "content_identity", "long_term_storyline", "content_direction", "business_goal", "expression_method", "existing_material_kinds",})
 RunnerError = RuntimeError
 class BudgetBoundaryError(RunnerError):
     pass
@@ -86,8 +79,7 @@ class PortalStep:
     request: dict[str, object]
     model_call_upper_bound: int
 class NoRedirectHandler(urllib.request.HTTPRedirectHandler):
-    def redirect_request(self, *args: Any, **kwargs: Any) -> None:
-        return None
+    def redirect_request(self, *args: Any, **kwargs: Any) -> None: return None
 class PortalPolicy:
     def __init__(self, value: str) -> None:
         parsed = urllib.parse.urlsplit(value.strip())
@@ -132,8 +124,6 @@ class PortalClient:
         if result.status != 200:
             raise RunnerError(f"portal options failed with HTTP {result.status}")
         return _validate_options(result.payload)
-    def chat(self, payload: dict[str, object]) -> HttpResult:
-        return self._request("/v1/portal/chat", "POST", payload, portal_header=True)
     def logout(self) -> None:
         result = self._request("/logout", "POST", {}, portal_header=True)
         if result.status != 200 or result.payload.get("logged_out") is not True:
@@ -178,12 +168,9 @@ class PortalClient:
             status, cast(dict[str, object], value), started_at, _utc_now(),
             round((time.monotonic() - started) * 1000),
         )
-def _utc_now() -> str:
-    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
-def _sha256(value: bytes) -> str:
-    return hashlib.sha256(value).hexdigest()
-def _canonical(value: object) -> bytes:
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+def _utc_now() -> str: return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+def _sha256(value: bytes) -> str: return hashlib.sha256(value).hexdigest()
+def _canonical(value: object) -> bytes: return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
 def _json_object(path: Path) -> tuple[dict[str, object], str]:
     raw = path.read_bytes()
     try:
@@ -575,9 +562,15 @@ def _send_step(
     request_digest = _sha256(_canonical(step.request))
     pending = _pending_event(events)
     replay = pending is not None
+    if pending is not None and not _replay_matches(pending, task.task_id, step.name, request_digest, browser_digest):
+        raise RunnerError("pending request cannot be replayed safely")
     if pending is not None:
-        if not _replay_matches(pending, task.task_id, step.name, request_digest, browser_digest):
-            raise RunnerError("pending request cannot be replayed safely")
+        if (
+            snapshot.task_calls_used + snapshot.planned_calls + step.model_call_upper_bound > MAX_CALLS
+            or snapshot.cumulative_calls + snapshot.planned_calls + step.model_call_upper_bound > snapshot.cumulative_limit
+            or snapshot.task_cost_used + snapshot.planned_cost + snapshot.cost_planning_rate * step.model_call_upper_bound > MAX_COST_CNY
+        ):
+            raise BudgetBoundaryError("the exact technical replay plus frozen remainder can exceed authorization")
     next_calls = calls_used + step.model_call_upper_bound
     incremental = next_calls - snapshot.task_calls_used
     if next_calls > MAX_CALLS or snapshot.cumulative_calls + incremental > snapshot.cumulative_limit:
@@ -599,7 +592,7 @@ def _send_step(
         },
     )
     try:
-        result = client.chat(step.request)
+        result = client._request("/v1/portal/chat", "POST", step.request, portal_header=True)
     except RunnerError:
         _append_event(
             ledger, events, {"event_type": "PORTAL_TRANSPORT_INCOMPLETE", "task_id": task.task_id,
@@ -628,6 +621,13 @@ def _send_step(
         raise RunnerError(f"portal step {step.name} failed with HTTP {result.status}")
     if result.payload.get("publish_allowed") is not False or not answer.strip():
         raise RunnerError("portal response violated the unpublished user-visible contract")
+    if (
+        (step.name == "FIRST_CANDIDATE_SET" and "【推荐候选】" not in answer and "【候选1】" not in answer) or (step.name == "ONE_LOCAL_REVISION" and "【候选1】" not in answer and "【推荐候选】" not in answer)
+        or (step.name.startswith("SELECT_") and "已选择第" not in answer)
+        or (step.name == "MANUAL_REVIEW_STATUS" and "发布状态：内部测试" not in answer)
+        or (step.name == "INTERNAL_EXPORT" and ("\n正文\n" not in answer or "内部测试稿，不可直接发布" not in answer))
+    ):
+        raise RunnerError(f"portal step {step.name} returned no usable content result")
     return next_calls, client.save_cookie()
 def _run_preflight(args: argparse.Namespace) -> int:
     policy = PortalPolicy(_base_url())
@@ -780,7 +780,7 @@ def _parser() -> argparse.ArgumentParser:
     run = modes.add_parser("run", help="run the exact frozen set through the portal")
     run.add_argument("--official", action="store_true")
     run.add_argument("--boundary-snapshot", type=Path, default=DEFAULT_SNAPSHOT)
-    run.add_argument("--evidence-dir", type=Path, default=DEFAULT_EVIDENCE_DIR)
+    run.add_argument("--evidence-dir", type=Path, default=EVIDENCE_ROOT / "official_remote_run")
     run.add_argument("--cookie-dir", type=Path, required=True)
     return parser
 def main() -> int:

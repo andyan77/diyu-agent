@@ -667,6 +667,69 @@ class Package7RecoveryTests(unittest.TestCase):
             echoed_run.payload["model_wrapper_normalization"],
         )
 
+        root_defaults = self.prepare("短视频")
+        root_default_envelope = candidate_envelope("短视频")
+        for candidate in root_default_envelope["candidates"]:
+            del candidate["spoken_lines"]
+            del candidate["cta"]
+        root_default_envelope["spoken_lines"] = []
+        root_default_envelope["cta"] = ""
+        root_default_result = self.finalize(
+            root_defaults,
+            "短视频",
+            envelope=root_default_envelope,
+        )
+        self.assertEqual(root_default_result["result_class"], "SUCCESS")
+        root_default_run = self.repository.model_run(str(root_defaults["run_id"]))
+        self.assertIn(
+            "REMOVED_EMPTY_ROOT_CANDIDATE_DEFAULTS:cta,spoken_lines",
+            root_default_run.payload["model_wrapper_normalization"],
+        )
+
+        nonempty_root = self.prepare("短视频")
+        nonempty_envelope = candidate_envelope("短视频")
+        nonempty_envelope["cta"] = "不得静默丢弃"
+        nonempty_result = self.finalize(
+            nonempty_root,
+            "短视频",
+            envelope=nonempty_envelope,
+        )
+        self.assertEqual(
+            nonempty_result["result_class"],
+            "MODEL_OUTPUT_CONTRACT_ERROR",
+        )
+
+        null_defaults = self.prepare("图文")
+        null_default_envelope = candidate_envelope("图文")
+        for candidate in null_default_envelope["candidates"]:
+            candidate["spoken_lines"] = None
+            candidate["cta"] = None
+        null_default_result = self.finalize(
+            null_defaults,
+            "图文",
+            envelope=null_default_envelope,
+        )
+        self.assertEqual(null_default_result["result_class"], "SUCCESS")
+        null_default_run = self.repository.model_run(str(null_defaults["run_id"]))
+        self.assertIn(
+            "REPLACED_NULL_CANDIDATE_DEFAULTS:4",
+            null_default_run.payload["model_wrapper_normalization"],
+        )
+
+        invalid_default = self.prepare("图文")
+        invalid_default_envelope = candidate_envelope("图文")
+        for candidate in invalid_default_envelope["candidates"]:
+            candidate["cta"] = {"unexpected": True}
+        invalid_default_result = self.finalize(
+            invalid_default,
+            "图文",
+            envelope=invalid_default_envelope,
+        )
+        self.assertEqual(
+            invalid_default_result["result_class"],
+            "MODEL_OUTPUT_CONTRACT_ERROR",
+        )
+
     def test_creative_claims_enter_human_review_without_evidence_binding(
         self,
     ) -> None:
@@ -765,6 +828,115 @@ class Package7RecoveryTests(unittest.TestCase):
         self.assertIn(
             "ESCAPED_RAW_JSON_STRING_CONTROLS",
             recovered_run.payload["model_wrapper_normalization"],
+        )
+
+        prepared_extra_closer = self.prepare("短视频")
+        valid_raw = json.dumps(candidate_envelope("短视频"), ensure_ascii=False)
+        recovered_extra_closer = self.scoped_finalize(
+            str(prepared_extra_closer["run_id"]),
+            base64.b64encode(f"{valid_raw}]".encode()).decode("ascii"),
+        )
+        self.assertEqual(recovered_extra_closer["result_class"], "SUCCESS")
+        extra_closer_run = self.repository.model_run(
+            str(prepared_extra_closer["run_id"])
+        )
+        self.assertIn(
+            "STRIPPED_TRAILING_REDUNDANT_ARRAY_CLOSER",
+            extra_closer_run.payload["model_wrapper_normalization"],
+        )
+
+        prepared_quotes = self.prepare("短视频")
+        quoted_envelope = candidate_envelope("短视频")
+        quoted_envelope["candidates"][0]["body"] = '记录“前版"返修-验收"节点”。'
+        quoted_raw = json.dumps(quoted_envelope, ensure_ascii=False).replace(
+            '\\"返修-验收\\"',
+            '"返修-验收"',
+        )
+        recovered_quotes = self.scoped_finalize(
+            str(prepared_quotes["run_id"]),
+            base64.b64encode(quoted_raw.encode()).decode("ascii"),
+        )
+        self.assertEqual(recovered_quotes["result_class"], "SUCCESS")
+        quoted_run = self.repository.model_run(str(prepared_quotes["run_id"]))
+        self.assertIn(
+            "ESCAPED_UNAMBIGUOUS_JSON_STRING_QUOTES",
+            quoted_run.payload["model_wrapper_normalization"],
+        )
+
+        fragmented_prepared = self.prepare("短视频")
+        fragmented_candidates = candidate_envelope("短视频")["candidates"]
+        for candidate in fragmented_candidates:
+            candidate["editing_notes"] = candidate["deliverable"].pop(
+                "editing_notes"
+            )
+        candidate_fragments = [
+            json.dumps(candidate, ensure_ascii=False, separators=(",", ":"))
+            for candidate in fragmented_candidates
+        ]
+        fragmented_raw = (
+            '{"candidates":['
+            + candidate_fragments[0]
+            + "}]},"
+            + candidate_fragments[1]
+            + "}]}]}"
+        )
+        fragmented_result = self.scoped_finalize(
+            str(fragmented_prepared["run_id"]),
+            base64.b64encode(fragmented_raw.encode()).decode("ascii"),
+        )
+        self.assertEqual(fragmented_result["result_class"], "SUCCESS")
+        fragmented_run = self.repository.model_run(
+            str(fragmented_prepared["run_id"])
+        )
+        self.assertIn(
+            "REBUILT_FRAGMENTED_CANDIDATE_ENVELOPE:2",
+            fragmented_run.payload["model_wrapper_normalization"],
+        )
+        self.assertIn(
+            "MOVED_CANDIDATE_ROOT_DELIVERABLE_FIELDS:2",
+            fragmented_run.payload["model_wrapper_normalization"],
+        )
+
+        unsafe_fragment_prepared = self.prepare("短视频")
+        unsafe_fragment = fragmented_raw.replace("}]},", "}]},unexpected", 1)
+        unsafe_fragment_result = self.scoped_finalize(
+            str(unsafe_fragment_prepared["run_id"]),
+            base64.b64encode(unsafe_fragment.encode()).decode("ascii"),
+        )
+        self.assertEqual(
+            unsafe_fragment_result["result_class"],
+            "MODEL_OUTPUT_CONTRACT_ERROR",
+        )
+
+        bare_candidate_prepared = self.prepare("图文")
+        bare_candidate_raw = json.dumps(
+            author_candidate("图文", 1),
+            ensure_ascii=False,
+            separators=(",", ":"),
+        )
+        bare_candidate_result = self.scoped_finalize(
+            str(bare_candidate_prepared["run_id"]),
+            base64.b64encode(bare_candidate_raw.encode()).decode("ascii"),
+        )
+        self.assertEqual(bare_candidate_result["result_class"], "SUCCESS")
+        bare_candidate_run = self.repository.model_run(
+            str(bare_candidate_prepared["run_id"])
+        )
+        self.assertIn(
+            "WRAPPED_BARE_CANDIDATE_OBJECT",
+            bare_candidate_run.payload["model_wrapper_normalization"],
+        )
+
+        unknown_bare_prepared = self.prepare("图文")
+        unknown_bare = author_candidate("图文", 1)
+        unknown_bare["unknown_field"] = "不得静默丢弃"
+        unknown_bare_result = self.scoped_finalize(
+            str(unknown_bare_prepared["run_id"]),
+            encoded(unknown_bare),
+        )
+        self.assertEqual(
+            unknown_bare_result["result_class"],
+            "MODEL_OUTPUT_CONTRACT_ERROR",
         )
 
     def test_internal_identifiers_sensitive_data_and_secrets_are_blocked(

@@ -174,6 +174,17 @@ CANDIDATE_MODELS: dict[str, CandidateModel] = {
     "陈列搭配": DisplayCandidate,
 }
 
+DeliverableModel: TypeAlias = type[StrictModel]
+DELIVERABLE_MODELS: dict[str, DeliverableModel] = {
+    "短视频": ShortVideoDeliverable,
+    "图文": ArticleDeliverable,
+    "直播内容包": LiveDeliverable,
+    "私域沟通内容": PrivateCommunicationDeliverable,
+    "门店线下物料": OfflineMaterialDeliverable,
+    "培训与门店话术": TrainingDeliverable,
+    "陈列搭配": DisplayDeliverable,
+}
+
 
 class CandidateEnvelopeShell(StrictModel):
     candidates: list[Any] = Field(min_length=1, max_length=3)
@@ -187,6 +198,12 @@ def candidate_schema(content_format: ContentFormat) -> JsonObject:
     """Return the exact current-format schema supplied to the author."""
 
     return CANDIDATE_MODELS[content_format].model_json_schema()
+
+
+def deliverable_field_names(content_format: ContentFormat) -> frozenset[str]:
+    """Return the exact deliverable fields for one server-selected format."""
+
+    return frozenset(DELIVERABLE_MODELS[content_format].model_fields)
 
 
 def parse_candidate_envelope(

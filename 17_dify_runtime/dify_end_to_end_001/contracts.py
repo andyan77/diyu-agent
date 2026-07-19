@@ -3,11 +3,18 @@
 
 from __future__ import annotations
 
+import json
+import re
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from author_contract import ContentFormat
+
+
+_CANDIDATE_ENVELOPE_PREFIX = re.compile(
+    r'^\{\s*"candidates"\s*:\s*\[\s*'
+)
 
 
 def normalize_model_json_text(raw: str) -> tuple[str, str]:
@@ -27,6 +34,15 @@ def normalize_model_json_text(raw: str) -> tuple[str, str]:
             if normalization == "NONE"
             else f"{normalization}+STRIPPED_JSON_FENCE"
         )
+    if value.startswith("{") and value.endswith("]"):
+        candidate = value[:-1].rstrip()
+        if candidate.endswith("}"):
+            value = candidate
+            normalization = (
+                "STRIPPED_TRAILING_REDUNDANT_ARRAY_CLOSER"
+                if normalization == "NONE"
+                else f"{normalization}+STRIPPED_TRAILING_REDUNDANT_ARRAY_CLOSER"
+            )
     if value.startswith("[") and value.endswith("]"):
         value = '{"candidates":' + value + "}"
         normalization = (
@@ -77,6 +93,95 @@ def escape_json_string_control_characters(value: str) -> tuple[str, int]:
             continue
         output.append(character)
     return "".join(output), replacement_count
+
+
+def escape_unambiguous_json_string_quotes(value: str) -> tuple[str, int]:
+    """Escape in-string quotes bounded by non-JSON, non-whitespace content."""
+
+    output: list[str] = []
+    inside_string = False
+    escaped = False
+    replacement_count = 0
+    structural = frozenset('{}[]:,"')
+    for index, character in enumerate(value):
+        if not inside_string:
+            output.append(character)
+            inside_string = character == '"'
+            continue
+        if escaped:
+            output.append(character)
+            escaped = False
+            continue
+        if character == "\\":
+            output.append(character)
+            escaped = True
+            continue
+        if character != '"':
+            output.append(character)
+            continue
+        previous = value[index - 1] if index else ""
+        following = value[index + 1] if index + 1 < len(value) else ""
+        if (
+            previous
+            and following
+            and not previous.isspace()
+            and not following.isspace()
+            and previous not in structural
+            and following not in structural
+        ):
+            output.append('\\"')
+            replacement_count += 1
+            continue
+        output.append(character)
+        inside_string = False
+    return "".join(output), replacement_count
+
+
+def rebuild_fragmented_candidate_envelope(value: str) -> tuple[str, int]:
+    """Rebuild only complete candidate objects split by redundant root closers."""
+
+    prefix = _CANDIDATE_ENVELOPE_PREFIX.match(value)
+    if prefix is None:
+        return value, 0
+    decoder = json.JSONDecoder()
+    cursor = prefix.end()
+    candidates: list[dict[str, Any]] = []
+    redundant_closer_seen = False
+    while cursor < len(value):
+        if value[cursor] != "{":
+            return value, 0
+        try:
+            candidate, cursor = decoder.raw_decode(value, cursor)
+        except json.JSONDecodeError:
+            return value, 0
+        if not isinstance(candidate, dict):
+            return value, 0
+        candidates.append(candidate)
+        if len(candidates) > 3:
+            return value, 0
+
+        separator_start = cursor
+        while cursor < len(value) and (
+            value[cursor].isspace() or value[cursor] in ",]}"
+        ):
+            cursor += 1
+        separator = value[separator_start:cursor]
+        redundant_closer_seen = redundant_closer_seen or any(
+            character in "]}" for character in separator
+        )
+        if cursor == len(value):
+            break
+        if not separator or value[cursor] != "{":
+            return value, 0
+
+    if not candidates or not redundant_closer_seen:
+        return value, 0
+    rebuilt = json.dumps(
+        {"candidates": candidates},
+        ensure_ascii=False,
+        separators=(",", ":"),
+    )
+    return rebuilt, len(candidates)
 
 
 Operation = Literal[
