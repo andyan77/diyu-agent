@@ -72,6 +72,35 @@ def _recompute(records):
         environmental_flags=ENV_FLAGS, known_r5_recall=1.0)
 
 
+def _mk_judgment(item_id: str, reviewer_id: str, *, decision: str = "APPROVE",
+                 hard_veto: bool = False, submission: str = "s1",
+                 source_group: str | None = None):
+    """review_calibration judgment 记录（role=judgment；含 item_id/reviewer_id）——§六A 计数。"""
+    case_id = f"rc-{item_id}-{reviewer_id}-{submission}"
+    payload = {"module": "review_calibration", "record_role": "judgment",
+               "family_id": "F1_PEOPLE_AND_REAL_SCENE", "case_origin": "NATURAL",
+               "item_id": item_id, "reviewer_id": reviewer_id,
+               "author_identity": "AUTHOR_X", "submission_tag": submission,
+               "reviewer_provenance": {"reviewer_identity": reviewer_id,
+                                       "reviewer_kind": "AI", "model_revision": "m1",
+                                       "prompt_digest": digest_json({"p": reviewer_id})}}
+    return asm.assemble_gold_record(
+        case_id=case_id, source_group_id=source_group or f"sg-{item_id}",
+        source_evidence_digest=digest_json({"item": item_id}),
+        dataset_manifest_digest=DMD,
+        gold_fields={"decision": decision, "hard_veto": hard_veto},
+        payload_fields=payload,
+        reviews_meta=[
+            {"review_id": f"A-{case_id}", "reviewer_identity": "SEAT_A::codex-gpt",
+             "reviewer_kind": "AI", "model_revision": "gpt-5.6-sol",
+             "prompt_digest": digest_json({"p": "A"}),
+             "evidence_digest": digest_json({"e": case_id, "s": "A"})},
+            {"review_id": f"B-{case_id}", "reviewer_identity": "SEAT_B::opus-4-8",
+             "reviewer_kind": "AI", "model_revision": "claude-opus-4-8",
+             "prompt_digest": digest_json({"p": "B"}),
+             "evidence_digest": digest_json({"e": case_id, "s": "B"})}])
+
+
 class QualCustodyRecompute(unittest.TestCase):
 
     def test_counts_recomputed_and_core_valid(self) -> None:
@@ -154,6 +183,38 @@ class QualCustodyRecompute(unittest.TestCase):
                          pc["counts"]["risk_classification_high_risk_cases"])
         # 小 fixture 远低于下限 → FAIL（就绪门不因 custody 来源而放松）
         self.assertEqual(readiness["verdict"], "FAIL")
+
+    # ---- §六A：review judgment 计数（40 item / 80 judgment 记录） ----
+
+    def test_review_counts_items_and_judgments_40x2_is_80(self) -> None:
+        records = [_mk_judgment(f"I{i:02d}", rv)
+                   for i in range(40) for rv in ("RV1", "RV2")]
+        pc = _recompute(records)
+        self.assertTrue(pc["custody_binding"]["core_validation_passed"],
+                        pc["custody_binding"]["core_validation_errors"][:5])
+        self.assertEqual(pc["counts"]["review_double_reviewed_items"], 40,
+                         "40 个 distinct item_id")
+        self.assertEqual(pc["counts"]["review_judgment_records"], 80,
+                         "40 item × 2 reviewer = 80 judgment 记录（禁按 item_id 去重成 40）")
+
+    def test_review_duplicate_reviewer_submission_not_inflated(self) -> None:
+        # §六A：同一 (item, reviewer) 重复提交（不同 case_id/payload）→ judgment 记录数不虚增
+        records = [_mk_judgment(f"I{i:02d}", rv)
+                   for i in range(40) for rv in ("RV1", "RV2")]
+        records.append(_mk_judgment("I00", "RV1", submission="s2"))
+        pc = _recompute(records)
+        self.assertEqual(pc["custody_binding"]["record_count"], 81)
+        self.assertEqual(pc["counts"]["review_judgment_records"], 80,
+                         "同一 reviewer 对同一 item 重复提交仍计 80（非 81）")
+        self.assertEqual(pc["counts"]["review_double_reviewed_items"], 40)
+
+    def test_review_single_reviewer_items_are_not_double_reviewed(self) -> None:
+        # 每 item 仅 1 reviewer → judgment=40 < 80 且 double_reviewed_items=0（防"单评冒充双审"假绿）
+        records = [_mk_judgment(f"I{i:02d}", "RV1") for i in range(40)]
+        pc = _recompute(records)
+        self.assertEqual(pc["counts"]["review_judgment_records"], 40)
+        self.assertEqual(pc["counts"]["review_double_reviewed_items"], 0,
+                         "无 item 具 >=2 reviewer → 双审 item=0（非 40）")
 
 
 if __name__ == "__main__":

@@ -38,67 +38,87 @@ def _is(rec: dict, module: str, role: str | None = None) -> bool:
     return role is None or rec.get("record_role") == role
 
 
-# 每个 COUNT_KEY 的 (predicate, dedup_by_source_group)。
-# dedup=True（§5.3 cluster-aware）：同一 source_group 在该分母只计一个独立单位；
-# dedup=False：pair/item/judgment 直接计原始记录（其独立性由 pair_id/item_id 保证）。
-CLASS_PREDICATES: dict[str, tuple[Callable[[dict], bool], bool]] = {
+# 每个 COUNT_KEY 的 (predicate, count_mode)。count_mode 显式声明该分母的合法独立统计单位，
+# 取代原先会误算的隐式 pair_id/item_id 启发式（§5.3 + §六A）：
+#   "source_group"    —— distinct source_group_id：同一 source_group 只计一个独立单位
+#                        （cluster-aware，同源变体不虚增有效 N）。用于全部「cases」类分母。
+#   "distinct_unit"      —— distinct 被评单元（pair_id→item_id→case_id）：如 formulaic 双审 pair 数。
+#   "double_reviewed_item" —— distinct item_id 且该 item 具 >=2 互异 reviewer_id（真正被双审的条目，
+#                        与 calibration.py double_reviewed_item_count 语义一致；单评 item 不计入）。
+#   "judgment_record"    —— distinct (被评单元, reviewer_id) 判断记录：如 review judgment 记录数
+#                        （40 item × 2 reviewer = 80；同一 reviewer 对同一 item 重复提交不虚增）。
+# 注（§六A 修复）：review 记录角色在 m0 仅有 "judgment"（min 80），无 "review_item"。
+#   review_double_reviewed_items = role=judgment 中具 >=2 reviewer 的 distinct item_id（=40）；
+#   review_judgment_records      = role=judgment 的 distinct (item_id,reviewer_id)（=80）。
+CLASS_PREDICATES: dict[str, tuple[Callable[[dict], bool], str]] = {
     "reference_extraction_positive_cases":
-        (lambda r: _is(r, "reference_extraction") and r.get("gold_present") is True, True),
+        (lambda r: _is(r, "reference_extraction") and r.get("gold_present") is True, "source_group"),
     "reference_extraction_negative_controls":
-        (lambda r: _is(r, "reference_extraction") and r.get("gold_present") is False, True),
+        (lambda r: _is(r, "reference_extraction") and r.get("gold_present") is False, "source_group"),
     "claim_atomization_positive_cases":
-        (lambda r: _is(r, "claim_atomization") and r.get("gold_present") is True, True),
+        (lambda r: _is(r, "claim_atomization") and r.get("gold_present") is True, "source_group"),
     "claim_atomization_negative_controls":
-        (lambda r: _is(r, "claim_atomization") and r.get("gold_present") is False, True),
+        (lambda r: _is(r, "claim_atomization") and r.get("gold_present") is False, "source_group"),
     "risk_classification_high_risk_cases":
-        (lambda r: _is(r, "risk_classification") and r.get("gold_risk") in HIGH, True),
+        (lambda r: _is(r, "risk_classification") and r.get("gold_risk") in HIGH, "source_group"),
     "risk_classification_legal_controls":
         (lambda r: _is(r, "risk_classification") and r.get("case_origin") == "NATURAL"
-         and r.get("gold_risk") in LEGAL_LOW, True),
+         and r.get("gold_risk") in LEGAL_LOW, "source_group"),
     "high_risk_contradicted_cases":
         (lambda r: _is(r, "entailment") and r.get("gold_label") == "CONTRADICTED"
-         and r.get("gold_risk") in HIGH, True),
+         and r.get("gold_risk") in HIGH, "source_group"),
     "high_risk_unknown_cases":
         (lambda r: _is(r, "entailment") and r.get("gold_label") == "UNKNOWN"
-         and r.get("gold_risk") in HIGH, True),
+         and r.get("gold_risk") in HIGH, "source_group"),
     "natural_legal_supported_cases":
         (lambda r: _is(r, "entailment") and r.get("gold_label") == "SUPPORTED"
-         and r.get("case_origin") == "NATURAL", True),
+         and r.get("case_origin") == "NATURAL", "source_group"),
     "fact_chain_high_risk_unsafe_cases":
         (lambda r: _is(r, "fact_chain") and r.get("gold_safe_to_clear") is False
-         and r.get("gold_risk") in HIGH, True),
+         and r.get("gold_risk") in HIGH, "source_group"),
     "fact_chain_natural_legal_cases":
         (lambda r: _is(r, "fact_chain") and r.get("case_origin") == "NATURAL"
-         and r.get("gold_safe_to_clear") is True, True),
+         and r.get("gold_safe_to_clear") is True, "source_group"),
     "formulaic_double_reviewed_pairs_total":
-        (lambda r: _is(r, "formulaic", "judgment"), False),
+        (lambda r: _is(r, "formulaic", "judgment"), "distinct_unit"),
     "formulaic_positive_pairs_minimum":
-        (lambda r: _is(r, "formulaic", "adjudication") and r.get("final_verdict") == "FORMULAIC", False),
+        (lambda r: _is(r, "formulaic", "adjudication") and r.get("final_verdict") == "FORMULAIC", "distinct_unit"),
     "formulaic_negative_pairs_minimum":
-        (lambda r: _is(r, "formulaic", "adjudication") and r.get("final_verdict") == "NOT_FORMULAIC", False),
+        (lambda r: _is(r, "formulaic", "adjudication") and r.get("final_verdict") == "NOT_FORMULAIC", "distinct_unit"),
     "formulaic_necessary_grammar_pairs_minimum":
-        (lambda r: _is(r, "formulaic", "adjudication") and r.get("final_verdict") == "NECESSARY_GRAMMAR", False),
+        (lambda r: _is(r, "formulaic", "adjudication") and r.get("final_verdict") == "NECESSARY_GRAMMAR", "distinct_unit"),
     "deterministic_disclosure_cases_total":
-        (lambda r: _is(r, "disclosure"), True),
+        (lambda r: _is(r, "disclosure"), "source_group"),
     "omission_misleading_high_risk_cases":
         (lambda r: _is(r, "omission") and r.get("gold_misleading") is True
-         and r.get("gold_risk") in HIGH, True),
+         and r.get("gold_risk") in HIGH, "source_group"),
     "omission_nonmisleading_controls":
-        (lambda r: _is(r, "omission") and r.get("gold_misleading") is False, True),
+        (lambda r: _is(r, "omission") and r.get("gold_misleading") is False, "source_group"),
     "review_double_reviewed_items":
-        (lambda r: _is(r, "review_calibration", "review_item"), False),
+        (lambda r: _is(r, "review_calibration", "judgment"), "double_reviewed_item"),
     "review_judgment_records":
-        (lambda r: _is(r, "review_calibration", "judgment"), False),
+        (lambda r: _is(r, "review_calibration", "judgment"), "judgment_record"),
 }
 
 
 def _count_class(records: list[dict], predicate: Callable[[dict], bool],
-                 dedup_by_source_group: bool) -> int:
-    """§5.3：dedup=True → 该分母内 distinct source_group_id 计数（同源变体不虚增独立 N）。"""
+                 count_mode: str) -> int:
+    """按 count_mode 计该分母的合法独立统计单位（§5.3 + §六A）。"""
     matched = [r for r in records if predicate(r)]
-    if dedup_by_source_group:
+    if count_mode == "source_group":
+        # §5.3：distinct source_group_id（同源变体不虚增独立 N）
         return len({str(r.get("source_group_id")) for r in matched})
-    # pair/item：按 pair_id/item_id（缺则 case_id）去重，防同一 pair 重复记录虚增
+    if count_mode == "judgment_record":
+        # §六A：独立单位=(被评单元, reviewer_id)；同一 reviewer 对同一单元重复提交只计一次
+        return len({(str(r.get("pair_id") or r.get("item_id") or r.get("case_id")),
+                     str(r.get("reviewer_id"))) for r in matched})
+    if count_mode == "double_reviewed_item":
+        # §六A：真正被双审的 item = 具 >=2 互异 reviewer_id 的 distinct item_id（单评 item 不计）
+        by_item: dict[str, set] = {}
+        for r in matched:
+            by_item.setdefault(str(r.get("item_id")), set()).add(str(r.get("reviewer_id")))
+        return sum(1 for reviewers in by_item.values() if len(reviewers) >= 2)
+    # "distinct_unit"：distinct 被评单元（pair_id→item_id→case_id）——item/pair 维度，不含 reviewer
     keyfield = "pair_id" if any("pair_id" in r for r in matched) else "item_id"
     if any(keyfield in r for r in matched):
         return len({str(r.get(keyfield)) for r in matched})
@@ -166,8 +186,8 @@ def recompute_public_counts(records: list[dict], *, set_id: str,
                   "unique_case_count": total_unique}
 
     counts = {}
-    for key, (predicate, dedup) in CLASS_PREDICATES.items():
-        counts[key] = _count_class(records, predicate, dedup)
+    for key, (predicate, count_mode) in CLASS_PREDICATES.items():
+        counts[key] = _count_class(records, predicate, count_mode)
 
     obligation_types = sorted({r.get("obligation_type") for r in records
                                if r.get("module") == "disclosure"
