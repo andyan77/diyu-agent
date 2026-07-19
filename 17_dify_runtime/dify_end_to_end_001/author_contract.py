@@ -32,9 +32,31 @@ class StrictModel(BaseModel):
 
 class VideoShot(StrictModel):
     visual: str = Field(min_length=1, max_length=800)
+    action: str = Field(min_length=1, max_length=500)
     camera: str = Field(min_length=1, max_length=300)
     audio: str = Field(min_length=1, max_length=800)
-    subtitle: str = Field(default="", max_length=500)
+    subtitle: str = Field(min_length=1, max_length=500)
+    edit_note: str = Field(min_length=1, max_length=500)
+
+    @field_validator("visual", "action", "camera", "subtitle", "edit_note")
+    @classmethod
+    def validate_required_text(cls, value: str) -> str:
+        normalized = value.strip()
+        if not normalized:
+            raise ValueError("video shot fields must not be blank")
+        return normalized
+
+    @field_validator("audio")
+    @classmethod
+    def validate_audio_direction(cls, value: str) -> str:
+        normalized = value.strip()
+        if not normalized or not any(
+            label in normalized for label in ("台词", "旁白", "纯画面", "环境声")
+        ):
+            raise ValueError(
+                "video shot audio must identify dialogue, narration, or ambient-only sound"
+            )
+        return normalized
 
 
 class ShortVideoDeliverable(StrictModel):
@@ -174,6 +196,17 @@ CANDIDATE_MODELS: dict[str, CandidateModel] = {
     "陈列搭配": DisplayCandidate,
 }
 
+DeliverableModel: TypeAlias = type[StrictModel]
+DELIVERABLE_MODELS: dict[str, DeliverableModel] = {
+    "短视频": ShortVideoDeliverable,
+    "图文": ArticleDeliverable,
+    "直播内容包": LiveDeliverable,
+    "私域沟通内容": PrivateCommunicationDeliverable,
+    "门店线下物料": OfflineMaterialDeliverable,
+    "培训与门店话术": TrainingDeliverable,
+    "陈列搭配": DisplayDeliverable,
+}
+
 
 class CandidateEnvelopeShell(StrictModel):
     candidates: list[Any] = Field(min_length=1, max_length=3)
@@ -187,6 +220,12 @@ def candidate_schema(content_format: ContentFormat) -> JsonObject:
     """Return the exact current-format schema supplied to the author."""
 
     return CANDIDATE_MODELS[content_format].model_json_schema()
+
+
+def deliverable_field_names(content_format: ContentFormat) -> frozenset[str]:
+    """Return the exact deliverable fields for one server-selected format."""
+
+    return frozenset(DELIVERABLE_MODELS[content_format].model_fields)
 
 
 def parse_candidate_envelope(

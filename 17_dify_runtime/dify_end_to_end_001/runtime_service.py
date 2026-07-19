@@ -19,10 +19,12 @@ import yaml  # type: ignore[import-untyped]
 
 from author_contract import (
     AUTHOR_CONTRACT_VERSION,
+    CANDIDATE_MODELS,
     CandidateBase,
     ChatEnvelope,
     ContentFormat,
     contract_descriptor,
+    deliverable_field_names,
     parse_candidate_envelope,
 )
 from contracts import (
@@ -32,7 +34,9 @@ from contracts import (
     ModelEnvelope,
     ProductionPackage,
     escape_json_string_control_characters,
+    escape_unambiguous_json_string_quotes,
     normalize_model_json_text,
+    rebuild_fragmented_candidate_envelope,
 )
 from persistence import (
     RuntimeRepository,
@@ -1137,6 +1141,8 @@ class Package7Runtime:
         column: JsonObject,
     ) -> JsonObject:
         task_brief = {
+            "confirmed_user_request": request.message,
+            "public_topic": str(request.topic_label),
             "content_goal": request.content_goal or request.message,
             "key_takeaway": request.key_takeaway or request.message,
             "speaker_role": role_card["display_name"],
@@ -1233,8 +1239,21 @@ class Package7Runtime:
                 {
                     "system": (
                         "你是受控内容作者，只负责把已给任务和资料写成内容。返回严格JSON，不要Markdown。"
-                        "一次写1至3份候选；有多份时，每份在点子、切入、叙事视角或呈现方式上真正不同，"
-                        "换标题或同义改写不算不同。"
+                        "task_brief是用户已确认的任务：confirmed_user_request、public_topic、品牌层级、"
+                        "账号身份、受众、平台、时长、成品形式和用户要求的场景都必须原样遵守，"
+                        "不得把事件、人物、商品或任务对象换成另一件事。童装或儿童任务只能使用儿童、"
+                        "家长与童装语境，不得漂移到成人身材、面试或成人女装。"
+                        "用户明确要求标注‘演绎’时，必须在正文、分镜字幕或其他成品可见位置标注；"
+                        "用户未要求时不要自行添加演绎声明或免责声明。"
+                        "一次写1至3份候选；根据题材自然采用纪实、故事、问答、对比、观察或演示，"
+                        "不要让所有内容固定套用同一种起承转合。有多份时，每份必须在点子、人物视角、"
+                        "情绪入口、叙事结构或画面组织上真正不同，换标题或同义改写不算不同。"
+                        "同一成品的正文、台词、分镜、字幕、话术、结尾和发布辅助内容必须对人物、"
+                        "事件结果、核心选择和行动建议保持一致。"
+                        "短视频每个镜头都要填写具体画面、人物动作、拍摄方式、字幕和剪辑提示；"
+                        "audio必须明确写‘台词：…’或‘旁白：…’。纯质感或环境镜头可以写‘纯画面/环境声’，"
+                        "但subtitle仍需写可见字幕或‘无字幕’。叙事、岗位、创始人、企业故事和专业讲解视频"
+                        "默认写完整台词或旁白。"
                         "只填写当前成品合同列出的内容字段。不要填写企业、账号、组织、平台、时长、内部编号、引用路径、"
                         "资料账本、组件编号，也不要输出其他六种成品的空分支。"
                         "标题、正文、口播、分镜、商品属性或功效、价格、库存、尺寸、授权表述、企业承诺、"
@@ -1277,6 +1296,8 @@ class Package7Runtime:
                         for key, value in task_brief.items()
                         if key
                         in {
+                            "confirmed_user_request",
+                            "public_topic",
                             "content_goal",
                             "key_takeaway",
                             "speaker_role",
@@ -1479,18 +1500,38 @@ class Package7Runtime:
             try:
                 parsed = json.loads(normalized)
             except json.JSONDecodeError:
-                escaped, replacement_count = escape_json_string_control_characters(
+                repair_markers: list[str] = []
+                repaired, control_count = escape_json_string_control_characters(
                     normalized
                 )
-                if replacement_count == 0:
-                    raise
-                parsed = json.loads(escaped)
-                normalized = escaped
-                normalization = (
-                    "ESCAPED_RAW_JSON_STRING_CONTROLS"
-                    if normalization == "NONE"
-                    else f"{normalization}+ESCAPED_RAW_JSON_STRING_CONTROLS"
+                repaired, quote_count = escape_unambiguous_json_string_quotes(
+                    repaired
                 )
+                if control_count:
+                    repair_markers.append("ESCAPED_RAW_JSON_STRING_CONTROLS")
+                if quote_count:
+                    repair_markers.append("ESCAPED_UNAMBIGUOUS_JSON_STRING_QUOTES")
+                try:
+                    parsed = json.loads(repaired)
+                except json.JSONDecodeError:
+                    rebuilt, candidate_count = rebuild_fragmented_candidate_envelope(
+                        repaired
+                    )
+                    if candidate_count == 0:
+                        raise
+                    parsed = json.loads(rebuilt)
+                    repaired = rebuilt
+                    repair_markers.append(
+                        "REBUILT_FRAGMENTED_CANDIDATE_ENVELOPE:"
+                        f"{candidate_count}"
+                    )
+                normalized = repaired
+                for marker in repair_markers:
+                    normalization = (
+                        marker
+                        if normalization == "NONE"
+                        else f"{normalization}+{marker}"
+                    )
         except (ValueError, UnicodeDecodeError, json.JSONDecodeError) as exc:
             self.repository.preserve_first_output(
                 run.run_id,
@@ -1557,11 +1598,25 @@ class Package7Runtime:
                 },
             )
             return self._failure_result("SYSTEM_OR_PROVIDER_ERROR", run.run_id)
-        transport_markers = self._normalize_server_owned_author_echo(
+        transport_markers: list[str] = []
+        candidate_fields = CANDIDATE_MODELS[
+            cast(ContentFormat, expected_format)
+        ].model_fields
+        if isinstance(parsed, dict) and "candidates" not in parsed:
+            parsed_fields = set(parsed)
+            required_fields = {
+                field
+                for field, descriptor in candidate_fields.items()
+                if descriptor.is_required()
+            }
+            if required_fields <= parsed_fields <= set(candidate_fields):
+                parsed = {"candidates": [parsed]}
+                transport_markers.append("WRAPPED_BARE_CANDIDATE_OBJECT")
+        transport_markers.extend(self._normalize_server_owned_author_echo(
             parsed,
             expected_format=expected_format,
             task_brief=task_brief,
-        )
+        ))
         for marker in transport_markers:
             normalization = (
                 marker if normalization == "NONE" else f"{normalization}+{marker}"
@@ -1608,6 +1663,51 @@ class Package7Runtime:
         ):
             return []
         markers: list[str] = []
+        candidates = cast(list[object], parsed["candidates"])
+        removed_defaults: list[str] = []
+        for field, empty_value in (("cta", ""), ("spoken_lines", [])):
+            if parsed.get(field) == empty_value and all(
+                isinstance(candidate, dict) and field not in candidate
+                for candidate in candidates
+            ):
+                del parsed[field]
+                removed_defaults.append(field)
+        if removed_defaults:
+            markers.append(
+                "REMOVED_EMPTY_ROOT_CANDIDATE_DEFAULTS:"
+                + ",".join(removed_defaults)
+            )
+        replaced_null_defaults = 0
+        for candidate in candidates:
+            if not isinstance(candidate, dict):
+                continue
+            for field in ("cta", "spoken_lines"):
+                if field in candidate and candidate[field] is None:
+                    candidate[field] = "" if field == "cta" else []
+                    replaced_null_defaults += 1
+        if replaced_null_defaults:
+            markers.append(
+                "REPLACED_NULL_CANDIDATE_DEFAULTS:"
+                f"{replaced_null_defaults}"
+            )
+        deliverable_fields = deliverable_field_names(
+            cast(ContentFormat, expected_format)
+        )
+        moved_fields = 0
+        for candidate in candidates:
+            deliverable = (
+                candidate.get("deliverable") if isinstance(candidate, dict) else None
+            )
+            if not isinstance(candidate, dict) or not isinstance(deliverable, dict):
+                continue
+            for field in deliverable_fields:
+                if field in candidate and field not in deliverable:
+                    deliverable[field] = candidate.pop(field)
+                    moved_fields += 1
+        if moved_fields:
+            markers.append(
+                f"MOVED_CANDIDATE_ROOT_DELIVERABLE_FIELDS:{moved_fields}"
+            )
         if parsed.get("contract_version") == AUTHOR_CONTRACT_VERSION:
             del parsed["contract_version"]
             markers.append("REMOVED_EXACT_SERVER_CONTRACT_VERSION_ECHO")
@@ -1615,7 +1715,7 @@ class Package7Runtime:
         if expected_format != "短视频" or not isinstance(expected_duration, str):
             return markers
         removed = 0
-        for candidate in parsed["candidates"]:
+        for candidate in candidates:
             deliverable = (
                 candidate.get("deliverable") if isinstance(candidate, dict) else None
             )
@@ -1884,24 +1984,31 @@ class Package7Runtime:
             "training": None,
             "display": None,
         }
+        spoken = list(candidate.spoken_lines)
         if content_format == "短视频":
+            shots = [
+                {
+                    "time_range": f"镜头{index}",
+                    "visual": row["visual"],
+                    "action": row["action"],
+                    "camera": row["camera"],
+                    "audio": row["audio"],
+                    "subtitle": row["subtitle"],
+                    "scene_product_props": "",
+                    "edit_note": row["edit_note"],
+                }
+                for index, row in enumerate(deliverable["shots"], 1)
+            ]
             branches["video"] = {
-                "shots": [
-                    {
-                        "time_range": f"镜头{index}",
-                        "visual": row["visual"],
-                        "action": "",
-                        "camera": row["camera"],
-                        "audio": row["audio"],
-                        "subtitle": row.get("subtitle", ""),
-                        "scene_product_props": "",
-                        "edit_note": "",
-                    }
-                    for index, row in enumerate(deliverable["shots"], 1)
-                ],
+                "shots": shots,
                 "shooting_notes": deliverable["shooting_notes"],
                 "editing_notes": deliverable["editing_notes"],
             }
+            spoken = [
+                str(row["audio"])
+                for row in shots
+                if "台词" in str(row["audio"]) or "旁白" in str(row["audio"])
+            ]
         elif content_format == "图文":
             branches["article"] = {
                 "frames": [
@@ -1921,19 +2028,19 @@ class Package7Runtime:
             branches["training"] = deliverable
         elif content_format == "陈列搭配":
             branches["display"] = {
-                "referenced_items_or_facts": ["以本次参考资料范围为准"],
+                "referenced_items_or_facts": ["以本次确认任务中的商品或陈列对象为准"],
                 **deliverable,
             }
         else:
             raise RuntimeContractError("Unknown content format")
-        spoken = list(candidate.spoken_lines)
         opening = spoken[0] if spoken else candidate.body[:500]
         ending = candidate.cta or "请先人工核对，再决定是否继续使用。"
         production = ProductionPackage.model_validate(
             {
                 "production_format": content_format,
                 "task_summary": str(
-                    task_brief.get("content_goal")
+                    task_brief.get("confirmed_user_request")
+                    or task_brief.get("content_goal")
                     or task_brief.get("key_takeaway")
                     or "完成当前内部内容任务"
                 ),
@@ -1947,7 +2054,7 @@ class Package7Runtime:
                 "target_platform": str(task_brief.get("target_platform") or "内部测试"),
                 "duration_label": str(task_brief.get("duration_label") or "由系统建议"),
                 "ending_and_action": ending,
-                "publishing_copy": f"{candidate.body}\n\n内部测试稿，不可直接发布。",
+                "publishing_copy": candidate.body,
                 "next_actions": ["选择候选", "提出局部修改", "人工审核"],
                 **branches,
             }
@@ -2545,12 +2652,14 @@ class Package7Runtime:
                 else ("推荐候选" if ordinal == 1 else f"备选{ordinal - 1}")
             )
             blocks.append(
-                f"\n【{prefix}】\n{surfaces['title']}\n{surfaces['body']}\n"
-                f"方向：{package['content_direction']}\n核心创意：{package['core_idea']}\n"
+                f"\n【{prefix}】\n标题：{surfaces['title']}\n"
+                f"首屏或封面：{package['cover_or_first_screen_copy']}\n"
+                f"正文或完整脚本：{surfaces['body']}\n"
                 f"{Package7Runtime._format_production_package(package)}\n"
-                f"参考范围：{candidate['evidence_panel']['used_material_count']}份资料、"
-                f"{candidate['evidence_panel']['used_fact_count']}项精确事实；"
-                "范围已检查，正文语义待人工确认。"
+                f"使用平台与时长：{package['target_platform']}｜{package['duration_label']}\n"
+                f"结尾与行动：{package['ending_and_action']}\n"
+                f"发布辅助文案：{package['publishing_copy']}\n"
+                f"接下来可以：{'、'.join(package['next_actions'])}"
             )
         if candidate_count == 1:
             blocks.append("\n可以选择第1份，也可以说明想局部修改哪里。")
@@ -2566,17 +2675,31 @@ class Package7Runtime:
             lines = ["分镜："]
             for index, shot in enumerate(shots, 1):
                 lines.append(
-                    f"{index}. {shot['time_range']}｜{shot['visual']}｜{shot['camera']}｜"
-                    f"声音：{shot['audio']}"
+                    f"{index}. {shot['time_range']}\n"
+                    f"画面：{shot['visual']}\n"
+                    f"动作：{shot['action']}\n"
+                    f"台词或声音：{shot['audio']}\n"
+                    f"字幕：{shot['subtitle']}\n"
+                    f"拍摄方式：{shot['camera']}\n"
+                    f"剪辑提示：{shot['edit_note']}"
                 )
+            video = package.get("video", {})
+            lines.append(
+                "拍摄补充：" + "；".join(video.get("shooting_notes", []))
+            )
+            lines.append(
+                "剪辑补充：" + "；".join(video.get("editing_notes", []))
+            )
             return "\n".join(lines)
         if package.get("production_format") == "图文":
-            frames = package.get("article", {}).get("frames", [])
-            lines = ["图片顺序与配文："]
+            article = package.get("article", {})
+            frames = article.get("frames", [])
+            lines = [f"封面画面：{article.get('cover_brief', '')}", "图片顺序与配文："]
             for frame in frames:
                 lines.append(
                     f"{frame['order']}. {frame['image_brief']}｜{frame['accompanying_copy']}"
                 )
+            lines.append("版式建议：" + "；".join(article.get("layout_notes", [])))
             return "\n".join(lines)
         if package.get("production_format") == "直播内容包":
             live = package.get("live", {})
@@ -2587,7 +2710,10 @@ class Package7Runtime:
             )
             return (
                 f"直播主题：{live.get('theme', '')}\n开场：{live.get('opening', '')}\n"
-                f"环节：\n{segments}\n收束：{live.get('closing', '')}"
+                f"环节：\n{segments}\n"
+                f"互动问答：{'；'.join(live.get('interaction_qa', []))}\n"
+                f"风险提醒：{'；'.join(live.get('risk_reminders', []))}\n"
+                f"收束：{live.get('closing', '')}"
             )
         if package.get("production_format") == "私域沟通内容":
             private = package.get("private_communication", {})
@@ -2597,13 +2723,15 @@ class Package7Runtime:
             )
             return (
                 f"适用场景：{private.get('applicable_scenario', '')}\n{messages}\n"
-                f"边界：{'；'.join(private.get('communication_boundaries', []))}"
+                f"后续动作：{'；'.join(private.get('follow_up_actions', []))}\n"
+                f"沟通边界：{'；'.join(private.get('communication_boundaries', []))}"
             )
         if package.get("production_format") == "门店线下物料":
             offline = package.get("offline_material", {})
             return (
                 f"核心文案：{offline.get('core_copy', '')}\n"
                 f"信息顺序：{' → '.join(offline.get('information_hierarchy', []))}\n"
+                f"版面或摆放建议：{'；'.join(offline.get('layout_or_placement_notes', []))}\n"
                 f"行动提示：{offline.get('action_guidance', '')}\n"
                 f"有效边界：{offline.get('validity_boundary', '')}"
             )
@@ -2615,15 +2743,20 @@ class Package7Runtime:
             )
             return (
                 f"培训目标：{training.get('training_goal', '')}\n"
-                f"提纲：{'；'.join(training.get('outline', []))}\n{questions}"
+                f"提纲：{'；'.join(training.get('outline', []))}\n"
+                f"练习：{'；'.join(training.get('exercises', []))}\n{questions}\n"
+                f"可以这样说：{'；'.join(training.get('allowed_phrasing', []))}\n"
+                f"不要这样说：{'；'.join(training.get('prohibited_phrasing', []))}"
             )
         display = package.get("display", {})
         return (
             "陈列执行：\n"
+            f"适用对象：{'；'.join(display.get('referenced_items_or_facts', []))}\n"
             f"关系：{display.get('arrangement_relationship', '')}\n"
             f"层次：{display.get('spatial_layers', '')}\n"
             f"颜色：{display.get('color_relationship', '')}\n"
-            f"待核对：{display.get('availability_caution', '')}"
+            f"可用性提醒：{display.get('availability_caution', '')}\n"
+            f"拍摄角度：{'；'.join(display.get('shooting_angles', []))}"
         )
 
     def _review_selected(self, principal_id: str, account_id: str) -> JsonObject:
@@ -2638,10 +2771,10 @@ class Package7Runtime:
         return {
             "response_kind": "DIRECT",
             "user_visible_text": (
-                f"审核状态\n已核对本次参考资料范围："
-                f"{len(selected.used_material_refs)}份资料、{len(selected.used_fact_refs)}项精确事实。\n"
-                "这不代表机器逐句证明全文；事实语义仍待人工确认。\n"
-                "发布状态：内部测试，不可直接发布。"
+                "人工审核确认\n"
+                "当前登录用户已确认：成品符合本次需求；人物与事件没有漂移；"
+                "正文、台词、字幕、画面和行动建议一致；商品与活动信息准确。\n"
+                "现在可以导出；当前仍是内部测试稿，不可直接发布。"
             ),
         }
 
