@@ -780,7 +780,7 @@ def main(arguments: Sequence[str] | None = None) -> int:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
     if not __debug__:
         LOGGER.error("Q20 qualification checker refuses optimized mode")
-        return 1
+        return 2
     args = _parse_args(arguments)
     try:
         package_root = cast(Path, args.package_root)
