@@ -111,7 +111,7 @@ PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
     "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
 )
 PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
-    "22ef796509486589b711ac53a9c8eafd78481c36ed6fde161d5e9db9a05156bc"
+    "c785f4f577bebbe80d9579a52d3963dfb98f8538698e375d85d6282f9b39f3ad"
 )
 PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES = (
     "python3 ci/checkers/check_product_foundation.py",
@@ -170,6 +170,17 @@ DOWNSTREAM_SUCCESSOR_DELEGATIONS = (
             "check_ecs_cutover.py"
         ),
     ),
+    (
+        Path(
+            "20_internal_pilot/"
+            "content_product_remote_quality_qualification_001"
+        ),
+        Path(
+            "20_internal_pilot/"
+            "content_product_remote_quality_qualification_001/"
+            "check_remote_quality_qualification.py"
+        ),
+    ),
 )
 MANDATORY_DOWNSTREAM_SUCCESSOR_ROOTS = frozenset(
     {
@@ -177,6 +188,10 @@ MANDATORY_DOWNSTREAM_SUCCESSOR_ROOTS = frozenset(
         Path("17_dify_runtime/dify_end_to_end_001"),
         Path("18_deployment/hosted_operations_001"),
         Path("19_cloud_cutover/ecs_migration_001"),
+        Path(
+            "20_internal_pilot/"
+            "content_product_remote_quality_qualification_001"
+        ),
     }
 )
 DOWNSTREAM_REFERENCE_SAFE_COMMITS = {
