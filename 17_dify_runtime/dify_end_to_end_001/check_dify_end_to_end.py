@@ -220,6 +220,19 @@ PACKAGE10_FINAL_CLOSEOUT_PATHS = frozenset(
     for path in RECOVERY_AUTHORIZED_REPOSITORY_PATHS
     if Path("20_internal_pilot/release_evaluation_001") in path.parents
 )
+PACKAGE10_FINAL_RUNTIME_PATHS = frozenset(
+    {
+        PACKAGE_RELATIVE_ROOT / "author_contract.py",
+        PACKAGE_RELATIVE_ROOT / "bridge_app.py",
+        PACKAGE_RELATIVE_ROOT / "check_dify_end_to_end.py",
+        PACKAGE_RELATIVE_ROOT / "content_capability_mapping.v1.yaml",
+        PACKAGE_RELATIVE_ROOT / "contracts.py",
+        PACKAGE_RELATIVE_ROOT / "dify_app.v1.yaml",
+        PACKAGE_RELATIVE_ROOT / "portal.js",
+        PACKAGE_RELATIVE_ROOT / "runtime_service.py",
+        PACKAGE_RELATIVE_ROOT / "test_dify_end_to_end.py",
+    }
+)
 POST_CANDIDATE_ALLOWED_PATHS = frozenset(
     {PACKAGE_RELATIVE_ROOT / RESULT_PATH, PACKAGE_RELATIVE_ROOT / DELIVERY_PATH}
     | {PACKAGE_RELATIVE_ROOT / path for path in REVIEW_PATHS}
@@ -2674,6 +2687,8 @@ def validate_recovery_candidate_binding(result: Mapping[str, Any]) -> tuple[str,
         PACKAGE_RELATIVE_ROOT / RECOVERY_RESULT_PATH,
         PACKAGE_RELATIVE_ROOT / RECOVERY_DELIVERY_PATH,
         *(PACKAGE_RELATIVE_ROOT / path for path in RECOVERY_REVIEW_PATHS),
+        *RECOVERY_AUTHORIZED_REPOSITORY_PATHS,
+        *PACKAGE10_FINAL_RUNTIME_PATHS,
     }
     changed = {
         Path(line)
