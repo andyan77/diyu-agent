@@ -1,0 +1,428 @@
+{
+  "schema": "diyu.package10.novice_isolation_operations_review.v1",
+  "reviewer_role": "independent_novice_experience_isolation_operations_reviewer",
+  "reviewed_at": "2026-07-19T11:09:30Z",
+  "independent_read_only_review": true,
+  "bound_input": {
+    "path": "/tmp/diyu-p10-review-input-f4ba734.json",
+    "normalization": "UTF-8 JSON with recursively sorted object keys, compact separators, and no trailing newline",
+    "normalized_sha256": "0fb97c0625315d22d5857a909949c4d5fa31f51ec4b17f444a45bb4751c4304f",
+    "candidate_commit": "f4ba734dd7a5681003931e047a893b46309be97b",
+    "candidate_tree": "f3dc3b1a08b015059432ca4619fe10921fcd1cc9",
+    "binding_verified": true
+  },
+  "review_method": {
+    "remote_tasks_or_model_calls": 0,
+    "web_searches": 0,
+    "backup_or_restore_reruns": 0,
+    "code_changes": 0,
+    "evidence_read": "Frozen review input, current candidate source, and existing Package 8/9 import, isolation, backup, restore and rollback evidence were inspected read-only."
+  },
+  "product_scores": [
+    {
+      "task_id": "P10-CP01",
+      "product_id": "CP01",
+      "product_label": "岗位任务VLOG",
+      "format": "短视频",
+      "score": 91,
+      "rationale": "九个镜头把动作、声音、字幕、拍法和剪辑提示逐项交齐，新手可直接照稿拍摄并继续选择。"
+    },
+    {
+      "task_id": "P10-CP02",
+      "product_id": "CP02",
+      "product_label": "门店时段微纪录",
+      "format": "短视频",
+      "score": 89,
+      "rationale": "开门、归位和首次接待按时钟串联，环境声与每镜执行说明清楚且没有成人场景漂移。"
+    },
+    {
+      "task_id": "P10-CP03",
+      "product_id": "CP03",
+      "product_label": "单项手艺全过程",
+      "format": "培训与门店话术",
+      "score": 83,
+      "rationale": "动作、判断、停止边界、练习和话术齐全，但蒸汽温度等参数必须先按实物洗护要求人工核实。"
+    },
+    {
+      "task_id": "P10-CP04",
+      "product_id": "CP04",
+      "product_label": "多岗位协作纪实",
+      "format": "短视频",
+      "score": 88,
+      "rationale": "仓库、司机和店长的交接及数量异常处理均有明确画面和结论，单候选仍可直接继续使用。"
+    },
+    {
+      "task_id": "P10-CP05",
+      "product_id": "CP05",
+      "product_label": "人物成长与职业史",
+      "format": "图文",
+      "score": 88,
+      "rationale": "三年成长被拆成执行、观察和复盘三个工作片段，叙事入口具体且候选差异容易理解。"
+    },
+    {
+      "task_id": "P10-CP06",
+      "product_id": "CP06",
+      "product_label": "专业判断切片",
+      "format": "图文",
+      "score": 81,
+      "rationale": "三个现场检查动作清楚可做，但帽绳处置和三项条件是否必须同时满足的表述需由人工审核统一。"
+    },
+    {
+      "task_id": "P10-CP07",
+      "product_id": "CP07",
+      "product_label": "用户问题诊断室",
+      "format": "直播内容包",
+      "score": 89,
+      "rationale": "开场、三问诊断、分层建议、互动、问答、风险提醒和收束完整，新手可按环节开播。"
+    },
+    {
+      "task_id": "P10-CP08",
+      "product_id": "CP08",
+      "product_label": "工艺／面料／版型解构",
+      "format": "图文",
+      "score": 82,
+      "rationale": "省道、拼接和余量与三个动作的关系讲得直观，但候选中的具体测试尺寸和次数需要证据确认或删除。"
+    },
+    {
+      "task_id": "P10-CP09",
+      "product_id": "CP09",
+      "product_label": "适用边界与反选指南",
+      "format": "私域沟通内容",
+      "score": 81,
+      "rationale": "朋友圈、社群和一对一均保持儿童反选逻辑，但拟态顾客经历不能当真实案例发布，必须在人审时改写。"
+    },
+    {
+      "task_id": "P10-CP10",
+      "product_id": "CP10",
+      "product_label": "长期验证档案",
+      "format": "图文",
+      "score": 86,
+      "rationale": "六周方法、固定记录栏和有限结论边界完整，推荐候选没有虚构已经发生的测试数值。"
+    },
+    {
+      "task_id": "P10-CP11",
+      "product_id": "CP11",
+      "product_label": "产品诞生与设计取舍档案",
+      "format": "图文",
+      "score": 81,
+      "rationale": "方案A与B的得失和最终选择清楚，但衍生的厘米数、试跑数据和家庭情节必须按真实资料核验。"
+    },
+    {
+      "task_id": "P10-CP12",
+      "product_id": "CP12",
+      "product_label": "产品迭代与版本日志",
+      "format": "图文",
+      "score": 82,
+      "rationale": "发现问题、修改、复看和待观察四段齐全，但试穿人数、毫米数和儿童反馈属于待核实创作细节。"
+    },
+    {
+      "task_id": "P10-CP13",
+      "product_id": "CP13",
+      "product_label": "产品的生活与衣橱角色",
+      "format": "短视频",
+      "score": 89,
+      "rationale": "同一孩子和同一夹克贯穿早中晚三个任务，完整分镜避免了万能单品宣传。"
+    },
+    {
+      "task_id": "P10-CP14",
+      "product_id": "CP14",
+      "product_label": "物性影像与感官短片",
+      "format": "短视频",
+      "score": 93,
+      "rationale": "每镜均明确纯画面或环境声、字幕、动作、拍法和剪辑，且没有虚构耐磨或保暖数据。"
+    },
+    {
+      "task_id": "P10-CP15",
+      "product_id": "CP15",
+      "product_label": "商品到店生命周期",
+      "format": "门店线下物料",
+      "score": 92,
+      "rationale": "核心文案、四步层级、摆放、行动提示和适用边界一次交齐，可直接交给门店排版。"
+    },
+    {
+      "task_id": "P10-CP16",
+      "product_id": "CP16",
+      "product_label": "真实服务复盘",
+      "format": "私域沟通内容",
+      "score": 82,
+      "rationale": "各渠道都保持保留原尺码并卷边观察的结论，但顾客联系方式和儿童固定方式须按隐私与安全规则人工删改。"
+    },
+    {
+      "task_id": "P10-CP17",
+      "product_id": "CP17",
+      "product_label": "陈列换陈与空间实验",
+      "format": "陈列搭配",
+      "score": 89,
+      "rationale": "商品关系、前中后层次、颜色、库存可用性和三种复拍角度完整，门店人员能据此执行。"
+    },
+    {
+      "task_id": "P10-CP18",
+      "product_id": "CP18",
+      "product_label": "城市门店生活志",
+      "format": "短视频",
+      "score": 85,
+      "rationale": "具体时间、街巷声音和门店动作组成清晰时间线，但涉及儿童和路人拍摄时仍需授权或明确演绎。"
+    },
+    {
+      "task_id": "P10-CP19",
+      "product_id": "CP19",
+      "product_label": "经营取舍与决策复盘",
+      "format": "图文",
+      "score": 90,
+      "rationale": "标题明确标注情境演绎，取消、延期、改室内的代价及最终决定在正文、配图和结尾一致。"
+    },
+    {
+      "task_id": "P10-CP20",
+      "product_id": "CP20",
+      "product_label": "承诺—兑现追踪",
+      "format": "图文",
+      "score": 84,
+      "rationale": "承诺原话、三天节点、变化说明和交付闭环清楚，但交易结果与联系方式不得未经核验进入外部内容或画面。"
+    }
+  ],
+  "aggregate": {
+    "product_count": 20,
+    "average_score": 86.25,
+    "minimum_score": 81,
+    "at_or_above_80_count": 20,
+    "below_80_count": 0,
+    "structure_complete_count": 20,
+    "expected_product_count": 20,
+    "actual_unique_product_count": 20,
+    "database_product_routing_verified_count": 20
+  },
+  "seven_format_display_checks": [
+    {
+      "format": "短视频",
+      "task_ids": ["P10-CP01", "P10-CP02", "P10-CP04", "P10-CP13", "P10-CP14", "P10-CP18"],
+      "check": "PASS",
+      "basis": "User-visible output includes complete shot fields: image, action, voice or environment sound, subtitle, camera and edit note."
+    },
+    {
+      "format": "图文",
+      "task_ids": ["P10-CP05", "P10-CP06", "P10-CP08", "P10-CP10", "P10-CP11", "P10-CP12", "P10-CP19", "P10-CP20"],
+      "check": "PASS",
+      "basis": "User-visible output includes title, full body, image sequence with captions and layout guidance."
+    },
+    {
+      "format": "直播内容包",
+      "task_ids": ["P10-CP07"],
+      "check": "PASS",
+      "basis": "Opening, multiple teaching sections, interactions, Q&A, risk reminders and close are all displayed."
+    },
+    {
+      "format": "私域沟通内容",
+      "task_ids": ["P10-CP09", "P10-CP16"],
+      "check": "PASS",
+      "basis": "Moments, group and one-to-one copy, follow-up actions and communication boundaries are all displayed."
+    },
+    {
+      "format": "门店线下物料",
+      "task_ids": ["P10-CP15"],
+      "check": "PASS",
+      "basis": "Core copy, hierarchy, placement, action guidance and validity boundary are all displayed."
+    },
+    {
+      "format": "培训与门店话术",
+      "task_ids": ["P10-CP03"],
+      "check": "PASS",
+      "basis": "Training goal, outline, exercises, situational Q&A and allowed and prohibited phrasing are all displayed."
+    },
+    {
+      "format": "陈列搭配",
+      "task_ids": ["P10-CP17"],
+      "check": "PASS",
+      "basis": "Item relationship, spatial layers, color relationship, availability caution and shooting angles are all displayed."
+    }
+  ],
+  "full_new_user_journey": {
+    "source_evidence_commit": "e908271bb3fd905250851465de137a3b741162bd",
+    "source_evidence_tree": "1206f4ea960657e886f0444fa3c38eeeba78fd7b",
+    "final_candidate_carry_forward": "PASS",
+    "carry_forward_basis": "The final f4ba734 delta only adds confirmed goal context to classification, adds CP14 to one public topic mapping, and adds tests; login, browser-session scoping, selection, revision, review and export implementation did not change.",
+    "ordered_steps": [
+      {"step": "登录", "status": 200, "check": "PASS"},
+      {"step": "选项", "account_option_count": 11, "check": "PASS"},
+      {"step": "生成", "status": 200, "candidate_count": 1, "complete_shot_fields": true, "check": "PASS"},
+      {"step": "选择", "status": 200, "check": "PASS"},
+      {"step": "局部修改", "status": 200, "content_changed": true, "child_context_retained": true, "complete_shot_fields": true, "check": "PASS"},
+      {"step": "再次选择", "status": 200, "check": "PASS"},
+      {"step": "人工审核", "status": 200, "internal_draft_only": true, "check": "PASS"},
+      {"step": "导出", "status": 200, "complete_production_package": true, "internal_draft_only": true, "check": "PASS"}
+    ],
+    "journey_pass": true
+  },
+  "browser_isolation": {
+    "distinct_cookie_digests": true,
+    "browser_b_login_option_account_count": 11,
+    "browser_b_review_of_browser_a": "BLOCKED",
+    "browser_b_export_of_browser_a": "BLOCKED",
+    "browser_b_block_message": "当前账号、使用范围或授权条件不成立，已停止本次操作。",
+    "implementation_binding": "Selected candidates and candidate activities are scoped by principal, account and persisted browser_session_id; session cookies are Secure, HttpOnly and SameSite=Strict, and logout revokes the persisted session.",
+    "browser_isolation_pass": true
+  },
+  "hard_checks": {
+    "candidate_commit_and_tree_exact": "PASS",
+    "normalized_input_digest_exact": "PASS",
+    "twenty_products_and_structures": "PASS",
+    "seven_formats_visible": "PASS",
+    "full_new_user_journey": "PASS",
+    "browser_b_cannot_review_or_export_browser_a": "PASS",
+    "cross_scope_access_count": 0,
+    "sensitive_information_or_secret_leak_count": 0,
+    "automatic_publish_count": 0,
+    "real_customer_data_task_count": 0,
+    "public_self_registration": false,
+    "human_review_required": true,
+    "remote_health_after_final_candidate_deploy": "healthy",
+    "package10_new_model_calls": 64,
+    "package10_model_call_limit": 100,
+    "package10_new_cost_cny": "0.250919",
+    "package10_cost_limit_cny": "5",
+    "all_safety_isolation_hard_checks_pass": true
+  },
+  "existing_operations_evidence_reuse": {
+    "authorized_real_brand_import_contract": {
+      "status": "PASS_REUSED",
+      "evidence": "Package 8 authorized-real safe fixture passed while import granted no publication or readiness.",
+      "related_candidate_paths_unchanged": true
+    },
+    "second_brand_isolation": {
+      "status": "PASS_REUSED",
+      "evidence": "Package 8 materialized the second simulated brand and excluded authorization-scope mismatch.",
+      "related_candidate_paths_unchanged": true
+    },
+    "backup_restore": {
+      "status": "PASS_REUSED",
+      "evidence": "Package 9 encrypted current-candidate artifacts passed digest, decryption and isolated network-NONE restore checks without persistent plaintext.",
+      "rerun_performed": false,
+      "related_candidate_paths_unchanged": true
+    },
+    "rollback_and_forward": {
+      "status": "PASS_REUSED",
+      "evidence": "Package 9 actual rollback and forward verification passed old bridge, Dify root, new bridge, apps health and 19-table forced RLS restoration.",
+      "rerun_performed": false,
+      "related_candidate_paths_unchanged": true
+    },
+    "candidate_delta_observation": "The Package 10 candidate did not modify brand_import.py, brand_import_contract.v1.yaml, persistence.py, security.py, 18_deployment/** or 19_cloud_cutover/**; its bridge_app.py delta is limited to classifier input context."
+  },
+  "limitations": [
+    "This is an internal-production review with mandatory human review, not permission for direct publication; unverified numerical tests, synthetic customer or employee details, filming consent and child-safety phrasing must be confirmed or removed before external use.",
+    "Sixteen of twenty formal tasks exercised candidate selection; the four single-candidate tasks P10-CP04, P10-CP17, P10-CP18 and P10-CP20 were not separately selected, while the dedicated full journey exercised selection, revision, re-selection, review and export.",
+    "The complete journey was captured on candidate ancestor e908271; its reuse for f4ba734 is accepted only because read-only delta inspection found no change to the journey or isolation paths.",
+    "Package 8/9 import, second-brand, backup, restore and rollback conclusions were reused as instructed and were not rerun."
+  ],
+  "decision": {
+    "threshold_average_score": 85,
+    "threshold_each_product_score": 80,
+    "actual_average_score": 86.25,
+    "all_products_at_or_above_threshold": true,
+    "all_safety_isolation_hard_checks_pass": true,
+    "verdict": "PASS",
+    "release_scope": "PASS_INTERNAL_PRODUCTION_READY_WITH_HUMAN_REVIEW",
+    "direct_publication_allowed": false,
+    "blocking_items": []
+  },
+  "founder_corrected_targeted_rereview": {
+    "binding": {
+      "mode": "SINGLE_TARGETED_REREVIEW_NOT_FULL_REVIEW",
+      "reviewed_at": "2026-07-19T11:55:35Z",
+      "targeted_input_path": "/tmp/diyu-p10-targeted-review-input-1c7b078.json",
+      "normalized_sha256": "892afef762c8e4e41f0ff950107db3749aa69bc88e0403181bdc316d5a9230ea",
+      "normalization": "remove normalized_sha256; UTF-8 JSON; ensure_ascii=false; sort_keys=true; separators=(',',':'); no trailing newline",
+      "candidate_commit": "1c7b078495a06e0504db507222d42f55ece1a641",
+      "candidate_tree": "bb71fd199c479bb7b95a295b63b86664271de810",
+      "head_and_tree_verified": true,
+      "initial_review_preserved": true,
+      "initial_review_sha256_before_append": "e83c0b0b584c7313d6f0cc2aaa789fc267528eae0cc9acd9303259244ab12b69"
+    },
+    "delta_checks": {
+      "full_twenty_item_review_restarted": false,
+      "new_model_calls": 0,
+      "new_remote_calls": 0,
+      "new_samples": 0,
+      "journey_reruns": 0,
+      "isolation_reruns": 0,
+      "candidate_changed_files": [
+        "20_internal_pilot/src/diyu_pilot/contracts.py",
+        "20_internal_pilot/src/diyu_pilot/runtime_service.py",
+        "20_internal_pilot/tests/test_dify_end_to_end.py"
+      ],
+      "author_boundary": "PASS",
+      "creative_source_proof_rule": "PASS_ZERO_PENALTIES",
+      "lossless_curly_quote_repair": "PASS",
+      "source_raw_unchanged": true,
+      "journey_evidence_reuse": "PASS",
+      "isolation_evidence_reuse": "PASS",
+      "operations_evidence_reuse": "PASS",
+      "twenty_structures_and_seven_formats": "PASS_20_OF_20_7_OF_7",
+      "human_review_before_publish": "PASS",
+      "automatic_publish_count": 0,
+      "sensitive_information_or_secret_leak_count": 0,
+      "enterprise_account_browser_isolation": "PASS",
+      "minimum_direct_child_safety": "FAIL_P10_CP06",
+      "child_safety_finding": "P10-CP06 tells a child that riding may continue when a hood cord is no longer than the hood opening or fixed at the back, and that riding suitability follows invented garment-movement thresholds of 4 cm and 5 cm. Those thresholds can leave entanglement or snag risk while presenting continued activity as safe; the required response is to stop and obtain adult review. This is a direct child-safety defect, not a source-proof defect."
+    },
+    "aggregate": {
+      "scope": "TARGETED_THRESHOLD_RECOMPUTATION_NOT_FULL_REREVIEW",
+      "founder_correction_applied": true,
+      "source_proof_penalty_count": 0,
+      "scores": {
+        "P10-CP01": 91,
+        "P10-CP02": 87,
+        "P10-CP03": 86,
+        "P10-CP04": 83,
+        "P10-CP05": 89,
+        "P10-CP06": 76,
+        "P10-CP07": 86,
+        "P10-CP08": 85,
+        "P10-CP09": 86,
+        "P10-CP10": 83,
+        "P10-CP11": 88,
+        "P10-CP12": 82,
+        "P10-CP13": 90,
+        "P10-CP14": 93,
+        "P10-CP15": 92,
+        "P10-CP16": 86,
+        "P10-CP17": 85,
+        "P10-CP18": 80,
+        "P10-CP19": 90,
+        "P10-CP20": 82
+      },
+      "product_count": 20,
+      "average_score": 86.0,
+      "minimum_score": 76,
+      "at_or_above_80_count": 19,
+      "below_80_task_ids": [
+        "P10-CP06"
+      ],
+      "structure_complete_count": 20,
+      "formats_visible_count": 7,
+      "hard_failure_count": 1,
+      "nonblocking_observations": [
+        "P10-CP04's third human-to-human handoff is implicit rather than explicit.",
+        "P10-CP10 states a six-week conclusion despite blank records, and P10-CP12 has an ambiguous zipper-stop direction; neither creates the direct continuation risk found in P10-CP06.",
+        "P10-CP18 gives a 45-minute duration without concrete timestamps.",
+        "P10-CP20 reports no substantive changes and therefore explains progress rather than changed content."
+      ]
+    },
+    "decision": {
+      "threshold_average_score": 85,
+      "threshold_each_product_score": 80,
+      "average_pass": true,
+      "each_product_pass": false,
+      "safety_isolation_hard_checks_pass": false,
+      "verdict": "FAIL",
+      "release_scope": "NOT_READY_DUE_TO_DIRECT_CHILD_SAFETY_BLOCKER",
+      "blocking_items": [
+        {
+          "id": "P10_CP06_DIRECT_CHILD_SAFETY_CONTINUATION_THRESHOLDS",
+          "task_id": "P10-CP06",
+          "required_correction": "Remove invented 4 cm/5 cm and hood-cord continuation thresholds. For any possible entanglement, snag, fall or pinch condition, tell the child to stop the activity and obtain adult review before continuing."
+        }
+      ],
+      "source_proof_is_not_a_blocker": true,
+      "journey_isolation_operations_reused_and_pass": true
+    }
+  }
+}

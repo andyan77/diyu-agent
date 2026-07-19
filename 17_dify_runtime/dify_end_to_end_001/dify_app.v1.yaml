@@ -152,7 +152,7 @@ workflow:
         context: {enabled: false, variable_selector: []}
         memory: {query_prompt_template: '', role_prefix: {assistant: '', user: ''}, window: {enabled: false, size: 1}}
         model:
-          completion_params: {temperature: 0.2}
+          completion_params: {response_format: json_object, temperature: 0.2}
           mode: chat
           name: deepseek-v4-flash
           provider: langgenius/deepseek/deepseek
@@ -164,6 +164,17 @@ workflow:
             只输出符合output_contract的JSON，不要Markdown代码块，不要解释，不要输出推理过程。
         - role: user
           text: '{{#start.author_prompt#}}'
+        reasoning_format: separated
+        structured_output:
+          schema:
+            additionalProperties: false
+            properties:
+              candidates:
+                items: {type: object}
+                type: array
+            required: [candidates]
+            type: object
+        structured_output_enabled: true
         title: 受控作者
         type: llm
         vision: {enabled: false}

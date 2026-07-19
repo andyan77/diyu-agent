@@ -459,6 +459,15 @@ def create_app(
                 )
             if runtime_request["operation"] == "确认制作":
                 failure_stage = "CLASSIFIER_INVOKE"
+                classification_request = "\n".join(
+                    (
+                        f"用户原始需求：{payload.message}",
+                        f"用户确认目标：{payload.content_goal or '未单独填写'}",
+                        f"用户确认重点：{payload.key_takeaway or '未单独填写'}",
+                        f"成品形式：{payload.content_format}",
+                        f"表达方式：{payload.expression_method or '由系统建议'}",
+                    )
+                )
                 classifier = active_chat.invoke(
                     invocation_id=_invocation_id(
                         principal_id, payload.message, "CLASSIFY"
@@ -471,7 +480,7 @@ def create_app(
                         "execution_phase": "CLASSIFY",
                         "operation": runtime_request["operation"],
                         "topic_label": payload.topic_label or "未指定题材",
-                        "message": payload.message,
+                        "message": classification_request,
                         "classification_options": json.dumps(
                             active_runtime.classification_options(payload.topic_label),
                             ensure_ascii=False,

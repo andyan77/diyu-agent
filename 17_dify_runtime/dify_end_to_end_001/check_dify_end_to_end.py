@@ -196,6 +196,41 @@ RECOVERY_AUTHORIZED_REPOSITORY_PATHS = frozenset(
         Path(".github/workflows/ci.yml"),
         Path("ci/checkers/check_product_foundation.py"),
         Path("ci/checkers/check_gate1_v1_1_current.py"),
+        Path("project-infra/current_product_status.v1.yaml"),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "result/package10_final_closeout_result.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "review/content_competitiveness_apparel_review.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "review/novice_isolation_operations_review.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "delivery/internal_production_entry.v1.yaml"
+        ),
+    }
+)
+PACKAGE10_FINAL_CLOSEOUT_PATHS = frozenset(
+    path
+    for path in RECOVERY_AUTHORIZED_REPOSITORY_PATHS
+    if Path("20_internal_pilot/release_evaluation_001") in path.parents
+)
+PACKAGE10_FINAL_RUNTIME_PATHS = frozenset(
+    {
+        PACKAGE_RELATIVE_ROOT / "author_contract.py",
+        PACKAGE_RELATIVE_ROOT / "bridge_app.py",
+        PACKAGE_RELATIVE_ROOT / "check_dify_end_to_end.py",
+        PACKAGE_RELATIVE_ROOT / "content_capability_mapping.v1.yaml",
+        PACKAGE_RELATIVE_ROOT / "contracts.py",
+        PACKAGE_RELATIVE_ROOT / "dify_app.v1.yaml",
+        PACKAGE_RELATIVE_ROOT / "portal.js",
+        PACKAGE_RELATIVE_ROOT / "runtime_service.py",
+        PACKAGE_RELATIVE_ROOT / "test_dify_end_to_end.py",
     }
 )
 POST_CANDIDATE_ALLOWED_PATHS = frozenset(
@@ -1773,8 +1808,11 @@ def validate_recovery_write_scope() -> None:
     )
     require(
         not any(
-            path == Path("20_internal_pilot/release_evaluation_001")
-            or Path("20_internal_pilot/release_evaluation_001") in path.parents
+            (
+                path == Path("20_internal_pilot/release_evaluation_001")
+                or Path("20_internal_pilot/release_evaluation_001") in path.parents
+            )
+            and path not in PACKAGE10_FINAL_CLOSEOUT_PATHS
             for path in changed
         ),
         "E_RECOVERY_PACKAGE10_MUTATION",
@@ -2020,7 +2058,7 @@ def validate_recovery_source_contract(root: Path) -> None:
         "_explicit_required_object_missing(",
         "NO_COMPLETE_SAFE_CANDIDATE",
         "本轮可选方案不足",
-        "都可作为待人审正文创作",
+        "都可作为待人工审核的创意候选",
         "不授予任何登录或数据访问权限",
     ):
         require(marker in runtime, f"E_RECOVERY_RUNTIME_MARKER:{marker}")
@@ -2058,12 +2096,12 @@ def validate_recovery_source_contract(root: Path) -> None:
     portal = sources["portal.js"]
     deploy = sources["deploy_remote.sh"]
     chat = sources["dify_chat.py"]
-    for marker in (
-        'value === "门店线下物料"',
-        "（暂未开放）",
-        "option.disabled = temporarilyUnavailable",
-    ):
-        require(marker in portal, f"E_RECOVERY_OFFLINE_ENTRY_DISABLED:{marker}")
+    require(
+        'fillSelect("content_format", value.content_formats);' in portal,
+        "E_RECOVERY_FORMAT_ENTRY_ENABLED",
+    )
+    for marker in ("（暂未开放）", "temporarilyUnavailable"):
+        require(marker not in portal, f"E_RECOVERY_FORMAT_ENTRY_DISABLED:{marker}")
     for marker in (
         "runtime_browser_session",
         "start_browser_session",
@@ -2649,6 +2687,8 @@ def validate_recovery_candidate_binding(result: Mapping[str, Any]) -> tuple[str,
         PACKAGE_RELATIVE_ROOT / RECOVERY_RESULT_PATH,
         PACKAGE_RELATIVE_ROOT / RECOVERY_DELIVERY_PATH,
         *(PACKAGE_RELATIVE_ROOT / path for path in RECOVERY_REVIEW_PATHS),
+        *RECOVERY_AUTHORIZED_REPOSITORY_PATHS,
+        *PACKAGE10_FINAL_RUNTIME_PATHS,
     }
     changed = {
         Path(line)

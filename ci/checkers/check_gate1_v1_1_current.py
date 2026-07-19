@@ -98,6 +98,22 @@ PUBLIC_FOUNDATION_EXACT_PATHS = frozenset(
         Path("ci/checkers/check_product_foundation.py"),
         Path("project-infra/current_product_status.v1.yaml"),
         Path("project-infra/product_workspace_manifest.v1.yaml"),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "result/package10_final_closeout_result.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "review/content_competitiveness_apparel_review.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "review/novice_isolation_operations_review.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "delivery/internal_production_entry.v1.yaml"
+        ),
     }
 )
 PUBLIC_FOUNDATION_CHECKER_PATH = Path("ci/checkers/check_product_foundation.py")
@@ -111,7 +127,7 @@ PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
     "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
 )
 PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
-    "22ef796509486589b711ac53a9c8eafd78481c36ed6fde161d5e9db9a05156bc"
+    "28d9c9caa91c100999a76eb5534b0aaf7ba018fdefdbc5f337d994fa2856cbc6"
 )
 PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES = (
     "python3 ci/checkers/check_product_foundation.py",

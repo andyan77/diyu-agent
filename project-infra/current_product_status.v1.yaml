@@ -54,6 +54,41 @@ current_product_status:
     runtime_ready: false
     release_ready: false
     production_ready: false
+  package10_release_closeout:
+    task_id: DIYU_PACKAGE10_FINAL_PRODUCT_CLOSEOUT_001
+    business_release_decision: PASS_INTERNAL_PRODUCTION_READY_WITH_HUMAN_REVIEW
+    scope: INTERNAL_GENERATED_CANDIDATES_WITH_MANDATORY_HUMAN_REVIEW
+    reviewed_runtime_candidate:
+      commit: 1c7b078495a06e0504db507222d42f55ece1a641
+      tree: bb71fd199c479bb7b95a295b63b86664271de810
+    internal_production_ready: true
+    real_brand_import_contract_ready: true
+    founder_risk_acceptance:
+      decision_id: FOUNDER_PACKAGE10_RISK_ACCEPTANCE_AND_RELEASE_CLOSEOUT
+      accepted_non_blocking_findings:
+      - P10-CP06
+      - P10-CP12
+      original_review_verdicts_preserved: true
+    controls:
+      automatic_publish: false
+      public_self_registration: false
+      real_customer_data_imported: false
+      human_review_required: true
+      customer_private_one_click_deployment_ready: false
+    enabled_internal_release_capabilities:
+    - DIFY
+    - RETRIEVAL
+    - GENERATION
+    - SERVING
+    - HOSTED_RUNTIME
+    - INTERNAL_RELEASE
+    inactive_historical_knowledge_capabilities:
+    - CANDIDATEPACK
+    - KE
+    - RAG
+    - EXPRESSION_COMPONENT_GENERATOR_QUALIFICATION
+    result_path: 20_internal_pilot/release_evaluation_001/result/package10_final_closeout_result.v1.json
+    delivery_entry_path: 20_internal_pilot/release_evaluation_001/delivery/internal_production_entry.v1.yaml
   historical_product_route_files:
   - path: project-infra/current_workspace_status.yaml
     sha256: f0ed9e1dffd9fdc0cae4358ae278607b0e2754aa70af88c9ff771ab048139294

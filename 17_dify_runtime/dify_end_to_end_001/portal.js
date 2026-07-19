@@ -32,13 +32,7 @@ function fillSelect(name, values, includeBlank = false) {
   select.replaceChildren();
   if (includeBlank) select.add(new Option("由系统建议", ""));
   for (const value of values) {
-    const temporarilyUnavailable = name === "content_format" && value === "门店线下物料";
-    const option = new Option(
-      temporarilyUnavailable ? `${value}（暂未开放）` : value,
-      value
-    );
-    option.disabled = temporarilyUnavailable;
-    select.add(option);
+    select.add(new Option(value, value));
   }
 }
 
@@ -108,15 +102,20 @@ function activateWorkbench(value) {
 document.querySelector("#login-form").addEventListener("submit", async (event) => {
   event.preventDefault();
   const form = new FormData(event.currentTarget);
-  const response = await fetch(endpoint("/login"), {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    credentials: "same-origin",
-    body: JSON.stringify({username: form.get("username"), password: form.get("password")})
-  });
-  const value = await response.json();
-  if (!response.ok) { output.textContent = value.user_visible_text; resultSection.classList.remove("hidden"); return; }
-  activateWorkbench(value.options);
+  try {
+    const response = await fetch(endpoint("/login"), {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      credentials: "same-origin",
+      body: JSON.stringify({username: form.get("username"), password: form.get("password")})
+    });
+    const value = await response.json();
+    if (!response.ok) { output.textContent = value.user_visible_text; resultSection.classList.remove("hidden"); return; }
+    activateWorkbench(value.options);
+  } catch {
+    output.textContent = "系统暂时无法完成登录，请稍后重试。";
+    resultSection.classList.remove("hidden");
+  }
 });
 
 taskForm.elements.account_display_name.addEventListener("change", updateRoleAndColumn);
@@ -152,6 +151,8 @@ taskForm.addEventListener("submit", async (event) => {
     });
     const value = await response.json();
     output.textContent = response.ok ? value.answer : value.user_visible_text;
+  } catch {
+    output.textContent = "系统暂时无法完成请求，请稍后重试。";
   } finally {
     send.disabled = false;
   }

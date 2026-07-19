@@ -77,20 +77,25 @@ def author_candidate(
             "shots": [
                 {
                     "visual": f"建议用第{ordinal}种构图呈现选择发生前的状态。",
+                    "action": "人物停下动作，先看清手中的选择。",
                     "camera": "固定近景后切中景。",
-                    "audio": text,
+                    "audio": f"旁白：{text}",
                     "subtitle": "先看选择，再讲理由。",
+                    "edit_note": "在动作停顿处切到细节。",
                 },
                 {
                     "visual": "建议以同一对象的细节收束，不冒充既有影像。",
+                    "action": "人物把对象放回原位，镜头停在细节。",
                     "camera": "稳定特写。",
-                    "audio": "结论只停在当前资料范围。",
+                    "audio": "旁白：结论只停在当前资料范围。",
                     "subtitle": "资料之外，保持待确认。",
+                    "edit_note": "保留自然停顿后结束。",
                 },
             ],
             "shooting_notes": ["使用未来、示意或条件性画面。"],
             "editing_notes": ["保留自然停顿，不用夸张转场。"],
         }
+        common["spoken_lines"] = [shot["audio"] for shot in deliverable["shots"]]
     elif content_format == "图文":
         deliverable = {
             "cover_brief": f"用方案{ordinal}的核心问题做封面。",
@@ -516,15 +521,25 @@ class Package7RecoveryTests(unittest.TestCase):
         self.assertIn("narrative_materials", prompt["author_materials"])
         self.assertNotIn("retrieval_fragment_refs", prompt["author_materials"])
         self.assertIn(
-            "商品属性或功效、价格、库存、尺寸、授权表述、企业承诺",
+            "人物经历、顾客故事、门店事件、未来拍摄和已有素材描述均可作为创意演绎",
             prompt["system"],
         )
+        self.assertIn(
+            "只对儿童直接人身安全保留最小护栏",
+            prompt["system"],
+        )
+        self.assertIn(
+            "时间顺序、地点、岗位交接、操作步骤、最终决定",
+            prompt["system"],
+        )
+        self.assertIn("不得用创作出来的阈值宣称儿童可以安全继续活动", prompt["system"])
         self.assertIn("没有检索资料也要", prompt["system"])
         self.assertIn(
             "只是可选创作参考，不是逐句真值证明",
             prompt["author_materials"]["instruction"],
         )
-        self.assertIn("都可作为待人审正文创作", serialized)
+        self.assertIn("不要求逐项提供来源证明", serialized)
+        self.assertNotIn("未经task_brief或author_materials支持，不得编造", serialized)
         self.assertIn("不授予任何登录或数据访问权限", serialized)
         self.assertNotIn("逐句绑定", serialized)
         self.assertNotIn("required_candidate_count", serialized)
@@ -536,9 +551,9 @@ class Package7RecoveryTests(unittest.TestCase):
         options = self.runtime.portal_options(self.principal_id)
         self.assertEqual(options["content_formats"], list(CONTENT_FORMATS))
         portal_javascript = (PACKAGE_ROOT / "portal.js").read_text(encoding="utf-8")
-        self.assertIn('value === "门店线下物料"', portal_javascript)
-        self.assertIn("（暂未开放）", portal_javascript)
-        self.assertIn("option.disabled = temporarilyUnavailable", portal_javascript)
+        self.assertNotIn("temporarilyUnavailable", portal_javascript)
+        self.assertNotIn("（暂未开放）", portal_javascript)
+        self.assertNotIn("option.disabled", portal_javascript)
         self.assertTrue(
             {
                 "品牌和企业故事",
@@ -565,6 +580,12 @@ class Package7RecoveryTests(unittest.TestCase):
                 encoding="utf-8"
             )
         )
+        product_design_topic = next(
+            row
+            for row in capability["public_topics"]
+            if row["display_name"] == "商品为什么这样设计"
+        )
+        self.assertIn("CP14", product_design_topic["internal_product_ids"])
         for topic in capability["public_topics"]:
             for product_id in topic["internal_product_ids"]:
                 with self.subTest(topic=topic["display_name"], product_id=product_id):
@@ -586,15 +607,153 @@ class Package7RecoveryTests(unittest.TestCase):
                         product_id,
                     )
 
+    def test_portal_classifier_receives_confirmed_goal_and_takeaway(self) -> None:
+        fake_chat = FakeDifyChatClient()
+        app = create_app(self.runtime, self.repository, fake_chat)
+        app.testing = True
+        client = app.test_client()
+        self.assertEqual(
+            client.post(
+                "/login",
+                json={
+                    "username": "package7-test-owner",
+                    "password": "package7-test-password",
+                },
+            ).status_code,
+            200,
+        )
+        response = client.post(
+            "/v1/portal/chat",
+            json={
+                "account_display_name": "笛语童装",
+                "operation": "直接做内容",
+                "topic_label": "商品为什么这样设计",
+                "message": "用近景和环境声拍清灯芯绒纹路。",
+                "content_goal": "呈现材料在光线、触感和声音里的可见物性",
+                "key_takeaway": "只做单一物性母题，不改成设计取舍档案",
+                "content_format": "短视频",
+                "expression_method": "演示",
+            },
+            headers={"X-Diyu-Portal": "same-origin-v1"},
+        )
+        self.assertEqual(response.status_code, 200)
+        classifier_call = next(
+            call
+            for call in fake_chat.calls
+            if call["inputs"]["execution_phase"] == "CLASSIFY"
+        )
+        classifier_request = classifier_call["inputs"]["message"]
+        for confirmed_value in (
+            "用近景和环境声拍清灯芯绒纹路。",
+            "呈现材料在光线、触感和声音里的可见物性",
+            "只做单一物性母题，不改成设计取舍档案",
+            "成品形式：短视频",
+            "表达方式：演示",
+        ):
+            self.assertIn(confirmed_value, classifier_request)
+
     def test_all_seven_formats_finalize_select_review_export_and_reference(
         self,
     ) -> None:
+        complete_format_phrases = {
+            "短视频": (
+                "人物停下动作，先看清手中的选择。",
+                "固定近景后切中景。",
+                "旁白：结论只停在当前资料范围。",
+                "资料之外，保持待确认。",
+                "在动作停顿处切到细节。",
+                "使用未来、示意或条件性画面。",
+                "保留自然停顿，不用夸张转场。",
+            ),
+            "图文": (
+                "用方案1的核心问题做封面。",
+                "建议拍整体关系。",
+                "建议拍可核对细节。",
+                "未知项明确留白。",
+                "先问题，后资料，再给边界。",
+            ),
+            "直播内容包": (
+                "日常选择直播·方案1",
+                "先说明今天只讲资料能够支持的部分。",
+                "问题从哪里来",
+                "你最想先确认哪一点？",
+                "问题：没有资料怎么办？回答：停在待确认，不补造。",
+                "不承诺库存、价格或效果。",
+                "把待确认项留下，资料齐了再继续。",
+            ),
+            "私域沟通内容": (
+                "用于内部模拟的一次日常咨询承接。",
+                "朋友圈",
+                "可以先说你最在意的判断点。",
+                "收集用户真正关心的问题。",
+                "不写未确认价格、库存或承诺。",
+            ),
+            "门店线下物料": (
+                "先说问题",
+                "标题与边界提示分区呈现。",
+                "请先向工作人员确认当前信息。",
+                "内部模拟，不代表实时库存、价格或活动。",
+            ),
+            "培训与门店话术": (
+                "学会把已知、未知和建议分开表达。",
+                "识别用户问题",
+                "把一句绝对承诺改成边界清楚的回答。",
+                "资料没有写怎么办？",
+                "现有资料支持的是……",
+                "一定有效。",
+            ),
+            "陈列搭配": (
+                "方案1按问题、证据和未知项组织陈列。",
+                "整体、局部和边界提示形成三层。",
+                "颜色只作视觉建议，不代替商品事实。",
+                "执行前核对当前可用对象与范围。",
+                "入口全景",
+            ),
+        }
         for content_format in CONTENT_FORMATS:
             with self.subTest(content_format=content_format):
                 prepared = self.prepare(content_format)
                 result = self.finalize(prepared, content_format)
                 self.assertEqual(result["result_class"], "SUCCESS")
-                self.assertNotIn("CP06", result["user_visible_text"])
+                visible_text = result["user_visible_text"]
+                for phrase in complete_format_phrases[content_format]:
+                    self.assertIn(phrase, visible_text)
+                for hidden_metadata in (
+                    "CP06",
+                    "方向：",
+                    "核心创意：",
+                    "参考范围：",
+                    "精确事实",
+                    "content_direction",
+                    "core_idea",
+                ):
+                    self.assertNotIn(hidden_metadata, visible_text)
+                if content_format == "短视频":
+                    with trusted_database_scope(
+                        self.runtime_scope("BRS-LOCAL-UNIT-TEST")
+                    ):
+                        candidates = self.repository.latest_candidates(
+                            self.principal_id,
+                            "ACCOUNT-DIYU-HQ-OFFICIAL",
+                        )
+                    surfaces = candidates[0].candidate_payload[
+                        "candidate_user_visible_surfaces"
+                    ]
+                    shots = surfaces["execution_payload"]["video"]["shots"]
+                    for shot in shots:
+                        for field in (
+                            "visual",
+                            "action",
+                            "camera",
+                            "audio",
+                            "subtitle",
+                            "edit_note",
+                        ):
+                            self.assertTrue(str(shot[field]).strip())
+                    self.assertEqual(
+                        surfaces["spoken_lines"],
+                        [shot["audio"] for shot in shots],
+                    )
                 selected = self.scoped_prepare(
                     self.request(operation="选择候选", candidate_number=1),
                 )
@@ -620,6 +779,12 @@ class Package7RecoveryTests(unittest.TestCase):
                     )
                     self.assertEqual(response["response_kind"], "DIRECT")
                     self.assertNotIn("PKG5-FRAGMENT", response["user_visible_text"])
+                    if operation == "审核":
+                        self.assertIn("当前登录用户已确认", response["user_visible_text"])
+                        self.assertIn("现在可以导出", response["user_visible_text"])
+                        self.assertIn("内部测试稿，不可直接发布", response["user_visible_text"])
+                        self.assertNotIn("精确事实", response["user_visible_text"])
+                        self.assertNotIn("机器逐句", response["user_visible_text"])
 
     def test_server_records_reference_scope_without_author_self_reporting(self) -> None:
         prepared = self.prepare()
@@ -665,6 +830,69 @@ class Package7RecoveryTests(unittest.TestCase):
         self.assertIn(
             "REMOVED_EXACT_SERVER_CONTRACT_VERSION_ECHO",
             echoed_run.payload["model_wrapper_normalization"],
+        )
+
+        root_defaults = self.prepare("短视频")
+        root_default_envelope = candidate_envelope("短视频")
+        for candidate in root_default_envelope["candidates"]:
+            del candidate["spoken_lines"]
+            del candidate["cta"]
+        root_default_envelope["spoken_lines"] = []
+        root_default_envelope["cta"] = ""
+        root_default_result = self.finalize(
+            root_defaults,
+            "短视频",
+            envelope=root_default_envelope,
+        )
+        self.assertEqual(root_default_result["result_class"], "SUCCESS")
+        root_default_run = self.repository.model_run(str(root_defaults["run_id"]))
+        self.assertIn(
+            "REMOVED_EMPTY_ROOT_CANDIDATE_DEFAULTS:cta,spoken_lines",
+            root_default_run.payload["model_wrapper_normalization"],
+        )
+
+        nonempty_root = self.prepare("短视频")
+        nonempty_envelope = candidate_envelope("短视频")
+        nonempty_envelope["cta"] = "不得静默丢弃"
+        nonempty_result = self.finalize(
+            nonempty_root,
+            "短视频",
+            envelope=nonempty_envelope,
+        )
+        self.assertEqual(
+            nonempty_result["result_class"],
+            "MODEL_OUTPUT_CONTRACT_ERROR",
+        )
+
+        null_defaults = self.prepare("图文")
+        null_default_envelope = candidate_envelope("图文")
+        for candidate in null_default_envelope["candidates"]:
+            candidate["spoken_lines"] = None
+            candidate["cta"] = None
+        null_default_result = self.finalize(
+            null_defaults,
+            "图文",
+            envelope=null_default_envelope,
+        )
+        self.assertEqual(null_default_result["result_class"], "SUCCESS")
+        null_default_run = self.repository.model_run(str(null_defaults["run_id"]))
+        self.assertIn(
+            "REPLACED_NULL_CANDIDATE_DEFAULTS:4",
+            null_default_run.payload["model_wrapper_normalization"],
+        )
+
+        invalid_default = self.prepare("图文")
+        invalid_default_envelope = candidate_envelope("图文")
+        for candidate in invalid_default_envelope["candidates"]:
+            candidate["cta"] = {"unexpected": True}
+        invalid_default_result = self.finalize(
+            invalid_default,
+            "图文",
+            envelope=invalid_default_envelope,
+        )
+        self.assertEqual(
+            invalid_default_result["result_class"],
+            "MODEL_OUTPUT_CONTRACT_ERROR",
         )
 
     def test_creative_claims_enter_human_review_without_evidence_binding(
@@ -765,6 +993,182 @@ class Package7RecoveryTests(unittest.TestCase):
         self.assertIn(
             "ESCAPED_RAW_JSON_STRING_CONTROLS",
             recovered_run.payload["model_wrapper_normalization"],
+        )
+
+        prepared_extra_closer = self.prepare("短视频")
+        valid_raw = json.dumps(candidate_envelope("短视频"), ensure_ascii=False)
+        recovered_extra_closer = self.scoped_finalize(
+            str(prepared_extra_closer["run_id"]),
+            base64.b64encode(f"{valid_raw}]".encode()).decode("ascii"),
+        )
+        self.assertEqual(recovered_extra_closer["result_class"], "SUCCESS")
+        extra_closer_run = self.repository.model_run(
+            str(prepared_extra_closer["run_id"])
+        )
+        self.assertIn(
+            "STRIPPED_TRAILING_REDUNDANT_ARRAY_CLOSER",
+            extra_closer_run.payload["model_wrapper_normalization"],
+        )
+
+        prepared_quotes = self.prepare("短视频")
+        quoted_envelope = candidate_envelope("短视频")
+        quoted_envelope["candidates"][0]["body"] = '记录“前版"返修-验收"节点”。'
+        quoted_raw = json.dumps(quoted_envelope, ensure_ascii=False).replace(
+            '\\"返修-验收\\"',
+            '"返修-验收"',
+        )
+        recovered_quotes = self.scoped_finalize(
+            str(prepared_quotes["run_id"]),
+            base64.b64encode(quoted_raw.encode()).decode("ascii"),
+        )
+        self.assertEqual(recovered_quotes["result_class"], "SUCCESS")
+        quoted_run = self.repository.model_run(str(prepared_quotes["run_id"]))
+        self.assertIn(
+            "ESCAPED_UNAMBIGUOUS_JSON_STRING_QUOTES",
+            quoted_run.payload["model_wrapper_normalization"],
+        )
+
+        prepared_structural_quote = self.prepare("图文")
+        structural_quote_raw = json.dumps(
+            candidate_envelope("图文"),
+            ensure_ascii=False,
+            indent=2,
+        ).replace(
+            '"accompanying_copy": "未知项明确留白。"',
+            '"accompanying_copy": "未知项明确留白。”',
+            1,
+        )
+        recovered_structural_quote = self.scoped_finalize(
+            str(prepared_structural_quote["run_id"]),
+            base64.b64encode(structural_quote_raw.encode()).decode("ascii"),
+        )
+        self.assertEqual(recovered_structural_quote["result_class"], "SUCCESS")
+        structural_quote_run = self.repository.model_run(
+            str(prepared_structural_quote["run_id"])
+        )
+        self.assertIn(
+            "NORMALIZED_UNAMBIGUOUS_JSON_STRUCTURAL_QUOTES:1",
+            structural_quote_run.payload["model_wrapper_normalization"],
+        )
+
+        trailing_comma_prepared = self.prepare("短视频")
+        trailing_comma_raw = json.dumps(
+            candidate_envelope("短视频"),
+            ensure_ascii=False,
+            separators=(",", ":"),
+        ).replace(
+            '"edit_note":"保留自然停顿后结束。"}',
+            '"edit_note":"保留自然停顿后结束。",}',
+            1,
+        )
+        trailing_comma_result = self.scoped_finalize(
+            str(trailing_comma_prepared["run_id"]),
+            base64.b64encode(trailing_comma_raw.encode()).decode("ascii"),
+        )
+        self.assertEqual(trailing_comma_result["result_class"], "SUCCESS")
+        trailing_comma_run = self.repository.model_run(
+            str(trailing_comma_prepared["run_id"])
+        )
+        self.assertIn(
+            "REMOVED_UNAMBIGUOUS_JSON_TRAILING_COMMAS:1",
+            trailing_comma_run.payload["model_wrapper_normalization"],
+        )
+
+        fragmented_prepared = self.prepare("短视频")
+        fragmented_candidates = candidate_envelope("短视频")["candidates"]
+        for candidate in fragmented_candidates:
+            candidate["editing_notes"] = candidate["deliverable"].pop(
+                "editing_notes"
+            )
+        candidate_fragments = [
+            json.dumps(candidate, ensure_ascii=False, separators=(",", ":"))
+            for candidate in fragmented_candidates
+        ]
+        fragmented_raw = (
+            '{"candidates":['
+            + candidate_fragments[0]
+            + "}]},"
+            + candidate_fragments[1]
+            + "}]}]}"
+        )
+        fragmented_result = self.scoped_finalize(
+            str(fragmented_prepared["run_id"]),
+            base64.b64encode(fragmented_raw.encode()).decode("ascii"),
+        )
+        self.assertEqual(fragmented_result["result_class"], "SUCCESS")
+        fragmented_run = self.repository.model_run(
+            str(fragmented_prepared["run_id"])
+        )
+        self.assertIn(
+            "REBUILT_FRAGMENTED_CANDIDATE_ENVELOPE:2",
+            fragmented_run.payload["model_wrapper_normalization"],
+        )
+        self.assertIn(
+            "MOVED_CANDIDATE_ROOT_DELIVERABLE_FIELDS:2",
+            fragmented_run.payload["model_wrapper_normalization"],
+        )
+
+        unsafe_fragment_prepared = self.prepare("短视频")
+        unsafe_fragment = fragmented_raw.replace("}]},", "}]},unexpected", 1)
+        unsafe_fragment_result = self.scoped_finalize(
+            str(unsafe_fragment_prepared["run_id"]),
+            base64.b64encode(unsafe_fragment.encode()).decode("ascii"),
+        )
+        self.assertEqual(
+            unsafe_fragment_result["result_class"],
+            "MODEL_OUTPUT_CONTRACT_ERROR",
+        )
+
+        bare_candidate_prepared = self.prepare("图文")
+        bare_candidate_raw = json.dumps(
+            author_candidate("图文", 1),
+            ensure_ascii=False,
+            separators=(",", ":"),
+        )
+        bare_candidate_result = self.scoped_finalize(
+            str(bare_candidate_prepared["run_id"]),
+            base64.b64encode(bare_candidate_raw.encode()).decode("ascii"),
+        )
+        self.assertEqual(bare_candidate_result["result_class"], "SUCCESS")
+        bare_candidate_run = self.repository.model_run(
+            str(bare_candidate_prepared["run_id"])
+        )
+        self.assertIn(
+            "WRAPPED_BARE_CANDIDATE_OBJECT",
+            bare_candidate_run.payload["model_wrapper_normalization"],
+        )
+
+        unknown_bare_prepared = self.prepare("图文")
+        unknown_bare = author_candidate("图文", 1)
+        unknown_bare["unknown_field"] = "不得静默丢弃"
+        unknown_bare_result = self.scoped_finalize(
+            str(unknown_bare_prepared["run_id"]),
+            encoded(unknown_bare),
+        )
+        self.assertEqual(
+            unknown_bare_result["result_class"],
+            "MODEL_OUTPUT_CONTRACT_ERROR",
+        )
+
+    def test_unlabeled_short_video_audio_is_classified_without_content_loss(
+        self,
+    ) -> None:
+        prepared = self.prepare("短视频")
+        envelope = candidate_envelope("短视频")
+        envelope["candidates"][0]["deliverable"]["shots"][0]["audio"] = (
+            "检验员：这颗按扣需要再确认。"
+        )
+        envelope["candidates"][1]["deliverable"]["shots"][0]["audio"] = (
+            "按扣声，脚步声。"
+        )
+        result = self.finalize(prepared, "短视频", envelope=envelope)
+        self.assertEqual(result["result_class"], "SUCCESS")
+        self.assertIn("台词：检验员：这颗按扣需要再确认。", result["user_visible_text"])
+        self.assertIn("环境声：按扣声，脚步声。", result["user_visible_text"])
+        run = self.repository.model_run(str(prepared["run_id"]))
+        self.assertIn(
+            "CLASSIFIED_UNLABELED_SHOT_AUDIO:dialogue=1,ambient=1",
+            run.payload["model_wrapper_normalization"],
         )
 
     def test_internal_identifiers_sensitive_data_and_secrets_are_blocked(
@@ -934,6 +1338,11 @@ class Package7RecoveryTests(unittest.TestCase):
         )
 
     def test_portal_provider_failure_is_a_system_error(self) -> None:
+        portal_javascript = (PACKAGE_ROOT / "portal.js").read_text(encoding="utf-8")
+        self.assertIn("系统暂时无法完成登录，请稍后重试。", portal_javascript)
+        self.assertIn("系统暂时无法完成请求，请稍后重试。", portal_javascript)
+        self.assertNotIn("资料不足", portal_javascript)
+
         class ProviderFailureChat(FakeDifyChatClient):
             def invoke(self, **kwargs: Any) -> JsonObject:
                 if kwargs["inputs"]["execution_phase"] == "AUTHOR":

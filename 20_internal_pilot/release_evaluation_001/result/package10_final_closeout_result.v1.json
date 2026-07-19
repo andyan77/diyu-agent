@@ -1,0 +1,140 @@
+{
+  "schema": "diyu.package10.final_closeout_result.v1",
+  "task_id": "DIYU_PACKAGE10_FINAL_PRODUCT_CLOSEOUT_001",
+  "finalized_at": "2026-07-19T11:58:31Z",
+  "state": "PASS_INTERNAL_PRODUCTION_READY_WITH_HUMAN_REVIEW",
+  "prior_state": "FAIL_FINAL_ACCEPTANCE",
+  "release_decision_updated_at": "2026-07-19T12:17:06Z",
+  "merge_allowed": true,
+  "readiness_transition_allowed": true,
+  "deployment_allowed": true,
+  "reviewed_runtime_candidate": {
+    "commit": "1c7b078495a06e0504db507222d42f55ece1a641",
+    "tree": "bb71fd199c479bb7b95a295b63b86664271de810"
+  },
+  "founder_correction_applied": {
+    "creative_candidates_require_source_proof": false,
+    "source_proof_penalty_count": 0,
+    "new_model_calls_after_correction": 0,
+    "new_content_reruns_after_correction": 0,
+    "cp06_saved_raw_reparse": {
+      "source_run_id": "RUN-C319C1E7B6355DCC06EEDF3A",
+      "source_raw_unchanged": true,
+      "structural_smart_quotes_normalized": 1,
+      "accepted_candidate_count": 2,
+      "model_call_count": 0
+    }
+  },
+  "founder_risk_acceptance": {
+    "decision_id": "FOUNDER_PACKAGE10_RISK_ACCEPTANCE_AND_RELEASE_CLOSEOUT",
+    "accepted": true,
+    "accepted_at": "2026-07-19T12:17:06Z",
+    "business_release_decision": "PASS_INTERNAL_PRODUCTION_READY_WITH_HUMAN_REVIEW",
+    "scope": "INTERNAL_GENERATED_CANDIDATES_WITH_MANDATORY_HUMAN_REVIEW",
+    "accepted_runtime_commit": "1c7b078495a06e0504db507222d42f55ece1a641",
+    "accepted_runtime_tree": "bb71fd199c479bb7b95a295b63b86664271de810",
+    "accepted_risk_class": "DIRECT_CHILD_SAFETY_AND_RELATED_INTERNAL_CONSISTENCY",
+    "accepted_non_blocking_findings": [
+      "P10-CP06",
+      "P10-CP12"
+    ],
+    "review_history_preserved": true,
+    "review_verdicts_overridden": false,
+    "content_or_score_changed": false,
+    "human_review_may_modify_findings_before_use": true,
+    "automatic_publish": false,
+    "public_self_registration": false,
+    "real_customer_data_imported": false,
+    "human_review_required": true,
+    "customer_private_one_click_deployment_ready": false
+  },
+  "completed_capabilities": {
+    "formal_products_with_complete_candidate": "20/20",
+    "unique_database_product_routes": "20/20",
+    "deliverable_formats_present": 7,
+    "full_novice_short_video_journey": "PASS",
+    "two_browser_session_isolation": "PASS",
+    "cross_scope_read_count": 0,
+    "real_sensitive_information_or_secret_leak_count": 0,
+    "automatic_publish_count": 0,
+    "automatic_publish": false,
+    "public_self_registration": false,
+    "real_customer_data_imported": false,
+    "human_review_required": true,
+    "customer_private_one_click_deployment_ready": false
+  },
+  "targeted_final_reviews": {
+    "content_competitiveness_and_apparel": {
+      "path": "20_internal_pilot/release_evaluation_001/review/content_competitiveness_apparel_review.v1.json",
+      "sha256": "14ca1faf346f29bf6390e032f821b16f598d27aeb4aa0fa8f50c9ef9fb10fc14",
+      "verdict": "FAIL",
+      "average_score": 85.75,
+      "score_gte_85_count": 16,
+      "score_gte_80_count": 18,
+      "market_comparable_or_stronger_count": 16,
+      "obvious_template_or_near_duplicate_count": 0,
+      "blocking_task_ids": [
+        "P10-CP06",
+        "P10-CP12"
+      ]
+    },
+    "novice_isolation_operations": {
+      "path": "20_internal_pilot/release_evaluation_001/review/novice_isolation_operations_review.v1.json",
+      "sha256": "a07efdc2f41bf49a5841d3aa59e376e20a7e558c2489774cf72c09a090e0202f",
+      "verdict": "FAIL",
+      "average_score": 86.0,
+      "score_gte_80_count": 19,
+      "journey_isolation_operations_reused_and_pass": true,
+      "blocking_task_ids": [
+        "P10-CP06"
+      ]
+    }
+  },
+  "historical_final_acceptance_blocker": {
+    "class": "DIRECT_CHILD_SAFETY_AND_RELATED_INTERNAL_CONSISTENCY",
+    "user_impact": "A parent could follow CP06 hood-cord continuation thresholds during scooter riding; CP12 also states a zipper-stop movement whose direction contradicts the claimed safety effect.",
+    "affected_tasks": {
+      "P10-CP06": "The candidate still permits scooter use with some hood cords and invented continuation thresholds, leaving an entanglement or snag risk.",
+      "P10-CP12": "The candidate says moving the upper zipper stop upward moves it away from the chin, an internally contradictory instruction with possible pinch or contact risk."
+    },
+    "shortest_future_fix": "Without adding samples or governance, human-edit the existing CP06 candidate to require stopping scooter use whenever a cord may move or snag, and correct CP12's zipper-stop direction so the action and claimed effect agree; then review only these two exact blockers under the same Founder-corrected rubric."
+  },
+  "model_budget": {
+    "actual_model": "langgenius/deepseek/deepseek / deepseek-v4-flash",
+    "package10_new_model_calls": 96,
+    "package10_call_limit": 100,
+    "package10_new_cost_cny": "0.383946",
+    "package10_cost_limit_cny": "5",
+    "current_cumulative_model_call_upper_bound": 689,
+    "configured_cumulative_limit": 1000
+  },
+  "historical_invariants": {
+    "golden_baseline_300_changed": false,
+    "frozen_reference_inventory_120_changed": false,
+    "historical_component_inventory_86_changed": false,
+    "packages_8_and_9_import_isolation_backup_restore_rollback_evidence_reused": true
+  },
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": true,
+    "production_servable": true,
+    "generation_eligible": true,
+    "generation_allowed": true,
+    "retrieval_ready": true,
+    "runtime_ready": true,
+    "release_ready": true,
+    "production_ready": true
+  },
+  "closure": {
+    "new_pull_request_created": false,
+    "remote_ci_started": false,
+    "merged": false,
+    "merged_release_deployed": false,
+    "superseded_pull_requests_closed": false,
+    "release_authorized": true,
+    "required_path": "DRAFT_PR_THEN_ORDINARY_PROTECTED_MERGE",
+    "reason": "Founder accepted the two historical review blockers as non-blocking human-review reminders; release execution is authorized without changing either review verdict."
+  }
+}
