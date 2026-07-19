@@ -570,6 +570,12 @@ class Package7RecoveryTests(unittest.TestCase):
                 encoding="utf-8"
             )
         )
+        product_design_topic = next(
+            row
+            for row in capability["public_topics"]
+            if row["display_name"] == "商品为什么这样设计"
+        )
+        self.assertIn("CP14", product_design_topic["internal_product_ids"])
         for topic in capability["public_topics"]:
             for product_id in topic["internal_product_ids"]:
                 with self.subTest(topic=topic["display_name"], product_id=product_id):
@@ -590,6 +596,51 @@ class Package7RecoveryTests(unittest.TestCase):
                         context["selected_internal_content_product_id"],
                         product_id,
                     )
+
+    def test_portal_classifier_receives_confirmed_goal_and_takeaway(self) -> None:
+        fake_chat = FakeDifyChatClient()
+        app = create_app(self.runtime, self.repository, fake_chat)
+        app.testing = True
+        client = app.test_client()
+        self.assertEqual(
+            client.post(
+                "/login",
+                json={
+                    "username": "package7-test-owner",
+                    "password": "package7-test-password",
+                },
+            ).status_code,
+            200,
+        )
+        response = client.post(
+            "/v1/portal/chat",
+            json={
+                "account_display_name": "笛语童装",
+                "operation": "直接做内容",
+                "topic_label": "商品为什么这样设计",
+                "message": "用近景和环境声拍清灯芯绒纹路。",
+                "content_goal": "呈现材料在光线、触感和声音里的可见物性",
+                "key_takeaway": "只做单一物性母题，不改成设计取舍档案",
+                "content_format": "短视频",
+                "expression_method": "演示",
+            },
+            headers={"X-Diyu-Portal": "same-origin-v1"},
+        )
+        self.assertEqual(response.status_code, 200)
+        classifier_call = next(
+            call
+            for call in fake_chat.calls
+            if call["inputs"]["execution_phase"] == "CLASSIFY"
+        )
+        classifier_request = classifier_call["inputs"]["message"]
+        for confirmed_value in (
+            "用近景和环境声拍清灯芯绒纹路。",
+            "呈现材料在光线、触感和声音里的可见物性",
+            "只做单一物性母题，不改成设计取舍档案",
+            "成品形式：短视频",
+            "表达方式：演示",
+        ):
+            self.assertIn(confirmed_value, classifier_request)
 
     def test_all_seven_formats_finalize_select_review_export_and_reference(
         self,
