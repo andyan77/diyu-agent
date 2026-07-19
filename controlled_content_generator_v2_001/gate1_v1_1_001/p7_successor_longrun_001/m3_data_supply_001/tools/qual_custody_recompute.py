@@ -152,7 +152,9 @@ def recompute_public_counts(records: list[dict], *, set_id: str,
                             dataset_manifest_digest: str,
                             faces_sha256: str, gold_sha256: str,
                             environmental_flags: dict[str, bool] | None = None,
-                            known_r5_recall: float = 0.0) -> dict[str, Any]:
+                            known_r5_input_binding_completeness: float = 0.0,
+                            cost_expected_event_manifests: int = 0,
+                            cost_rate_cards: int = 0) -> dict[str, Any]:
     """密封记录 → 记录级 core 校验 → cluster-aware 计数 → 绑定生成/摘要的公开计数。
 
     environmental_flags: custody 侧独立证明的过程旗标（ab 互斥/DEV 隔离/顺序/无泄漏）；
@@ -204,7 +206,13 @@ def recompute_public_counts(records: list[dict], *, set_id: str,
         "counts": counts,
         "deterministic_disclosure_obligation_types_present": len(obligation_types),
         "obligation_types": obligation_types,
-        "known_r5_recall": known_r5_recall,
+        # §5.4 边界：known-R5 在 M3 只证「输入案例+注册变体绑定完备」（input binding），
+        # 不是运行后 recall（后者 M4 盲预测才产生）。字段名如实反映 M3 冻结属性。
+        "known_r5_input_binding_completeness": known_r5_input_binding_completeness,
+        # §5.4 M3 冻结成本输入：expected 事件 manifest + 费率卡（M3 冻结）；
+        # source event manifest / 实际 cost events 属 M4 运行产物，M3 不产不检。
+        "cost_expected_event_manifests": int(cost_expected_event_manifests),
+        "cost_rate_cards": int(cost_rate_cards),
         "module_gold_field_coverage": module_cov,
         "family_coverage": families,
         "faces_sha256": faces_sha256,
@@ -258,7 +266,11 @@ def verify_binding(public_counts: dict, records: list[dict]) -> list[str]:
             k: public_counts.get(k) for k in
             ("ab_mutually_exclusive", "dev_isolation", "qual_order_ok",
              "sealed_no_leak", "adjudication_on_disagreement")},
-        known_r5_recall=public_counts.get("known_r5_recall", 0.0))
+        known_r5_input_binding_completeness=public_counts.get(
+            "known_r5_input_binding_completeness", 0.0),
+        cost_expected_event_manifests=public_counts.get(
+            "cost_expected_event_manifests", 0),
+        cost_rate_cards=public_counts.get("cost_rate_cards", 0))
     if not fresh["custody_binding"]["core_validation_passed"]:
         errors.append("core_validation_failed:" + ";".join(
             fresh["custody_binding"]["core_validation_errors"][:5]))

@@ -69,7 +69,8 @@ def _recompute(records):
     return cust.recompute_public_counts(
         records, set_id="A", active_generation_id="QUAL_A_GEN_R3_001",
         dataset_manifest_digest=DMD, faces_sha256="f" * 64, gold_sha256="0" * 64,
-        environmental_flags=ENV_FLAGS, known_r5_recall=1.0)
+        environmental_flags=ENV_FLAGS, known_r5_input_binding_completeness=1.0,
+        cost_expected_event_manifests=1, cost_rate_cards=1)
 
 
 def _mk_judgment(item_id: str, reviewer_id: str, *, decision: str = "APPROVE",

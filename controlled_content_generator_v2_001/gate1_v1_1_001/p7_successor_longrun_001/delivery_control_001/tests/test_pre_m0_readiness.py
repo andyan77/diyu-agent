@@ -47,7 +47,8 @@ def _full_counts(set_id: str) -> dict:
     return {
         "set": set_id, "counts": counts,
         "deterministic_disclosure_obligation_types_present": 4,
-        "known_r5_recall": 1.0,
+        "known_r5_input_binding_completeness": 1.0,
+        "cost_expected_event_manifests": 1, "cost_rate_cards": 1,
         "module_gold_field_coverage": coverage,
         "family_coverage": list(prm.FAMILIES),
         "ab_mutually_exclusive": True, "dev_isolation": True,
@@ -177,6 +178,53 @@ class PreM0Readiness(unittest.TestCase):
                 json.dumps(ra2, ensure_ascii=False), encoding="utf-8")
             ok2, _ = checker.check_qual_data_readiness(troot)
             self.assertFalse(ok2, "一套 FAIL → 段必 FAIL")
+
+    # --- §六D/§5.4：M3/M4 阶段边界 ---
+    def test_m3_manifest_keys_are_expected_and_rate_card_only(self) -> None:
+        self.assertEqual(set(prm.M3_MANIFEST_KEYS),
+                         {"cost_expected_event_manifests", "cost_rate_cards"})
+        self.assertNotIn("cost_source_event_manifests", prm.M3_MANIFEST_KEYS)
+        self.assertNotIn("cost_events", prm.M3_MANIFEST_KEYS)
+        self.assertEqual(prm.KEY_MAP["cost_source_event_manifests"][4], "M4")
+        self.assertEqual(prm.KEY_MAP["cost_events"][4], "M4")
+
+    def test_m3_missing_expected_cost_manifest_fails(self) -> None:
+        pc = _full_counts("A")
+        pc["cost_expected_event_manifests"] = 0
+        r = prm.evaluate_set_readiness("A", pc)
+        self.assertEqual(r["verdict"], "FAIL")
+        self.assertIn("cost_expected_event_manifests", r["failing_keys"])
+
+    def test_m3_missing_rate_card_fails(self) -> None:
+        pc = _full_counts("A")
+        pc["cost_rate_cards"] = 0
+        r = prm.evaluate_set_readiness("A", pc)
+        self.assertEqual(r["verdict"], "FAIL")
+        self.assertIn("cost_rate_cards", r["failing_keys"])
+
+    def test_m3_does_not_require_m4_run_products(self) -> None:
+        # M3 就绪不因缺 source event manifest / 实际 cost events 而 FAIL（二者 M4 运行产物）
+        pc = _full_counts("A")  # 刻意不含 cost_source_event_manifests / cost_events
+        r = prm.evaluate_set_readiness("A", pc)
+        self.assertEqual(r["verdict"], "PASS", r["failing_keys"])
+        row_keys = {row["key"] for row in r["rows"]}
+        self.assertNotIn("cost_source_event_manifests", row_keys)
+        self.assertNotIn("cost_events", row_keys)
+
+    def test_known_r5_input_binding_incomplete_fails(self) -> None:
+        pc = _full_counts("A")
+        pc["known_r5_input_binding_completeness"] = 0.99  # 输入绑定不完备
+        r = prm.evaluate_set_readiness("A", pc)
+        self.assertEqual(r["verdict"], "FAIL")
+        self.assertIn("known_r5_hard_veto_cases_and_registered_variants_recall",
+                      r["failing_keys"])
+
+    def test_known_r5_row_statistic_is_input_binding_not_recall(self) -> None:
+        # §5.4：该门口径必须是 M3 输入绑定完备度，非运行后 recall
+        r = prm.evaluate_set_readiness("A", _full_counts("A"))
+        row = next(x for x in r["rows"]
+                   if x["key"] == "known_r5_hard_veto_cases_and_registered_variants_recall")
+        self.assertEqual(row["statistic"], "input_binding_completeness")
 
 
 if __name__ == "__main__":

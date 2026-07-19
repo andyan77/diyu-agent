@@ -75,12 +75,15 @@ KEY_MAP = {
     "review_judgment_records": ("review_calibration", "judgment 记录(2×item)", False, "record_count", "M3"),
     # 特殊键
     "deterministic_disclosure_obligation_types_required": ("disclosure", "distinct obligation_type 数", False, "type_coverage", "M3"),
-    "known_r5_hard_veto_cases_and_registered_variants_recall": ("entailment", "已知 R5 硬否决+注册变体召回", False, "recall", "M3"),
-    # cost：M4 运行产物（本 per-set 门不计）；矩阵登记阶段以备追踪
-    "cost_events": ("cost", "完整成本事件", False, "event_count", "M4"),
-    "cost_expected_event_manifests": ("cost", "expected 事件 manifest", False, "manifest", "M3"),
-    "cost_source_event_manifests": ("cost", "source 事件 manifest", False, "manifest", "M3"),
-    "cost_rate_cards": ("cost", "费率卡", False, "manifest", "M3"),
+    # §5.4：M3 只证「已知 R5 硬否决输入案例+注册变体绑定完备」（input binding），非运行后 recall
+    "known_r5_hard_veto_cases_and_registered_variants_recall": ("entailment", "已知 R5 硬否决输入+注册变体绑定完备度", False, "input_binding_completeness", "M3"),
+    # cost（§5.4 阶段边界）：
+    #   M3 冻结 = expected 事件 manifest + 费率卡（预先登记的口径）；本门强制其在场。
+    #   M4 运行产物 = 实际 cost events + source append-only 事件 manifest；M3 不产不检。
+    "cost_events": ("cost", "实际成本事件（M4 运行产物）", False, "event_count", "M4"),
+    "cost_expected_event_manifests": ("cost", "expected 事件 manifest（M3 冻结）", False, "manifest", "M3"),
+    "cost_source_event_manifests": ("cost", "source append-only 事件 manifest（M4 运行产物）", False, "manifest", "M4"),
+    "cost_rate_cards": ("cost", "费率卡（M3 冻结）", False, "manifest", "M3"),
 }
 
 # per-set 就绪门只强制 stage==M3 且 statistic 为可计数/覆盖类的键；这些是「逐套逐模块数量硬门」
@@ -88,6 +91,10 @@ COUNT_KEYS = tuple(k for k, v in KEY_MAP.items()
                    if v[4] == "M3" and v[3] in
                    ("detection_positive", "detection_negative", "class_count",
                     "pair_count", "det_count", "item_count", "record_count"))
+# §5.4：M3 冻结的成本输入 manifest 门（expected 事件 manifest + 费率卡）——STAGE 驱动，
+# 确定性排除 cost_source_event_manifests / cost_events（二者 STAGE=M4，运行产物，M3 不检）。
+M3_MANIFEST_KEYS = tuple(k for k, v in KEY_MAP.items()
+                         if v[4] == "M3" and v[3] == "manifest")
 FAMILIES = ("F1_PEOPLE_AND_REAL_SCENE", "F2_PROFESSIONAL_AND_SEARCH",
             "F3_PRODUCT_RELATION_AND_AESTHETIC", "F4_STORE_LOCAL_AND_RETAIL",
             "F5_ENTERPRISE_LONG_TERM_TRUST")
@@ -115,7 +122,19 @@ def evaluate_set_readiness(set_id: str, public_counts: dict,
                      "actual": actual, "delta": actual - req, "pass": ok,
                      "reuse_allowed": reuse, "statistic": stat})
 
-    # obligation type coverage (>=4 distinct) —— 顶层聚合（同 known_r5_recall）
+    # §5.4：M3 冻结成本输入 manifest 门（expected 事件 manifest + 费率卡；顶层聚合，非 counts）。
+    # 不检 cost_source_event_manifests / cost_events（M4 运行产物，STAGE=M4 已从此集排除）。
+    for key in M3_MANIFEST_KEYS:
+        req = mins[key]
+        actual = int(public_counts.get(key, 0))
+        ok = actual >= req
+        all_pass &= ok
+        module, caliber, reuse, stat, stage = KEY_MAP[key]
+        rows.append({"key": key, "module": module, "required": req,
+                     "actual": actual, "delta": actual - req, "pass": ok,
+                     "reuse_allowed": reuse, "statistic": stat})
+
+    # obligation type coverage (>=4 distinct) —— 顶层聚合
     obl_req = mins["deterministic_disclosure_obligation_types_required"]
     obl_actual = int(public_counts.get("deterministic_disclosure_obligation_types_present", 0))
     obl_ok = obl_actual >= obl_req
@@ -125,15 +144,16 @@ def evaluate_set_readiness(set_id: str, public_counts: dict,
                  "delta": obl_actual - obl_req, "pass": obl_ok, "reuse_allowed": False,
                  "statistic": "type_coverage"})
 
-    # known-R5 recall (>=1.0)
+    # §5.4：known-R5 输入绑定完备度 (>=1.0) —— M3 冻结输入属性（所有已知 R5 硬否决案例+
+    # 注册变体均作为输入绑定），非运行后 recall（后者 M4 盲预测才产生，M3 不得据此伪造 recall=1）。
     r5_req = mins["known_r5_hard_veto_cases_and_registered_variants_recall"]
-    r5_actual = float(public_counts.get("known_r5_recall", 0.0))
+    r5_actual = float(public_counts.get("known_r5_input_binding_completeness", 0.0))
     r5_ok = r5_actual >= r5_req
     all_pass &= r5_ok
     rows.append({"key": "known_r5_hard_veto_cases_and_registered_variants_recall",
                  "module": "entailment", "required": r5_req, "actual": r5_actual,
                  "delta": round(r5_actual - r5_req, 4), "pass": r5_ok,
-                 "reuse_allowed": False, "statistic": "recall"})
+                 "reuse_allowed": False, "statistic": "input_binding_completeness"})
 
     # 模块 gold 字段覆盖（9 模块全部 gold 字段须在场）
     coverage = public_counts.get("module_gold_field_coverage", {})
@@ -220,7 +240,9 @@ def public_counts_from_old_qual(set_id: str) -> dict:
     return {
         "set": set_id, "counts": counts,
         "deterministic_disclosure_obligation_types_present": 0,
-        "known_r5_recall": 0.0,
+        "known_r5_input_binding_completeness": 0.0,
+        # 旧 QUAL 无 M3 冻结成本输入 → 0 → M3 manifest 门确定性 FAIL（§5.4）
+        "cost_expected_event_manifests": 0, "cost_rate_cards": 0,
         "module_gold_field_coverage": {"risk_classification": ["gold_risk"],
                                        "entailment": ["gold_label", "gold_risk"]},
         "family_coverage": sorted(fam.keys()),
@@ -268,6 +290,8 @@ def build_requirement_matrix(actuals: dict | None = None) -> dict:
         "note": "actual 为 pre-recovery 快照（旧 QUAL 公开聚合，7 模块=0）；R4 由保全工具以新数据重填",
         "entries": entries,
         "m3_enforced_count_keys": list(COUNT_KEYS),
+        "m3_enforced_manifest_keys": list(M3_MANIFEST_KEYS),
+        "m4_run_product_keys": [k for k, v in KEY_MAP.items() if v[4] == "M4"],
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "record_digest": "",
     }
