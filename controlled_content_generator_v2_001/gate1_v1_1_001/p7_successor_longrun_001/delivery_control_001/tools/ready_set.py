@@ -140,7 +140,7 @@ def _verify_closed_pass_binding(status: dict,
         return False, ("candidate commit 3-way mismatch/invalid "
                        f"(closeout={co_c[:12]} handoff={ho_c[:12]} "
                        f"binding={bind_c[:12]}) -> fail-closed")
-    # (d) generation/index 不能只是任意非空字符串
+    # (d) generation/index 格式预门（廉价拦任意串；真绑定见 (d2)）
     for gk in ("qual_a_active_generation", "qual_b_active_generation"):
         if not _GENERATION_RE.match(str(binding.get(gk, ""))):
             return False, (f"{gk} not a structured active-generation id "
@@ -148,11 +148,37 @@ def _verify_closed_pass_binding(status: dict,
     if not _DIGEST_RE.fullmatch(str(binding.get("qualification_index_digest", ""))):
         return False, ("qualification_index_digest not a valid 64-hex digest "
                        "(arbitrary string rejected) -> fail-closed")
-    for fk in ("gold_sha256", "faces_sha256"):
-        if not _DIGEST_RE.fullmatch(str(binding.get(fk, ""))):
-            return False, f"closed_pass_binding.{fk} not a valid digest -> fail-closed"
+    # (d2) §四.4 真实 generation/index 绑定：跟随磁盘 active pointer→generation manifest→
+    #      qualification index 链逐层复算文件摘要，绑定所声明的 active generation / index /
+    #      gold / faces 必须 == 本链复算值（不再只信名字格式与 digest 格式）。
+    try:
+        qgen = _load(DC.parent / "m3_data_supply_001/tools/qual_generation.py",
+                     "qgen_interlock")
+    except (OSError, ImportError) as exc:
+        return False, f"qual_generation unloadable for gen binding ({exc}) -> fail-closed"
+    qual_dir = p7 / "m3_data_supply_001/gold/qual"
+    manifests: dict[str, dict] = {}
+    for set_id, gk in (("A", "qual_a_active_generation"),
+                       ("B", "qual_b_active_generation")):
+        resolved = qgen.resolve_active_generation(qual_dir, set_id)
+        if resolved["errors"] or resolved["manifest"] is None:
+            return False, (f"generation chain {set_id} unresolved on disk: "
+                           f"{resolved['errors'][:3]} -> fail-closed")
+        manifest = resolved["manifest"]
+        if manifest.get("generation_id") != binding.get(gk):
+            return False, (f"{gk} not bound to disk active generation "
+                           f"(binding={binding.get(gk)} disk="
+                           f"{manifest.get('generation_id')}) -> fail-closed")
+        if manifest.get("dataset_manifest_digest") != binding.get(
+                "dataset_manifest_digest", manifest.get("dataset_manifest_digest")):
+            return False, f"generation {set_id} dataset_manifest mismatch -> fail-closed"
+        manifests[set_id] = manifest
+    combined = qgen.combined_index_digest(manifests["A"], manifests["B"])
+    if binding.get("qualification_index_digest") != combined:
+        return False, ("qualification_index_digest not bound to disk index content "
+                       "(both sets' index recompute) -> fail-closed")
     # (e) readiness 深校验：schema/contract + record_digest 自洽 + verdict 从
-    #     rows/coverage/governance 重算 + set 匹配 + gold/faces sha 与绑定逐项一致
+    #     rows/coverage/governance 重算 + set 匹配 + gold/faces sha 与**真 generation manifest**一致
     try:
         prm = _load(DC.parent / "m3_data_supply_001/tools/pre_m0_readiness.py",
                     "prm_interlock")
@@ -172,14 +198,15 @@ def _verify_closed_pass_binding(status: dict,
         if prm.recompute_verdict(receipt) != "PASS":
             return False, (f"readiness {set_id} internal verdict recompute != PASS "
                            "(forged verdict:PASS over failing rows) -> fail-closed")
-        if (receipt.get("public_counts_gold_sha256") != binding.get("gold_sha256")
+        manifest = manifests[set_id]
+        if (receipt.get("public_counts_gold_sha256") != manifest.get("gold_sha256")
                 or receipt.get("public_counts_faces_sha256")
-                != binding.get("faces_sha256")):
-            return False, (f"readiness {set_id} gold/faces sha not bound to "
-                           "closed_pass_binding -> fail-closed")
+                != manifest.get("faces_sha256")):
+            return False, (f"readiness {set_id} gold/faces sha not bound to active "
+                           "generation manifest -> fail-closed")
     return True, ("closed_pass_binding verified (semantic: closeout M3 PASS + "
                   "handoff M3->M4 closure + candidate 3-way + readiness recompute + "
-                  "gen/index/gold/faces bound)")
+                  "real generation/index chain recomputed + per-set gold/faces bound)")
 
 
 def m3_recovery_active(milestones_dir: Path | None = None) -> tuple[bool, str]:

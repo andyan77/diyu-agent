@@ -38,6 +38,11 @@ def _load_p7_tool(rel: str, name: str):
 
 
 prm = _load_p7_tool("m3_data_supply_001/tools/pre_m0_readiness.py", "prm_interlock_test")
+qgen = _load_p7_tool("m3_data_supply_001/tools/qual_generation.py", "qgen_interlock_test")
+fx = _load_p7_tool("m3_data_supply_001/tools/qual_core_fixtures.py", "fx_interlock_test")
+
+_GOLD_SHA = "0" * 64
+_FACES_SHA = "f" * 64
 
 _HANDOFF_CLOSURE_RULE = (
     "关闭提交不自指：由 ORIGIN_ANCHOR.v2 锚定——锚提交的第一父提交必须等于锚文件内记录的 "
@@ -45,7 +50,8 @@ _HANDOFF_CLOSURE_RULE = (
     "anchor→closeout→candidate 全链")
 
 
-def _full_public_counts(set_id: str, *, failing: bool = False) -> dict:
+def _full_public_counts(set_id: str, *, failing: bool = False,
+                        gold_sha: str = _GOLD_SHA, faces_sha: str = _FACES_SHA) -> dict:
     mins = prm.load_minimums()
     counts = {k: mins[k] + 5 for k in prm.COUNT_KEYS}
     if failing:
@@ -62,7 +68,7 @@ def _full_public_counts(set_id: str, *, failing: bool = False) -> dict:
         "qual_order_ok": True, "sealed_no_leak": True,
         "two_independent_labels_per_record": True,
         "adjudication_on_disagreement": True,
-        "faces_sha256": "f" * 64, "gold_sha256": "0" * 64,
+        "faces_sha256": faces_sha, "gold_sha256": gold_sha,
     }
 
 
@@ -111,10 +117,16 @@ def _make_closed_pass_artifacts(mdir: Path, *, corrupt: str | None = None) -> di
       'candidate_mismatch'       handoff.accepted_candidate_commit != closeout/binding
       'index_arbitrary'          qualification_index_digest 为任意非摘要字符串
       'readiness_internally_invalid'  就绪 verdict=PASS/failing_keys=[] 但 rows 内有 pass=False
+      §四.4 真实 generation 链负测：
+      'wrong_generation'         binding.qual_a_active_generation 格式正确但≠盘上真 generation
+      'index_tampered'           index 文件内容被改，文件 sha≠manifest 声明（内容篡改）
+      'gold_faces_mismatch'      readiness gold/faces≠active generation manifest（gold/faces 不一致）
     """
     import hashlib
     p7 = mdir.parents[1]
     candidate = "c" * 40
+    qual_dir = p7 / "m3_data_supply_001/gold/qual"
+    qual_dir.mkdir(parents=True, exist_ok=True)
 
     def _write(rel: str, obj: dict) -> tuple[Path, str]:
         target = p7 / rel
@@ -123,16 +135,30 @@ def _make_closed_pass_artifacts(mdir: Path, *, corrupt: str | None = None) -> di
         target.write_bytes(blob)
         return target, hashlib.sha256(blob).hexdigest()
 
+    # §四.4：落真实 generation 链（active pointer→manifest→index），gold/faces 与就绪回执一致。
+    records = fx.build_core_gold_records()
+    built = {}
+    for sid in ("A", "B"):
+        built[sid] = qgen.build_generation(
+            records, set_id=sid, generation_id=f"QUAL_{sid}_GEN_R3_001",
+            dataset_manifest_digest=fx.DMD, faces_sha256=_FACES_SHA,
+            gold_sha256=_GOLD_SHA, qual_dir=qual_dir)
+    if corrupt == "index_tampered":
+        ipath = qual_dir / built["A"]["manifest"]["qualification_index_path"]
+        ipath.write_text(ipath.read_text(encoding="utf-8") + " ", encoding="utf-8")
+
     # closeout：完整 typed 回执（candidate_commit="c"*40）；负测 result=FAIL
     co_result = "FAIL" if corrupt == "closeout_result_fail" else "PASS"
     closeout = _mk_closeout("M3", co_result)
     _, closeout_digest = _write(
         "delivery_control_001/milestones/M3/CLOSEOUT_RECEIPT.v2.json", closeout)
 
-    # readiness A/B：完整就绪回执（真 evaluate_set_readiness + close_record）
+    # readiness A/B：完整就绪回执（真 evaluate_set_readiness + close_record）；
+    # gold/faces 与 generation manifest 一致（gold_faces_mismatch 负测下 A 侧故意错开）。
+    a_gold = "9" * 64 if corrupt == "gold_faces_mismatch" else _GOLD_SHA
     ra = receipts.close_record(prm.evaluate_set_readiness(
-        "A", _full_public_counts("A", failing=(corrupt == "readiness_fail"))),
-        "record_digest")
+        "A", _full_public_counts("A", failing=(corrupt == "readiness_fail"),
+                                 gold_sha=a_gold)), "record_digest")
     if corrupt == "readiness_internally_invalid":
         ra["rows"][0]["pass"] = False       # 内部 rows 有失败项
         ra["verdict"] = "PASS"              # 但 verdict/failing_keys 洗成 PASS/[]
@@ -172,8 +198,13 @@ def _make_closed_pass_artifacts(mdir: Path, *, corrupt: str | None = None) -> di
         (p7 / "delivery_control_001/milestones/M3/CLOSEOUT_RECEIPT.v2.json"
          ).write_text('{"tampered": true}', encoding="utf-8")
 
-    index_digest = ("not-a-real-index-digest" if corrupt == "index_arbitrary"
-                    else "f" * 64)
+    if corrupt == "index_arbitrary":
+        index_digest = "not-a-real-index-digest"
+    else:
+        index_digest = qgen.combined_index_digest(
+            built["A"]["manifest"], built["B"]["manifest"])
+    a_gen = ("QUAL_A_GEN_WRONG_999" if corrupt == "wrong_generation"
+             else "QUAL_A_GEN_R3_001")
     return {
         "closeout_receipt_path": "delivery_control_001/milestones/M3/CLOSEOUT_RECEIPT.v2.json",
         "closeout_receipt_digest": closeout_digest,
@@ -183,11 +214,12 @@ def _make_closed_pass_artifacts(mdir: Path, *, corrupt: str | None = None) -> di
         "qual_b_readiness_digest": rb_digest,
         "handoff_path": "delivery_control_001/milestones/M3/HANDOFF.v2.json",
         "handoff_digest": handoff_digest,
-        "qual_a_active_generation": "QUAL_A_GEN_R3_001",
+        "qual_a_active_generation": a_gen,
         "qual_b_active_generation": "QUAL_B_GEN_R3_001",
         "qualification_index_digest": index_digest,
         "closure_candidate_commit": candidate,
-        "gold_sha256": "0" * 64, "faces_sha256": "f" * 64,
+        "dataset_manifest_digest": fx.DMD,
+        "gold_sha256": _GOLD_SHA, "faces_sha256": _FACES_SHA,
     }
 
 
@@ -335,6 +367,38 @@ class M3RecoveryInterlock(unittest.TestCase):
             active, why = ready_set_mod.m3_recovery_active(mdir)
             self.assertTrue(active, why)
             self.assertIn("recompute", why.lower())
+
+    # ---- §四.4 真实 generation/index 绑定 3 类负测 ----
+
+    def test_helper_wrong_generation_fails_closed(self) -> None:
+        # §四.4 负测A：binding.qual_a_active_generation 格式正确但≠盘上真 generation id
+        with tempfile.TemporaryDirectory() as tmp:
+            mdir = Path(tmp) / "milestones"
+            _write_recovery_status(mdir, "CLOSED_PASS",
+                                   corrupt_binding="wrong_generation")
+            active, why = ready_set_mod.m3_recovery_active(mdir)
+            self.assertTrue(active, why)
+            self.assertIn("active generation", why.lower())
+
+    def test_helper_index_tampered_content_fails_closed(self) -> None:
+        # §四.4 负测B：index digest 格式正确但 index 文件内容被改（文件 sha≠manifest 声明）
+        with tempfile.TemporaryDirectory() as tmp:
+            mdir = Path(tmp) / "milestones"
+            _write_recovery_status(mdir, "CLOSED_PASS",
+                                   corrupt_binding="index_tampered")
+            active, why = ready_set_mod.m3_recovery_active(mdir)
+            self.assertTrue(active, why)
+            self.assertIn("generation chain", why.lower())
+
+    def test_helper_gold_faces_mismatch_fails_closed(self) -> None:
+        # §四.4 负测C：readiness gold/faces 与 active generation manifest 不一致
+        with tempfile.TemporaryDirectory() as tmp:
+            mdir = Path(tmp) / "milestones"
+            _write_recovery_status(mdir, "CLOSED_PASS",
+                                   corrupt_binding="gold_faces_mismatch")
+            active, why = ready_set_mod.m3_recovery_active(mdir)
+            self.assertTrue(active, why)
+            self.assertIn("gold/faces", why.lower())
 
     def test_ready_set_m4_ready_without_recovery(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

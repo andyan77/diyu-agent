@@ -215,5 +215,52 @@ class VariantConstructionFix(unittest.TestCase):
             self.qr._build_variant_tasks(self._synthetic_by_fam(), "fd", bad)
 
 
+class CapacityPrecheckMechanical(unittest.TestCase):
+    """§五：从**真实**抽样框机械复算每套供给，逐类/逐族与合同下限比较（非只读 plan 静态数）。"""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.cap = _load(P7 / "m3_data_supply_001/tools/qual_capacity_precheck.py",
+                        "qual_capacity_precheck")
+        cls.result = cls.cap.precheck()
+        cls.plan = json.loads(PLAN.read_text(encoding="utf-8"))
+        cls.mins = json.loads(CONTRACT.read_text(encoding="utf-8"))["qualification_set_minimums"]
+
+    def test_verdict_feasible_and_no_insufficient(self) -> None:
+        self.assertEqual(self.result["verdict"], "FEASIBLE",
+                         self.result["insufficient_classes"])
+        self.assertEqual(self.result["insufficient_classes"], [])
+
+    def test_per_set_supply_meets_each_claim_class_minimum(self) -> None:
+        for row in self.result["class_rows"]:
+            self.assertGreaterEqual(row["per_set_supply"], row["required"],
+                                    row["class"])
+            self.assertTrue(row["ok"], row["class"])
+
+    def test_frame_digest_bound_to_real_frame(self) -> None:
+        frame = json.loads((P7 / "m3_data_supply_001/SAMPLING_FRAME.v1.json"
+                            ).read_text(encoding="utf-8"))
+        self.assertEqual(self.result["supply"]["frame_digest"], frame["frame_digest"])
+
+    def test_mechanical_supply_matches_plan_order(self) -> None:
+        # 机械复算的每套供给 应与 plan 记载的 ~510 同量级（真源一致性）
+        mech = self.result["supply"]["per_set_claim_source_group_supply"]
+        plan_supply = self.plan["per_set_capacity_feasibility"][
+            "per_set_distinct_claim_source_groups_approx"]
+        self.assertLessEqual(abs(mech - plan_supply), 20,
+                             f"mechanical {mech} vs plan {plan_supply}")
+
+    def test_binding_family_floor(self) -> None:
+        # F5 最薄族每套供给 ≥ 每族下限（紧但可行）
+        rows = {r["family"]: r for r in self.result["family_rows"]}
+        self.assertTrue(rows["F5_ENTERPRISE_LONG_TERM_TRUST"]["ok"])
+        self.assertEqual(self.result["supply"]["binding_family"],
+                         "F5_ENTERPRISE_LONG_TERM_TRUST")
+
+    def test_variants_do_not_inflate_supply(self) -> None:
+        # 独立单位口径必须是 source_group（同源变体不增有效 N）
+        self.assertIn("source_group", self.result["independent_unit_rule"])
+
+
 if __name__ == "__main__":
     unittest.main()

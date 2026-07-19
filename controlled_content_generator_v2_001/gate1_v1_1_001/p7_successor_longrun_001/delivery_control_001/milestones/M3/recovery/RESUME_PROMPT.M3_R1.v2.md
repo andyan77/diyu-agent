@@ -1,6 +1,29 @@
 # M3-R1 恢复续跑 Prompt v2
 # 基线 392c87f · Opus 4.8 主执行 · §5.2 → R6
 
+---
+## ⟪SESSION 4 CHECKPOINT ADDENDUM（2026-07-18，最新磁盘态；先读本块再读全文）⟫
+
+**当前 HEAD 基线**：`96d5084` 之后本会话新增 1 提交（R3-build 确定性子件）。以实际 HEAD 为准（其含 96d5084）。RUN_JOURNAL 现 **53 条 VALID**（非全文所述 50/52）。M3_RECOVERY_STATUS=ACTIVE 未改。M4 保持 fail-closed（launcher dry-run refused=true / ready_set M4 ready=False）。
+
+**session4 已交付（确定性、零 LLM、已机器验证）**：
+- **§四.1 kind support**：`annotation_protocol_annexC_qual.v1.json` qual_variant_constructor 扩至 **6 kind**（CONTRADICTION_INJECT/RISK_ELEVATE/EVIDENCE_INSUFFICIENT/BOUNDARY_OMIT/OMISSION_MISLEAD/LEGAL_NEGATIVE_CONTROL）+ sha 重算 + `challenge_kinds`/`legacy_kind_compat_map`（HIGH_RISK_INJECT→RISK_ELEVATE，**不回写旧冻结 G2**）；`qual_runner.py` `CHALLENGE_KINDS`/`normalize_kind`/题面钉 `challenge_kind`/face 回执 `per_challenge_kind`。
+- **§四.3 真 core 路径**：`qual_core_fixtures.build_core_eval_records()`（九模块 gold+predicted 最小记录经 assemble_gold_record 装配）→ 测试直接喂 `calibration.qualify_*` + `formulaic.qualify_formulaic_construct` 真 core（`test_qual_core_fixtures` 6→18 测，含缺字段/坏值翻模块门负例）。
+- **§四.4 真 generation 绑定**：新增 `m3_data_supply_001/tools/qual_generation.py`（active pointer→generation manifest→qualification index 真文件链，逐层复算文件 sha256）；`ready_set._verify_closed_pass_binding` 以真链复算取代纯格式校验（per-set gold/faces 绑真 manifest）；3 负测经真 ready_set gate + `test_qual_generation` 8 库直测。
+- **§五 容量预检**：新增 `m3_data_supply_001/tools/qual_capacity_precheck.py`（真实 SAMPLING_FRAME+DEV_PARTITION 机械算每套供给 510，逐类/逐族比合同下限）→ **FEASIBLE**（510≥max类下限300；F5 每套45≥每族下限40；同源变体不增有效N）；+6 测。
+- 测试：**delivery_control 187 passed**（+29）+ **eval_audit_spine 53**；ready_set selftest ALL_PASS；checker selftest ALL_NEGATIVE_CASES_ENFORCED。
+
+**R3-build 剩余（下一会话，与 §六 真实 pilot 耦合，故本会话未建以免半破损中间态）**：
+1. **§四.1 七模块富标签**：`reference/atomization/fact_chain/formulaic/disclosure/omission/review` 的构造 + 双盲标注（把 `annotation_protocol.v1.json#labeler` 扩至捕获富 gold：present/attributes/atom_partition/safe_to_clear/misleading/obligation/verdict/decision）+ 裁决。
+2. **§四.2 goldfreeze 富派生**：重写 `qual_runner.cmd_goldfreeze` 为逐 case 经 `assemble_gold_record` 派生逐模块**验证器合规**记录（cross_module_reuse 登记），**删旧简化非合规写入路径**；可先用 stubbed 富标签确定性测派生，再由 §六 pilot 喂真标签。
+3. **§六 真实小批 pilot**：席A=Codex（**沙箱外** `codex exec ... -s read-only` gpt-5.6-sol）/席B=Claude（`claude -p --model claude-opus-4-8`）/仲裁隔离；6 kind 各≥1；同 source_group 变体证 raw↑ 而有效N不变；review 1 item×2 judgment；真实分歧走一次仲裁；链：真源→构造→盲标→仲裁→assemble→九模块真 core→qual_generation 建链→custody 复算→readiness 预检（允许失败仅规模/类下限）。
+4. **§七 自动 R3-run**（pilot 全绿 + 容量预检过后，不再问授权）→ R4→R5→R6。
+
+**已就位骨架（复用，勿重建）**：`qual_record_assembly.assemble_gold_record`（装配范式）/`qual_core_fixtures`（九模块记录+真 core eval）/`qual_generation`（真 generation 链）/`qual_custody_recompute`（密封复算）/`qual_capacity_precheck`（供给）/`pre_m0_readiness`（就绪门）。
+
+**运维真值（续）**：codex 步须**沙箱外**（`dangerouslyDisableSandbox`；沙箱内 app-server 只读 FS os error 30）；本地 commit/push 亦须沙箱外（沙箱内 worktree gitdir 只读 + 无网）；git **读**（rev-parse/status）沙箱内可跑。成本/会话额度**非停工门**=可恢复中断。
+---
+
 你是 M3 恢复阶段的主执行者，实际主模型必须为 claude-opus-4-8。
 
 目标：从磁盘检查点继续完成 M3，而不是重新规划、重新审议或进入 M4。

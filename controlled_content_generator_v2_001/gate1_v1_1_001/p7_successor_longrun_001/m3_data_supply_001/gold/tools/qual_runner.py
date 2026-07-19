@@ -46,7 +46,19 @@ import labeling_lib as L                  # noqa: E402
 from spine.canonical import digest_json   # noqa: E402
 
 BATCH = 10
-VARIANT_KINDS = ("CONTRADICTION_INJECT", "HIGH_RISK_INJECT", "OMISSION_MISLEAD")
+# R3-build §四.1：6 种 challenge kind（真源 = CAPACITY_AND_CONSTRUCTION_PLAN.variant_construction.kinds
+# + annexC.challenge_kinds；此常量为文档/回退，实际数量由 plan 驱动 _build_variant_tasks）。
+CHALLENGE_KINDS = ("CONTRADICTION_INJECT", "RISK_ELEVATE", "EVIDENCE_INSUFFICIENT",
+                   "BOUNDARY_OMIT", "OMISSION_MISLEAD", "LEGAL_NEGATIVE_CONTROL")
+# 旧冻结 generation（G2 等）用 HIGH_RISK_INJECT；新 generation 用 RISK_ELEVATE。
+# 读旧变体时经此映射对齐语义，绝不回写旧冻结数据（annexC.legacy_kind_compat_map 真源）。
+LEGACY_KIND_MAP = {"HIGH_RISK_INJECT": "RISK_ELEVATE"}
+VARIANT_KINDS = CHALLENGE_KINDS  # 向后兼容旧引用名
+
+
+def normalize_kind(kind: str) -> str:
+    """把旧冻结 generation 的 legacy kind 映射到当前 6-kind 家族（只读向对齐，不回写旧数据）。"""
+    return LEGACY_KIND_MAP.get(kind, kind)
 ROUND_FILES = {
     "round1_top": ("inputs/requests.g3.v1.jsonl", "outputs/first_outputs.g3.v1.jsonl"),
     "round2": ("round2/inputs/requests.g3.v1.jsonl", "round2/outputs/first_outputs.g3.v1.jsonl"),
@@ -306,6 +318,9 @@ def cmd_faces(set_id: str, max_batches: int) -> int:
             t = next(t for t in tasks if t["variant_id"] == r["variant_id"])
             variants_faces.append({
                 "case_id": r["variant_id"], "case_kind": "CHALLENGE_VARIANT",
+                # §四.1：把 challenge kind 钉在题面（经 normalize_kind 对齐 6-kind 家族），
+                # 供 pilot/审计核「六种 kind 各至少运行一次」（真源仍在 variant_intents_goldside）。
+                "challenge_kind": normalize_kind(r.get("variant_kind", t["variant_kind"])),
                 "scenario_id": t["base_case_id"], "family_id": t["family_id"],
                 "item_title": "", "claim_text": r["variant_claim_text"],
                 "claim_boundary": t["claim_boundary"],
@@ -337,6 +352,8 @@ def cmd_faces(set_id: str, max_batches: int) -> int:
         "faces_total": len(faces), "face_batches": len(fb),
         "per_family": dict(sorted(Counter(c["family_id"] for c in faces).items())),
         "per_kind": dict(sorted(Counter(c["case_kind"] for c in faces).items())),
+        "per_challenge_kind": dict(sorted(Counter(
+            c["challenge_kind"] for c in faces if c.get("challenge_kind")).items())),
         "faces_sha256": sha_file(faces_path),
         "faces_location": f"sealed_custody_001/qual_{set_id}/faces_frozen.json（保全区）",
         "intents_sha256": sha_file(sdir / "variant_intents_goldside.json"),

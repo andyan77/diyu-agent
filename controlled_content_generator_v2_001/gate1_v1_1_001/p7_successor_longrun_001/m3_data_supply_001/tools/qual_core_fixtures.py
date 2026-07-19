@@ -26,10 +26,14 @@ sys.path.insert(0, str(P7 / "eval_audit_spine_001"))
 sys.path.insert(0, str(HERE.parent))
 from spine.canonical import digest_json  # noqa: E402
 from spine.formulaic import canonical_pair_id, verdict_from_axes  # noqa: E402
+from spine import calibration as cal  # noqa: E402
+from spine import qualification_data as qd  # noqa: E402
 import qual_record_assembly as asm  # noqa: E402
 
 DMD = "d" * 64
 FAM = "F1_PEOPLE_AND_REAL_SCENE"
+_ATTRS = {"polarity": "AFFIRMATIVE", "modality": "ASSERTED",
+          "time_scope": "PRESENT", "preconditions": None}
 
 # 模块（pre_m0/custody 名） → (m0 module_id, record_role, gold_fields, extra_payload)
 # gold 通道（各经 assemble_gold_record）：8 模块 + review（双审 2 条）。
@@ -231,3 +235,151 @@ def build_formulaic_minibatch() -> dict[str, Any]:
     return {"judgments": judgments, "adjudications": adjudications,
             "candidate_audit": candidate_audit, "candidate_manifest": candidate_manifest,
             "rubric_manifest": rubric, "necessary_grammar_exceptions": [exception]}
+
+
+# ---------------------------------------------------------------- §四.3 真实 core 路径
+# 上面的 GOLD_CHANNELS 记录是**金标（gold-only）**，用于 custody 复算/validate 记录级门。
+# 但 measurement_qualification.v2 的模块门（calibration.qualify_*）是 M0-run 语义：需要
+# 每条记录同时带 predicted_*（被测评测器输出）才能算指标。§四.3 要求「九模块测试实际调用
+# 各模块生产 core，而非只走通用 validate」——本节构造带 gold+predicted 的最小 eval 记录
+# （predicted=gold，平凡正确），逐条经 assemble_gold_record 装配（仍是验证器合规记录），
+# 供测试直接喂 qualify_reference_extraction / qualify_entailment / … 等真 core。
+# 计数门（sample>=300 等）在小批必 False（属允许的规模下限失败）；本节只证结构/证据门可过、
+# 且缺字段/未调 core 时会失败（防「通用 envelope 假绿」）。
+
+
+def _chain_manifest(case_id: str) -> dict[str, Any]:
+    """构造一条通过 calibration.verify_chain_manifest 的合法端到端链清单。"""
+    roles = cal.CHAIN_ROLES
+    objs = {role: digest_json({"chain": case_id, "role": role}) for role in roles}
+    links = [{"from_role": left, "to_role": right,
+              "from_digest": objs[left], "to_digest": objs[right]}
+             for left, right in zip(roles, roles[1:])]
+    manifest = {"schema_version": "eval-spine-e2e-chain-manifest-v1",
+                "object_digests": objs, "links": links, "chain_digest": ""}
+    manifest["chain_digest"] = digest_json(
+        {k: v for k, v in manifest.items() if k != "chain_digest"})
+    return manifest
+
+
+def _eval(case_id: str, module: str, role: str, gold_fields: dict,
+          predicted_payload: dict, *, source_group: str,
+          case_origin: str = "CHALLENGE") -> dict[str, Any]:
+    payload = {"module": module, "record_role": role, "family_id": FAM,
+               "case_origin": case_origin}
+    payload.update(predicted_payload)
+    return asm.assemble_gold_record(
+        case_id=case_id, source_group_id=source_group,
+        source_evidence_digest=digest_json({"src": source_group, "cid": case_id}),
+        dataset_manifest_digest=DMD, gold_fields=gold_fields, payload_fields=payload,
+        reviews_meta=_seats(case_id))
+
+
+def _index(records: list[dict]) -> dict[str, Any]:
+    return qd.build_qualification_record_index(records, dataset_manifest_digest=DMD)
+
+
+def build_core_eval_records() -> dict[str, Any]:
+    """九模块（除 formulaic 见 build_formulaic_minibatch）最小 eval 记录 + 各自 index。
+
+    返回按测试消费口径分组；每组记录带 gold+predicted，predicted=gold（平凡正确），
+    经 assemble_gold_record 装配，可直接喂对应生产 core。缺字段/篡改由测试负例覆盖。
+    """
+    out: dict[str, Any] = {}
+
+    # reference_extraction —— detection(base) + 属性正确性；matched 行需 gold/predicted attributes
+    ref = [
+        _eval(f"ev-ref-p{i}", "reference_extraction", "qualification_case",
+              {"gold_present": True, "gold_risk": "HIGH", "gold_attributes": dict(_ATTRS)},
+              {"predicted_present": True, "predicted_risk": "HIGH",
+               "predicted_attributes": dict(_ATTRS), "field_type": "PERFORMANCE_CLAIM"},
+              source_group=f"sg-ref-p{i}")
+        for i in range(2)] + [
+        _eval("ev-ref-n0", "reference_extraction", "qualification_case",
+              {"gold_present": False, "gold_risk": "LOW", "gold_attributes": dict(_ATTRS)},
+              {"predicted_present": False, "predicted_risk": "LOW",
+               "predicted_attributes": dict(_ATTRS), "field_type": "GENERIC"},
+              source_group="sg-ref-n0", case_origin="NATURAL")]
+    out["reference_extraction"] = {"records": ref, "index": _index(ref)}
+
+    # claim_atomization —— detection(base) + 原子划分；predicted 行需 gold/predicted partition
+    atom = [
+        _eval(f"ev-atom-p{i}", "claim_atomization", "qualification_case",
+              {"gold_present": True, "gold_risk": "HIGH",
+               "gold_atom_partition": [["a1", "a2"], ["a3"]]},
+              {"predicted_present": True, "predicted_risk": "HIGH",
+               "predicted_atom_partition": [["a1", "a2"], ["a3"]], "field_type": "COMPOUND"},
+              source_group=f"sg-atom-p{i}")
+        for i in range(2)] + [
+        _eval("ev-atom-n0", "claim_atomization", "qualification_case",
+              {"gold_present": False, "gold_risk": "LOW",
+               "gold_atom_partition": [["b1"]]},
+              {"predicted_present": False, "predicted_risk": "LOW",
+               "predicted_atom_partition": [["b1"]], "field_type": "GENERIC"},
+              source_group="sg-atom-n0", case_origin="NATURAL")]
+    out["claim_atomization"] = {"records": atom, "index": _index(atom)}
+
+    # risk_classification
+    risk = [
+        _eval("ev-risk-h0", "risk_classification", "qualification_case",
+              {"gold_risk": "HIGH"},
+              {"predicted_risk": "HIGH"}, source_group="sg-risk-h0"),
+        _eval("ev-risk-l0", "risk_classification", "qualification_case",
+              {"gold_risk": "LOW"},
+              {"predicted_risk": "LOW"}, source_group="sg-risk-l0",
+              case_origin="NATURAL")]
+    out["risk_classification"] = {"records": risk, "index": _index(risk)}
+
+    # entailment —— 需 predicted_label/abstain/action
+    ent = [
+        _eval("ev-ent-c0", "entailment", "qualification_case",
+              {"gold_label": "CONTRADICTED", "gold_risk": "HIGH"},
+              {"predicted_label": "CONTRADICTED", "predicted_risk": "HIGH",
+               "abstain": False, "action": "HARD_VETO"}, source_group="sg-ent-c0"),
+        _eval("ev-ent-s0", "entailment", "qualification_case",
+              {"gold_label": "SUPPORTED", "gold_risk": "LOW"},
+              {"predicted_label": "SUPPORTED", "predicted_risk": "LOW",
+               "abstain": False, "action": "ALLOW"}, source_group="sg-ent-s0",
+              case_origin="NATURAL")]
+    out["entailment"] = {"records": ent, "index": _index(ent)}
+
+    # fact_chain (qualify_end_to_end) —— 需 gold_safe_to_clear/final_action/chain_manifest
+    fc = [
+        _eval("ev-fc-h0", "fact_chain", "qualification_case",
+              {"gold_risk": "HIGH", "gold_safe_to_clear": False},
+              {"predicted_risk": "HIGH", "final_action": "HARD_VETO",
+               "chain_manifest": _chain_manifest("ev-fc-h0")}, source_group="sg-fc-h0"),
+        _eval("ev-fc-n0", "fact_chain", "qualification_case",
+              {"gold_risk": "LOW", "gold_safe_to_clear": True},
+              {"predicted_risk": "LOW", "final_action": "ALLOW",
+               "chain_manifest": _chain_manifest("ev-fc-n0")}, source_group="sg-fc-n0",
+              case_origin="NATURAL")]
+    out["fact_chain"] = {"records": fc, "index": _index(fc)}
+
+    # disclosure + omission —— 联合 core，共享一个 index（须含两侧记录）
+    disclosure = [
+        _eval(f"ev-disc-{ot[:6]}", "disclosure", "disclosure_case",
+              {"gold_violation": True},
+              {"predicted_hard": True, "obligation_type": ot},
+              source_group=f"sg-disc-{ot[:6]}")
+        for ot in ("SYNTHETIC_IDENTITY_DISCLOSURE",
+                   "PROHIBITED_REAL_IDENTITY_IMPERSONATION",
+                   "EXPLICIT_AUTHORIZATION_BOUNDARY", "PRIVACY_REDACTION_OR_BLOCK")]
+    omission = [
+        _eval("ev-omis-m0", "omission", "omission_case",
+              {"gold_misleading": True, "gold_risk": "HIGH"},
+              {"predicted_flagged": True, "predicted_risk": "HIGH"},
+              source_group="sg-omis-m0"),
+        _eval("ev-omis-c0", "omission", "omission_case",
+              {"gold_misleading": False, "gold_risk": "LOW"},
+              {"predicted_flagged": False, "predicted_risk": "LOW"},
+              source_group="sg-omis-c0", case_origin="NATURAL")]
+    out["disclosure_and_omission"] = {
+        "disclosure": disclosure, "omission": omission,
+        "index": _index(disclosure + omission)}
+
+    # review_calibration —— 复用 gold 通道的 1 item × 2 reviewer judgment
+    review = [r for r in build_core_gold_records()
+              if r.get("module") == "review_calibration"]
+    out["review_calibration"] = {"judgments": review, "index": _index(review)}
+    return out

@@ -2,13 +2,13 @@
  "schema_version": "p7-m3-recovery-progress-v2",
  "recovery_id": "M3_R1",
  "checkpoint_kind": "INTERRUPTED_RESUMABLE",
- "supersedes": "M3_RECOVERY_PROGRESS.v1.json（封存不改）；本 v2 为逐会话累积细粒度进度，session3 更新",
+ "supersedes": "M3_RECOVERY_PROGRESS.v1.json（封存不改）；本 v2 为逐会话累积细粒度进度，session4 更新（R3-build 确定性子件交付）",
  "session": {
-  "ordinal": 3,
-  "identity_ledger": "delivery_control_001/milestones/M3/recovery/SESSION_IDENTITY_LEDGER.M3_R1.jsonl（session_ordinal=3）",
+  "ordinal": 4,
+  "identity_ledger": "delivery_control_001/milestones/M3/recovery/SESSION_IDENTITY_LEDGER.M3_R1.jsonl（session_ordinal=4）",
   "primary_model": "claude-opus-4-8",
-  "resumed_from_head": "392c87f86bc46a819c896f6cf860edcc00017131",
-  "note": "全新顶层 Opus 4.8 会话，从磁盘 392c87f 续 §5.2→R6（R3 前置确定性修复全数完成）"
+  "resumed_from_head": "96d508411d3a6cbf1dfd4cbbc8abd86def215d69",
+  "note": "全新顶层 Opus 4.8 会话，从磁盘 96d5084 续 R3-build；本会话交付 R3-build 确定性子件（§四.1 kinds/§四.3 真 core 路径/§四.4 真 generation 绑定/§五 容量预检），未进 §四.2 goldfreeze 富标签派生 + §六 真实小批 pilot（下一会话）。"
  },
  "canonical_resume_prompt": "delivery_control_001/milestones/M3/recovery/RESUME_PROMPT.M3_R1.v2.md（唯一磁盘入口，取代 v1.md；新会话逐字重投即续）",
  "validated_operational_facts": {
@@ -66,38 +66,61 @@
    "what": "九通道 core fixture：qual_core_fixtures.py 每模块最小记录经 assemble_gold_record 贯通真 spine 验证器(validate_qualification_records+custody core+9模块gold覆盖+m0记录角色映射+formulaic六角色结构门)；+6 测"
   }
  ],
- "test_baseline": "delivery_control 158 passed + eval_audit_spine 53 passed（本会话净增 30 测：§六A+3/§六D+6/§六B+4/§三.1+4/§六E+8/§六C+6-1去重）；ready_set selftest ALL_PASS；checker selftest ALL_NEGATIVE_CASES_ENFORCED",
- "pre_r3_fixes_status": "全部完成（§六A review计数/§六B统计独立容量/§5.2 core fixture=§六C/§5.4 M3-M4边界=§六D/§5.5 M4语义互锁=§三.1/custody端到端=§六E）——§六 A-E + §三.1/§三.2 全数交付并机器验证",
+ "test_baseline": "delivery_control 187 passed(+29净：§四.3 core-fixtures+12/§四.4 interlock+3/generation+8/§五 capacity+6) + eval_audit_spine 53 不变；ready_set selftest ALL_PASS；checker selftest ALL_NEGATIVE_CASES_ENFORCED",
+ "pre_r3_fixes_status": "R3 前置(§六A-E/§三.1/§三.2)全数完成(session3)。R3-build 确定性子件(§四.1 kinds/§四.3 真 core 路径/§四.4 真 generation 绑定/§五 容量预检)完成(session4)。R3-build 剩余=§四.1 七模块富标签构造/双标/裁决 + §四.2 goldfreeze 经 assemble_gold_record 富派生(去旧非合规写入路径)——与 §六 真实 pilot 耦合，下一会话建。",
  "pending": [
   {
-   "stage": "R3-build",
-   "what": "扩展 annexC/qual_runner 支持 6 新 kinds(CONTRADICTION_INJECT/RISK_ELEVATE/EVIDENCE_INSUFFICIENT/BOUNDARY_OMIT/OMISSION_MISLEAD/LEGAL_NEGATIVE_CONTROL)+补 7 模块(reference/atomization/fact_chain/formulaic/disclosure/omission/review)构造+标注+裁决逻辑；goldfreeze 用 assemble_gold_record；跑小规模端到端批次(构造→席A/B→仲裁→assemble→custody→readiness 预检)全绿后才 R3-run。core fixture(qual_core_fixtures)已证装配→验证器贯通，可作 R3-build 骨架起点"
+   "stage": "R3-build(剩余)",
+   "what": "§四.1 七模块(reference/atomization/fact_chain/formulaic/disclosure/omission/review)富标签构造+双盲标注(labeler 扩至富 gold)+裁决；§四.2 cmd_goldfreeze 重写为逐 case 经 assemble_gold_record 派生逐模块验证器合规记录(cross_module_reuse 登记)，删旧简化非合规写入路径；可先用 stubbed 富标签确定性测 goldfreeze 派生，再由 §六 pilot 喂真标签。已就位骨架：qual_core_fixtures(装配范式)/qual_generation(链)/qual_capacity_precheck(供给)"
   },
   {
-   "stage": "R3-run",
-   "what": "密封双盲建标至两套达 measurement_qualification.v2 全下限（席A=codex沙箱外/席B=claude/仲裁/裁决）；可恢复批次；某 generation 不足→整体 superseded 建下一 generation；容量机械证明不足+穷尽合法补量才 HONEST_STOP。数千次跨模型付费调用/多会话——预期多次 INTERRUPTED_RESUMABLE"
+   "stage": "R3-run(pilot 先)",
+   "what": "§六 真实小批端到端：真源→构造(6 kind 各≥1)→席A(Codex 沙箱外 gpt-5.6-sol)/席B(Claude opus-4-8)独立盲标→分歧仲裁→assemble_gold_record→九模块真 core→qual_generation 建链→custody 复算→readiness 预检(允许失败仅规模/类下限)。全绿+容量预检过→§七 自动进正式 R3-run"
   },
   {
    "stage": "R4",
-   "what": "custody(qual_custody_recompute)对两套直算落 QUAL_{A,B}_READINESS_RECEIPT + QUAL_{A,B}_PUBLIC_COUNTS + QUAL_{A,B}_CUSTODY_ANCHORS(§六E 锚)喂 checker；两套 verdict PASS 才进候选审核；checker qual_data_readiness + qual_custody_binding 复核"
+   "what": "custody 落两套 readiness+public_counts+custody anchors 喂 checker；两套 PASS 进候选审"
   },
   {
    "stage": "R5",
-   "what": "全套测试(不减)+§八负测+两份新独立终审(全新 Opus 对抗 + 全新 Codex 复算,不复用主会话/席A/B/仲裁)绑新候选，整改重审"
+   "what": "全测(不减)+§八负测+两份新独立终审(全新 Opus 对抗+全新 Codex 复算)绑新候选"
   },
   {
    "stage": "R6",
-   "what": "版本化重关闭：v2 closeout 八件套 + ORIGIN_ANCHOR.v3 + 推锚 + journal CLOSED_PASS + M3_RECOVERY_STATUS→CLOSED_PASS(带完整 closed_pass_binding：closeout/两套就绪/HANDOFF 路径+摘要 + generation/index/candidate/gold_sha256/faces_sha256)+closure 复算 + launcher --dry-run M4 would_launch=true → 立即退出等 Codex 复审"
+   "what": "v2 关闭八件套+ORIGIN_ANCHOR.v3+推锚+journal CLOSED_PASS+STATUS→CLOSED_PASS(完整 closed_pass_binding，含真 generation 链)+closure 复算+launcher dry-run M4 would_launch=true→退出等 Codex 复审"
   }
  ],
  "invariants_held_at_checkpoint": {
   "m4_fail_closed": true,
-  "m4_fail_closed_evidence": "m3_recovery_active=True(state=ACTIVE)；checker M3 qual_data_readiness + qual_custody_binding 均 ABSENT fail-closed；launcher --dry-run M4 refused=true",
-  "m3_recovery_status_state": "ACTIVE（未改；§三.1 加固后 CLOSED_PASS 须带完整语义合法绑定方放行）",
-  "old_qual_and_close_artifacts": "全部封存不改不揭晓（candidate 84f8fc50/closeout 07414172/anchor 1fbddc48/旧 QUAL）",
+  "m4_fail_closed_evidence": "m3_recovery_active=True(state=ACTIVE)；checker M3 qual_data_readiness+qual_custody_binding ABSENT fail-closed；launcher --dry-run M4 refused=true；ready_set M4 ready=False/M3=RECOVERY_ACTIVE",
+  "m3_recovery_status_state": "ACTIVE（未改）",
+  "old_qual_and_close_artifacts": "全部封存不改不揭晓（candidate 84f8fc50/closeout 07414172/anchor 1fbddc48/旧 QUAL/旧冻结 generation G2 含 HIGH_RISK_INJECT）",
   "working_tree": "干净（提交后；仅 harness 环境 dotfiles/.claude 未跟踪，非任务文件）",
+  "no_sealed_plaintext_in_git": "本会话改动仅代码/测试/config(annexC/qual_generation/qual_capacity_precheck/qual_core_fixtures/qual_runner/ready_set/3 测试文件)；零密封明文/密钥/客户数据入 Git",
   "not_a_honest_stop": "成本/会话额度非停工门；本检查点=可恢复中断"
  },
- "next_action": "全新顶层 Opus 4.8 会话逐字重投 RESUME_PROMPT.M3_R1.v2.md，从磁盘续 R3-build（前置 §六 全过，可直接进 annexC/qual_runner 扩展+7模块构造逻辑，先小批端到端再 R3-run）",
- "record_digest": "afd4c43825bb373a1b01fdd3ebe6dc7943e6abe327b287d4f99110150cde6f75"
+ "next_action": "全新顶层 Opus 4.8 会话逐字重投 RESUME_PROMPT.M3_R1.v2.md，从磁盘 HEAD 续 R3-build 剩余(§四.1 七模块富标签+§四.2 goldfreeze 富派生，先 stubbed 测再 §六 真实 pilot)→§七 R3-run→R4→R5→R6。M4 保持 fail-closed 直至全过。",
+ "record_digest": "5cc9956cc75d35edf95f84a38a6ba2a33858ba5ca496c79d0276c6e4cb1fe98f",
+ "completed_this_session_session4": [
+  {
+   "stage": "§四.1(kind support)",
+   "commit": "PENDING_THIS_COMMIT",
+   "what": "annexC qual_variant_constructor 扩至 6 kind(CONTRADICTION_INJECT/RISK_ELEVATE/EVIDENCE_INSUFFICIENT/BOUNDARY_OMIT/OMISSION_MISLEAD/LEGAL_NEGATIVE_CONTROL)+重算 sha256+challenge_kinds/legacy_kind_compat_map(HIGH_RISK_INJECT→RISK_ELEVATE，不回写旧冻结 G2)；qual_runner CHALLENGE_KINDS/normalize_kind+题面钉 challenge_kind+face 回执 per_challenge_kind"
+  },
+  {
+   "stage": "§四.3(real core path)",
+   "commit": "PENDING_THIS_COMMIT",
+   "what": "qual_core_fixtures.build_core_eval_records()：九模块最小 eval 记录(gold+predicted，predicted=gold)经 assemble_gold_record 装配→直接喂 calibration.qualify_reference_extraction/claim_atomization/risk/entailment/end_to_end/disclosure_and_omission/review_calibration + formulaic.qualify_formulaic_construct 真 core；测试断言结构/证据门过、模块专属返回键在场、缺字段/坏值时模块门翻 False(通用 validate 仍过)。test_qual_core_fixtures 6→18 测"
+  },
+  {
+   "stage": "§四.4(real generation/index binding)",
+   "commit": "PENDING_THIS_COMMIT",
+   "what": "新增 qual_generation.py：active pointer→generation manifest→qualification index 真文件链(逐层复算文件 sha256+自洽摘要+dataset/gold/faces/record_count 一致)；ready_set._verify_closed_pass_binding 以真链复算取代 generation 名/digest 纯格式校验(per-set gold/faces 绑真 manifest，修单字段两套混绑)；3 负测(wrong_generation/index_tampered/gold_faces_mismatch)经真 ready_set gate + 8 库直测(test_qual_generation)"
+  },
+  {
+   "stage": "§五(capacity precheck)",
+   "commit": "PENDING_THIS_COMMIT",
+   "what": "新增 qual_capacity_precheck.py：从真实 SAMPLING_FRAME+DEV_PARTITION 机械算每套 distinct claim source_group 供给(510)逐类/逐族比 measurement_qualification.v2 下限；verdict=FEASIBLE(510≥max类下限300；F5 绑定族每套45≥每族下限40)；同源变体不增有效N；不足→Tier1 定向补量→穷尽真源仍不足才 HONEST_STOP。+6 测"
+  }
+ ]
 }
