@@ -3,10 +3,11 @@
   "task_id": "DIYU_20_CONTENT_PRODUCTS_REMOTE_QUALITY_QUALIFICATION_001",
   "recorded_at": "2026-07-19T02:42:59Z",
   "authorization": {
-    "configured_limit_before": 209,
-    "configured_limit_after": 600,
-    "q20_maximum_new_model_calls_unchanged": 300,
-    "q20_maximum_new_cost_cny_unchanged": 5
+    "runtime_configured_cumulative_limit_before": 209,
+    "runtime_configured_cumulative_limit_after": 600,
+    "q20_maximum_new_model_calls_before": 300,
+    "q20_maximum_new_model_calls_after": 600,
+    "q20_maximum_new_cost_cny": 5
   },
   "configuration_change": {
     "runtime_environment_name": "DIYU_PKG7_MAX_MODEL_CALLS",

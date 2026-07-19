@@ -1,26 +1,43 @@
 {
   "schema": "diyu.q20.review_execution_status.v1",
   "task_id": "DIYU_20_CONTENT_PRODUCTS_REMOTE_QUALITY_QUALIFICATION_001",
-  "terminal_state": "STOPPED_EXTERNAL_OR_BUDGET_BOUNDARY",
-  "review_input_candidate_count": 0,
-  "formal_reviews_started": 0,
-  "formal_reviews_completed": 0,
+  "terminal_state": "FAIL_20_PRODUCT_REMOTE_QUALITY_QUALIFICATION",
+  "candidate_commit": "41623d6bcbcc338eb7745a186ab7da7538faedee",
+  "blind_lock_commit": "be3de48bdcf0dd676f8f2f542e74357afdfe4962",
+  "review_input_candidate_count": 100,
+  "formal_reviews_started": 2,
+  "formal_reviews_completed": 2,
   "reviews": [
     {
       "reviewer_role": "服装品牌自媒体内容审查",
-      "status": "NOT_RUN",
-      "score": null,
-      "reason": "No official first candidates exist because the legal stop occurred before the first task."
+      "reviewer_instance": "/root/apparel_blind_reviewer",
+      "status": "COMPLETED",
+      "score": 84.79,
+      "tasks_ge85": 62,
+      "blind_correct": 100,
+      "hard_vetoes": 3,
+      "cliche_or_near_duplicate_count": 59,
+      "market_at_least_comparable_count": 16,
+      "file": "apparel_media_review.v1.json",
+      "sha256": "4da22b1fac87b6c2e22bf5299ad4efbef467fcf7294122786ee265c6b165dcb4"
     },
     {
       "reviewer_role": "企业新手使用与内容生产审查",
-      "status": "NOT_RUN",
-      "score": null,
-      "reason": "No official first candidates exist because the legal stop occurred before the first task."
+      "reviewer_instance": "/root/enterprise_blind_reviewer",
+      "status": "COMPLETED",
+      "score": 80.16,
+      "tasks_ge85": 27,
+      "blind_correct": 100,
+      "hard_vetoes": 8,
+      "cliche_or_near_duplicate_count": 48,
+      "market_at_least_comparable_count": 17,
+      "file": "enterprise_novice_review.v1.json",
+      "sha256": "8156ccaec74813c547935d83b4a9b690834c893ec3fcc5034b3cfbed43df9425"
     }
   ],
-  "market_comparisons_completed": 0,
-  "blind_identifications_completed": 0,
+  "market_comparisons_completed": 40,
+  "blind_identification_items_completed": 200,
+  "production_model_calls_for_reviews": 0,
   "scores_fabricated": false,
   "third_full_review_started": false
 }

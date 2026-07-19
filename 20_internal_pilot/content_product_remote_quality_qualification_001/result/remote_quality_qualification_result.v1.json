@@ -1,43 +1,125 @@
 {
   "schema": "diyu.q20.remote_quality_qualification_result.v1",
   "task_id": "DIYU_20_CONTENT_PRODUCTS_REMOTE_QUALITY_QUALIFICATION_001",
-  "terminal_state": "STOPPED_EXTERNAL_OR_BUDGET_BOUNDARY",
+  "terminal_state": "FAIL_20_PRODUCT_REMOTE_QUALITY_QUALIFICATION",
   "qualification_claimed": false,
-  "official_model_calls": 0,
-  "official_tasks_started": 0,
-  "official_tasks_completed": 0,
-  "new_cost_cny": 0,
+  "official_model_calls": 382,
+  "official_tasks_started": 100,
+  "official_tasks_completed": 100,
+  "new_cost_cny": 1.369708,
   "acceptance": {
-    "Q20-A01": "PASS",
-    "Q20-A02": "PASS",
-    "Q20-A03": "NOT_RUN",
-    "Q20-A04": "NOT_RUN",
-    "Q20-A05": "NOT_RUN",
-    "Q20-A06": "NOT_RUN",
-    "Q20-A07": "NOT_RUN",
-    "Q20-A08": "NOT_RUN",
-    "Q20-A09": "NOT_RUN",
-    "Q20-A10": "NOT_RUN",
-    "Q20-A11": "NOT_RUN",
-    "Q20-A12": "NOT_RUN",
-    "Q20-A13": "PASS_BUDGET_BOUNDARY_RESPECTED",
-    "Q20-A14": "PASS",
-    "Q20-A15": "PASS_DRAFT_PR_AND_REMOTE_CHECKS"
+    "Q20-A01": true,
+    "Q20-A02": true,
+    "Q20-A03": true,
+    "Q20-A04": false,
+    "Q20-A05": false,
+    "Q20-A06": true,
+    "Q20-A07": false,
+    "Q20-A08": true,
+    "Q20-A09": false,
+    "Q20-A10": true,
+    "Q20-A11": true,
+    "Q20-A12": true,
+    "Q20-A13": true,
+    "Q20-A14": true,
+    "Q20-A15": true
   },
-  "minimum_recovery_condition": {
-    "required_cumulative_model_call_cap": 508,
-    "ledger_model_call_upper_bound_must_remain": 208,
-    "configured_cap_before_recovery": 209,
-    "initial_cost_planning_rate_cny": 0.0187076,
-    "initial_projected_cost_cny": 4.489824,
-    "cost_ledger_refresh_required_after_each_task": true,
-    "maximum_new_cost_cny": 5
-  },
+  "acceptance_failures": [
+    "Q20-A04",
+    "Q20-A05",
+    "Q20-A07",
+    "Q20-A09"
+  ],
   "content_quality_results": {
-    "task_scores_available": false,
-    "product_qualification_matrix_available": false,
-    "market_competitiveness_result_available": false,
-    "reason": "Official production did not start; no quality result can be inferred from frozen inputs or local checks."
+    "formal_overall_average": 82.48,
+    "formal_tasks_ge85": 44,
+    "products_qualified": 0,
+    "reviewers": [
+      {
+        "role": "服装品牌自媒体内容审查",
+        "overall_average": 84.79,
+        "tasks_ge85": 62,
+        "blind_correct": 100,
+        "hard_vetoes": 3,
+        "cliche_or_near_duplicate_count": 59,
+        "market_at_least_comparable_count": 16
+      },
+      {
+        "role": "企业新手使用与内容生产审查",
+        "overall_average": 80.16,
+        "tasks_ge85": 27,
+        "blind_correct": 100,
+        "hard_vetoes": 8,
+        "cliche_or_near_duplicate_count": 48,
+        "market_at_least_comparable_count": 17
+      }
+    ],
+    "product_qualification_matrix": [
+      {"product_id": "CP01", "product_label": "岗位任务视频日志", "task_count": 5, "formal_average": 85.0, "tasks_ge85": 3, "qualified": false},
+      {"product_id": "CP02", "product_label": "门店时段微纪录", "task_count": 5, "formal_average": 80.7, "tasks_ge85": 1, "qualified": false},
+      {"product_id": "CP03", "product_label": "单项手艺全过程", "task_count": 5, "formal_average": 81.1, "tasks_ge85": 0, "qualified": false},
+      {"product_id": "CP04", "product_label": "多岗位协作纪实", "task_count": 5, "formal_average": 85.8, "tasks_ge85": 3, "qualified": false},
+      {"product_id": "CP05", "product_label": "人物成长与职业史", "task_count": 5, "formal_average": 79.2, "tasks_ge85": 1, "qualified": false},
+      {"product_id": "CP06", "product_label": "专业判断切片", "task_count": 5, "formal_average": 76.2, "tasks_ge85": 0, "qualified": false},
+      {"product_id": "CP07", "product_label": "用户问题诊断室", "task_count": 5, "formal_average": 80.5, "tasks_ge85": 1, "qualified": false},
+      {"product_id": "CP08", "product_label": "工艺、面料、版型解构", "task_count": 5, "formal_average": 82.6, "tasks_ge85": 3, "qualified": false},
+      {"product_id": "CP09", "product_label": "适用边界与反选指南", "task_count": 5, "formal_average": 75.7, "tasks_ge85": 1, "qualified": false},
+      {"product_id": "CP10", "product_label": "长期验证档案", "task_count": 5, "formal_average": 84.3, "tasks_ge85": 4, "qualified": false},
+      {"product_id": "CP11", "product_label": "产品诞生与设计取舍", "task_count": 5, "formal_average": 84.9, "tasks_ge85": 4, "qualified": false},
+      {"product_id": "CP12", "product_label": "产品迭代与版本日志", "task_count": 5, "formal_average": 86.1, "tasks_ge85": 3, "qualified": false},
+      {"product_id": "CP13", "product_label": "产品的生活与衣橱角色", "task_count": 5, "formal_average": 79.1, "tasks_ge85": 1, "qualified": false},
+      {"product_id": "CP14", "product_label": "物性影像与感官短片", "task_count": 5, "formal_average": 85.5, "tasks_ge85": 3, "qualified": false},
+      {"product_id": "CP15", "product_label": "商品到店生命周期", "task_count": 5, "formal_average": 83.3, "tasks_ge85": 2, "qualified": false},
+      {"product_id": "CP16", "product_label": "服务复盘", "task_count": 5, "formal_average": 84.4, "tasks_ge85": 3, "qualified": false},
+      {"product_id": "CP17", "product_label": "陈列换陈与空间实验", "task_count": 5, "formal_average": 85.2, "tasks_ge85": 3, "qualified": false},
+      {"product_id": "CP18", "product_label": "城市门店生活志", "task_count": 5, "formal_average": 84.1, "tasks_ge85": 2, "qualified": false},
+      {"product_id": "CP19", "product_label": "经营取舍与决策复盘", "task_count": 5, "formal_average": 80.9, "tasks_ge85": 3, "qualified": false},
+      {"product_id": "CP20", "product_label": "承诺与兑现追踪", "task_count": 5, "formal_average": 84.9, "tasks_ge85": 3, "qualified": false}
+    ],
+    "blind_identification": {
+      "apparel_correct": 100,
+      "enterprise_correct": 100,
+      "each_product_each_reviewer_at_least_4_of_5": true
+    },
+    "anti_template": {
+      "cliche_or_near_duplicate_task_union": 68,
+      "fixed_structure_dominates_majority": true
+    },
+    "market_comparison": {
+      "tasks": 20,
+      "conservative_at_least_comparable": 15,
+      "criterion_met": true
+    },
+    "hard_veto_task_ids": [
+      "Q20-CP05-S4",
+      "Q20-CP09-S4",
+      "Q20-CP11-S4",
+      "Q20-CP14-S4",
+      "Q20-CP17-S4",
+      "Q20-CP18-S4",
+      "Q20-CP19-S2",
+      "Q20-CP19-S4"
+    ]
+  },
+  "review_contract": {
+    "missing_evidence_used_as_deduction_or_veto": false,
+    "same_two_reviewer_instances_preserved": true,
+    "third_full_review_started": false,
+    "production_model_calls_for_reviews": 0
+  },
+  "runtime_recovery": {
+    "initial_output_contract_failures_preserved": true,
+    "repair_authorized_by_later_user_direction": true,
+    "final_100_task_run_restarted_without_reusing_failed_outputs": true,
+    "quality_rerolls": 0,
+    "technical_replays": 1
+  },
+  "execution_safety": {
+    "cross_tenant_account_store_or_browser_leaks": 0,
+    "sensitive_or_secret_leaks": 0,
+    "automatic_publish_count": 0,
+    "real_customer_data_used": false,
+    "active_remote_sessions_after_completion": 0
   },
   "preserved_invariants": {
     "historical_300_changed": false,

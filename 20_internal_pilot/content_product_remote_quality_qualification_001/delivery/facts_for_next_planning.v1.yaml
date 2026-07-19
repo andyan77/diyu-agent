@@ -1,44 +1,46 @@
 schema: diyu.q20.facts_for_next_planning.v1
 task_id: DIYU_20_CONTENT_PRODUCTS_REMOTE_QUALITY_QUALIFICATION_001
-terminal_state: STOPPED_EXTERNAL_OR_BUDGET_BOUNDARY
+terminal_state: FAIL_20_PRODUCT_REMOTE_QUALITY_QUALIFICATION
 facts:
   official_tasks_frozen: 100
-  content_products_frozen: 20
-  tasks_per_product: 5
-  public_market_references_frozen: 20
-  official_tasks_started: 0
-  official_model_calls: 0
-  new_cost_cny: 0
-  old_package10_results_consumed: false
-  direct_dify_or_model_api_used: false
-  real_customer_data_used: false
-  automatic_publish_count: 0
-  offline_material_status: 暂未开放
-  historical_300_120_86_changed: false
+  official_tasks_completed: 100
+  content_products: 20
+  first_candidate_sets: 100
+  user_selections: 100
+  local_revisions: 20
+  reviews_completed: 2
+  exports_completed: 100
+  task_total_model_calls: 382
+  task_total_cost_cny: 1.369708
+  technical_replays: 1
+  quality_rerolls: 0
+quality:
+  formal_average: 82.48
+  formal_tasks_ge85: 44
+  qualified_products: 0
+  blind_correct_apparel: 100
+  blind_correct_enterprise: 100
+  cliche_or_near_duplicate_union: 68
+  fixed_structure_dominates_majority: true
+  market_at_least_comparable_conservative: 15
+  failed_acceptance_items:
+    - Q20-A04
+    - Q20-A05
+    - Q20-A07
+    - Q20-A09
 remote_truth:
-  runtime_code_sha256: ec3e880784ab1c1ce3ed4a1689ba072b077074be8dfd2189a4c8d19008cfd949
-  actual_model: deepseek-v4-flash
-  actual_model_provider: langgenius/deepseek/deepseek
-  model_configuration_sha256: c39607da450791e626151b5c18f6735b6c9bbfe3515cbe4fe914832c8f929a3f
-  ledger_rows: 204
-  cumulative_model_call_upper_bound_used: 208
-  configured_cumulative_model_call_cap: 209
-  historical_llm_node_cost_p95_cny: 0.0187076
-  initial_240_call_cost_projection_cny: 4.489824
-  historical_max_240_call_projection_cny: 6.43536
-resume_prerequisites:
-  - >-
-    An already-authorized Package 7 deployment/configuration action raises the
-    cumulative cap to at least 508 without changing source, model, workflow,
-    database schema, security boundaries, or publication settings.
-  - >-
-    Before any model call, reverify HTTPS health, ledger 204/208, runtime digest,
-    model digest, and configured cap.
-  - >-
-    Run at most one task per refreshed boundary snapshot, reconcile actual remote
-    cost after each task, and stop before total new cost can exceed CNY 5.
-  - >-
-    Resume only the same frozen inputs through the Diyu /apps webpage chain;
-    do not use old Package 10 results or direct provider APIs.
-automatic_next_package_start: false
-readiness_transition_authorized: false
+  provider: langgenius/deepseek/deepseek
+  model: deepseek-v4-flash
+  model_configuration_sha256: 55ea900cac45919ac80c14ed3085762243b1f124b752a3219292f3a28f86aaad
+  final_runtime_projection_sha256: aaaee4363d85c3b3d9ff668ce3d97dfa6bd21216213ba1f584ce15f226962614
+  cumulative_model_calls: 590
+  configured_cumulative_limit: 600
+  offline_material_status: 暂未开放
+preserved_invariants:
+  historical_300_changed: false
+  historical_120_changed: false
+  historical_86_changed: false
+  old_package10_results_consumed: false
+  automatic_publish_count: 0
+  readiness_transition_authorized: false
+next_action: ROOT_REVIEW_QUALITY_GAPS_WITHOUT_AUTOMATIC_PACKAGE_START

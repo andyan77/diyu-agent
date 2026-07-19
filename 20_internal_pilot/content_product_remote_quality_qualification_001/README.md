@@ -1,12 +1,19 @@
 # 20 项内容产品远程质量资格测试
 
-本包在首次正式任务前进入合法终态 `STOPPED_EXTERNAL_OR_BUDGET_BOUNDARY`。远程桥接账本已使用的模型调用上界为 208，运行配置累计上限为 209，只余 1 次；冻结批次需要 240 次上界，无法安全完成首项普通内容任务。任务权限不包含修改云端运行配置，因此正式任务、模型调用和新增费用均为 0，也没有复用旧第 10 包输出或生成虚假审查分数。
+终态：`FAIL_20_PRODUCT_REMOTE_QUALITY_QUALIFICATION`。
 
-已在任何正式输出前冻结 20 个内容产品各 5 个场景共 100 项任务，以及每项产品 1 份公开市场参考。任务和参考摘要分别为 `b88d59cb368a8f29c26fc8886b4995478d00fd833b806f171c4ed7e5a1772185`、`6df51b6e3ee24bfa0eba25ceb975cc2df3681ede7ed2473abeaf178cd5102d94`。六类现有成品均有覆盖，“门店线下物料”仍为暂未开放。
+真实远程链已完成 100/100 项首次内容生产、100 次选择与审核导出，以及 20 次选择后局部修改。最终 100 项批次使用 246 次 DeepSeek 调用、费用 ¥0.897012；包含前置输出契约恢复在内，本任务共 382 次、¥1.369708。只发生 1 次无模型输出的同输入传输重试；质量重抽、旧第 10 包复用、真实客户数据和自动发布均为 0。
 
-`qualification_runner.py` 只接受 `https://dify.diyuai.cc/apps` 网页链，预算检查先于 URL、cookie、凭据和登录。恢复后每次进程最多完成 1 项任务，返回码 4 表示必须先从远端实际账本刷新调用数、费用、完成数和事件序号；只有第 100 项完成后才登出并清除五组外部 cookie。cookie 目录必须显式指定在仓库外，运行证据只保存其摘要。
+两名隔离审查者均盲判正确 100/100。服装品牌自媒体审查均分 84.79，企业新手审查均分 80.16；双审正式均分 82.48，100 项中 44 项达到 85 分。20 个产品没有一个同时满足“至少 4/5 达到 85 且产品均分不低于 85”，明显套话或近重复的两审并集为 68 项，固定结构支配多数；因此 Q20-A04、A05、A07、A09 失败。市场保守比较 15/20 至少基本相当，盲辨识和市场标准通过。
 
-恢复执行前，既有授权的第 7 包部署/配置动作须把累计上限提高到至少 508，并在任何模型调用前复核账本仍为 204 行/208 次上界、运行代码摘要、现网模型摘要和 HTTPS 健康状态。初始费用按历史 P95 规划为 4.489824 元；每完成一项都必须以远端实际费用刷新边界，并在可能超过 5 元前停止。
+首次运行暴露的 Dify 输出契约问题及后续变体均已保留。按后续用户指令完成最小运行修复后，最终 100 项从头执行，没有复用失败输出。审查评分不使用证据编号、来源绑定或逐句证明作为扣分或硬否决依据。
+
+主要证据：
+
+- `evidence/official_remote_run/official_task_records.v1.jsonl`：100 项首次候选、选择、修改、审核导出、调用费用与错误
+- `review/apparel_media_review.v1.json` 与 `review/enterprise_novice_review.v1.json`：两份独立百分制审查
+- `result/remote_quality_qualification_result.v1.json`：20 项产品矩阵与 Q20-A01 至 A15
+- `evidence/official_remote_run/model_cost_reconciliation.v1.json`：246 / 382 / 590 三层调用费用对账
 
 本地复核：
 
@@ -17,4 +24,4 @@ python3 check_remote_quality_qualification.py
 python3 check_remote_quality_qualification.py --selftest
 ```
 
-当前 `evidence/run_boundary_snapshot.v1.json` 会让正式模式以返回码 3 在首次网络访问前拒绝运行，这是本终态的预期行为。`python -O` 下检查器必须以返回码 2 拒绝运行。
+`python3 -O check_remote_quality_qualification.py` 必须拒绝运行。所有 readiness flags 保持 `false`，“门店线下物料”仍为“暂未开放”。
