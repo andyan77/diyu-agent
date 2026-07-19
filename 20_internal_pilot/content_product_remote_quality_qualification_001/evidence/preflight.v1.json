@@ -1,0 +1,138 @@
+{
+  "schema": "diyu.q20.preflight.v1",
+  "task_id": "DIYU_20_CONTENT_PRODUCTS_REMOTE_QUALITY_QUALIFICATION_001",
+  "recorded_at": "2026-07-19T00:21:33Z",
+  "final_read_only_replay": {
+    "observed_at": "2026-07-19T00:31:39Z",
+    "ledger_row_count": 204,
+    "model_call_upper_bound_used": 208,
+    "configured_model_call_cap": 209,
+    "latest_llm_execution_at_database_value": "2026-07-18 17:45:08.673484",
+    "latest_llm_execution_time_zone": "DATABASE_SESSION_NOT_RECORDED",
+    "unchanged_since_initial_preflight": true,
+    "write_performed": false
+  },
+  "terminal_state": "STOPPED_EXTERNAL_OR_BUDGET_BOUNDARY",
+  "official_run_started": false,
+  "baseline": {
+    "base_commit": "a588ca5c44d8243927f1d0b2d2349c29f14f8a4a",
+    "origin_master_at_workspace_creation": "a588ca5c44d8243927f1d0b2d2349c29f14f8a4a",
+    "branch": "agent/diyu-20-content-products-remote-quality-qualification-001",
+    "worktree": "/home/diyu/worktrees/diyu-20-content-products-remote-quality-qualification-001",
+    "pull_request_27": {
+      "url": "https://github.com/andyan77/diyu-agent/pull/27",
+      "state": "MERGED",
+      "approved_head": "507893f45b210ae37832e611245234db0c07fa24",
+      "merge_commit": "a588ca5c44d8243927f1d0b2d2349c29f14f8a4a",
+      "merge_commit_second_parent": "507893f45b210ae37832e611245234db0c07fa24"
+    },
+    "first_post_merge_master_checks": {
+      "run_id": 29665690700,
+      "url": "https://github.com/andyan77/diyu-agent/actions/runs/29665690700",
+      "checker_compatibility": "SUCCESS",
+      "secret_scan": "SUCCESS"
+    },
+    "workspace_was_new_and_clean": true
+  },
+  "remote_app": {
+    "entry_url": "https://dify.diyuai.cc/apps",
+    "health_status": 200,
+    "service": "diyu-package7-nonproduction-bridge",
+    "simulation_only": true,
+    "production_ready": false,
+    "login_preflight_succeeded": true,
+    "content_account_option_count": 11,
+    "enabled_output_formats": [
+      "短视频",
+      "图文",
+      "直播内容包",
+      "私域沟通内容",
+      "培训与门店话术",
+      "陈列搭配"
+    ],
+    "unavailable_output_format": "门店线下物料",
+    "automatic_publish_enabled": false
+  },
+  "frozen_source_contracts": {
+    "content_product_profiles_sha256": "d38c7139d5eb5b88745b20adc37f6e4c97e42dff3076aca5d2822d78be5c1056",
+    "content_capability_mapping_sha256": "cb632001b59b747afec7052bb6ed52fbfa4689448cf7a56429b4db26eb6d72bb",
+    "content_product_count": 20,
+    "current_public_topic_count": 10,
+    "enabled_output_format_count": 6
+  },
+  "deployed_package7": {
+    "runtime_container": "diyu-package7-bridge",
+    "runtime_source_mount": "/opt/diyu/package7/releases/output-contract-recovery-002/source",
+    "source_mount_read_only": true,
+    "canonical_runtime_files_sha256": "ec3e880784ab1c1ce3ed4a1689ba072b077074be8dfd2189a4c8d19008cfd949",
+    "local_remote_runtime_digest_match": true,
+    "portal_js_sha256": "7621a947a76f4200ed09fe3db484236f5bd5aa330c892948fe15b79c62bdfb01",
+    "portal_html_sha256": "1feb32771d5aa3aa6dcdd474aff285a118f3bbdfdb3cfc0fbd59ec45305c7958"
+  },
+  "actual_dify_model": {
+    "app_id": "98eb36f1-50b7-42ca-8184-976512fbef9d",
+    "workflow_id": "0b927af9-e1f0-4ed3-880e-ece485e4d9d4",
+    "provider": "langgenius/deepseek/deepseek",
+    "model": "deepseek-v4-flash",
+    "mode": "chat",
+    "temperature": 0.2,
+    "nodes": [
+      "author",
+      "classify_direction"
+    ],
+    "normalized_configuration_sha256": "c39607da450791e626151b5c18f6735b6c9bbfe3515cbe4fe914832c8f929a3f",
+    "repository_deployment_configuration_match": true
+  },
+  "remote_budget": {
+    "ledger_row_count": 204,
+    "model_call_upper_bound_used": 208,
+    "configured_model_call_cap": 209,
+    "remaining_model_call_capacity": 1,
+    "planned_batch_model_call_upper_bound": 240,
+    "authorized_maximum_new_model_calls": 300,
+    "authorized_maximum_new_cost_cny": 5,
+    "required_recovery_cap": 508,
+    "bridge_known_historical_cost_cny": 1.106089,
+    "dify_historical_successful_llm_nodes": 193,
+    "dify_historical_tokens": 754753,
+    "dify_historical_cost_cny": 1.125305,
+    "dify_llm_node_cost_statistics_cny": {
+      "sample_count": 193,
+      "maximum": 0.026814,
+      "p95": 0.0187076,
+      "average": 0.005830596,
+      "currency": "RMB"
+    },
+    "planned_batch_cost_at_historical_p95_cny": 4.489824,
+    "planned_batch_cost_at_historical_maximum_cny": 6.43536,
+    "cost_guard_requires_remote_ledger_refresh_after_each_task": true,
+    "historical_totals_are_not_charged_to_this_task": true
+  },
+  "stop_reason": {
+    "code": "E_REMOTE_CUMULATIVE_MODEL_CALL_CAP_INSUFFICIENT",
+    "detail": "Only one cumulative model-call slot remains; even the first normal content task needs more than one slot and the frozen batch needs an upper bound of 240.",
+    "boundary_precedes_first_official_task": true,
+    "runtime_configuration_change_authorized_in_this_task": false
+  },
+  "minimum_recovery_condition": {
+    "required_cumulative_model_call_cap": 508,
+    "ledger_row_count_must_remain": 204,
+    "ledger_model_call_upper_bound_must_remain": 208,
+    "runtime_code_sha256_must_remain": "ec3e880784ab1c1ce3ed4a1689ba072b077074be8dfd2189a4c8d19008cfd949",
+    "model_configuration_sha256_must_remain": "c39607da450791e626151b5c18f6735b6c9bbfe3515cbe4fe914832c8f929a3f",
+    "https_health_must_succeed": true,
+    "initial_cost_plan_must_use_historical_p95_cny": 0.0187076,
+    "remote_cost_ledger_must_refresh_after_each_completed_task": true,
+    "new_cost_cny_must_remain_below_or_equal_to": 5,
+    "no_model_call_before_reverification": true
+  },
+  "security": {
+    "credentials_recorded": false,
+    "cookies_recorded": false,
+    "direct_dify_api_used": false,
+    "direct_model_api_used": false,
+    "external_write_performed": false
+  },
+  "old_package10_results_consumed": false,
+  "real_customer_data_used": false
+}

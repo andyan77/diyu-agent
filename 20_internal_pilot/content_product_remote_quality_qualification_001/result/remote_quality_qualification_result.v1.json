@@ -1,0 +1,61 @@
+{
+  "schema": "diyu.q20.remote_quality_qualification_result.v1",
+  "task_id": "DIYU_20_CONTENT_PRODUCTS_REMOTE_QUALITY_QUALIFICATION_001",
+  "terminal_state": "STOPPED_EXTERNAL_OR_BUDGET_BOUNDARY",
+  "qualification_claimed": false,
+  "official_model_calls": 0,
+  "official_tasks_started": 0,
+  "official_tasks_completed": 0,
+  "new_cost_cny": 0,
+  "acceptance": {
+    "Q20-A01": "PASS",
+    "Q20-A02": "PASS",
+    "Q20-A03": "NOT_RUN",
+    "Q20-A04": "NOT_RUN",
+    "Q20-A05": "NOT_RUN",
+    "Q20-A06": "NOT_RUN",
+    "Q20-A07": "NOT_RUN",
+    "Q20-A08": "NOT_RUN",
+    "Q20-A09": "NOT_RUN",
+    "Q20-A10": "NOT_RUN",
+    "Q20-A11": "NOT_RUN",
+    "Q20-A12": "NOT_RUN",
+    "Q20-A13": "PASS_BUDGET_BOUNDARY_RESPECTED",
+    "Q20-A14": "PASS",
+    "Q20-A15": "PENDING_DRAFT_PR_AND_REMOTE_CHECKS"
+  },
+  "minimum_recovery_condition": {
+    "required_cumulative_model_call_cap": 508,
+    "ledger_model_call_upper_bound_must_remain": 208,
+    "configured_cap_before_recovery": 209,
+    "initial_cost_planning_rate_cny": 0.0187076,
+    "initial_projected_cost_cny": 4.489824,
+    "cost_ledger_refresh_required_after_each_task": true,
+    "maximum_new_cost_cny": 5
+  },
+  "content_quality_results": {
+    "task_scores_available": false,
+    "product_qualification_matrix_available": false,
+    "market_competitiveness_result_available": false,
+    "reason": "Official production did not start; no quality result can be inferred from frozen inputs or local checks."
+  },
+  "preserved_invariants": {
+    "historical_300_changed": false,
+    "historical_120_changed": false,
+    "historical_86_changed": false,
+    "offline_material_enabled": false,
+    "automatic_publish_enabled": false,
+    "old_package10_results_reused": false
+  },
+  "readiness_flags": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "release_ready": false,
+    "production_ready": false
+  }
+}

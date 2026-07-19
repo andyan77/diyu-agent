@@ -1,0 +1,23 @@
+schema: diyu.q20.execution_review_request.v1
+task_id: DIYU_20_CONTENT_PRODUCTS_REMOTE_QUALITY_QUALIFICATION_001
+request: REVIEW_20_CONTENT_PRODUCTS_REMOTE_QUALITY_QUALIFICATION
+terminal_state: STOPPED_EXTERNAL_OR_BUDGET_BOUNDARY
+qualification_claimed: false
+base_commit: a588ca5c44d8243927f1d0b2d2349c29f14f8a4a
+branch: agent/diyu-20-content-products-remote-quality-qualification-001
+candidate_head: PENDING_COMMIT
+draft_pull_request: PENDING_CREATION
+review_scope:
+  - verify_frozen_100_task_and_20_reference_integrity
+  - verify_remote_code_and_actual_model_preflight
+  - verify_zero_official_calls_and_honest_legal_stop
+  - verify_runner_fail_closed_and_compact_checker
+boundary:
+  code: E_REMOTE_CUMULATIVE_MODEL_CALL_CAP_INSUFFICIENT
+  observed_used_upper_bound: 208
+  configured_cumulative_cap: 209
+  remaining_capacity: 1
+  required_recovery_cap: 508
+reviewer_action_requested: >-
+  Review this stopped qualification package. Do not merge it, change readiness,
+  enable offline material, or infer content quality from the frozen inputs.

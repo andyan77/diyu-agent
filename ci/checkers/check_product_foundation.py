@@ -104,6 +104,19 @@ SERIAL_SUCCESSOR_PACKAGES = (
         Path("19_cloud_cutover/ecs_migration_001/check_ecs_cutover.py"),
         "PACKAGE_9_ONLY",
     ),
+    (
+        "CONTENT_PRODUCT_REMOTE_QUALITY_QUALIFICATION_001",
+        Path(
+            "20_internal_pilot/"
+            "content_product_remote_quality_qualification_001"
+        ),
+        Path(
+            "20_internal_pilot/"
+            "content_product_remote_quality_qualification_001/"
+            "check_remote_quality_qualification.py"
+        ),
+        "CONTENT_PRODUCT_REMOTE_QUALITY_QUALIFICATION_001_ONLY",
+    ),
 )
 CHECKED_DOWNSTREAM_PACKAGES = SUCCESSOR_PACKAGES + SERIAL_SUCCESSOR_PACKAGES
 MANDATORY_SUCCESSOR_ROOTS = frozenset(
@@ -112,6 +125,10 @@ MANDATORY_SUCCESSOR_ROOTS = frozenset(
         Path("17_dify_runtime/dify_end_to_end_001"),
         Path("18_deployment/hosted_operations_001"),
         Path("19_cloud_cutover/ecs_migration_001"),
+        Path(
+            "20_internal_pilot/"
+            "content_product_remote_quality_qualification_001"
+        ),
     }
 )
 REFERENCE_SAFE_SUCCESSOR_COMMITS = {
