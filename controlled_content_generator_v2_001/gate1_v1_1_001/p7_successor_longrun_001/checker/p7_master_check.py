@@ -478,6 +478,71 @@ def check_qual_data_readiness(root: Path) -> tuple[bool, list[str]]:
     return ok, details
 
 
+def check_qual_custody_binding(root: Path) -> tuple[bool, list[str]]:
+    """M3+ FINAL 硬门（§六E/§三.2）：checker 不得只读 public_counts；faces/gold/known-R5/
+    环境旗标/active generation 必须绑定到独立锚证据。
+
+    对 QUAL-A/B 各要求：QUAL_{s}_PUBLIC_COUNTS.v1.json + QUAL_{s}_CUSTODY_ANCHORS.v1.json
+    在场 + public_counts record_digest 自洽 + qual_custody_recompute.verify_public_evidence_binding
+    ==[]（把调用方自述字段钉到独立锚）。任一缺失/不符 → fail-closed。
+    非 M3/M4 pass-through。R4 由密封区 custody 从真密封回执产出这些公开锚。"""
+    milestone = CTX.get("milestone")
+    if milestone not in ("M3", "M4"):
+        return True, [f"not applicable at {milestone} (pre-M3 custody binding gate)"]
+
+    def _canon(obj: dict, field: str) -> str:
+        unsigned = {k: v for k, v in obj.items() if k != field}
+        return hashlib.sha256(json.dumps(
+            unsigned, ensure_ascii=False, sort_keys=True,
+            separators=(",", ":")).encode("utf-8")).hexdigest()
+
+    # 工具=代码，从真仓位置导入（不随被检 root/temp 走）；数据（public_counts/anchors）读 root。
+    tools_dir = DEFAULT_ROOT / P7 / "m3_data_supply_001/tools"
+    spine_dir = DEFAULT_ROOT / P7 / "eval_audit_spine_001"
+    sys.path.insert(0, str(spine_dir))
+    sys.path.insert(0, str(tools_dir))
+    try:
+        import qual_custody_recompute as cust  # type: ignore
+    except Exception as exc:  # noqa: BLE001
+        return False, [f"qual_custody_recompute unimportable: {type(exc).__name__}:{exc}"]
+    finally:
+        for entry in (str(tools_dir), str(spine_dir)):
+            if sys.path and sys.path[0] == entry:
+                sys.path.pop(0)
+
+    qual_dir = root / P7 / "m3_data_supply_001/gold/qual"
+    details: list[str] = []
+    ok = True
+    for s in ("A", "B"):
+        pcp = qual_dir / f"QUAL_{s}_PUBLIC_COUNTS.v1.json"
+        anp = qual_dir / f"QUAL_{s}_CUSTODY_ANCHORS.v1.json"
+        if not pcp.is_file() or not anp.is_file():
+            ok = False
+            details.append(f"QUAL-{s} custody public_counts/anchors ABSENT -> "
+                           "fail-closed（checker 只读 public_counts 不足；须绑独立锚）")
+            continue
+        try:
+            pc = json.loads(pcp.read_text(encoding="utf-8"))
+            an = json.loads(anp.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            ok = False
+            details.append(f"QUAL-{s} custody artifact unreadable: {exc}")
+            continue
+        if ("record_digest" in pc
+                and pc.get("record_digest") != _canon(pc, "record_digest")):
+            ok = False
+            details.append(f"QUAL-{s} public_counts record_digest mismatch (tampered)")
+            continue
+        errs = cust.verify_public_evidence_binding(pc, s, an)
+        if errs:
+            ok = False
+            details.append(f"QUAL-{s} public-evidence binding FAIL: {errs[:5]}")
+        else:
+            details.append(f"QUAL-{s} public-evidence binding OK "
+                           "(faces/gold/active-generation/known-R5/env 绑独立锚)")
+    return ok, details
+
+
 def check_candidate_manifest(root: Path) -> tuple[bool, list[str]]:
     """候选清单必须覆盖并精确绑定当前实现，审核/证据自身不参与递归摘要。"""
     manifest_path = root / EVAL_SPINE / "release/candidate_manifest.v1.json"
@@ -884,6 +949,7 @@ SECTIONS: dict[str, object] = {
     "pkg1_blind": check_pkg1_blind,
     "pkg1_reviews": check_pkg1_reviews,
     "qual_data_readiness": check_qual_data_readiness,
+    "qual_custody_binding": check_qual_custody_binding,
     "final_receipts": check_final_receipts,
 }
 
@@ -899,11 +965,12 @@ SECTION_SCOPES: dict[str, str] = {
     "candidate_manifest": "A", "independent_reviews": "A",
     "recovery_shadow_recompute": "SHARED",
     "pkg1_input_freeze": "B", "pkg1_route": "B", "pkg1_blind": "B",
-    "pkg1_reviews": "B", "qual_data_readiness": "A", "final_receipts": "SHARED",
+    "pkg1_reviews": "B", "qual_data_readiness": "A",
+    "qual_custody_binding": "A", "final_receipts": "SHARED",
 }
 
 # 仅 FINAL 模式运行的节（PRE_REVIEW 只证送审条件，不要求签字存在）
-FINAL_ONLY_SECTIONS = {"final_receipts", "qual_data_readiness"}
+FINAL_ONLY_SECTIONS = {"final_receipts", "qual_data_readiness", "qual_custody_binding"}
 
 
 def selftest() -> int:

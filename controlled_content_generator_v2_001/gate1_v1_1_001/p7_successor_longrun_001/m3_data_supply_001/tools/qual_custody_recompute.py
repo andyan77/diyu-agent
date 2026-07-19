@@ -323,6 +323,51 @@ def verify_binding(public_counts: dict, records: list[dict]) -> list[str]:
     return errors
 
 
+_ENV_FLAGS = ("ab_mutually_exclusive", "dev_isolation", "qual_order_ok",
+              "sealed_no_leak", "adjudication_on_disagreement")
+
+
+def verify_public_evidence_binding(public_counts: dict, set_id: str,
+                                   anchors: dict | None) -> list[str]:
+    """§六E/§三.2 端到端绑定（主会话零明文，只读公开锚证据）：把原本调用方可随意回灌的
+    faces/gold/known-R5/环境旗标/active generation 绑定到**独立过程证据** anchors，而非只信
+    public_counts 自述。anchors 缺项/不符 → 返回非空 → fail-closed（绝非 pass-through）。
+
+    与 verify_binding 分工：verify_binding 在密封区从明文记录复算计数（需 records）；本函数
+    在主会话侧只用公开摘要，把 verify_binding 无法覆盖的「调用方自述字段」钉到独立锚。
+
+    anchors（R4 由密封区 custody 从真密封回执装配；此处只读公开摘要）:
+      active_generation_id: str                     ACTIVE 指针
+      faces_sha256 / gold_sha256: str               face/gold 冻结的独立摘要
+      known_r5_input_binding_completeness: float     独立影子核算的输入绑定完备度
+      env_evidence: {flag: bool}                    每个环境旗标的独立证据
+    """
+    if not isinstance(anchors, dict):
+        return ["public_evidence_anchors_absent"]  # fail-closed，非 pass-through
+    errors: list[str] = []
+    binding = public_counts.get("custody_binding") or {}
+    anchor_gen = anchors.get("active_generation_id")
+    if not isinstance(anchor_gen, str) or not anchor_gen.strip():
+        errors.append("active_generation_pointer_absent")
+    elif binding.get("active_generation_id") != anchor_gen:
+        errors.append("active_generation_id_not_bound_to_active_pointer")
+    for field, slug in (("faces_sha256", "faces_sha256_not_bound_to_face_freeze"),
+                        ("gold_sha256", "gold_sha256_not_bound_to_gold_freeze")):
+        anchor_val = anchors.get(field)
+        if (not isinstance(anchor_val, str) or len(anchor_val) != 64
+                or public_counts.get(field) != anchor_val):
+            errors.append(slug)
+    pub_r5 = float(public_counts.get("known_r5_input_binding_completeness", 0.0))
+    anchor_r5 = anchors.get("known_r5_input_binding_completeness")
+    if anchor_r5 is None or float(anchor_r5) < pub_r5:
+        errors.append("known_r5_not_bound_to_independent_evidence")
+    env_ev = anchors.get("env_evidence") or {}
+    for flag in _ENV_FLAGS:
+        if public_counts.get(flag) is True and env_ev.get(flag) is not True:
+            errors.append(f"governance:{flag}_not_evidenced")
+    return sorted(set(errors))
+
+
 def _load_records(path: Path) -> list[dict]:
     if path.is_dir():
         rows: list[dict] = []

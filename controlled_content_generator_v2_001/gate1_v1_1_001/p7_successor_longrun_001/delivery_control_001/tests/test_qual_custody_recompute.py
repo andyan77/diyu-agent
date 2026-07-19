@@ -13,6 +13,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 import unittest
 from pathlib import Path
@@ -273,6 +274,108 @@ class QualCustodyRecompute(unittest.TestCase):
                          "同源伪独立必须 fail-closed")
         errs = cust.verify_binding(pc, recs)
         self.assertTrue(any(e.startswith("core_validation_failed") for e in errs), errs)
+
+
+def _pc_with_gen(set_id: str):
+    records = [_mk(f"QA-e-{set_id}", module="entailment", source_group=f"sg-{set_id}",
+                   gold_fields={"gold_label": "CONTRADICTED", "gold_risk": "HIGH"})]
+    pc = cust.recompute_public_counts(
+        records, set_id=set_id, active_generation_id=f"QUAL_{set_id}_GEN_R3_001",
+        dataset_manifest_digest=DMD, faces_sha256="f" * 64, gold_sha256="0" * 64,
+        environmental_flags=ENV_FLAGS, known_r5_input_binding_completeness=1.0,
+        cost_expected_event_manifests=1, cost_rate_cards=1)
+    return pc
+
+
+def _anchors_for(pc, set_id: str):
+    return {"active_generation_id": f"QUAL_{set_id}_GEN_R3_001",
+            "faces_sha256": pc["faces_sha256"], "gold_sha256": pc["gold_sha256"],
+            "known_r5_input_binding_completeness": 1.0,
+            "env_evidence": {f: True for f in cust._ENV_FLAGS}}
+
+
+class QualCustodyPublicEvidenceBinding(unittest.TestCase):
+    """§六E/§三.2：调用方自述字段（faces/gold/known-R5/env/active-gen）绑定独立锚。"""
+
+    def test_genuine_binding_passes(self) -> None:
+        pc = _pc_with_gen("A")
+        self.assertEqual(cust.verify_public_evidence_binding(pc, "A", _anchors_for(pc, "A")), [])
+
+    def test_absent_anchors_fail_closed_not_passthrough(self) -> None:
+        pc = _pc_with_gen("A")
+        self.assertEqual(cust.verify_public_evidence_binding(pc, "A", None),
+                         ["public_evidence_anchors_absent"])
+
+    def test_wrong_faces_sha_rejected(self) -> None:
+        pc = _pc_with_gen("A"); an = _anchors_for(pc, "A"); an["faces_sha256"] = "e" * 64
+        self.assertIn("faces_sha256_not_bound_to_face_freeze",
+                      cust.verify_public_evidence_binding(pc, "A", an))
+
+    def test_wrong_gold_sha_rejected(self) -> None:
+        pc = _pc_with_gen("A"); an = _anchors_for(pc, "A"); an["gold_sha256"] = "1" * 64
+        self.assertIn("gold_sha256_not_bound_to_gold_freeze",
+                      cust.verify_public_evidence_binding(pc, "A", an))
+
+    def test_wrong_active_generation_rejected(self) -> None:
+        pc = _pc_with_gen("A"); an = _anchors_for(pc, "A")
+        an["active_generation_id"] = "QUAL_A_GEN_OTHER"
+        self.assertIn("active_generation_id_not_bound_to_active_pointer",
+                      cust.verify_public_evidence_binding(pc, "A", an))
+
+    def test_unevidenced_env_flag_rejected(self) -> None:
+        # public 声明 sealed_no_leak=True 但独立证据未证 → governance fail
+        pc = _pc_with_gen("A"); an = _anchors_for(pc, "A")
+        an["env_evidence"]["sealed_no_leak"] = False
+        self.assertIn("governance:sealed_no_leak_not_evidenced",
+                      cust.verify_public_evidence_binding(pc, "A", an))
+
+    def test_known_r5_not_independently_evidenced_rejected(self) -> None:
+        pc = _pc_with_gen("A"); an = _anchors_for(pc, "A")
+        an["known_r5_input_binding_completeness"] = 0.5  # < public 1.0
+        self.assertIn("known_r5_not_bound_to_independent_evidence",
+                      cust.verify_public_evidence_binding(pc, "A", an))
+
+
+class CheckerQualCustodyBindingSection(unittest.TestCase):
+    """checker check_qual_custody_binding 段：绑定在场且吻合 → PASS；缺/篡改 → fail-closed。"""
+
+    def _checker(self):
+        return _load(P7 / "checker/p7_master_check.py", "p7_master_check_custody")
+
+    def _write_pair(self, qual_dir):
+        for s in ("A", "B"):
+            pc = _pc_with_gen(s)
+            (qual_dir / f"QUAL_{s}_PUBLIC_COUNTS.v1.json").write_text(
+                json.dumps(pc, ensure_ascii=False), encoding="utf-8")
+            (qual_dir / f"QUAL_{s}_CUSTODY_ANCHORS.v1.json").write_text(
+                json.dumps(_anchors_for(pc, s), ensure_ascii=False), encoding="utf-8")
+
+    def test_present_and_bound_passes_absent_and_tamper_fail(self) -> None:
+        import tempfile
+        checker = self._checker()
+        with tempfile.TemporaryDirectory() as tmp:
+            troot = Path(tmp)
+            qual = troot / checker.P7 / "m3_data_supply_001/gold/qual"
+            qual.mkdir(parents=True)
+            checker.CTX["milestone"] = "M3"
+            # 缺工件 → fail-closed
+            ok0, d0 = checker.check_qual_custody_binding(troot)
+            self.assertFalse(ok0, d0)
+            # 在场且绑定吻合 → PASS
+            self._write_pair(qual)
+            ok1, d1 = checker.check_qual_custody_binding(troot)
+            self.assertTrue(ok1, d1)
+            # 篡改 A 的 gold_sha256（与锚失配）→ fail-closed
+            pcA = json.loads((qual / "QUAL_A_PUBLIC_COUNTS.v1.json").read_text())
+            pcA["gold_sha256"] = "9" * 64
+            (qual / "QUAL_A_PUBLIC_COUNTS.v1.json").write_text(
+                json.dumps(pcA, ensure_ascii=False), encoding="utf-8")
+            ok2, d2 = checker.check_qual_custody_binding(troot)
+            self.assertFalse(ok2, d2)
+            # M2 → pass-through
+            checker.CTX["milestone"] = "M2"
+            ok3, _ = checker.check_qual_custody_binding(troot)
+            self.assertTrue(ok3)
 
 
 if __name__ == "__main__":
