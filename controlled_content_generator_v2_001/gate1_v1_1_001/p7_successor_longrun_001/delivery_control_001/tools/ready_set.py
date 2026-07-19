@@ -16,10 +16,15 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import re
 import sys
 from pathlib import Path
 
 DC = Path(__file__).resolve().parents[1]
+
+_DIGEST_RE = re.compile(r"^[0-9a-f]{64}$")
+_COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
+_GENERATION_RE = re.compile(r"^QUAL_[AB]_GEN_[0-9A-Za-z_]+$")
 
 
 def _load(path: Path, name: str):
@@ -93,7 +98,7 @@ def _verify_closed_pass_binding(status: dict,
         val = binding.get(scalar_key)
         if not isinstance(val, str) or not val.strip():
             return False, f"closed_pass_binding.{scalar_key} missing/empty"
-    # 两套就绪回执必须 verdict==PASS（且 failing_keys 空）
+    # 两套就绪回执必须 verdict==PASS（且 failing_keys 空）——首过快速门
     for rk in _READINESS_PATH_KEYS:
         target = p7 / binding[rk]
         try:
@@ -103,7 +108,78 @@ def _verify_closed_pass_binding(status: dict,
         if not _readiness_verdict_pass(receipt):
             return False, (f"readiness receipt {binding[rk]} not PASS "
                            "-> fail-closed")
-    return True, "closed_pass_binding verified (files+digests+readiness PASS)"
+    # === §三.1/§5.5 语义互锁加固：文件 SHA 自洽仍不足，必须内部语义合法 ===
+    # (a) closeout 须经正式 receipt parser 验证为合法 M3 PASS CLOSEOUT（含内部 receipt_digest）
+    try:
+        closeout = receipts.load_typed_receipt(p7 / binding["closeout_receipt_path"])
+    except receipts.ReceiptError as exc:
+        return False, (f"closeout not a valid typed receipt ({exc}) -> fail-closed")
+    if (closeout.get("receipt_kind") != "CLOSEOUT_RECEIPT"
+            or closeout.get("milestone_id") != "M3"
+            or closeout.get("result") != "PASS"):
+        return False, ("closeout not a legit M3 PASS closeout "
+                       f"(kind={closeout.get('receipt_kind')} "
+                       f"milestone={closeout.get('milestone_id')} "
+                       f"result={closeout.get('result')}) -> fail-closed")
+    # (b) HANDOFF 须经正式 validator 验证内部闭包（schema + handoff_digest）且 M3→M4
+    try:
+        handoff = receipts.validate_handoff(p7 / binding["handoff_path"])
+    except receipts.ReceiptError as exc:
+        return False, (f"handoff internal closure invalid ({exc}) -> fail-closed")
+    to_ms = handoff.get("to_milestone")
+    if (handoff.get("from_milestone") != "M3"
+            or not isinstance(to_ms, list) or "M4" not in to_ms):
+        return False, ("handoff not M3->M4 "
+                       f"(from={handoff.get('from_milestone')} "
+                       f"to={to_ms}) -> fail-closed")
+    # (c) candidate 三方一致（closeout / HANDOFF / binding）且为 40-hex 提交，非任意字符串
+    co_c = str(closeout.get("candidate_commit", ""))
+    ho_c = str(handoff.get("accepted_candidate_commit", ""))
+    bind_c = str(binding.get("closure_candidate_commit", ""))
+    if not (_COMMIT_RE.fullmatch(co_c) and co_c == ho_c == bind_c):
+        return False, ("candidate commit 3-way mismatch/invalid "
+                       f"(closeout={co_c[:12]} handoff={ho_c[:12]} "
+                       f"binding={bind_c[:12]}) -> fail-closed")
+    # (d) generation/index 不能只是任意非空字符串
+    for gk in ("qual_a_active_generation", "qual_b_active_generation"):
+        if not _GENERATION_RE.match(str(binding.get(gk, ""))):
+            return False, (f"{gk} not a structured active-generation id "
+                           "(arbitrary string rejected) -> fail-closed")
+    if not _DIGEST_RE.fullmatch(str(binding.get("qualification_index_digest", ""))):
+        return False, ("qualification_index_digest not a valid 64-hex digest "
+                       "(arbitrary string rejected) -> fail-closed")
+    for fk in ("gold_sha256", "faces_sha256"):
+        if not _DIGEST_RE.fullmatch(str(binding.get(fk, ""))):
+            return False, f"closed_pass_binding.{fk} not a valid digest -> fail-closed"
+    # (e) readiness 深校验：schema/contract + record_digest 自洽 + verdict 从
+    #     rows/coverage/governance 重算 + set 匹配 + gold/faces sha 与绑定逐项一致
+    try:
+        prm = _load(DC.parent / "m3_data_supply_001/tools/pre_m0_readiness.py",
+                    "prm_interlock")
+    except (OSError, ImportError) as exc:
+        return False, f"pre_m0_readiness unloadable for deep check ({exc}) -> fail-closed"
+    for set_id, rk in (("A", "qual_a_readiness_path"), ("B", "qual_b_readiness_path")):
+        receipt = json.loads((p7 / binding[rk]).read_text(encoding="utf-8"))
+        if (receipt.get("schema_version") != "p7-pre-m0-data-readiness-v1"
+                or receipt.get("contract_id") != "EAS-M0-QUALIFICATION-V2"):
+            return False, f"readiness {set_id} wrong schema/contract -> fail-closed"
+        if receipt.get("record_digest") != receipts.canonical_digest(
+                receipt, "record_digest"):
+            return False, (f"readiness {set_id} record_digest mismatch "
+                           "(tampered) -> fail-closed")
+        if receipt.get("set") != set_id:
+            return False, f"readiness {set_id} set-field mismatch -> fail-closed"
+        if prm.recompute_verdict(receipt) != "PASS":
+            return False, (f"readiness {set_id} internal verdict recompute != PASS "
+                           "(forged verdict:PASS over failing rows) -> fail-closed")
+        if (receipt.get("public_counts_gold_sha256") != binding.get("gold_sha256")
+                or receipt.get("public_counts_faces_sha256")
+                != binding.get("faces_sha256")):
+            return False, (f"readiness {set_id} gold/faces sha not bound to "
+                           "closed_pass_binding -> fail-closed")
+    return True, ("closed_pass_binding verified (semantic: closeout M3 PASS + "
+                  "handoff M3->M4 closure + candidate 3-way + readiness recompute + "
+                  "gen/index/gold/faces bound)")
 
 
 def m3_recovery_active(milestones_dir: Path | None = None) -> tuple[bool, str]:

@@ -27,6 +27,45 @@ receipts = fh.receipts
 ready_set_mod = fh.load_tool("ready_set")
 
 
+# §三.1 语义互锁需要真 readiness 回执 + 完整 handoff：加载真实 pre_m0_readiness
+def _load_p7_tool(rel: str, name: str):
+    P7 = DC.parent
+    spec = importlib.util.spec_from_file_location(name, P7 / rel)
+    mod = importlib.util.module_from_spec(spec)
+    assert spec.loader is not None
+    spec.loader.exec_module(mod)
+    return mod
+
+
+prm = _load_p7_tool("m3_data_supply_001/tools/pre_m0_readiness.py", "prm_interlock_test")
+
+_HANDOFF_CLOSURE_RULE = (
+    "关闭提交不自指：由 ORIGIN_ANCHOR.v2 锚定——锚提交的第一父提交必须等于锚文件内记录的 "
+    "closeout_commit；tools/closure.py verify_closure 从分支头零外部知识机械重建 "
+    "anchor→closeout→candidate 全链")
+
+
+def _full_public_counts(set_id: str, *, failing: bool = False) -> dict:
+    mins = prm.load_minimums()
+    counts = {k: mins[k] + 5 for k in prm.COUNT_KEYS}
+    if failing:
+        counts["risk_classification_high_risk_cases"] = 0
+    return {
+        "set": set_id, "counts": counts,
+        "deterministic_disclosure_obligation_types_present": 4,
+        "known_r5_input_binding_completeness": 1.0,
+        "cost_expected_event_manifests": 1, "cost_rate_cards": 1,
+        "module_gold_field_coverage": {m: list(prm.MODULE_GOLD_FIELDS[m])
+                                       for m in prm.REQUIRED_MODULES},
+        "family_coverage": list(prm.FAMILIES),
+        "ab_mutually_exclusive": True, "dev_isolation": True,
+        "qual_order_ok": True, "sealed_no_leak": True,
+        "two_independent_labels_per_record": True,
+        "adjudication_on_disagreement": True,
+        "faces_sha256": "f" * 64, "gold_sha256": "0" * 64,
+    }
+
+
 def _mk_closeout(milestone: str, result: str, flags: dict | None = None) -> dict:
     value = {
         "schema_version": "p7-typed-receipt-v1",
@@ -62,13 +101,20 @@ def _write_closeouts(mdir: Path, rows: dict[str, dict]) -> None:
 
 
 def _make_closed_pass_artifacts(mdir: Path, *, corrupt: str | None = None) -> dict:
-    """在 p7 根（mdir.parents[1]）落 §5.5 CLOSED_PASS 硬绑定所需真实工件，返回绑定块。
+    """在 p7 根（mdir.parents[1]）落 §5.5/§三.1 CLOSED_PASS 硬绑定所需**语义完整**工件，
+    返回绑定块。工件均通过正式 parser/validator（typed receipt / handoff / readiness）。
 
-    corrupt: None=全真；'closeout_digest'=改 closeout 内容使摘要失配；
-             'readiness_fail'=就绪回执 verdict!=PASS。用于负测。
+    corrupt 负测：
+      'closeout_digest'          文件内容篡改，绑定仍写旧摘要 → 逐字节复算失配
+      'readiness_fail'           QUAL-A 就绪 verdict!=PASS（首过门拦）
+      'closeout_result_fail'     closeout 文件 SHA 正确但 result=FAIL（语义非 M3 PASS）
+      'candidate_mismatch'       handoff.accepted_candidate_commit != closeout/binding
+      'index_arbitrary'          qualification_index_digest 为任意非摘要字符串
+      'readiness_internally_invalid'  就绪 verdict=PASS/failing_keys=[] 但 rows 内有 pass=False
     """
     import hashlib
     p7 = mdir.parents[1]
+    candidate = "c" * 40
 
     def _write(rel: str, obj: dict) -> tuple[Path, str]:
         target = p7 / rel
@@ -77,23 +123,57 @@ def _make_closed_pass_artifacts(mdir: Path, *, corrupt: str | None = None) -> di
         target.write_bytes(blob)
         return target, hashlib.sha256(blob).hexdigest()
 
+    # closeout：完整 typed 回执（candidate_commit="c"*40）；负测 result=FAIL
+    co_result = "FAIL" if corrupt == "closeout_result_fail" else "PASS"
+    closeout = _mk_closeout("M3", co_result)
     _, closeout_digest = _write(
-        "delivery_control_001/milestones/M3/CLOSEOUT_RECEIPT.v2.json",
-        {"schema_version": "p7-typed-receipt-v1", "milestone_id": "M3",
-         "result": "PASS", "receipt_kind": "CLOSEOUT_RECEIPT"})
-    ra_verdict = "FAIL" if corrupt == "readiness_fail" else "PASS"
-    ra_failing = ["risk_classification_high_risk_cases"] if corrupt == "readiness_fail" else []
-    _, ra_digest = _write("m3_data_supply_001/gold/qual/QUAL_A_READINESS_RECEIPT.v1.json",
-                          {"set": "A", "verdict": ra_verdict, "failing_keys": ra_failing})
-    _, rb_digest = _write("m3_data_supply_001/gold/qual/QUAL_B_READINESS_RECEIPT.v1.json",
-                          {"set": "B", "verdict": "PASS", "failing_keys": []})
+        "delivery_control_001/milestones/M3/CLOSEOUT_RECEIPT.v2.json", closeout)
+
+    # readiness A/B：完整就绪回执（真 evaluate_set_readiness + close_record）
+    ra = receipts.close_record(prm.evaluate_set_readiness(
+        "A", _full_public_counts("A", failing=(corrupt == "readiness_fail"))),
+        "record_digest")
+    if corrupt == "readiness_internally_invalid":
+        ra["rows"][0]["pass"] = False       # 内部 rows 有失败项
+        ra["verdict"] = "PASS"              # 但 verdict/failing_keys 洗成 PASS/[]
+        ra["failing_keys"] = []
+        ra = receipts.close_record(ra, "record_digest")  # 自洽摘要，欺骗首过门
+    _, ra_digest = _write(
+        "m3_data_supply_001/gold/qual/QUAL_A_READINESS_RECEIPT.v1.json", ra)
+    rb = receipts.close_record(prm.evaluate_set_readiness(
+        "B", _full_public_counts("B")), "record_digest")
+    _, rb_digest = _write(
+        "m3_data_supply_001/gold/qual/QUAL_B_READINESS_RECEIPT.v1.json", rb)
+
+    # handoff：完整 handoff.v2（from M3 / to [M4] / accepted_candidate_commit 三方一致）
+    ho_candidate = "b" * 40 if corrupt == "candidate_mismatch" else candidate
+    handoff = receipts.close_record({
+        "schema_version": "p7-handoff-v2", "from_milestone": "M3",
+        "to_milestone": ["M4"], "accepted_candidate_commit": ho_candidate,
+        "active_contract_set_digest": "1" * 64, "input_manifest_digest": "2" * 64,
+        "output_manifest_digest": "3" * 64, "evidence_manifest_digest": "4" * 64,
+        "exit_evidence_digest": "5" * 64,
+        "last_green_test_summary": "delivery_control + eval_audit_spine green",
+        "review_receipt_bindings": [
+            {"receipt_path": "r1.json", "receipt_digest": "1" * 64,
+             "reviewer_kind": "OPUS_ADVERSARIAL", "verdict": "ACCEPT"},
+            {"receipt_path": "r2.json", "receipt_digest": "2" * 64,
+             "reviewer_kind": "CODEX_GPT_SIGNER", "verdict": "ACCEPT"}],
+        "qualification_flags": {}, "route_binding": "a",
+        "next_entry_contract": "M4_ENTRY",
+        "next_prompt_template_digest": "6" * 64, "ready_set_result_digest": "7" * 64,
+        "closure_rule": _HANDOFF_CLOSURE_RULE, "issued_at": "T",
+        "handoff_digest": "",
+    }, "handoff_digest")
     _, handoff_digest = _write(
-        "delivery_control_001/milestones/M3/HANDOFF.v2.json",
-        {"schema_version": "p7-handoff-v2", "milestone_id": "M3"})
+        "delivery_control_001/milestones/M3/HANDOFF.v2.json", handoff)
+
     if corrupt == "closeout_digest":
-        # 篡改文件内容但绑定仍写旧摘要 → 逐字节复算失配
         (p7 / "delivery_control_001/milestones/M3/CLOSEOUT_RECEIPT.v2.json"
          ).write_text('{"tampered": true}', encoding="utf-8")
+
+    index_digest = ("not-a-real-index-digest" if corrupt == "index_arbitrary"
+                    else "f" * 64)
     return {
         "closeout_receipt_path": "delivery_control_001/milestones/M3/CLOSEOUT_RECEIPT.v2.json",
         "closeout_receipt_digest": closeout_digest,
@@ -105,8 +185,9 @@ def _make_closed_pass_artifacts(mdir: Path, *, corrupt: str | None = None) -> di
         "handoff_digest": handoff_digest,
         "qual_a_active_generation": "QUAL_A_GEN_R3_001",
         "qual_b_active_generation": "QUAL_B_GEN_R3_001",
-        "qualification_index_digest": "f" * 64,
-        "closure_candidate_commit": "a" * 40,
+        "qualification_index_digest": index_digest,
+        "closure_candidate_commit": candidate,
+        "gold_sha256": "0" * 64, "faces_sha256": "f" * 64,
     }
 
 
@@ -212,6 +293,48 @@ class M3RecoveryInterlock(unittest.TestCase):
             active, why = ready_set_mod.m3_recovery_active(mdir)
             self.assertTrue(active, why)
             self.assertIn("absent", why.lower())
+
+    # ---- §三.1 语义互锁负测（文件 SHA 自洽但内部语义无效必须 fail-closed） ----
+
+    def test_helper_closeout_file_sha_ok_but_result_not_pass_fails_closed(self) -> None:
+        # 负测1：closeout 文件字节摘要正确，但正式 parser 见 result=FAIL（非 M3 PASS）
+        with tempfile.TemporaryDirectory() as tmp:
+            mdir = Path(tmp) / "milestones"
+            _write_recovery_status(mdir, "CLOSED_PASS",
+                                   corrupt_binding="closeout_result_fail")
+            active, why = ready_set_mod.m3_recovery_active(mdir)
+            self.assertTrue(active, why)
+            self.assertIn("m3 pass closeout", why.lower())
+
+    def test_helper_candidate_3way_mismatch_fails_closed(self) -> None:
+        # 负测2：candidate 在 closeout/HANDOFF/binding 三方不一致
+        with tempfile.TemporaryDirectory() as tmp:
+            mdir = Path(tmp) / "milestones"
+            _write_recovery_status(mdir, "CLOSED_PASS",
+                                   corrupt_binding="candidate_mismatch")
+            active, why = ready_set_mod.m3_recovery_active(mdir)
+            self.assertTrue(active, why)
+            self.assertIn("candidate", why.lower())
+
+    def test_helper_index_arbitrary_string_fails_closed(self) -> None:
+        # 负测3：qualification_index_digest 为任意非摘要字符串（非 64-hex）
+        with tempfile.TemporaryDirectory() as tmp:
+            mdir = Path(tmp) / "milestones"
+            _write_recovery_status(mdir, "CLOSED_PASS",
+                                   corrupt_binding="index_arbitrary")
+            active, why = ready_set_mod.m3_recovery_active(mdir)
+            self.assertTrue(active, why)
+            self.assertIn("qualification_index_digest", why.lower())
+
+    def test_helper_readiness_internally_invalid_fails_closed(self) -> None:
+        # 负测4：就绪 verdict=PASS、failing_keys=[]（骗过首过门），但 rows 内有 pass=False
+        with tempfile.TemporaryDirectory() as tmp:
+            mdir = Path(tmp) / "milestones"
+            _write_recovery_status(mdir, "CLOSED_PASS",
+                                   corrupt_binding="readiness_internally_invalid")
+            active, why = ready_set_mod.m3_recovery_active(mdir)
+            self.assertTrue(active, why)
+            self.assertIn("recompute", why.lower())
 
     def test_ready_set_m4_ready_without_recovery(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
