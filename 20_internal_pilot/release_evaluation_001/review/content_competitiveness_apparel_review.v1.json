@@ -1,0 +1,878 @@
+{
+  "schema": "diyu.package10.content_competitiveness_apparel_review.v1",
+  "reviewer_role": "independent_apparel_content_competitiveness_reviewer",
+  "reviewed_at": "2026-07-19T11:09:45Z",
+  "bound_input": {
+    "path": "/tmp/diyu-p10-review-input-f4ba734.json",
+    "normalized_sha256": "0fb97c0625315d22d5857a909949c4d5fa31f51ec4b17f444a45bb4751c4304f",
+    "candidate_commit": "f4ba734dd7a5681003931e047a893b46309be97b",
+    "candidate_commit_short": "f4ba734",
+    "candidate_tree": "f3dc3b1a08b015059432ca4619fe10921fcd1cc9",
+    "candidate_tree_short": "f3dc3b1"
+  },
+  "review_scope": {
+    "task_count": 20,
+    "candidate_rule": "已选择候选优先；未选择时审查首个候选；本批20项均为候选1",
+    "alternatives_reviewed": false,
+    "internal_test_or_human_review_wrapper_penalized": false,
+    "market_reference_count": 20,
+    "market_reference_sha256": "6df51b6e3ee24bfa0eba25ceb975cc2df3681ede7ed2473abeaf178cd5102d94"
+  },
+  "items": [
+    {
+      "task_id": "P10-CP01",
+      "product_id": "CP01",
+      "product_label": "岗位任务VLOG",
+      "score": 89,
+      "apparel_brand_fit": {
+        "verdict": "适配",
+        "note": "岗位动作、判断和交接均具体，适合以真实幕后建立童装品牌信任。"
+      },
+      "market_comparison": "comparable",
+      "rationale": "九镜完整覆盖抽样、按压、标记、返修交接和结论，制作可执行性达到同类岗位日常内容水平。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP02",
+      "product_id": "CP02",
+      "product_label": "门店时段微纪录",
+      "score": 84,
+      "apparel_brand_fit": {
+        "verdict": "需小修后适配",
+        "note": "门店声场和动作真实，但标题时间口径必须先纠正。"
+      },
+      "market_comparison": "comparable",
+      "rationale": "卷帘门、脚步、归位和首位亲子顾客形成清楚时间线，但标题写“开门前”而正文是开门后，形成直接口径冲突。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": true,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP03",
+      "product_id": "CP03",
+      "product_label": "单项手艺全过程",
+      "score": 76,
+      "apparel_brand_fit": {
+        "verdict": "修订前不适配",
+        "note": "训练结构齐全，但通用温度与绝对无损话术不能直接进入门店SOP。"
+      },
+      "market_comparison": "weaker",
+      "rationale": "练习、问答和停止边界完整，但未先核对洗护标与材质就统一要求150℃以下蒸汽，并承诺“不会损伤面料”，存在真实商品损伤风险。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": true
+      }
+    },
+    {
+      "task_id": "P10-CP04",
+      "product_id": "CP04",
+      "product_label": "多岗位协作纪实",
+      "score": 82,
+      "apparel_brand_fit": {
+        "verdict": "需修订后适配",
+        "note": "跨岗交接可视化良好，但异常闭环和扫码地点未按任务原话落地。"
+      },
+      "market_comparison": "weaker",
+      "rationale": "交接镜头明确且可拍，但司机扫码被移到仓库而非卸货区，数量不符也只做标记签字，未说明追补、差异单或责任回传。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": true,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP05",
+      "product_id": "CP05",
+      "product_label": "人物成长与职业史",
+      "score": 82,
+      "apparel_brand_fit": {
+        "verdict": "经事实核验后适配",
+        "note": "人物弧线清楚，但大量门店数据、会议问答和工作经历并非输入事实。"
+      },
+      "market_comparison": "weaker",
+      "rationale": "三年三段的观察—决策—复盘成长线有编辑张力，但虚构A/B店表现、销售明细和客流记录会削弱“真实人物故事”的可信度。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP06",
+      "product_id": "CP06",
+      "product_label": "专业判断切片",
+      "score": 62,
+      "apparel_brand_fit": {
+        "verdict": "不适配",
+        "note": "涉及儿童骑行安全的判断标准存在危险误导，不能进入家长内容。"
+      },
+      "market_comparison": "weaker",
+      "rationale": "成品允许部分帽绳在骑滑板车时继续使用，又在“无需全部满足才安全”和“三项都满足可放心滑”之间自相矛盾，且把抬手露腰误写成下摆卷入后轮风险。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": true,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": true
+      }
+    },
+    {
+      "task_id": "P10-CP07",
+      "product_id": "CP07",
+      "product_label": "用户问题诊断室",
+      "score": 82,
+      "apparel_brand_fit": {
+        "verdict": "需小修后适配",
+        "note": "诊断顺序正确，但15至30分钟直播内容深度不足且个别穿脱建议不稳。"
+      },
+      "market_comparison": "comparable",
+      "rationale": "三个先问条件和分层方案均在，但现有稿量难支撑15至30分钟，且把不会自行穿脱的孩子导向套头款并不普遍成立。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP08",
+      "product_id": "CP08",
+      "product_label": "工艺／面料／版型解构",
+      "score": 76,
+      "apparel_brand_fit": {
+        "verdict": "修订前不适配",
+        "note": "形式完整但版型机理和测试数据未经输入支持，专业账号不应直接发布。"
+      },
+      "market_comparison": "weaker",
+      "rationale": "动作与结构一一对应且保留试穿边界，但“侧拼接分工”“1.5厘米余量”和三档省深测试均为未证实的精确技术叙述。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP09",
+      "product_id": "CP09",
+      "product_label": "适用边界与反选指南",
+      "score": 68,
+      "apparel_brand_fit": {
+        "verdict": "不适配",
+        "note": "渠道结构齐全，但案例、健康因果和沟通边界互相冲突。"
+      },
+      "market_comparison": "weaker",
+      "rationale": "正文虚构具体母子到店案例和既往咨询，一边又明写不得虚构顾客反馈，并把汗湿后吹风直接归因为感冒，不能作为可信反选指南。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": true,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP10",
+      "product_id": "CP10",
+      "product_label": "长期验证档案",
+      "score": 84,
+      "apparel_brand_fit": {
+        "verdict": "需小修后适配",
+        "note": "观察维度克制，但测量方法和逐周表格尚不足以形成可重复档案。"
+      },
+      "market_comparison": "comparable",
+      "rationale": "没有编造结果且明确单件样本边界，但袖口拉伸没有固定拉力、时长和恢复时间，也只列通用字段而未给出六周记录表。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP11",
+      "product_id": "CP11",
+      "product_label": "产品诞生与设计取舍档案",
+      "score": 82,
+      "apparel_brand_fit": {
+        "verdict": "经事实核验后适配",
+        "note": "取舍表达清晰，但新增尺寸、掉落次数和儿童反馈需真实证据。"
+      },
+      "market_comparison": "comparable",
+      "rationale": "A/B方案、试穿动作、最终选择和放弃代价齐全，但擅自生成8/10厘米、捡七八次和一周适应等事实，且口袋高度并非稳定性的唯一变量。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP12",
+      "product_id": "CP12",
+      "product_label": "产品迭代与版本日志",
+      "score": 84,
+      "apparel_brand_fit": {
+        "verdict": "经事实核验后适配",
+        "note": "迭代叙事与未决边界优秀，但精确尺寸和试穿反馈不能无来源落地。"
+      },
+      "market_comparison": "comparable",
+      "rationale": "发现—修改—复看—待观察链条完整且没有广告腔，但自行增加5毫米、8×5厘米、同一儿童复测与原话，真实性弱于市场中的可核验版本记录。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP13",
+      "product_id": "CP13",
+      "product_label": "产品的生活与衣橱角色",
+      "score": 90,
+      "apparel_brand_fit": {
+        "verdict": "适配",
+        "note": "同一儿童、同一夹克和三个时段一致，生活角色清晰且不夸功能。"
+      },
+      "market_comparison": "comparable",
+      "rationale": "早晨挡风、午后收纳、傍晚再穿的三镜均可直接拍摄，时间和人物没有漂移，品牌表达克制自然。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP14",
+      "product_id": "CP14",
+      "product_label": "物性影像与感官短片",
+      "score": 91,
+      "apparel_brand_fit": {
+        "verdict": "适配",
+        "note": "视觉、触感和环境声均被转成明确镜头语言，适合质感型童装内容。"
+      },
+      "market_comparison": "comparable",
+      "rationale": "四镜准确覆盖顺毛、逆毛、揉合和松手形态，每镜明确纯画面/环境声与字幕，且没有虚构耐磨或保暖数据。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP15",
+      "product_id": "CP15",
+      "product_label": "商品到店生命周期",
+      "score": 91,
+      "apparel_brand_fit": {
+        "verdict": "适配",
+        "note": "四步流程、异常边界、摆放和责任动作均能直接用于门店后场。"
+      },
+      "market_comparison": "stronger",
+      "rationale": "相较泛幕后叙事，本成品以A4/A3可执行层级明确箱数、尺码、异常筐和上架交接，对当前线下物料任务更直接。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP16",
+      "product_id": "CP16",
+      "product_label": "真实服务复盘",
+      "score": 65,
+      "apparel_brand_fit": {
+        "verdict": "不适配",
+        "note": "终局一致，但将拖地裤脚和小夹子固定作为儿童可继续穿着方案存在跌倒与勾挂风险。"
+      },
+      "market_comparison": "weaker",
+      "rationale": "各渠道都保持原尺码卷边的决定，但明知裤脚拖地仍称不影响活动，并建议孩子穿着夹子固定的裤脚回家观察，服务方案不可安全复用。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": true
+      }
+    },
+    {
+      "task_id": "P10-CP17",
+      "product_id": "CP17",
+      "product_label": "陈列换陈与空间实验",
+      "score": 84,
+      "apparel_brand_fit": {
+        "verdict": "需小修后适配",
+        "note": "空间和商品关系可执行，但周末场景与顾客视线定义需要回到真实门店。"
+      },
+      "market_comparison": "comparable",
+      "rationale": "三场景、前中后层次、颜色和复拍角度齐全，但把“周末”缩成配渔夫帽的“周末在家”，并以儿童1米视角替代主要家长顾客视线。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": true,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP18",
+      "product_id": "CP18",
+      "product_label": "城市门店生活志",
+      "score": 82,
+      "apparel_brand_fit": {
+        "verdict": "需修订后适配",
+        "note": "声场与门店动作完整，但苏州园区店被泛化为老街意象，地方真实性不足。"
+      },
+      "market_comparison": "weaker",
+      "rationale": "45分钟、铃声、亲子路过、遮阳帘和吊牌均可拍，但“苏州老街巷”与园区门店语境脱节，且熟人扮演、电扇造风削弱纪实可信度。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP19",
+      "product_id": "CP19",
+      "product_label": "经营取舍与决策复盘",
+      "score": 89,
+      "apparel_brand_fit": {
+        "verdict": "适配",
+        "note": "情境演绎清楚，三个方案及代价完整，最终决定始终一致。"
+      },
+      "market_comparison": "comparable",
+      "rationale": "取消、延期和室内三案比较有经营判断，标题、正文、图注及结尾都保持时间不变、地点改室内，适合品牌主理人表达。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": false,
+        "missed_explicit_requirement": false,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    },
+    {
+      "task_id": "P10-CP20",
+      "product_id": "CP20",
+      "product_label": "承诺—兑现追踪",
+      "score": 67,
+      "apparel_brand_fit": {
+        "verdict": "不适配",
+        "note": "承诺框架清楚，但时间事实自相矛盾，不能作为品牌兑现证明。"
+      },
+      "market_comparison": "weaker",
+      "rationale": "周二说次日发出、周三又说当日下午到、实际周四到货，却总结为“原说两天、实际一天”，且没有向家长解释周三到周四的ETA变化。",
+      "serious_issues": {
+        "serious_task_drift": false,
+        "child_adult_mismatch": false,
+        "internal_contradiction": true,
+        "missed_explicit_requirement": true,
+        "invisible_dialogue": false,
+        "safety_hard_issue": false
+      }
+    }
+  ],
+  "aggregate": {
+    "overall_average": 80.5,
+    "score_gte_85_count": 5,
+    "score_gte_80_count": 14,
+    "score_below_80_count": 6,
+    "market_comparison_counts": {
+      "stronger": 1,
+      "comparable": 10,
+      "weaker": 9,
+      "comparable_or_stronger": 11
+    },
+    "obvious_template_or_near_duplicate": {
+      "item_count": 0,
+      "groups": [],
+      "note": "未把七类格式各自必需的结构标签或系统收口包装计作内容同模板。"
+    },
+    "serious_issue_summary": {
+      "affected_task_count": 8,
+      "affected_tasks": [
+        "P10-CP02",
+        "P10-CP03",
+        "P10-CP04",
+        "P10-CP06",
+        "P10-CP09",
+        "P10-CP16",
+        "P10-CP17",
+        "P10-CP20"
+      ],
+      "serious_task_drift_count": 0,
+      "child_adult_mismatch_count": 0,
+      "internal_contradiction_count": 4,
+      "missed_explicit_requirement_count": 3,
+      "invisible_dialogue_count": 0,
+      "safety_hard_issue_count": 3
+    },
+    "seven_format_completeness": {
+      "all_seven_formats_present": true,
+      "structurally_complete_task_count": 20,
+      "formats": [
+        {
+          "format": "短视频",
+          "task_count": 6,
+          "structurally_complete_count": 6,
+          "task_ids": ["P10-CP01", "P10-CP02", "P10-CP04", "P10-CP13", "P10-CP14", "P10-CP18"]
+        },
+        {
+          "format": "培训与门店话术",
+          "task_count": 1,
+          "structurally_complete_count": 1,
+          "task_ids": ["P10-CP03"]
+        },
+        {
+          "format": "图文",
+          "task_count": 8,
+          "structurally_complete_count": 8,
+          "task_ids": ["P10-CP05", "P10-CP06", "P10-CP08", "P10-CP10", "P10-CP11", "P10-CP12", "P10-CP19", "P10-CP20"]
+        },
+        {
+          "format": "直播内容包",
+          "task_count": 1,
+          "structurally_complete_count": 1,
+          "task_ids": ["P10-CP07"]
+        },
+        {
+          "format": "私域沟通内容",
+          "task_count": 2,
+          "structurally_complete_count": 2,
+          "task_ids": ["P10-CP09", "P10-CP16"]
+        },
+        {
+          "format": "门店线下物料",
+          "task_count": 1,
+          "structurally_complete_count": 1,
+          "task_ids": ["P10-CP15"]
+        },
+        {
+          "format": "陈列搭配",
+          "task_count": 1,
+          "structurally_complete_count": 1,
+          "task_ids": ["P10-CP17"]
+        }
+      ],
+      "quality_note": "20项结构均完整，但结构完整不等于市场可用；儿童安全、事实可信和时间一致性仍有阻断项。"
+    },
+    "safety_hard_items": {
+      "all_pass": false,
+      "failed_task_ids": ["P10-CP03", "P10-CP06", "P10-CP16"],
+      "findings": [
+        "P10-CP03在未核对洗护标和面料前给出通用蒸汽温度并承诺不会损伤面料。",
+        "P10-CP06为儿童骑滑板车时的连帽绳提供可继续使用条件并给出矛盾的安全结论。",
+        "P10-CP16把拖地裤脚和小夹子固定作为儿童可继续穿着观察的方案，存在跌倒和勾挂风险。"
+      ]
+    },
+    "real_market_usability": {
+      "ready_at_current_content_quality_count": 5,
+      "ready_task_ids": ["P10-CP01", "P10-CP13", "P10-CP14", "P10-CP15", "P10-CP19"],
+      "requires_minor_edit_or_fact_verification_count": 9,
+      "requires_minor_edit_or_fact_verification_task_ids": ["P10-CP02", "P10-CP04", "P10-CP05", "P10-CP07", "P10-CP10", "P10-CP11", "P10-CP12", "P10-CP17", "P10-CP18"],
+      "blocked_pending_material_content_repair_count": 6,
+      "blocked_pending_material_content_repair_task_ids": ["P10-CP03", "P10-CP06", "P10-CP08", "P10-CP09", "P10-CP16", "P10-CP20"],
+      "conclusion": "当前批次具备多格式成品生产能力，但尚未达到整批服装品牌市场竞争力验收线。"
+    }
+  },
+  "limitations": [
+    "只审查冻结输入中的已选择或首个候选，没有评价备选，也没有重新生成内容。",
+    "市场比较仅使用冻结的20份参考条目的标题、摘要与可比性说明；未联网、未读取全文、未读取既有审查结论。",
+    "没有因“内部测试”“人工审核”或不可直接发布等系统包装扣分。",
+    "输入未提供真实商品SOP、版型数据、员工档案、顾客授权或活动记录；成品自行新增的精确事实按需核验或不可直接发布处理。"
+  ],
+  "decision": {
+    "verdict": "FAIL",
+    "thresholds": {
+      "overall_average_gte_85": false,
+      "at_least_16_items_gte_85": false,
+      "all_remaining_items_gte_80": false,
+      "comparable_or_stronger_gte_14": false,
+      "obvious_template_or_near_duplicate_lte_4": true,
+      "serious_issue_count_eq_0": false,
+      "all_safety_hard_items_pass": false
+    },
+    "reason": "平均80.5、仅5项达到85分、6项低于80分、市场相当或更强11项，并存在儿童安全、事实矛盾和明确要求遗漏，未达到终审验收线。"
+  },
+  "founder_corrected_targeted_rereview": {
+    "schema": "diyu.package10.content_competitiveness_apparel_targeted_rereview.v1",
+    "reviewed_at": "2026-07-19T11:54:22Z",
+    "mode": "single_targeted_rereview_after_founder_correction",
+    "binding": {
+      "input_path": "/tmp/diyu-p10-targeted-review-input-1c7b078.json",
+      "normalized_sha256": "892afef762c8e4e41f0ff950107db3749aa69bc88e0403181bdc316d5a9230ea",
+      "normalization": "移除normalized_sha256字段后，以ensure_ascii=false、sort_keys=true、separators=(',',':')规范化",
+      "digest_verified": true,
+      "candidate_commit": "1c7b078495a06e0504db507222d42f55ece1a641",
+      "candidate_commit_short": "1c7b078",
+      "candidate_tree": "bb71fd199c479bb7b95a295b63b86664271de810",
+      "candidate_tree_short": "bb71fd1",
+      "initial_review_preserved": true,
+      "third_full_review": false,
+      "new_samples": 0,
+      "task_replacements": 0,
+      "new_model_calls": 0,
+      "web_search_repeated": false
+    },
+    "founder_correction_applied": {
+      "creative_candidate_facts_require_source_proof": false,
+      "no_deduction_for_unproven_creative_candidate_facts": true,
+      "covered_fact_kinds": ["价格", "库存", "尺寸", "承诺", "人物经历", "顾客故事", "门店事件", "已有素材描述"],
+      "remaining_axes": ["任务一致性", "成品内部自洽", "真实敏感信息与秘密", "账号与浏览器隔离", "人工审核前禁止自动发布", "儿童直接人身安全最小护栏", "内容竞争力与服装品牌适配"]
+    },
+    "items": [
+      {
+        "task_id": "P10-CP01",
+        "selected_candidate": "候选1",
+        "selected_title": "按扣复检：三件样衣，一个松动",
+        "score": 89,
+        "apparel_brand_fit": "适配",
+        "market_comparison": "comparable",
+        "task_fidelity": "pass",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "岗位动作、声音、字幕和交接结论完整，仍是可直接拍摄的强幕后成品。"
+      },
+      {
+        "task_id": "P10-CP02",
+        "selected_candidate": "备选1",
+        "selected_title": "9:00-9:30 门店的半小时",
+        "score": 89,
+        "apparel_brand_fit": "适配",
+        "market_comparison": "comparable",
+        "task_fidelity": "pass",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "备选以9:00至9:30修复开店前后口径，并完整保留卷帘门、脚步、试衣牌、归位与首位亲子顾客。"
+      },
+      {
+        "task_id": "P10-CP03",
+        "selected_candidate": "推荐候选",
+        "selected_title": "棉服上挂标准操作训练",
+        "score": 86,
+        "apparel_brand_fit": "适配，人工审核时应按实际洗护标确认蒸汽档位",
+        "market_comparison": "comparable",
+        "task_fidelity": "pass",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "拆包、低温蒸汽、检查、帽绳整理、上挂及练习问答齐全；Founder纠偏后不因候选中的工艺参数无外部证明扣分。"
+      },
+      {
+        "task_id": "P10-CP04",
+        "selected_candidate": "候选1",
+        "selected_title": "一箱临时补货的接力",
+        "score": 83,
+        "apparel_brand_fit": "需小修后适配",
+        "market_comparison": "weaker",
+        "task_fidelity": "minor_issue",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "交接和短缺补发闭环已经清楚，但司机扫码仍发生在仓库装车处而非用户点名的门店卸货区，属于单点可修任务偏差。"
+      },
+      {
+        "task_id": "P10-CP05",
+        "selected_candidate": "推荐候选",
+        "selected_title": "从照图摆货到独立思考：一个陈列师的三年",
+        "score": 91,
+        "apparel_brand_fit": "适配",
+        "market_comparison": "comparable",
+        "task_fidelity": "pass",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "三个年度片段把判断从照图、观察停留到独立换陈复盘写实展开，人物细节作为创意候选不再因无来源证明被扣分。"
+      },
+      {
+        "task_id": "P10-CP06",
+        "selected_candidate": "候选1（saved_raw_zero_call_reparse）",
+        "selected_title": "连帽外套能骑滑板车吗？现场做三个动作就知道",
+        "score": 65,
+        "apparel_brand_fit": "不适配",
+        "market_comparison": "weaker",
+        "task_fidelity": "pass",
+        "internal_consistency": "minor_issue",
+        "child_direct_safety": "fail",
+        "serious_issue": true,
+        "rationale": "成品仍允许不超过帽口或后背固定的帽绳用于儿童滑板车场景；松绳长度阈值不能消除车把或外物勾挂风险，违反儿童直接防缠绕最小护栏。"
+      },
+      {
+        "task_id": "P10-CP07",
+        "selected_candidate": "备选1",
+        "selected_title": "孩子说“太热了”或“好冷”，其实是你没选对上衣",
+        "score": 87,
+        "apparel_brand_fit": "适配",
+        "market_comparison": "comparable",
+        "task_fidelity": "pass",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "备选同时询问出汗、风力及孩子会不会和愿不愿意自行穿脱，再给可调分层而非唯一商品。"
+      },
+      {
+        "task_id": "P10-CP08",
+        "selected_candidate": "候选1",
+        "selected_title": "一条儿童工装裤的膝部：省道、拼接和余量怎么配合动作",
+        "score": 87,
+        "apparel_brand_fit": "适配",
+        "market_comparison": "comparable",
+        "task_fidelity": "pass",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "省道、侧拼接和后片余量分别对应蹲、跨、坐，并明确结构解释不能替代真实试穿；技术细节按Founder纠偏视为待人工审核的创意候选。"
+      },
+      {
+        "task_id": "P10-CP09",
+        "selected_candidate": "推荐候选",
+        "selected_title": "暖气房里穿厚绒？先停一下",
+        "score": 87,
+        "apparel_brand_fit": "适配",
+        "market_comparison": "comparable",
+        "task_fidelity": "pass",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "朋友圈、社群和一对一均覆盖暖气、易出汗和频繁穿脱的反选理由及替代方案，且无成人场景漂移。"
+      },
+      {
+        "task_id": "P10-CP10",
+        "selected_candidate": "候选1",
+        "selected_title": "一件儿童卫衣的六周洗穿观察：方法、记录与有限结论",
+        "score": 85,
+        "apparel_brand_fit": "适配，发布前应以实际记录替换候选结论",
+        "market_comparison": "comparable",
+        "task_fidelity": "pass",
+        "internal_consistency": "minor_issue",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "观察方法、六周栏位和有限结论边界完整且未虚构已发生的具体测试数值，但空白记录与确定性示例结论需在人工审核时对齐。"
+      },
+      {
+        "task_id": "P10-CP11",
+        "selected_candidate": "推荐候选",
+        "selected_title": "口袋位置相差2cm，我们在取舍什么？",
+        "score": 90,
+        "apparel_brand_fit": "适配",
+        "market_comparison": "comparable",
+        "task_fidelity": "pass",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "两案草图、试穿动作、选择和放弃代价构成完整产品诞生档案，测试人物与数据作为创意候选不再扣分。"
+      },
+      {
+        "task_id": "P10-CP12",
+        "selected_candidate": "候选1",
+        "selected_title": "一件儿童夹克拉链的版本日志",
+        "score": 72,
+        "apparel_brand_fit": "不适配",
+        "market_comparison": "weaker",
+        "task_fidelity": "pass",
+        "internal_consistency": "fail",
+        "child_direct_safety": "fail",
+        "serious_issue": true,
+        "rationale": "正文称把靠近下巴的拉链上止口再向上移8毫米会让拉链头远离下巴，方向与结果自相矛盾，可能增加碰撞或夹触风险；护片不能消除该设计指令问题。"
+      },
+      {
+        "task_id": "P10-CP13",
+        "selected_candidate": "推荐候选",
+        "selected_title": "一件薄夹克的一天：早晨·午后·傍晚",
+        "score": 90,
+        "apparel_brand_fit": "适配",
+        "market_comparison": "comparable",
+        "task_fidelity": "pass",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "同一孩子、同一夹克和三个生活时段完整一致，表达克制且可直接拍摄。"
+      },
+      {
+        "task_id": "P10-CP14",
+        "selected_candidate": "推荐候选",
+        "selected_title": "灯芯绒的触感验证",
+        "score": 91,
+        "apparel_brand_fit": "适配",
+        "market_comparison": "comparable",
+        "task_fidelity": "pass",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "顺毛、逆毛、揉合和松手均有近景、纯画面/环境声和字幕，感官成品完整且无虚构功效数据。"
+      },
+      {
+        "task_id": "P10-CP15",
+        "selected_candidate": "推荐候选",
+        "selected_title": "新货到店四步操作指引",
+        "score": 91,
+        "apparel_brand_fit": "适配",
+        "market_comparison": "stronger",
+        "task_fidelity": "pass",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "四步流程、异常筐、责任动作、版面和摆放建议均可直接用于门店后场，当前任务实用性强于泛幕后参考。"
+      },
+      {
+        "task_id": "P10-CP16",
+        "selected_candidate": "备选1",
+        "selected_title": "妈妈纠结：换小码还是卷裤脚？我们做了个对比",
+        "score": 86,
+        "apparel_brand_fit": "适配",
+        "market_comparison": "comparable",
+        "task_fidelity": "pass",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "备选保持所有渠道最终选择原码临时卷边，并明确在安全环境观察牢固度、散开则缝针固定，已消除初审夹子勾挂问题。"
+      },
+      {
+        "task_id": "P10-CP17",
+        "selected_candidate": "备选1",
+        "selected_title": "入口桌换陈三步法：从颜色到场景的落地清单",
+        "score": 90,
+        "apparel_brand_fit": "适配",
+        "market_comparison": "comparable",
+        "task_fidelity": "pass",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "备选完整给出三场景商品关系、前中后层次、颜色、可用性核对及入口、成人顾客视线和桌面三个复拍角度。"
+      },
+      {
+        "task_id": "P10-CP18",
+        "selected_candidate": "候选1",
+        "selected_title": "苏州夏日傍晚，放学后的45分钟",
+        "score": 85,
+        "apparel_brand_fit": "适配，建议剪辑时补入起止时刻",
+        "market_comparison": "weaker",
+        "task_fidelity": "minor_issue",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "自行车铃、亲子经过、遮阳帘和吊牌晚风均完整且已去除地域错位，但45分钟主要靠标题表达，镜内缺少具体起止时刻。"
+      },
+      {
+        "task_id": "P10-CP19",
+        "selected_candidate": "推荐候选",
+        "selected_title": "（情境演绎）高温预警下的周末亲子活动：我们为什么换到室内？",
+        "score": 89,
+        "apparel_brand_fit": "适配",
+        "market_comparison": "comparable",
+        "task_fidelity": "pass",
+        "internal_consistency": "pass",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "情境演绎显式、三案代价清楚，标题正文图注和结尾始终保持时间不变、地点改室内。"
+      },
+      {
+        "task_id": "P10-CP20",
+        "selected_candidate": "候选1",
+        "selected_title": "一件缺码外套的72小时追踪",
+        "score": 82,
+        "apparel_brand_fit": "需小修后适配",
+        "market_comparison": "comparable",
+        "task_fidelity": "minor_issue",
+        "internal_consistency": "minor_issue",
+        "child_direct_safety": "pass",
+        "serious_issue": false,
+        "rationale": "三天承诺与节点已经一致，但在途阶段称店员拍到“外包装完好”不够自洽，且只写无变化时更新，未实际展示发生变化时的解释话术。"
+      }
+    ],
+    "aggregate": {
+      "task_count": 20,
+      "overall_average": 85.75,
+      "score_gte_85_count": 16,
+      "score_gte_80_count": 18,
+      "score_below_80_count": 2,
+      "market_comparison_counts": {
+        "stronger": 1,
+        "comparable": 15,
+        "weaker": 4,
+        "comparable_or_stronger": 16
+      },
+      "serious_issue_count": 2,
+      "serious_issue_task_ids": ["P10-CP06", "P10-CP12"],
+      "child_direct_safety_all_pass": false,
+      "child_direct_safety_failed_task_ids": ["P10-CP06", "P10-CP12"],
+      "real_sensitive_information_or_secret_leak_count": 0,
+      "browser_and_account_isolation_pass": true,
+      "automatic_publish_count": 0,
+      "human_review_required": true,
+      "obvious_template_or_near_duplicate": {
+        "item_count": 0,
+        "groups": [],
+        "note": "未把七类交付格式的必需结构或系统包装计作内容近重复。"
+      },
+      "seven_formats_present": true,
+      "structurally_complete_task_count": 20,
+      "founder_correction_effect": "无来源证明不再构成候选内容扣分或资格失败；初审中仅由该标准导致的扣分已移除。"
+    },
+    "decision": {
+      "verdict": "FAIL",
+      "thresholds": {
+        "overall_average_gte_85": true,
+        "at_least_16_items_gte_85": true,
+        "all_remaining_items_gte_80": false,
+        "comparable_or_stronger_gte_14": true,
+        "serious_issue_count_eq_0": false,
+        "child_direct_safety_all_pass": false,
+        "obvious_template_or_near_duplicate_lte_4": true
+      },
+      "reason": "Founder纠偏后平均分、85分项数、市场比较与模板阈值均已达到；但CP06仍给出儿童骑滑板车时可保留帽绳的缠绕风险建议，CP12的拉链上止口调整方向与远离下巴目标自相矛盾并可能增加夹触风险，两项低于80且儿童直接安全硬项未全过。",
+      "not_a_complete_rereview": true,
+      "no_further_review_round_started": true
+    }
+  }
+}
