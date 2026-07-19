@@ -1,0 +1,74 @@
+{
+ "schema_version": "p7-m3-recovery-progress-v2",
+ "recovery_id": "M3_R1",
+ "checkpoint_kind": "INTERRUPTED_RESUMABLE",
+ "supersedes": "M3_RECOVERY_PROGRESS.v1.json（v1 保留不改；v2=Opus 4.8 完整替换版续跑会话细粒度进度）",
+ "session": {
+  "identity": "delivery_control_001/milestones/M3/recovery/SESSION_IDENTITY.M3_R1.v2.json",
+  "primary_model": "claude-opus-4-8",
+  "resumed_from_head": "8d934414185c5c2f231d09b76e908e4d9ce970af",
+  "note": "Opus 4.8 完全替代 Fable 5（发起人 RESUME Prompt 明确授权，不再探测/询问）"
+ },
+ "canonical_resume_prompt": "『Opus 4.8 完整替换版』RESUME Prompt（发起人会话内投放；与旧 RESUME_PROMPT.M3_R1.v1.md 冲突条款以其为准）。新会话逐字重投该 Prompt 即可续。",
+ "validated_operational_facts": {
+  "seat_B_claude_headless": "claude -p --model claude-opus-4-8 活体 OK（沙箱内可跑；单次简单调用约 $0.29）",
+  "seat_A_codex_headless": "codex exec - --json --ephemeral -s read-only 活体 OK，但**必须在沙箱外运行**（沙箱内 app-server 写只读 FS 失败 os error 30）——续跑建标凡调 codex 的步骤须 dangerouslyDisableSandbox",
+  "cost_note": "全量 9 模块×2 套建标=数千次跨模型付费调用/多小时/多会话；成本非停工门（发起人裁定），耗尽=再落 INTERRUPTED_RESUMABLE"
+ },
+ "completed_this_session": [
+  {
+   "stage": "startup",
+   "commit": "14bd52e",
+   "what": "SESSION_IDENTITY.v2 + journal seq49 RESUME + 活体验证跨模型 CLI 原语"
+  },
+  {
+   "stage": "§5.5",
+   "commit": "14bd52e",
+   "what": "M4 恢复互锁加固：CLOSED_PASS 须携 closed_pass_binding（new closeout/两套就绪 PASS/HANDOFF 逐字节摘要吻合 + generation/index/candidate 标量）；仅伪造状态文件 fail-closed。interlock 14 测（4 新正负测）"
+  },
+  {
+   "stage": "§5.1+§5.3",
+   "commit": "a1eb729",
+   "what": "qual_record_assembly（验证器合规记录装配，对拍真 validate_qualification_records 过）+ qual_custody_recompute（计数由密封记录复算非调用方输入；§5.3 distinct source_group 去重；verify_binding 复核计数/摘要==复算，伪造计数 fail-closed）。custody 7 测"
+  }
+ ],
+ "test_baseline": "delivery_control 128 passed + eval_audit_spine 53 passed（本会话新增 11 测：interlock +4 / custody +7）",
+ "pending": [
+  {
+   "stage": "§5.2",
+   "what": "为 9 条数据通道建最小 fixture 贯通真实 product core 验证器（qualification_data.validate_qualification_records + m0.MODULE_RECORD_ROLE_MINIMUMS + 各模块 adapter/gold_field_names/record-role）；measurement_qualification.v2 与 m0.py 较严者为准"
+  },
+  {
+   "stage": "§5.4",
+   "what": "M3/M4 阶段边界：cost_source_event_manifests 由 M3 误标改 M4（M4 运行产物）；M3 readiness 须验 expected cost manifest + rate card（M3 冻结）但不得要求 source event manifest / cost_events（M4）。需改 pre_m0_readiness KEY_MAP + 就绪门 + 测试，勿破现有 128 绿"
+  },
+  {
+   "stage": "R3-build",
+   "what": "扩展 annexC 构造模板支持新 kinds（CONTRADICTION_INJECT/RISK_ELEVATE/EVIDENCE_INSUFFICIENT/BOUNDARY_OMIT/OMISSION_MISLEAD/LEGAL_NEGATIVE_CONTROL）+ 为 7 新模块（reference/atomization/fact_chain/formulaic/disclosure/omission/review）建构造+标注+裁决逻辑；qual_runner goldfreeze 改用 assemble_gold_record 产验证器合规记录（含 source_group_id/record_role/module 字段）；不建平行 schema"
+  },
+  {
+   "stage": "R3-run",
+   "what": "跑密封双盲建标至两套分别达 measurement_qualification.v2 全部下限（席A=codex 沙箱外/席B=claude/仲裁/裁决）；某 generation 不足→整体 superseded 建下一 generation；机械证明容量不足才 HONEST_STOP"
+  },
+  {
+   "stage": "R4",
+   "what": "custody（qual_custody_recompute）对两套直算落 QUAL_{A,B}_READINESS_RECEIPT，喂 pre_m0_readiness；两套 verdict PASS 才进候选审核；checker 侧调 verify_binding 复核绑定"
+  },
+  {
+   "stage": "R5",
+   "what": "全套测试（不减）+ §八 负测清单 + 两份新独立终审（Opus 对抗 + Codex 复算，全新会话不复用）绑新候选，整改重审"
+  },
+  {
+   "stage": "R6",
+   "what": "版本化重关闭：v2 closeout 八件套 + ORIGIN_ANCHOR.v3 + 推锚 + journal CLOSED_PASS + M3_RECOVERY_STATUS→CLOSED_PASS（须填 closed_pass_binding：closeout/两套就绪/HANDOFF 路径+摘要 + generation/index/candidate）+ closure 复算 + launcher --dry-run M4 would_launch=true → 立即退出等 Codex 复审"
+  }
+ ],
+ "invariants_held_at_checkpoint": {
+  "m4_fail_closed": true,
+  "m3_recovery_status_state": "ACTIVE（未改；§5.5 加固后 CLOSED_PASS 须带完整绑定方放行）",
+  "old_qual_and_close_artifacts": "全部封存不改不揭晓（candidate 84f8fc50/closeout 07414172/anchor 1fbddc48/旧 QUAL）",
+  "working_tree": "干净（提交后；仅 harness .claude/.mcp.json 未跟踪，非任务文件）",
+  "not_a_honest_stop": "成本/会话额度非停工门；本检查点=可恢复中断"
+ },
+ "record_digest": "92105b343b7d8b1059f3365b548ff5a76d6bf930d51a0733e2dbff0225c4fd81"
+}
