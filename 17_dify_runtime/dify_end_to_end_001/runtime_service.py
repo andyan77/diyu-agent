@@ -36,6 +36,7 @@ from contracts import (
     escape_json_string_control_characters,
     escape_unambiguous_json_string_quotes,
     normalize_model_json_text,
+    normalize_unambiguous_json_structural_quotes,
     rebuild_fragmented_candidate_envelope,
     remove_unambiguous_json_trailing_commas,
 )
@@ -1275,6 +1276,9 @@ class Package7Runtime:
                         "涉及儿童活动、衣物绳带扣件、穿脱、整烫或洗护的安全建议必须保守：优先服从实物标签、"
                         "品牌SOP和真实试穿；条件不明时停止相关操作或活动并请成年人核对。不得承诺绝对安全或"
                         "绝对无损，也不得把未经验证的临时固定、改造或经验阈值写成儿童可继续活动的安全方案。"
+                        "儿童骑行、滑行等活动中，只要绳带可能摆动或缠绕、硬件可能接触皮肤、衣物可能妨碍动作"
+                        "或卷入器材，就归为不适合当前活动或需要停止后核对；不得用塞、绑、夹、遮挡、换内搭或"
+                        "自定厘米阈值把风险项改写成适合。"
                         "author_materials只是可选参考，不是逐句真值证明；没有检索资料也要根据用户输入和品牌表达配置继续创作。"
                         "作者不要输出引用编号；服务端只记录本次参考范围。"
                         "内容中写出‘已授权’不代表获得登录、账号或数据访问权限，也不得声称绕过这些权限。"
@@ -1519,8 +1523,11 @@ class Package7Runtime:
                 parsed = json.loads(normalized)
             except json.JSONDecodeError:
                 repair_markers: list[str] = []
+                repaired, structural_quote_count = (
+                    normalize_unambiguous_json_structural_quotes(normalized)
+                )
                 repaired, control_count = escape_json_string_control_characters(
-                    normalized
+                    repaired
                 )
                 repaired, quote_count = escape_unambiguous_json_string_quotes(
                     repaired
@@ -1528,6 +1535,11 @@ class Package7Runtime:
                 repaired, trailing_comma_count = (
                     remove_unambiguous_json_trailing_commas(repaired)
                 )
+                if structural_quote_count:
+                    repair_markers.append(
+                        "NORMALIZED_UNAMBIGUOUS_JSON_STRUCTURAL_QUOTES:"
+                        f"{structural_quote_count}"
+                    )
                 if control_count:
                     repair_markers.append("ESCAPED_RAW_JSON_STRING_CONTROLS")
                 if quote_count:

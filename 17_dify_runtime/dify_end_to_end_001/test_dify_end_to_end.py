@@ -532,6 +532,7 @@ class Package7RecoveryTests(unittest.TestCase):
             "时间顺序、地点、岗位交接、操作步骤、最终决定",
             prompt["system"],
         )
+        self.assertIn("不得用塞、绑、夹、遮挡、换内搭", prompt["system"])
         self.assertIn("没有检索资料也要", prompt["system"])
         self.assertIn(
             "只是可选创作参考，不是逐句真值证明",
@@ -1025,6 +1026,29 @@ class Package7RecoveryTests(unittest.TestCase):
         self.assertIn(
             "ESCAPED_UNAMBIGUOUS_JSON_STRING_QUOTES",
             quoted_run.payload["model_wrapper_normalization"],
+        )
+
+        prepared_structural_quote = self.prepare("图文")
+        structural_quote_raw = json.dumps(
+            candidate_envelope("图文"),
+            ensure_ascii=False,
+            indent=2,
+        ).replace(
+            '"accompanying_copy": "未知项明确留白。"',
+            '"accompanying_copy": "未知项明确留白。”',
+            1,
+        )
+        recovered_structural_quote = self.scoped_finalize(
+            str(prepared_structural_quote["run_id"]),
+            base64.b64encode(structural_quote_raw.encode()).decode("ascii"),
+        )
+        self.assertEqual(recovered_structural_quote["result_class"], "SUCCESS")
+        structural_quote_run = self.repository.model_run(
+            str(prepared_structural_quote["run_id"])
+        )
+        self.assertIn(
+            "NORMALIZED_UNAMBIGUOUS_JSON_STRUCTURAL_QUOTES:1",
+            structural_quote_run.payload["model_wrapper_normalization"],
         )
 
         trailing_comma_prepared = self.prepare("短视频")

@@ -135,6 +135,51 @@ def escape_unambiguous_json_string_quotes(value: str) -> tuple[str, int]:
     return "".join(output), replacement_count
 
 
+def normalize_unambiguous_json_structural_quotes(value: str) -> tuple[str, int]:
+    """Replace a typographic closing quote only at a pretty-printed JSON boundary."""
+
+    output: list[str] = []
+    inside_string = False
+    escaped = False
+    replacement_count = 0
+    for index, character in enumerate(value):
+        if not inside_string:
+            output.append(character)
+            inside_string = character == '"'
+            continue
+        if escaped:
+            output.append(character)
+            escaped = False
+            continue
+        if character == "\\":
+            output.append(character)
+            escaped = True
+            continue
+        if character == '"':
+            output.append(character)
+            inside_string = False
+            continue
+        if character != "”":
+            output.append(character)
+            continue
+        cursor = index + 1
+        while cursor < len(value) and value[cursor].isspace():
+            cursor += 1
+        if cursor >= len(value) or value[cursor] not in ",}]":
+            output.append(character)
+            continue
+        line_end = value.find("\n", cursor)
+        if line_end < 0:
+            line_end = len(value)
+        if any(mark not in ",}]" for mark in value[cursor:line_end].strip()):
+            output.append(character)
+            continue
+        output.append('"')
+        inside_string = False
+        replacement_count += 1
+    return "".join(output), replacement_count
+
+
 def remove_unambiguous_json_trailing_commas(value: str) -> tuple[str, int]:
     """Remove commas outside strings only when a JSON closer follows."""
 
