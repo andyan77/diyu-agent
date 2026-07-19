@@ -521,7 +521,15 @@ class Package7RecoveryTests(unittest.TestCase):
         self.assertIn("narrative_materials", prompt["author_materials"])
         self.assertNotIn("retrieval_fragment_refs", prompt["author_materials"])
         self.assertIn(
-            "商品属性或功效、价格、库存、尺寸、授权表述、企业承诺",
+            "未经task_brief或author_materials支持，不得编造价格、库存",
+            prompt["system"],
+        )
+        self.assertIn(
+            "涉及儿童活动、衣物绳带扣件、穿脱、整烫或洗护",
+            prompt["system"],
+        )
+        self.assertIn(
+            "时间顺序、地点、岗位交接、操作步骤、最终决定",
             prompt["system"],
         )
         self.assertIn("没有检索资料也要", prompt["system"])
@@ -529,7 +537,8 @@ class Package7RecoveryTests(unittest.TestCase):
             "只是可选创作参考，不是逐句真值证明",
             prompt["author_materials"]["instruction"],
         )
-        self.assertIn("都可作为待人审正文创作", serialized)
+        self.assertIn("不可当作已发生事实", serialized)
+        self.assertNotIn("均可自由创作并进入人工审核", serialized)
         self.assertIn("不授予任何登录或数据访问权限", serialized)
         self.assertNotIn("逐句绑定", serialized)
         self.assertNotIn("required_candidate_count", serialized)
