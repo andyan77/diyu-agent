@@ -1,0 +1,303 @@
+#!/usr/bin/env python3
+"""§5.1/§5.3 保全直算：在密封区内直接读金标记录 → 记录级 core 校验 → cluster-aware
+聚合 → 产出绑定 active generation + 摘要的公开计数回执。
+
+动机（M3-R1 §5.1）：pre_m0_readiness.evaluate_set_readiness 原本信任调用方递来的任意
+public_counts JSON——可被伪造洗绿。本工具把「计数」从可信输入变成**由密封明文复算**：
+custody 侧读 sealed 金标记录、跑 spine.validate_qualification_records、按 §5.3 独立
+source/evidence 单位去重后计数，回执带 custody_binding（active generation + faces/gold/
+index 摘要）。checker/就绪门必须调 verify_binding 复核「计数==复算 且 摘要吻合」，
+而不是只重算回执里的布尔（§5.1 硬要求）。
+
+主编排会话零明文：本工具由保全/隔离会话在密封区调用；stdout 只吐聚合与摘要。
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+from typing import Any, Callable
+
+HERE = Path(__file__).resolve()
+P7 = HERE.parents[2]
+sys.path.insert(0, str(P7 / "eval_audit_spine_001"))
+sys.path.insert(0, str(HERE.parent))
+from spine.canonical import digest_json  # noqa: E402
+from spine import qualification_data as qd  # noqa: E402
+import pre_m0_readiness as R  # noqa: E402
+
+HIGH = {"HIGH", "CRITICAL"}
+LEGAL_LOW = {"LOW", "MEDIUM"}
+
+
+def _is(rec: dict, module: str, role: str | None = None) -> bool:
+    if rec.get("module") != module:
+        return False
+    return role is None or rec.get("record_role") == role
+
+
+# 每个 COUNT_KEY 的 (predicate, dedup_by_source_group)。
+# dedup=True（§5.3 cluster-aware）：同一 source_group 在该分母只计一个独立单位；
+# dedup=False：pair/item/judgment 直接计原始记录（其独立性由 pair_id/item_id 保证）。
+CLASS_PREDICATES: dict[str, tuple[Callable[[dict], bool], bool]] = {
+    "reference_extraction_positive_cases":
+        (lambda r: _is(r, "reference_extraction") and r.get("gold_present") is True, True),
+    "reference_extraction_negative_controls":
+        (lambda r: _is(r, "reference_extraction") and r.get("gold_present") is False, True),
+    "claim_atomization_positive_cases":
+        (lambda r: _is(r, "claim_atomization") and r.get("gold_present") is True, True),
+    "claim_atomization_negative_controls":
+        (lambda r: _is(r, "claim_atomization") and r.get("gold_present") is False, True),
+    "risk_classification_high_risk_cases":
+        (lambda r: _is(r, "risk_classification") and r.get("gold_risk") in HIGH, True),
+    "risk_classification_legal_controls":
+        (lambda r: _is(r, "risk_classification") and r.get("case_origin") == "NATURAL"
+         and r.get("gold_risk") in LEGAL_LOW, True),
+    "high_risk_contradicted_cases":
+        (lambda r: _is(r, "entailment") and r.get("gold_label") == "CONTRADICTED"
+         and r.get("gold_risk") in HIGH, True),
+    "high_risk_unknown_cases":
+        (lambda r: _is(r, "entailment") and r.get("gold_label") == "UNKNOWN"
+         and r.get("gold_risk") in HIGH, True),
+    "natural_legal_supported_cases":
+        (lambda r: _is(r, "entailment") and r.get("gold_label") == "SUPPORTED"
+         and r.get("case_origin") == "NATURAL", True),
+    "fact_chain_high_risk_unsafe_cases":
+        (lambda r: _is(r, "fact_chain") and r.get("gold_safe_to_clear") is False
+         and r.get("gold_risk") in HIGH, True),
+    "fact_chain_natural_legal_cases":
+        (lambda r: _is(r, "fact_chain") and r.get("case_origin") == "NATURAL"
+         and r.get("gold_safe_to_clear") is True, True),
+    "formulaic_double_reviewed_pairs_total":
+        (lambda r: _is(r, "formulaic", "judgment"), False),
+    "formulaic_positive_pairs_minimum":
+        (lambda r: _is(r, "formulaic", "adjudication") and r.get("final_verdict") == "FORMULAIC", False),
+    "formulaic_negative_pairs_minimum":
+        (lambda r: _is(r, "formulaic", "adjudication") and r.get("final_verdict") == "NOT_FORMULAIC", False),
+    "formulaic_necessary_grammar_pairs_minimum":
+        (lambda r: _is(r, "formulaic", "adjudication") and r.get("final_verdict") == "NECESSARY_GRAMMAR", False),
+    "deterministic_disclosure_cases_total":
+        (lambda r: _is(r, "disclosure"), True),
+    "omission_misleading_high_risk_cases":
+        (lambda r: _is(r, "omission") and r.get("gold_misleading") is True
+         and r.get("gold_risk") in HIGH, True),
+    "omission_nonmisleading_controls":
+        (lambda r: _is(r, "omission") and r.get("gold_misleading") is False, True),
+    "review_double_reviewed_items":
+        (lambda r: _is(r, "review_calibration", "review_item"), False),
+    "review_judgment_records":
+        (lambda r: _is(r, "review_calibration", "judgment"), False),
+}
+
+
+def _count_class(records: list[dict], predicate: Callable[[dict], bool],
+                 dedup_by_source_group: bool) -> int:
+    """§5.3：dedup=True → 该分母内 distinct source_group_id 计数（同源变体不虚增独立 N）。"""
+    matched = [r for r in records if predicate(r)]
+    if dedup_by_source_group:
+        return len({str(r.get("source_group_id")) for r in matched})
+    # pair/item：按 pair_id/item_id（缺则 case_id）去重，防同一 pair 重复记录虚增
+    keyfield = "pair_id" if any("pair_id" in r for r in matched) else "item_id"
+    if any(keyfield in r for r in matched):
+        return len({str(r.get(keyfield)) for r in matched})
+    return len({str(r.get("case_id")) for r in matched})
+
+
+def _module_gold_field_coverage(records: list[dict]) -> dict[str, list[str]]:
+    cov: dict[str, set[str]] = {}
+    for r in records:
+        module = r.get("module")
+        if module not in R.MODULE_GOLD_FIELDS:
+            continue
+        present = {f for f in R.MODULE_GOLD_FIELDS[module] if f in r}
+        cov.setdefault(module, set()).update(present)
+    return {m: sorted(v) for m, v in cov.items()}
+
+
+def _derive_two_independent_labels(records: list[dict]) -> bool:
+    """每条记录须 >=2 条互异身份的 gold_review_provenance（validate 已强制；此处冗余复核）。"""
+    for r in records:
+        reviews = r.get("gold_review_provenance") or []
+        identities = {str(rv.get("reviewer_identity")) for rv in reviews
+                      if isinstance(rv, dict)}
+        if len(reviews) < 2 or len(identities) < 2:
+            return False
+    return True
+
+
+def recompute_public_counts(records: list[dict], *, set_id: str,
+                            active_generation_id: str,
+                            dataset_manifest_digest: str,
+                            faces_sha256: str, gold_sha256: str,
+                            environmental_flags: dict[str, bool] | None = None,
+                            known_r5_recall: float = 0.0) -> dict[str, Any]:
+    """密封记录 → 记录级 core 校验 → cluster-aware 计数 → 绑定生成/摘要的公开计数。
+
+    environmental_flags: custody 侧独立证明的过程旗标（ab 互斥/DEV 隔离/顺序/无泄漏）；
+    计数与覆盖一律**由本函数从密封记录复算**，不接受调用方递入（§5.1 反伪造核心）。
+    """
+    # 记录级 core 校验须**逐 (module, record_role) 组**跑：不同模块/角色 gold 字段不同，
+    # 一个统一 gold_field_names 会误拒（validate 要求 expected ⊆ 每条 supplied）。
+    # 每组以该组共有 gold_field_names 交集为下限 + 该组独立 index。
+    index = qd.build_qualification_record_index(
+        records, dataset_manifest_digest=dataset_manifest_digest)
+    groups: dict[tuple, list[dict]] = {}
+    for r in records:
+        groups.setdefault((r.get("module"), r.get("record_role")), []).append(r)
+    val_passed = True
+    val_errors: list[str] = []
+    total_unique = 0
+    for (module, role), grp in sorted(groups.items(), key=lambda kv: str(kv[0])):
+        common = set.intersection(*[set(r.get("gold_field_names") or [])
+                                    for r in grp]) if grp else set()
+        grp_index = qd.build_qualification_record_index(
+            grp, dataset_manifest_digest=dataset_manifest_digest)
+        grp_val = qd.validate_qualification_records(
+            grp, expected_dataset_manifest_digest=dataset_manifest_digest,
+            gold_field_names=sorted(common) or ["gold_field_names"],
+            qualification_record_index=grp_index,
+            require_gold_review_provenance=True)
+        val_passed &= grp_val["passed"]
+        val_errors.extend(f"{module}/{role}:{e}" for e in grp_val["errors"])
+        total_unique += grp_val["unique_case_count"]
+    validation = {"passed": val_passed, "errors": sorted(set(val_errors)),
+                  "unique_case_count": total_unique}
+
+    counts = {}
+    for key, (predicate, dedup) in CLASS_PREDICATES.items():
+        counts[key] = _count_class(records, predicate, dedup)
+
+    obligation_types = sorted({r.get("obligation_type") for r in records
+                               if r.get("module") == "disclosure"
+                               and r.get("obligation_type")})
+    families = sorted({r.get("family_id") for r in records if r.get("family_id")})
+    module_cov = _module_gold_field_coverage(records)
+
+    flags = dict(environmental_flags or {})
+    flags["two_independent_labels_per_record"] = _derive_two_independent_labels(records)
+
+    public_counts = {
+        "schema_version": "p7-qual-custody-public-counts-v1",
+        "set": set_id,
+        "counts": counts,
+        "deterministic_disclosure_obligation_types_present": len(obligation_types),
+        "obligation_types": obligation_types,
+        "known_r5_recall": known_r5_recall,
+        "module_gold_field_coverage": module_cov,
+        "family_coverage": families,
+        "faces_sha256": faces_sha256,
+        "gold_sha256": gold_sha256,
+        # governance（环境旗标由 custody 证明；记录级 two_independent 已复算）
+        "ab_mutually_exclusive": bool(flags.get("ab_mutually_exclusive")),
+        "dev_isolation": bool(flags.get("dev_isolation")),
+        "qual_order_ok": bool(flags.get("qual_order_ok")),
+        "sealed_no_leak": bool(flags.get("sealed_no_leak")),
+        "two_independent_labels_per_record": flags["two_independent_labels_per_record"],
+        "adjudication_on_disagreement": bool(flags.get("adjudication_on_disagreement")),
+        # §5.1 custody 绑定：受信来源=密封记录复算，非调用方输入
+        "custody_binding": {
+            "active_generation_id": active_generation_id,
+            "dataset_manifest_digest": dataset_manifest_digest,
+            "record_count": len(records),
+            "records_recompute_digest": _records_recompute_digest(records),
+            "qualification_index_digest": index["index_digest"],
+            "core_validation_passed": validation["passed"],
+            "core_validation_errors": validation["errors"][:20],
+            "unique_case_count": validation["unique_case_count"],
+            "main_session_plaintext_contact": "NONE",
+        },
+        "counts_source": "RECOMPUTED_FROM_SEALED_RECORDS (not caller-provided)",
+    }
+    return public_counts
+
+
+def _records_recompute_digest(records: list[dict]) -> str:
+    """密封记录集的确定性摘要（case_digest 排序）——绑定回执与实际密封内容。"""
+    return digest_json(sorted(str(r.get("case_digest")) for r in records))
+
+
+def verify_binding(public_counts: dict, records: list[dict]) -> list[str]:
+    """checker/就绪门侧硬复核（§5.1）：计数/覆盖/摘要必须==从密封记录复算，且 core 校验 PASS。
+
+    伪造 public_counts（手改数字/摘要）→ 与复算不符 → 返回非空错误 → fail-closed。
+    """
+    errors: list[str] = []
+    binding = public_counts.get("custody_binding") or {}
+    dmd = binding.get("dataset_manifest_digest")
+    if not isinstance(dmd, str) or len(dmd) != 64:
+        return ["custody_binding.dataset_manifest_digest_invalid"]
+    fresh = recompute_public_counts(
+        records, set_id=public_counts.get("set", "?"),
+        active_generation_id=binding.get("active_generation_id", ""),
+        dataset_manifest_digest=dmd,
+        faces_sha256=public_counts.get("faces_sha256", ""),
+        gold_sha256=public_counts.get("gold_sha256", ""),
+        environmental_flags={
+            k: public_counts.get(k) for k in
+            ("ab_mutually_exclusive", "dev_isolation", "qual_order_ok",
+             "sealed_no_leak", "adjudication_on_disagreement")},
+        known_r5_recall=public_counts.get("known_r5_recall", 0.0))
+    if not fresh["custody_binding"]["core_validation_passed"]:
+        errors.append("core_validation_failed:" + ";".join(
+            fresh["custody_binding"]["core_validation_errors"][:5]))
+    if public_counts.get("counts") != fresh["counts"]:
+        errors.append("counts_mismatch_vs_recompute")
+    if (public_counts.get("module_gold_field_coverage")
+            != fresh["module_gold_field_coverage"]):
+        errors.append("module_coverage_mismatch_vs_recompute")
+    if sorted(public_counts.get("family_coverage", [])) != fresh["family_coverage"]:
+        errors.append("family_coverage_mismatch_vs_recompute")
+    if (public_counts.get("deterministic_disclosure_obligation_types_present")
+            != fresh["deterministic_disclosure_obligation_types_present"]):
+        errors.append("obligation_types_mismatch_vs_recompute")
+    for bkey in ("records_recompute_digest", "qualification_index_digest",
+                 "record_count"):
+        if binding.get(bkey) != fresh["custody_binding"][bkey]:
+            errors.append(f"custody_binding.{bkey}_mismatch_vs_recompute")
+    if public_counts.get("two_independent_labels_per_record") is not \
+            fresh["two_independent_labels_per_record"]:
+        errors.append("two_independent_labels_flag_mismatch_vs_recompute")
+    return errors
+
+
+def _load_records(path: Path) -> list[dict]:
+    if path.is_dir():
+        rows: list[dict] = []
+        for p in sorted(path.glob("*.json")):
+            data = json.loads(p.read_text(encoding="utf-8"))
+            rows.extend(data if isinstance(data, list) else [data])
+        return rows
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return data if isinstance(data, list) else [data]
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--records", required=True, help="密封金标记录 JSON 文件或目录（保全区）")
+    ap.add_argument("--set", choices=["A", "B"], required=True)
+    ap.add_argument("--active-generation", required=True)
+    ap.add_argument("--dataset-manifest-digest", required=True)
+    ap.add_argument("--faces-sha256", default="")
+    ap.add_argument("--gold-sha256", default="")
+    ap.add_argument("--out", help="公开计数回执输出路径（只聚合/摘要）")
+    args = ap.parse_args()
+    records = _load_records(Path(args.records))
+    pc = recompute_public_counts(
+        records, set_id=args.set, active_generation_id=args.active_generation,
+        dataset_manifest_digest=args.dataset_manifest_digest,
+        faces_sha256=args.faces_sha256, gold_sha256=args.gold_sha256)
+    if args.out:
+        Path(args.out).write_text(json.dumps(pc, ensure_ascii=False, indent=1),
+                                  encoding="utf-8")
+    summary = {"set": pc["set"], "record_count": pc["custody_binding"]["record_count"],
+               "core_validation_passed": pc["custody_binding"]["core_validation_passed"],
+               "counts": pc["counts"], "families": pc["family_coverage"],
+               "index_digest": pc["custody_binding"]["qualification_index_digest"][:16]}
+    print(json.dumps(summary, ensure_ascii=False, indent=1))
+    return 0 if pc["custody_binding"]["core_validation_passed"] else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
