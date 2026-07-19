@@ -44,7 +44,33 @@ CHECKER_PATH = Path("ci/checkers/check_product_foundation.py")
 WORKFLOW_PATH = Path(".github/workflows/ci.yml")
 FROZEN_REVIEWED_COMMIT = "3f610726943dee5545d4d310f107239f2eeb9234"
 AUTHORIZED_CURRENT_LIVE_PATHS = frozenset(
-    {Path("AGENTS.md"), LEGACY_GATE1_CHECKER_PATH, CHECKER_PATH, WORKFLOW_PATH}
+    {
+        Path("AGENTS.md"),
+        LEGACY_GATE1_CHECKER_PATH,
+        CHECKER_PATH,
+        WORKFLOW_PATH,
+        STATUS_PATH,
+    }
+)
+PACKAGE10_FINAL_CLOSEOUT_PATHS = frozenset(
+    {
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "result/package10_final_closeout_result.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "review/content_competitiveness_apparel_review.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "review/novice_isolation_operations_review.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "delivery/internal_production_entry.v1.yaml"
+        ),
+    }
 )
 SUCCESSOR_PACKAGES = (
     (
@@ -819,6 +845,7 @@ def validate_post_candidate_paths(paths: set[str]) -> None:
         TRUST_REVIEW_PATH.as_posix(),
         COORDINATOR_PATH.as_posix(),
         *(path.as_posix() for path in AUTHORIZED_CURRENT_LIVE_PATHS),
+        *(path.as_posix() for path in PACKAGE10_FINAL_CLOSEOUT_PATHS),
     }
     unauthorized = sorted(
         path

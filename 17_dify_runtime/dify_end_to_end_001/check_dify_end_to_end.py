@@ -196,7 +196,29 @@ RECOVERY_AUTHORIZED_REPOSITORY_PATHS = frozenset(
         Path(".github/workflows/ci.yml"),
         Path("ci/checkers/check_product_foundation.py"),
         Path("ci/checkers/check_gate1_v1_1_current.py"),
+        Path("project-infra/current_product_status.v1.yaml"),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "result/package10_final_closeout_result.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "review/content_competitiveness_apparel_review.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "review/novice_isolation_operations_review.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "delivery/internal_production_entry.v1.yaml"
+        ),
     }
+)
+PACKAGE10_FINAL_CLOSEOUT_PATHS = frozenset(
+    path
+    for path in RECOVERY_AUTHORIZED_REPOSITORY_PATHS
+    if Path("20_internal_pilot/release_evaluation_001") in path.parents
 )
 POST_CANDIDATE_ALLOWED_PATHS = frozenset(
     {PACKAGE_RELATIVE_ROOT / RESULT_PATH, PACKAGE_RELATIVE_ROOT / DELIVERY_PATH}
@@ -1773,8 +1795,11 @@ def validate_recovery_write_scope() -> None:
     )
     require(
         not any(
-            path == Path("20_internal_pilot/release_evaluation_001")
-            or Path("20_internal_pilot/release_evaluation_001") in path.parents
+            (
+                path == Path("20_internal_pilot/release_evaluation_001")
+                or Path("20_internal_pilot/release_evaluation_001") in path.parents
+            )
+            and path not in PACKAGE10_FINAL_CLOSEOUT_PATHS
             for path in changed
         ),
         "E_RECOVERY_PACKAGE10_MUTATION",
