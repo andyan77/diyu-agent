@@ -9,6 +9,7 @@ import hashlib
 import ipaddress
 import json
 import os
+import re
 import secrets
 from datetime import datetime, timezone
 from pathlib import Path
@@ -65,6 +66,125 @@ PORTAL_OPERATION_MAP = {
     "查看来源": "查看来源",
     "提交反馈": "提交反馈",
 }
+
+
+def _idea_subject(message: str) -> str:
+    first_line = next(
+        (line.strip() for line in message.splitlines() if line.strip()),
+        "这次内容",
+    )
+    compact = re.sub(r"\s+", " ", first_line).strip("。！？!? ")
+    return f"{compact[:32]}…" if len(compact) > 32 else compact
+
+
+def _inspiration_angles(
+    *,
+    reply: str,
+    message: str,
+    topic_label: str | None,
+    account_directions: list[object],
+) -> list[JsonObject]:
+    parsed: list[JsonObject] = []
+    pattern = re.compile(
+        r"^方向\s*[123一二三]\s*[｜|:：、.-]\s*([^｜|]+?)(?:\s*[｜|]\s*(.+))?$"
+    )
+    for line in reply.splitlines():
+        match = pattern.match(line.strip())
+        if match is None:
+            continue
+        label = match.group(1).strip()
+        description = (match.group(2) or "").strip()
+        if label:
+            parsed.append(
+                {
+                    "label": label,
+                    "description": description,
+                    "topic_label": topic_label,
+                }
+            )
+    if len(parsed) == 3:
+        return parsed
+
+    subject = _idea_subject(message)
+    if message.startswith("我还没有想好"):
+        labels = [
+            str(value).strip()
+            for value in account_directions[:3]
+            if str(value).strip()
+        ]
+        if len(labels) == 3:
+            descriptions = (
+                "先从一个具体场景讲起，让内容容易开始。",
+                "换一个人物或判断视角，说清这件事为什么值得讲。",
+                "把方向落到一个普通人会关心的问题上。",
+            )
+            return [
+                {
+                    "label": label,
+                    "description": descriptions[index],
+                    "topic_label": topic_label,
+                }
+                for index, label in enumerate(labels)
+            ]
+    return [
+        {
+            "label": f"从“{subject}”的过程讲起",
+            "description": "交代起因、关键动作和结果，做成一条容易跟随的真实记录。",
+            "topic_label": topic_label,
+        },
+        {
+            "label": f"说清“{subject}”背后的判断",
+            "description": "讲明为什么这样做、比较过什么，以及最后如何取舍。",
+            "topic_label": topic_label,
+        },
+        {
+            "label": f"把“{subject}”变成一个常见问题",
+            "description": "从别人最可能追问的一点切入，用通俗回答带出内容价值。",
+            "topic_label": topic_label,
+        },
+    ]
+
+
+def _series_outline(*, reply: str, message: str) -> list[JsonObject]:
+    ordinals = {"1": 1, "2": 2, "3": 3, "一": 1, "二": 2, "三": 3}
+    parsed: dict[int, JsonObject] = {}
+    pattern = re.compile(
+        r"^第?\s*([123一二三])\s*集\s*[｜|:：、.-]\s*([^｜|]+?)(?:\s*[｜|]\s*(.+))?$"
+    )
+    for line in reply.splitlines():
+        match = pattern.match(line.strip())
+        if match is None:
+            continue
+        ordinal = ordinals[match.group(1)]
+        title = match.group(2).strip()
+        description = (match.group(3) or "").strip()
+        if title:
+            parsed[ordinal] = {
+                "episode_index": ordinal,
+                "title": title,
+                "description": description,
+            }
+    if set(parsed) == {1, 2, 3}:
+        return [parsed[index] for index in (1, 2, 3)]
+
+    subject = _idea_subject(message)
+    return [
+        {
+            "episode_index": 1,
+            "title": f"起点：{subject}",
+            "description": "先讲这件事从哪里开始，以及最初遇到的具体问题。",
+        },
+        {
+            "episode_index": 2,
+            "title": f"过程：{subject}",
+            "description": "继续讲关键动作、协作或判断，不重复第一集的起点。",
+        },
+        {
+            "episode_index": 3,
+            "title": f"结果：{subject}",
+            "description": "用结果、变化或下一步收束，让三集形成完整连续内容。",
+        },
+    ]
 
 
 def _portal_result(result: JsonObject) -> JsonObject:
@@ -629,10 +749,20 @@ def create_app(
             response_payload = _portal_result(finalized)
             if runtime_request["operation"] == "找灵感":
                 directions = account_projection.get("directions", [])
-                if isinstance(directions, list):
-                    response_payload["angles"] = [
-                        str(value) for value in directions[:3] if str(value).strip()
-                    ]
+                response_payload["angles"] = _inspiration_angles(
+                    reply=str(response_payload.get("answer", "")),
+                    message=payload.message,
+                    topic_label=payload.topic_label,
+                    account_directions=(directions if isinstance(directions, list) else []),
+                )
+                if payload.series_mode == "SERIES":
+                    response_payload["series"] = {
+                        "mode": "SERIES",
+                        "outline": _series_outline(
+                            reply=str(response_payload.get("answer", "")),
+                            message=payload.message,
+                        ),
+                    }
                 response_payload["ui_state"] = "angles"
             return jsonify(response_payload)
         except DifyChatError as exc:

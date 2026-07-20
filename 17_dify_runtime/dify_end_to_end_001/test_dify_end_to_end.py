@@ -249,6 +249,22 @@ class FakeDifyChatClient:
             if "candidate_schema" in contract:
                 content_format = str(prompt["task_brief"]["content_format"])
                 answer = candidate_envelope(content_format)
+            elif "方向1｜短标题" in str(prompt.get("system", "")):
+                subject = str(prompt.get("user_message", "本次内容")).splitlines()[0]
+                lines = [
+                    f"方向1｜先讲发生了什么｜围绕“{subject}”交代起因和过程。",
+                    f"方向2｜解释专业判断｜说清“{subject}”背后的比较与取舍。",
+                    f"方向3｜回答常见问题｜把“{subject}”变成普通人会关心的问题。",
+                ]
+                if "第1集｜短标题" in str(prompt.get("system", "")):
+                    lines.extend(
+                        [
+                            f"第1集｜事情的起点｜先讲“{subject}”从哪里开始。",
+                            f"第2集｜关键的过程｜继续讲“{subject}”中间怎样推进。",
+                            f"第3集｜最后的变化｜用“{subject}”带来的结果收束。",
+                        ]
+                    )
+                answer = {"reply": "\n".join(lines)}
             else:
                 answer = {"reply": "已从Dify内部编排返回。"}
         return {
@@ -984,12 +1000,50 @@ class Package7RecoveryTests(unittest.TestCase):
             json={
                 "account_display_name": "笛语童装",
                 "operation": "找点灵感",
-                "message": "我还没有想好，给我三个容易开始的方向。",
+                "message": "面料改版反复打样，想讲清为什么值得。",
             },
             headers={"X-Diyu-Portal": "same-origin-v1"},
         )
         self.assertEqual(inspiration.status_code, 200)
-        self.assertEqual(len(inspiration.get_json()["angles"]), 3)
+        inspiration_payload = inspiration.get_json()
+        self.assertEqual(len(inspiration_payload["angles"]), 3)
+        self.assertTrue(
+            all(
+                "面料改版反复打样" in angle["description"]
+                for angle in inspiration_payload["angles"]
+            )
+        )
+
+        other_inspiration = client.post(
+            "/v1/portal/chat",
+            json={
+                "account_display_name": "笛语童装",
+                "operation": "找点灵感",
+                "message": "公司为什么坚持做童装，想从创始人的选择讲起。",
+            },
+            headers={"X-Diyu-Portal": "same-origin-v1"},
+        )
+        self.assertEqual(other_inspiration.status_code, 200)
+        self.assertNotEqual(
+            inspiration_payload["angles"],
+            other_inspiration.get_json()["angles"],
+        )
+
+        series_inspiration = client.post(
+            "/v1/portal/chat",
+            json={
+                "account_display_name": "笛语童装",
+                "operation": "找点灵感",
+                "message": "面料改版反复打样，做成三集连续内容。",
+                "series_mode": "SERIES",
+                "episode_index": 1,
+            },
+            headers={"X-Diyu-Portal": "same-origin-v1"},
+        )
+        self.assertEqual(series_inspiration.status_code, 200)
+        outline = series_inspiration.get_json()["series"]["outline"]
+        self.assertEqual([row["episode_index"] for row in outline], [1, 2, 3])
+        self.assertEqual(len({row["title"] for row in outline}), 3)
 
     def test_all_seven_formats_render_select_revise_export_and_reference(
         self,
