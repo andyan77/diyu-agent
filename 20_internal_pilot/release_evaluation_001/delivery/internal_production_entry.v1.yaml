@@ -1,37 +1,96 @@
 internal_production_entry:
-  schema: diyu.package10.internal_production_entry.v1
-  task_id: DIYU_PACKAGE10_FINAL_PRODUCT_CLOSEOUT_001
-  state: PASS_INTERNAL_PRODUCTION_READY_WITH_HUMAN_REVIEW
-  scope: INTERNAL_GENERATED_CANDIDATES_WITH_MANDATORY_HUMAN_REVIEW
-  result_path: 20_internal_pilot/release_evaluation_001/result/package10_final_closeout_result.v1.json
-  reviewed_runtime_candidate:
-    commit: 1c7b078495a06e0504db507222d42f55ece1a641
-    tree: bb71fd199c479bb7b95a295b63b86664271de810
-  reviews:
-    content:
-      path: 20_internal_pilot/release_evaluation_001/review/content_competitiveness_apparel_review.v1.json
-      sha256: 14ca1faf346f29bf6390e032f821b16f598d27aeb4aa0fa8f50c9ef9fb10fc14
-    novice_operations:
-      path: 20_internal_pilot/release_evaluation_001/review/novice_isolation_operations_review.v1.json
-      sha256: a07efdc2f41bf49a5841d3aa59e376e20a7e558c2489774cf72c09a090e0202f
+  schema: diyu.ui_full_decision_live_delivery.internal_entry.v1
+  task_id: DIYU_UI_FULL_DECISION_LIVE_DELIVERY_001
+  state: READY_FOR_FOUNDER_POINT_BY_POINT_UI_ACCEPTANCE
+  scope: INTERNAL_GENERATED_CANDIDATES_WITH_USER_CONTROLLED_EXPORT
+  result_path: 20_internal_pilot/release_evaluation_001/result/ui_full_decision_live_delivery_result.v1.json
+  acceptance_guide_path: 20_internal_pilot/release_evaluation_001/delivery/founder_point_by_point_ui_acceptance_guide.v1.md
+  deployed_runtime_candidate:
+    commit: 0ee66680e77907a83692e6c68aeee89896e92618
+    tree: 73a1bd0ad871cf6f6d8bc05d70051cfade54752f
   release:
-    status: AUTHORIZED_ORDINARY_PROTECTED_MERGE
+    status: MERGED_AND_DEPLOYED_VIA_ORDINARY_PROTECTED_PATH
     merge_method: MERGE_COMMIT
+    pull_request: 33
+    master_check_run_id: 29785677276
+    checker_compatibility: SUCCESS
+    secret_scan: SUCCESS
     administrator_bypass: false
     force_push: false
     rebase: false
     squash: false
   entrypoints:
-    user_web: https://dify.diyuai.cc/apps
+    enterprise_and_creator_web: https://dify.diyuai.cc/apps
     dify_admin: https://dify.diyuai.cc/
-    account_delivery: credentials_only_via_secure_channel
+    credential_delivery: C:\Users\Administrator\Documents\笛语agent\secure_handoff\DIYU_UI_FULL_DECISION_LIVE_DELIVERY_001.credentials.clixml
+  identity:
+    account_family_count: 7
+    simulation_login_count: 12
+    active_content_account_count: 11
+    inactive_acceptance_account_count: 1
+    dify_admin_member_count: 1
   acceptance:
+    ui_01_to_ui_14: PASS
+    enterprise_admin_sections: 5/5
     complete_content_products: 20/20
-    deliverable_format_count: 7
-    novice_journey: PASS
-    browser_session_isolation: PASS
-    market_comparable_or_stronger: 16/20
-  review_history:
+    deliverable_formats: 7/7
+    creator_account_families: 6/6
+    three_episode_outline_before_generation: PASS
+    episode_1_candidate_count: 2
+    episode_2_candidate_count: 3
+    desktop_and_mobile: PASS
+    browser_and_account_isolation: PASS
+    founder_point_by_point_acceptance: PENDING
+  reviews:
+    product_novice_page:
+      initial_score: 88
+      initial_verdict: FAIL
+      targeted_rereview_score: 98
+      targeted_rereview_verdict: PASS
+    interface_isolation_deployment_rollback:
+      score: 96
+      verdict: PASS
+    ui_09_targeted_rereview:
+      verdict: PASS
+      hard_blockers: []
+  controls:
+    automatic_publish: false
+    public_self_registration: false
+    real_customer_data_imported: false
+    enterprise_content_approval: false
+    human_review_required: false
+    user_controls_final_use: true
+    data_access_authorization_enforced: true
+  model_budget:
+    model: langgenius/deepseek/deepseek / deepseek-v4-flash
+    start_cumulative_calls: 685
+    final_cumulative_calls: 715
+    task_calls: 30
+    task_cost_rmb: 0.101967
+    call_limit: 30
+    cost_limit_rmb: 2
+    quality_rerolls: 0
+    cumulative_call_limit: 1000
+  rollback:
+    release: /opt/diyu/package7/releases/ui-full-decision-live-delivery-001-merge-e82144b6e34f/source
+    backup: /opt/diyu/package7/backups/pre-final-redeploy-e82144b6e34f-20260720T231012Z
+    validated: true
+  historical_package10_snapshot:
+    preserved: true
+    task_id: DIYU_PACKAGE10_FINAL_PRODUCT_CLOSEOUT_001
+    state: PASS_INTERNAL_PRODUCTION_READY_WITH_HUMAN_REVIEW
+    scope: INTERNAL_GENERATED_CANDIDATES_WITH_MANDATORY_HUMAN_REVIEW
+    result_path: 20_internal_pilot/release_evaluation_001/result/package10_final_closeout_result.v1.json
+    reviewed_runtime_candidate:
+      commit: 1c7b078495a06e0504db507222d42f55ece1a641
+      tree: bb71fd199c479bb7b95a295b63b86664271de810
+    review_files:
+      content:
+        path: 20_internal_pilot/release_evaluation_001/review/content_competitiveness_apparel_review.v1.json
+        sha256: 14ca1faf346f29bf6390e032f821b16f598d27aeb4aa0fa8f50c9ef9fb10fc14
+      novice_operations:
+        path: 20_internal_pilot/release_evaluation_001/review/novice_isolation_operations_review.v1.json
+        sha256: a07efdc2f41bf49a5841d3aa59e376e20a7e558c2489774cf72c09a090e0202f
     content_review_verdict: FAIL
     content_review_average: 85.75
     novice_operations_review_verdict: FAIL
@@ -39,21 +98,33 @@ internal_production_entry:
     founder_accepted_non_blocking_findings:
     - P10-CP06
     - P10-CP12
-  controls:
-    automatic_publish: false
-    public_self_registration: false
-    real_customer_data_imported: false
-    human_review_required: true
-  model_budget:
-    model: langgenius/deepseek/deepseek / deepseek-v4-flash
-    package10_calls: 96
-    package10_cost_cny: 0.383946
-    cumulative_call_upper_bound: 689
-    cumulative_call_limit: 1000
-  rollback:
-    runbook: 19_cloud_cutover/ecs_migration_001/RUNBOOK.md
-    prior_release_preserved_in_server_external_backup: true
+    controls:
+      automatic_publish: false
+      public_self_registration: false
+      real_customer_data_imported: false
+      human_review_required: true
+    acceptance:
+      complete_content_products: 20/20
+      deliverable_format_count: 7
+      novice_journey: PASS
+      browser_session_isolation: PASS
+      market_comparable_or_stronger: 16/20
+    model_budget:
+      package10_calls: 96
+      package10_cost_cny: 0.383946
+      cumulative_call_upper_bound: 689
+    rollback_runbook: 19_cloud_cutover/ecs_migration_001/RUNBOOK.md
   historical_invariants:
     golden_baseline_300_changed: false
     frozen_reference_inventory_120_changed: false
     historical_component_inventory_86_changed: false
+  readiness:
+    candidatepack_ready: false
+    KE_ready: false
+    RAG_ready: false
+    DIFY_ready: false
+    production_servable: false
+    generation_eligible: false
+    generation_allowed: false
+    release_ready: false
+    production_ready: false

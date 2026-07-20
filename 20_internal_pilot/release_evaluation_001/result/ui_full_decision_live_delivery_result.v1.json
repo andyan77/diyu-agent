@@ -1,10 +1,12 @@
 {
   "schema": "diyu.ui_full_decision_live_delivery.result.v1",
   "task_id": "DIYU_UI_FULL_DECISION_LIVE_DELIVERY_001",
-  "state": "PREMERGE_ACCEPTANCE_PASS_AUTHORIZED_FOR_PROTECTED_MERGE_AND_DEPLOYMENT",
+  "state": "READY_FOR_FOUNDER_POINT_BY_POINT_UI_ACCEPTANCE",
   "baseline_commit": "7898f3ed90dbbf9990f1e848be911b33cb4d9e77",
   "reviewed_candidate_commit": "e9b7bb943920c41d20113ca25dd3974427833a78",
   "reviewed_candidate_tree": "7d904ef298ddc5cc53d7c4a1114da181040f0c66",
+  "deployed_runtime_commit": "0ee66680e77907a83692e6c68aeee89896e92618",
+  "deployed_runtime_tree": "73a1bd0ad871cf6f6d8bc05d70051cfade54752f",
   "acceptance": {
     "UI-01": "PASS",
     "UI-02": "PASS",
@@ -18,14 +20,16 @@
     "UI-10": "PASS",
     "UI-11": "PASS",
     "UI-12": "PASS",
-    "UI-13": "PASS_STAGE_BOUND_DEPLOYMENT_UPDATE_REQUIRED",
-    "UI-14": "PASS_CODE_BOUND_LIVE_LOGIN_REQUIRED"
+    "UI-13": "PASS",
+    "UI-14": "PASS"
   },
   "product_result": {
     "enterprise_admin_sections": 5,
     "account_family_count": 7,
     "representative_login_principal_count": 12,
     "content_account_count": 11,
+    "active_content_account_count": 11,
+    "inactive_acceptance_account_count": 1,
     "content_product_count": 20,
     "deliverable_format_count": 7,
     "single_and_three_episode_series": true,
@@ -41,7 +45,19 @@
     "git_diff_check": "PASS",
     "candidate_secret_scan": "PASS",
     "desktop_browser_journey": "PASS",
-    "mobile_browser_journey": "PASS"
+    "mobile_browser_journey": "PASS",
+    "pull_request_33": {
+      "head_commit": "6de3bc40164e7af8a281bdb0f62adc4a15212ec0",
+      "merge_commit": "0ee66680e77907a83692e6c68aeee89896e92618",
+      "run_id": 29785060234,
+      "checker_compatibility": "SUCCESS",
+      "secret_scan": "SUCCESS"
+    },
+    "master_after_pull_request_33": {
+      "run_id": 29785677276,
+      "checker_compatibility": "SUCCESS",
+      "secret_scan": "SUCCESS"
+    }
   },
   "independent_reviews": {
     "product_novice_page": {
@@ -49,7 +65,10 @@
       "initial_candidate_commit": "824cd4ae9f5ed0d4b1ffb29833f182b621d24927",
       "initial_score": 88,
       "initial_verdict": "FAIL",
-      "initial_blocking_acceptance_ids": ["UI-01", "UI-12"],
+      "initial_blocking_acceptance_ids": [
+        "UI-01",
+        "UI-12"
+      ],
       "targeted_rereview_candidate_commit": "e9b7bb943920c41d20113ca25dd3974427833a78",
       "targeted_rereview_score": 98,
       "targeted_rereview_verdict": "PASS",
@@ -65,32 +84,104 @@
         "update_current_truth_after_exact_deployment",
         "verify_founder_dify_member_and_single_app_canvas",
         "verify_current_backup_manifest_and_rollback_entry"
-      ]
+      ],
+      "deployment_stage_obligations_completed": true
+    },
+    "ui_09_targeted_rereview": {
+      "reviewer_identity": "/root/candidate_fix_verification",
+      "candidate_commit": "6de3bc40164e7af8a281bdb0f62adc4a15212ec0",
+      "acceptance_ids": [
+        "UI-09"
+      ],
+      "verdict": "PASS",
+      "hard_blockers": []
+    }
+  },
+  "deployment": {
+    "ordinary_protected_merge_required": true,
+    "ordinary_protected_merge": true,
+    "administrator_bypass": false,
+    "force_push": false,
+    "rebase": false,
+    "squash": false,
+    "exact_merge_commit_deployment_required": true,
+    "live_acceptance_pending": false,
+    "exact_merge_commit_deployed": "0ee66680e77907a83692e6c68aeee89896e92618",
+    "existing_dify_application_reused": true,
+    "new_application_created": false,
+    "health": {
+      "web": "PASS",
+      "login": "PASS",
+      "brand_data": "PASS",
+      "retrieval_configuration": "PASS",
+      "model_configuration": "PASS",
+      "export": "PASS"
+    },
+    "rollback_release": "/opt/diyu/package7/releases/ui-full-decision-live-delivery-001-merge-e82144b6e34f/source",
+    "rollback_backup": "/opt/diyu/package7/backups/pre-final-redeploy-e82144b6e34f-20260720T231012Z"
+  },
+  "live_acceptance": {
+    "representative_task_count": 8,
+    "creator_account_families_covered": 6,
+    "deliverable_formats_covered": 7,
+    "ordinary_chat": "PASS",
+    "admin_five_sections": "PASS",
+    "login_scope_12_of_12": "PASS",
+    "cross_account_and_browser_isolation": "PASS",
+    "four_distinct_error_states": "PASS",
+    "desktop_and_mobile": "PASS",
+    "preserved_first_series_failure": {
+      "task": "T3",
+      "result": "FAIL",
+      "reason": "EPISODE_1_RETURNED_ONE_CANDIDATE",
+      "rerun": false
+    },
+    "post_fix_new_series": {
+      "account_persona": "总部终端运营人设",
+      "topic": "陈列换陈与空间实验",
+      "outline_titles": [
+        "改造前夜",
+        "三天数据",
+        "复盘启示"
+      ],
+      "outline_completed_before_episode_1": true,
+      "episode_1_candidate_count": 2,
+      "episode_2_candidate_count": 3,
+      "continuity_not_title_only": true,
+      "result": "PASS"
     }
   },
   "model_budget": {
     "pre_task_cumulative_model_call_upper_bound": 689,
+    "actual_start_cumulative_calls": 685,
+    "actual_final_cumulative_calls": 715,
+    "new_model_node_calls": 30,
     "authorized_new_model_node_calls": 30,
+    "new_cost_rmb": 0.101967,
     "authorized_new_cost_rmb": 2,
+    "technical_retries_used": 2,
     "authorized_technical_retries": 2,
-    "premerge_new_model_calls": 0,
-    "quality_rerolls": 0
+    "quality_rerolls": 0,
+    "founder_cumulative_call_limit": 1000,
+    "remaining_calls_to_founder_limit": 285
+  },
+  "credential_handoff": {
+    "path": "C:\\Users\\Administrator\\Documents\\笛语agent\\secure_handoff\\DIYU_UI_FULL_DECISION_LIVE_DELIVERY_001.credentials.clixml",
+    "windows_dpapi_encrypted": true,
+    "simulation_login_count": 12,
+    "dify_admin_member_count": 1,
+    "plaintext_absent": true,
+    "dify_login": "PASS",
+    "single_target_app_detail": "PASS",
+    "canvas": "PASS"
   },
   "controls": {
     "automatic_publish": false,
     "public_self_registration": false,
     "real_customer_data_imported": false,
     "enterprise_content_approval": false,
+    "human_review_required": false,
     "data_access_authorization_enforced": true
-  },
-  "deployment": {
-    "ordinary_protected_merge_required": true,
-    "administrator_bypass": false,
-    "force_push": false,
-    "rebase": false,
-    "squash": false,
-    "exact_merge_commit_deployment_required": true,
-    "live_acceptance_pending": true
   },
   "core_numbers": {
     "300": 300,
