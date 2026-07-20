@@ -8,6 +8,7 @@ import copy
 import hashlib
 import json
 import os
+import subprocess
 import tempfile
 import threading
 import unittest
@@ -24,6 +25,7 @@ from bridge_app import create_app, selected_account_database_scope
 from contracts import BridgePrepareRequest
 from dify_chat import DifyChatClient, DifyChatError
 from persistence import (
+    PROFESSIONAL_PERSONA_DIRECTIONS,
     RuntimeRepository,
     SqlAlchemyPlanStore,
     TrustedDatabaseScope,
@@ -526,49 +528,72 @@ class Package7RecoveryTests(unittest.TestCase):
         self.assertNotIn("allowed_topics", professional_account)
         self.assertNotIn("priority_topic", professional_account)
 
-        principal_id = family_principals["HEADQUARTERS_PROFESSIONAL_PERSONA"]
-        principal = self.repository.principal_by_id(principal_id)
-        self.assertIsNotNone(principal)
-        if principal is None:
-            return
-        account_id = principal.allowed_account_ids[0]
-        _, account = self.repository.require_active_scope(principal_id, account_id)
+        required_professional_personas = {
+            "商品人设",
+            "设计师人设",
+            "终端运营人设",
+            "品控人设",
+            "陈列搭配人设",
+            "供应链人设",
+        }
+        self.assertTrue(
+            required_professional_personas.issubset(PROFESSIONAL_PERSONA_DIRECTIONS)
+        )
+        for persona_type in required_professional_personas:
+            self.assertGreaterEqual(
+                len(PROFESSIONAL_PERSONA_DIRECTIONS[persona_type]), 3
+            )
+            self.assertLessEqual(len(PROFESSIONAL_PERSONA_DIRECTIONS[persona_type]), 5)
+
+        professional_principals = {
+            "商品人设": "SIM-LOGIN-DIYU-PRODUCT-001",
+            "终端运营人设": "SIM-LOGIN-DIYU-RETAIL-001",
+        }
+        professional_directions: dict[str, tuple[str, ...]] = {}
         topic_label = "城市、区域与本地生活"
         product_id = str(
             self.runtime.classification_options(topic_label)[0]["content_product_id"]
         )
-        scope = selected_account_database_scope(
-            trusted_tenant_id="TENANT-DIYU-SIM-001",
-            principal_id=principal_id,
-            browser_session_id="BRS-PROFESSIONAL-OPEN-TOPIC",
-            account=account,
+        for persona_type, principal_id in professional_principals.items():
+            options = self.runtime.portal_options(principal_id)
+            persona_account = options["accounts"][0]
+            self.assertEqual(persona_account["persona_type"], persona_type)
+            professional_directions[persona_type] = tuple(
+                map(str, persona_account["directions"])
+            )
+            principal = self.repository.principal_by_id(principal_id)
+            self.assertIsNotNone(principal)
+            if principal is None:
+                return
+            account_id = principal.allowed_account_ids[0]
+            _, account = self.repository.require_active_scope(principal_id, account_id)
+            scope = selected_account_database_scope(
+                trusted_tenant_id="TENANT-DIYU-SIM-001",
+                principal_id=principal_id,
+                browser_session_id=f"BRS-PROFESSIONAL-OPEN-TOPIC-{persona_type}",
+                account=account,
+            )
+            prepared = self.runtime.prepare(
+                self.request(
+                    account_display_name=account.display_name,
+                    topic_label=topic_label,
+                    selected_content_product_id=product_id,
+                    message=f"从{persona_type}的观察讲一次城市门店里的真实选择。",
+                ),
+                principal_id,
+                trusted_scope=scope,
+            )
+            self.assertEqual(prepared["response_kind"], "MODEL_REQUIRED")
+            self.assertEqual(
+                prepared["author_prompt"]["task_brief"]["public_topic"],
+                topic_label,
+            )
+        self.assertNotEqual(
+            professional_directions["商品人设"],
+            professional_directions["终端运营人设"],
         )
-        prepared = self.runtime.prepare(
-            self.request(
-                account_display_name=account.display_name,
-                topic_label=topic_label,
-                selected_content_product_id=product_id,
-                message="从商品岗位的观察讲一次城市门店里的真实选择。",
-            ),
-            principal_id,
-            trusted_scope=scope,
-        )
-        self.assertEqual(prepared["response_kind"], "MODEL_REQUIRED")
-        self.assertEqual(
-            prepared["author_prompt"]["task_brief"]["public_topic"], topic_label
-        )
-
-        soft_routed = self.runtime.prepare(
-            self.request(
-                account_display_name=account.display_name,
-                topic_label="品牌和企业故事",
-                selected_content_product_id="CP06",
-                message="从商品岗位讲一个不在首页优先方向里的门店选择。",
-            ),
-            principal_id,
-            trusted_scope=scope,
-        )
-        self.assertEqual(soft_routed["response_kind"], "MODEL_REQUIRED")
+        self.assertIn("面料与版型判断", professional_directions["商品人设"])
+        self.assertIn("门店经营复盘", professional_directions["终端运营人设"])
 
     def test_admin_matrix_creates_uses_and_disables_four_extensible_families(
         self,
@@ -684,6 +709,11 @@ class Package7RecoveryTests(unittest.TestCase):
             created = response.get_json()["account"]
             self.assertEqual(created["account_family"], family)
             self.assertEqual(created["bound_principal_ids"], [principal_id])
+            if family == "HEADQUARTERS_PROFESSIONAL_PERSONA":
+                self.assertEqual(
+                    created["directions"],
+                    list(PROFESSIONAL_PERSONA_DIRECTIONS[persona]),
+                )
             created_accounts.append(created)
 
         creator_client = app.test_client()
@@ -1292,6 +1322,72 @@ class Package7RecoveryTests(unittest.TestCase):
         self.assertEqual(
             [row["episode_index"] for row in continuation_result["series"]["outline"]],
             [1, 2, 3],
+        )
+
+    def test_series_generation_waits_for_delayed_outline_before_first_request(
+        self,
+    ) -> None:
+        node_script = r"""
+const assert = require("node:assert/strict");
+const {
+  createSeriesOutlineGate,
+  formatSeriesOutline,
+  runGenerationAfterOutline
+} = require("./portal.js");
+
+let releaseOutline;
+let outlineRequestCount = 0;
+const gate = createSeriesOutlineGate(() => {
+  outlineRequestCount += 1;
+  return new Promise((resolve) => { releaseOutline = resolve; });
+});
+const outlineFromSelection = gate.ensure([]);
+const generationRequests = [];
+const generation = runGenerationAfterOutline({
+  seriesMode: "SERIES",
+  currentOutline: [],
+  ensureOutline: (outline) => gate.ensure(outline),
+  buildPayload: (outline) => ({message: formatSeriesOutline(outline)}),
+  sendGeneration: async (payload) => {
+    generationRequests.push(payload);
+    return {result: "generated"};
+  }
+});
+
+setImmediate(async () => {
+  try {
+    assert.equal(outlineRequestCount, 1);
+    assert.equal(generationRequests.length, 0);
+    releaseOutline([
+      {index: 1, title: "第一集标题", description: "第一集重点"},
+      {index: 2, title: "第二集标题", description: "第二集重点"},
+      {index: 3, title: "第三集标题", description: "第三集重点"}
+    ]);
+    await Promise.all([outlineFromSelection, generation]);
+    assert.equal(generationRequests.length, 1);
+    for (const expected of [
+      "第一集标题", "第一集重点",
+      "第二集标题", "第二集重点",
+      "第三集标题", "第三集重点"
+    ]) assert.match(generationRequests[0].message, new RegExp(expected));
+    console.log(JSON.stringify({outlineRequestCount, generationRequestCount: 1}));
+  } catch (error) {
+    console.error(error);
+    process.exitCode = 1;
+  }
+});
+"""
+        process = subprocess.run(
+            ["node", "-e", node_script],
+            cwd=PACKAGE_ROOT,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(process.returncode, 0, process.stderr)
+        self.assertEqual(
+            json.loads(process.stdout),
+            {"outlineRequestCount": 1, "generationRequestCount": 1},
         )
 
     def test_server_records_reference_scope_without_author_self_reporting(self) -> None:

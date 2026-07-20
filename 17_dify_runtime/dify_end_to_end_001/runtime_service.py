@@ -46,6 +46,7 @@ from persistence import (
     TrustedDatabaseScope,
     current_trusted_database_scope,
     digest_object,
+    recommended_directions,
     runtime_browser_session,
     trusted_database_scope,
 )
@@ -819,9 +820,13 @@ class Package7Runtime:
                         or "账号使用人"
                     )
                 ]
+            persona_type = str(payload.get("persona_type", ""))
+            configured_directions = recommended_directions(family, persona_type)
             directions = payload.get("directions")
-            if not isinstance(directions, list) or not 3 <= len(directions) <= 5:
-                directions = direction_fallbacks.get(
+            if family == "HEADQUARTERS_PROFESSIONAL_PERSONA" and configured_directions:
+                directions = configured_directions
+            elif not isinstance(directions, list) or not 3 <= len(directions) <= 5:
+                directions = configured_directions or direction_fallbacks.get(
                     family,
                     direction_fallbacks["HEADQUARTERS_PROFESSIONAL_PERSONA"],
                 )
@@ -836,7 +841,7 @@ class Package7Runtime:
                         "account_family_display_name",
                         family_labels.get(family, "内容账号"),
                     ),
-                    "persona_type": payload.get("persona_type", ""),
+                    "persona_type": persona_type,
                     "persona_display_name": payload.get(
                         "persona_display_name",
                         payload.get(

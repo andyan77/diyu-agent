@@ -1,5 +1,70 @@
 "use strict";
 
+function completeSeriesOutline(outline) {
+  return Array.isArray(outline)
+    && outline.length === 3
+    && outline.every((episode) => String(episode?.title || "").trim());
+}
+
+function createSeriesOutlineGate(loadOutline) {
+  let pendingRequest = null;
+
+  return {
+    ensure(currentOutline) {
+      if (completeSeriesOutline(currentOutline)) return Promise.resolve(currentOutline);
+      if (pendingRequest) return pendingRequest;
+
+      const request = Promise.resolve()
+        .then(loadOutline)
+        .then((outline) => {
+          if (!completeSeriesOutline(outline)) {
+            throw new Error("三集提纲暂时没有完成，请重试，或切回单篇。");
+          }
+          return outline;
+        });
+      pendingRequest = request;
+      void request.then(
+        () => { if (pendingRequest === request) pendingRequest = null; },
+        () => { if (pendingRequest === request) pendingRequest = null; }
+      );
+      return request;
+    },
+    reset() {
+      pendingRequest = null;
+    }
+  };
+}
+
+function formatSeriesOutline(outline) {
+  return `三集提纲：${outline.map((episode) => {
+    const description = String(episode.description || "").trim();
+    return `${episode.index}.${episode.title}${description ? `（${description}）` : ""}`;
+  }).join("；")}`;
+}
+
+async function runGenerationAfterOutline({
+  seriesMode,
+  currentOutline,
+  ensureOutline,
+  buildPayload,
+  sendGeneration
+}) {
+  const outline = seriesMode === "SERIES"
+    ? await ensureOutline(currentOutline)
+    : currentOutline;
+  const value = await sendGeneration(buildPayload(outline));
+  return {outline, value};
+}
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    createSeriesOutlineGate,
+    formatSeriesOutline,
+    runGenerationAfterOutline
+  };
+}
+
+if (typeof window !== "undefined" && typeof document !== "undefined") {
 const portalBase = window.location.pathname.startsWith("/apps") ? "/apps" : "";
 const endpoint = (path) => `${portalBase}${path}`;
 const FORMATS = [
@@ -312,6 +377,7 @@ function accountDirections() {
 }
 
 function resetCreation() {
+  seriesOutlineGate.reset();
   state.step = "home";
   state.maxStep = 0;
   state.startMode = "make";
@@ -475,6 +541,17 @@ function extractSeries(value) {
   return asArray(raw).slice(0, 3).map(normalizeEpisode);
 }
 
+async function requestSeriesOutline() {
+  const value = await sendTask("找点灵感", {
+    message: `${state.idea}\n请先规划三集彼此不同、但主题连续的通俗提纲。`,
+    series_mode: "SERIES",
+    episode_index: 1
+  });
+  return extractSeries(value);
+}
+
+const seriesOutlineGate = createSeriesOutlineGate(requestSeriesOutline);
+
 function extractCandidates(value) {
   const uiState = value.ui_state || {};
   const result = value.result || {};
@@ -578,22 +655,31 @@ function renderSeriesPlan() {
 async function chooseSeriesMode(mode) {
   state.seriesMode = mode;
   state.episodeIndex = 1;
-  renderConfirm();
-  if (mode !== "SERIES" || state.seriesOutline.length === 3) return;
-  try {
-    state.seriesNote = "正在规划三集提纲…";
-    renderSeriesPlan();
-    const value = await sendTask("找点灵感", {
-      message: `${state.idea}\n请先规划三集彼此不同、但主题连续的通俗提纲。`,
-      series_mode: "SERIES",
-      episode_index: 1
-    });
-    state.seriesOutline = extractSeries(value);
-    state.seriesNote = state.seriesOutline.length === 3 ? "先生成第1集，完成后再继续下一集。" : responseAnswer(value);
-  } catch (error) {
-    state.seriesNote = error.message;
+  if (mode !== "SERIES") {
+    state.seriesNote = "";
+    renderConfirm();
+    return;
   }
-  renderSeriesPlan();
+  if (completeSeriesOutline(state.seriesOutline)) {
+    state.seriesNote = "先生成第1集，完成后再继续下一集。";
+    renderConfirm();
+    return;
+  }
+  state.seriesNote = "正在规划三集提纲…";
+  renderConfirm();
+  try {
+    const outline = await seriesOutlineGate.ensure(state.seriesOutline);
+    if (state.seriesMode === "SERIES") {
+      state.seriesOutline = outline;
+      state.seriesNote = "先生成第1集，完成后再继续下一集。";
+    }
+  } catch (_error) {
+    if (state.seriesMode === "SERIES") {
+      state.seriesNote = "三集提纲暂时没有完成，请重试，或切回单篇。";
+      setStatus(state.seriesNote, "error");
+    }
+  }
+  if (state.seriesMode === "SERIES") renderSeriesPlan();
 }
 
 function creationMessage(episodeIndex) {
@@ -602,7 +688,7 @@ function creationMessage(episodeIndex) {
   if (angle?.label) lines.push(`切入角度：${angle.label}`);
   if (state.detail) lines.push(`必须保留的细节：${state.detail}`);
   if (state.seriesMode === "SERIES") {
-    if (state.seriesOutline.length) lines.push(`三集提纲：${state.seriesOutline.map((item) => `${item.index}.${item.title}`).join("；")}`);
+    if (state.seriesOutline.length) lines.push(formatSeriesOutline(state.seriesOutline));
     lines.push(`本次生成第${episodeIndex}集，保持连续但不要只换标题。`);
   }
   return lines.filter(Boolean).join("\n");
@@ -643,13 +729,29 @@ async function generateContent({nextEpisode = false} = {}) {
   const episode = nextEpisode ? Math.min(3, state.episodeIndex + 1) : 1;
   const operation = nextEpisode ? "继续一个系列" : "直接做内容";
   try {
-    setBusy(true, nextEpisode ? `正在生成第${episode}集…` : "正在生成第一版…");
-    const value = await sendTask(operation, {
-      message: creationMessage(episode),
-      continue_previous: nextEpisode,
-      series_mode: state.seriesMode,
-      episode_index: episode,
-      content_format: state.contentFormat
+    const generationStatus = nextEpisode ? `正在生成第${episode}集…` : "正在生成第一版…";
+    const waitingForOutline = state.seriesMode === "SERIES" && !completeSeriesOutline(state.seriesOutline);
+    setBusy(true, waitingForOutline ? "正在等待三集提纲…" : generationStatus);
+    const {value} = await runGenerationAfterOutline({
+      seriesMode: state.seriesMode,
+      currentOutline: state.seriesOutline,
+      ensureOutline: (outline) => seriesOutlineGate.ensure(outline),
+      buildPayload: (outline) => {
+        if (state.seriesMode === "SERIES") {
+          state.seriesOutline = outline;
+          state.seriesNote = "先生成第1集，完成后再继续下一集。";
+          renderSeriesPlan();
+          setStatus(generationStatus);
+        }
+        return {
+          message: creationMessage(episode),
+          continue_previous: nextEpisode,
+          series_mode: state.seriesMode,
+          episode_index: episode,
+          content_format: state.contentFormat
+        };
+      },
+      sendGeneration: (payload) => sendTask(operation, payload)
     });
     state.episodeIndex = episode;
     const outline = extractSeries(value);
@@ -1276,3 +1378,4 @@ document.querySelector("#account-matrix").addEventListener("click", (event) => {
 });
 
 updateProgress();
+}

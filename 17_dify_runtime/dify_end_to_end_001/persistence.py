@@ -134,12 +134,31 @@ FAMILY_ORGANIZATION_KINDS = {
     "HEADQUARTERS_DIRECT_STORE": frozenset({"DIRECT_STORE"}),
     "FRANCHISE_STORE": frozenset({"FRANCHISE_STORE"}),
 }
-FAMILY_DIRECTIONS = {
-    "HEADQUARTERS_PROFESSIONAL_PERSONA": ["岗位日常", "专业判断", "产品怎样改变", "真实工作过程"],
-    "PROVINCIAL_AGENT": ["本地市场", "区域门店协作", "培训服务", "区域经营"],
-    "HEADQUARTERS_DIRECT_STORE": ["新品到店", "顾客常问", "陈列变化", "店员日常"],
-    "FRANCHISE_STORE": ["店里今天", "商品搭配", "顾客常问", "到店陈列", "店主人设"],
+PROFESSIONAL_PERSONA_DIRECTIONS = {
+    "商品人设": ("商品开发日常", "面料与版型判断", "商品改版取舍", "衣服如何服务真实生活"),
+    "设计师人设": ("设计灵感与草图", "版型与色彩取舍", "一件衣服如何形成", "设计如何回应生活"),
+    "终端运营人设": ("门店经营复盘", "顾客常问与反馈", "商品到店表现", "陈列与销售协作"),
+    "品控人设": ("品质检查日常", "工艺细节判断", "问题如何闭环", "耐穿与使用体验"),
+    "陈列搭配人设": ("空间与陈列变化", "商品搭配思路", "色彩与层次判断", "到店体验"),
+    "供应链人设": ("从面料到成衣", "交期与协作", "成本与质量取舍", "供应链现场"),
+    "内容策划人设": ("选题如何判断", "内容创作幕后", "表达方式取舍", "内容复盘"),
 }
+FAMILY_DIRECTIONS = {
+    "HEADQUARTERS_PROFESSIONAL_PERSONA": ("岗位日常", "专业判断", "产品怎样改变", "真实工作过程"),
+    "PROVINCIAL_AGENT": ("本地市场", "区域门店协作", "培训服务", "区域经营"),
+    "HEADQUARTERS_DIRECT_STORE": ("新品到店", "顾客常问", "陈列变化", "店员日常"),
+    "FRANCHISE_STORE": ("店里今天", "商品搭配", "顾客常问", "到店陈列", "店主人设"),
+}
+
+
+def recommended_directions(account_family: str, persona_type: str) -> tuple[str, ...]:
+    """Return recommendation order without turning it into topic authorization."""
+
+    if account_family == "HEADQUARTERS_PROFESSIONAL_PERSONA":
+        persona_directions = PROFESSIONAL_PERSONA_DIRECTIONS.get(persona_type)
+        if persona_directions is not None:
+            return persona_directions
+    return FAMILY_DIRECTIONS.get(account_family, ())
 
 
 @dataclass(frozen=True)
@@ -1128,7 +1147,9 @@ class RuntimeRepository:
                 "bound_principal_ids": [principal_id],
                 "allowed_source_organization_ids": [organization_id],
                 "cross_organization_source_requires_explicit_grant": True,
-                "directions": list(FAMILY_DIRECTIONS[account_family]),
+                "directions": list(
+                    recommended_directions(account_family, persona_type)
+                ),
                 "recommended_content_format": "短视频",
                 "fixed_account": False,
                 "expandable_account": True,
