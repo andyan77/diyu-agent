@@ -209,7 +209,7 @@ DELIVERABLE_MODELS: dict[str, DeliverableModel] = {
 
 
 class CandidateEnvelopeShell(StrictModel):
-    candidates: list[Any] = Field(min_length=1, max_length=3)
+    candidates: list[Any] = Field(min_length=2, max_length=3)
 
 
 class ChatEnvelope(StrictModel):
@@ -263,7 +263,7 @@ def contract_descriptor(content_format: ContentFormat) -> JsonObject:
         "contract_version": AUTHOR_CONTRACT_VERSION,
         "contract_version_authority": "SERVER_BOUND_FROM_MODEL_RUN",
         "root_fields": {
-            "candidates": "1至3份；每份按candidate_schema填写",
+            "candidates": "2至3份；每份按candidate_schema填写",
         },
         "candidate_schema": candidate_schema(content_format),
         "forbidden_author_fields": [

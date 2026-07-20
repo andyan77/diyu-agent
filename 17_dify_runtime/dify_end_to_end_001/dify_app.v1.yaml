@@ -171,6 +171,8 @@ workflow:
             properties:
               candidates:
                 items: {type: object}
+                maxItems: 3
+                minItems: 2
                 type: array
             required: [candidates]
             type: object

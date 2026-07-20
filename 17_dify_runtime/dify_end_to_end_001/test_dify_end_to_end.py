@@ -1233,9 +1233,23 @@ process.stdout.write(JSON.stringify(payload));
         self.assertIn("不授予任何登录或数据访问权限", serialized)
         self.assertNotIn("逐句绑定", serialized)
         self.assertNotIn("required_candidate_count", serialized)
+        self.assertIn("一次写2至3份候选", prompt["system"])
         self.assertEqual(
-            contract["root_fields"]["candidates"], "1至3份；每份按candidate_schema填写"
+            contract["root_fields"]["candidates"], "2至3份；每份按candidate_schema填写"
         )
+        dsl = yaml.safe_load(
+            (PACKAGE_ROOT / "dify_app.v1.yaml").read_text(encoding="utf-8")
+        )
+        author_node = next(
+            node
+            for node in dsl["workflow"]["graph"]["nodes"]
+            if node.get("id") == "author"
+        )
+        candidate_array = author_node["data"]["structured_output"]["schema"][
+            "properties"
+        ]["candidates"]
+        self.assertEqual(candidate_array["minItems"], 2)
+        self.assertEqual(candidate_array["maxItems"], 3)
 
     def test_public_capability_mapping_exposes_ten_topics_and_seven_formats(
         self,
@@ -1651,7 +1665,7 @@ process.stdout.write(JSON.stringify(payload));
                 self.principal_id,
                 "ACCOUNT-DIYU-HQ-OFFICIAL",
             )
-        self.assertGreaterEqual(len(first_candidates), 1)
+        self.assertGreaterEqual(len(first_candidates), 2)
         previous_content_ref = first_candidates[0].candidate_id
         continuation = self.prepare(
             "短视频",
@@ -1871,26 +1885,57 @@ setImmediate(async () => {
                 )
                 self.assertEqual(result["result_class"], "SUCCESS")
 
-    def test_one_valid_candidate_is_delivered_with_option_warning(
+    def test_one_valid_candidate_is_rejected_without_partial_delivery(
         self,
     ) -> None:
         prepared = self.prepare()
         envelope = candidate_envelope("短视频")
         del envelope["candidates"][0]["deliverable"]
         result = self.finalize(prepared, "短视频", envelope=envelope)
-        self.assertEqual(result["result_class"], "SUCCESS")
-        self.assertEqual(result["candidate_option_warning"], "本轮可选方案不足")
-        self.assertIn("本轮可选方案不足", result["user_visible_text"])
+        self.assertEqual(result["result_class"], "MODEL_OUTPUT_CONTRACT_ERROR")
         run = self.repository.model_run(str(prepared["run_id"]))
         self.assertEqual(run.payload["accepted_candidate_count"], 1)
-        self.assertEqual(run.payload["candidate_option_warning"], "本轮可选方案不足")
-        self.assertEqual(run.state, "FIRST_OUTPUT_ACCEPTED")
-        selected = self.scoped_prepare(
-            self.request(operation="选择候选", candidate_number=1),
+        self.assertEqual(
+            run.payload["failure_reason"],
+            "INSUFFICIENT_COMPLETE_CANDIDATES",
         )
-        self.assertIn("已选择", selected["user_visible_text"])
-        response = self.scoped_prepare(self.request(operation="导出"))
-        self.assertEqual(response["response_kind"], "DIRECT")
+        self.assertEqual(run.state, "FIRST_OUTPUT_REJECTED")
+        with trusted_database_scope(self.runtime_scope("BRS-LOCAL-UNIT-TEST")):
+            self.assertEqual(
+                self.repository.latest_candidates(
+                    self.principal_id,
+                    "ACCOUNT-DIYU-HQ-OFFICIAL",
+                ),
+                (),
+            )
+
+        exact_one = self.prepare("短视频")
+        exact_one_envelope = candidate_envelope("短视频")
+        exact_one_envelope["candidates"] = exact_one_envelope["candidates"][:1]
+        exact_one_output = encoded(exact_one_envelope)
+        exact_one_result = self.scoped_finalize(
+            str(exact_one["run_id"]),
+            exact_one_output,
+        )
+        self.assertEqual(
+            exact_one_result["result_class"],
+            "MODEL_OUTPUT_CONTRACT_ERROR",
+        )
+        exact_one_run = self.repository.model_run(str(exact_one["run_id"]))
+        self.assertEqual(
+            exact_one_run.payload["original_envelope"],
+            exact_one_envelope,
+        )
+        with trusted_database_scope(self.runtime_scope("BRS-LOCAL-UNIT-TEST")):
+            self.assertEqual(
+                self.repository.latest_candidates(
+                    self.principal_id,
+                    "ACCOUNT-DIYU-HQ-OFFICIAL",
+                ),
+                (),
+            )
+        with self.assertRaisesRegex(RuntimeContractError, "already completed"):
+            self.scoped_finalize(str(exact_one["run_id"]), exact_one_output)
 
         mismatched = self.prepare("短视频", duration_label="30秒左右")
         mismatched_envelope = candidate_envelope("短视频")
@@ -2078,7 +2123,10 @@ setImmediate(async () => {
             str(bare_candidate_prepared["run_id"]),
             base64.b64encode(bare_candidate_raw.encode()).decode("ascii"),
         )
-        self.assertEqual(bare_candidate_result["result_class"], "SUCCESS")
+        self.assertEqual(
+            bare_candidate_result["result_class"],
+            "MODEL_OUTPUT_CONTRACT_ERROR",
+        )
         bare_candidate_run = self.repository.model_run(
             str(bare_candidate_prepared["run_id"])
         )

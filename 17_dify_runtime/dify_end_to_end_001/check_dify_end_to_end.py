@@ -1960,7 +1960,7 @@ def validate_author_contract_projection(projection: Mapping[str, Any]) -> None:
         )
         require(
             descriptor.get("root_fields")
-            == {"candidates": "1至3份；每份按candidate_schema填写"},
+            == {"candidates": "2至3份；每份按candidate_schema填写"},
             f"E_RECOVERY_DESCRIPTOR_CANDIDATE_RANGE:{content_format}",
         )
 
@@ -2042,6 +2042,18 @@ def validate_capability_mapping(root: Path) -> None:
         value.get("content_formats") == list(RECOVERY_FORMATS),
         "E_RECOVERY_CAPABILITY_FORMATS",
     )
+    author_nodes = [
+        row for row in nodes if isinstance(row, dict) and row.get("id") == "author"
+    ]
+    require(len(author_nodes) == 1, "E_RECOVERY_DIFY_AUTHOR_NODE")
+    candidate_array = cast(Mapping[str, Any], author_nodes[0])["data"][
+        "structured_output"
+    ]["schema"]["properties"]["candidates"]
+    require(
+        candidate_array.get("minItems") == 2
+        and candidate_array.get("maxItems") == 3,
+        "E_RECOVERY_DIFY_CANDIDATE_RANGE",
+    )
     invariants = cast(Mapping[str, Any], value.get("invariants", {}))
     require(invariants.get("one_generation_chain") is True, "E_RECOVERY_ONE_CHAIN")
     require(
@@ -2089,7 +2101,7 @@ def validate_recovery_source_contract(root: Path) -> None:
         "_server_fact_resolution(",
         "_explicit_required_object_missing(",
         "NO_COMPLETE_SAFE_CANDIDATE",
-        "本轮可选方案不足",
+        "INSUFFICIENT_COMPLETE_CANDIDATES",
         "都可作为待人工审核的创意候选",
         "不授予任何登录或数据访问权限",
     ):
@@ -2116,9 +2128,10 @@ def validate_recovery_source_contract(root: Path) -> None:
     for marker in (
         '"claim_bindings": []',
         '"server_bound_explicit_fact_count": 0',
-        "if not accepted:",
+        "if len(accepted) < 2:",
         '"failure_reason": "NO_COMPLETE_SAFE_CANDIDATE"',
-        '"本轮可选方案不足" if len(accepted) == 1 else None',
+        '"INSUFFICIENT_COMPLETE_CANDIDATES"',
+        "candidate_option_warning = None",
     ):
         require(marker in current_finalizer, f"E_RECOVERY_CURRENT_CONTRACT:{marker}")
     persistence = sources["persistence.py"]
@@ -2207,7 +2220,7 @@ def validate_recovery_source_contract(root: Path) -> None:
         "test_creative_claims_enter_human_review_without_evidence_binding",
         "test_internal_identifiers_sensitive_data_and_secrets_are_blocked",
         "test_reference_panel_records_scope_without_sentence_binding",
-        "test_one_valid_candidate_is_delivered_with_option_warning",
+        "test_one_valid_candidate_is_rejected_without_partial_delivery",
         "test_first_output_is_preserved_and_reroll_is_forbidden",
         "test_paid_author_response_survives_completion_transaction_failure",
         "test_received_staged_response_can_resume_without_a_second_call",
