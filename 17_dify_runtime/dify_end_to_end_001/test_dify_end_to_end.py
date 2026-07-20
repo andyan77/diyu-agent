@@ -967,6 +967,13 @@ process.stdout.write(JSON.stringify(payload));
             self.assertIn(label, portal_html)
         portal_js = (PACKAGE_ROOT / "portal.js").read_text(encoding="utf-8")
         portal_css = (PACKAGE_ROOT / "portal.css").read_text(encoding="utf-8")
+        self.assertIn('id="copy-result"', portal_html)
+        self.assertIn("navigator.clipboard.writeText", portal_js)
+        self.assertIn("尚未选择候选：请先点选一份候选", portal_js)
+        self.assertNotIn(
+            "await selectCandidate(state.selectedOrdinal, true)",
+            portal_js,
+        )
         self.assertIn(
             'ui.workspace.classList.toggle("admin-mode", state.isAdmin)',
             portal_js,

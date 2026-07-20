@@ -937,10 +937,11 @@ function renderCandidateCards() {
   setHidden(ui.candidates, !state.candidates.length);
   state.candidates.forEach((candidate, index) => {
     const ordinal = candidateOrdinal(candidate, index);
-    const button = createElement("button", `candidate-card${ordinal === state.selectedOrdinal ? " selected" : ""}`);
+    const selected = state.selectionConfirmed && ordinal === state.confirmedOrdinal;
+    const button = createElement("button", `candidate-card${selected ? " selected" : ""}`);
     button.type = "button";
     button.dataset.candidateOrdinal = String(ordinal);
-    button.setAttribute("aria-pressed", String(ordinal === state.selectedOrdinal));
+    button.setAttribute("aria-pressed", String(selected));
     button.append(
       createElement("span", "candidate-label", state.candidates.length === 1 ? "当前方案" : `方案 ${index + 1}`),
       createElement("strong", "", candidateTitle(candidate, index))
@@ -1136,10 +1137,11 @@ function renderRevisionThread() {
 }
 
 async function selectCandidate(ordinal, quiet = false) {
+  if (state.selectionConfirmed && state.confirmedOrdinal === ordinal) return true;
   state.selectedOrdinal = ordinal;
+  state.selectionConfirmed = false;
   renderCandidateCards();
   renderArtifact();
-  if (state.selectionConfirmed && state.confirmedOrdinal === ordinal) return true;
   try {
     const value = await sendTask("选择候选", {message: "选择当前候选继续修改或使用。", candidate_number: ordinal});
     state.selectionConfirmed = true;
@@ -1150,12 +1152,19 @@ async function selectCandidate(ordinal, quiet = false) {
       version.selectionConfirmed = true;
       version.confirmedOrdinal = ordinal;
     }
+    renderCandidateCards();
     if (!quiet) showToast(responseAnswer(value) || "已选择当前方案。");
     return true;
   } catch (error) {
     setStatus(error.message, "error");
     return false;
   }
+}
+
+function requireConfirmedCandidate() {
+  if (!state.candidates.length || (state.selectionConfirmed && state.confirmedOrdinal === state.selectedOrdinal)) return true;
+  setStatus("尚未选择候选：请先点选一份候选，再继续修改、复制或导出。", "warning");
+  return false;
 }
 
 async function applyRevision() {
@@ -1165,7 +1174,7 @@ async function applyRevision() {
     ui.revisionInput.focus();
     return;
   }
-  if (!(await selectCandidate(state.selectedOrdinal, true))) return;
+  if (!requireConfirmedCandidate()) return;
   try {
     setBusy(true, "正在生成修改版…");
     state.revisionMessages.push({kind: "user", text: message});
@@ -1184,8 +1193,24 @@ async function applyRevision() {
   }
 }
 
+async function copyResult() {
+  if (!requireConfirmedCandidate()) return;
+  const text = ui.artifact.innerText.trim();
+  if (!text) {
+    setStatus("当前没有可复制的成品。", "warning");
+    return;
+  }
+  try {
+    if (!navigator.clipboard?.writeText) throw new Error("clipboard unavailable");
+    await navigator.clipboard.writeText(text);
+    showToast("当前成品已复制。");
+  } catch {
+    setStatus("浏览器未允许自动复制，请选中成品文字后复制。", "warning");
+  }
+}
+
 async function exportResult() {
-  if ((state.candidates.length || state.legacyAnswer) && !(await selectCandidate(state.selectedOrdinal, true))) return;
+  if (!requireConfirmedCandidate()) return;
   try {
     setBusy(true, "正在准备导出内容…");
     const value = await sendTask("导出", {message: "导出当前选择的内容。", candidate_number: state.selectedOrdinal});
@@ -1664,6 +1689,7 @@ document.querySelector("#previous-version").addEventListener("click", () => {
 document.querySelector("#change-angle").addEventListener("click", () => setStep("angles"));
 document.querySelector("#change-format").addEventListener("click", () => setStep("confirm"));
 document.querySelector("#next-episode").addEventListener("click", () => generateContent({nextEpisode: true}));
+document.querySelector("#copy-result").addEventListener("click", copyResult);
 document.querySelector("#export-result").addEventListener("click", exportResult);
 
 document.querySelector("#open-account-create").addEventListener("click", () => setHidden(document.querySelector("#account-create-form"), false));
