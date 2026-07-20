@@ -46,6 +46,9 @@ FROZEN_REVIEWED_COMMIT = "3f610726943dee5545d4d310f107239f2eeb9234"
 AUTHORIZED_CURRENT_LIVE_PATHS = frozenset(
     {
         Path("AGENTS.md"),
+        CONTRACT_PATH,
+        CASES_PATH,
+        IDENTITY_PATH,
         LEGACY_GATE1_CHECKER_PATH,
         CHECKER_PATH,
         WORKFLOW_PATH,
@@ -167,6 +170,7 @@ REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
         Path("17_dify_runtime/dify_end_to_end_001/dify_app.v1.yaml"),
         Path("17_dify_runtime/dify_end_to_end_001/dify_chat.py"),
         Path("17_dify_runtime/dify_end_to_end_001/persistence.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/portal.css"),
         Path("17_dify_runtime/dify_end_to_end_001/portal.html"),
         Path("17_dify_runtime/dify_end_to_end_001/portal.js"),
         Path("17_dify_runtime/dify_end_to_end_001/provision_dify.py"),
@@ -174,6 +178,7 @@ REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
         Path("17_dify_runtime/dify_end_to_end_001/runtime_retrieval.py"),
         Path("17_dify_runtime/dify_end_to_end_001/runtime_service.py"),
         Path("17_dify_runtime/dify_end_to_end_001/security.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/seed_runtime.py"),
         Path("17_dify_runtime/dify_end_to_end_001/test_dify_end_to_end.py"),
         Path(
             "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
@@ -232,6 +237,33 @@ REFERENCE_SAFE_SUCCESSOR_ADDITIONAL_PATHS = {
         if path.name in {"author_contract.py", "content_capability_mapping.v1.yaml"}
         or "output_contract_recovery_002" in path.parts
     }
+    | (
+        {
+            Path(
+                "17_dify_runtime/dify_end_to_end_001/delivery/"
+                "account_persona_ui_no_approval_execution_review_request.v1.yaml"
+            ),
+            Path(
+                "17_dify_runtime/dify_end_to_end_001/result/"
+                "account_persona_ui_no_approval_result.v1.json"
+            ),
+            *{
+                Path(
+                    "17_dify_runtime/dify_end_to_end_001/result/"
+                    f"account_persona_ui_screenshots/{filename}"
+                )
+                for filename in (
+                    "admin-desktop.png",
+                    "professional-desktop.png",
+                    "franchise-desktop.png",
+                    "mobile-result.png",
+                )
+            },
+        }
+        if checker
+        == Path("17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py")
+        else set()
+    )
     for checker, mutable_paths in REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS.items()
 }
 SUCCESSOR_NORMAL_STEP_NAME = "Run reserved downstream package checks"
@@ -4065,7 +4097,7 @@ def run_selftest() -> dict[str, Any]:
     validate_contract["response_examples"]["pass"]["usage_check_status"] = "VERIFIED"
     expect_failure(
         lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_VALIDATE_SEMANTIC_REVIEW_STATUS",
+        "E_VALIDATE_USAGE_CHECK_STATUS",
     )
 
     mutated_contract = copy.deepcopy(contract)
