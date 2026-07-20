@@ -395,6 +395,7 @@ function activateWorkspace(payload) {
   setHidden(ui.workspace, false);
   setHidden(ui.adminWorkspace, !state.isAdmin);
   setHidden(ui.creativeWorkspace, state.isAdmin);
+  ui.workspace.classList.toggle("admin-mode", state.isAdmin);
   renderIdentity();
   if (state.isAdmin) {
     configureAdmin(root.management || root.admin || root.account_matrix || {});

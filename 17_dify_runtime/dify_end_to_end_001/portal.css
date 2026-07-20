@@ -396,8 +396,10 @@ textarea { resize: vertical; line-height: 1.7; }
   .workspace { width: 100%; min-height: calc(100vh - 60px); margin: 0; display: block; border: 0; }
   .identity-rail { padding: 16px; display: grid; grid-template-columns: 1fr auto; gap: 12px; border-right: 0; border-bottom: 1px solid var(--line); }
   .identity-rail h2 { margin: 7px 0 3px; font-size: 16px; }
-  .identity-list, .use-boundary { display: none; }
-  .account-switcher { min-width: 150px; align-self: end; }
+  .identity-list { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; }
+  .identity-list div { min-width: 0; padding: 8px 0; }
+  .workspace.admin-mode .identity-list, .use-boundary { display: none; }
+  .account-switcher { grid-column: 1 / -1; min-width: 0; align-self: end; }
   .workspace-main { padding: 24px 16px 52px; }
   .page-heading h1 { font-size: 34px; }
   .progress { margin-bottom: 28px; }

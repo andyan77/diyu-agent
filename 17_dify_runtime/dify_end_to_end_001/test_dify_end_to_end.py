@@ -965,6 +965,20 @@ process.stdout.write(JSON.stringify(payload));
             "搜索其他内容方向",
         ):
             self.assertIn(label, portal_html)
+        portal_js = (PACKAGE_ROOT / "portal.js").read_text(encoding="utf-8")
+        portal_css = (PACKAGE_ROOT / "portal.css").read_text(encoding="utf-8")
+        self.assertIn(
+            'ui.workspace.classList.toggle("admin-mode", state.isAdmin)',
+            portal_js,
+        )
+        self.assertIn(
+            ".workspace.admin-mode .identity-list, .use-boundary { display: none; }",
+            portal_css,
+        )
+        self.assertNotIn(
+            "\n  .identity-list, .use-boundary { display: none; }\n",
+            portal_css,
+        )
 
     def test_portal_state_contract_keeps_four_error_types_distinct(self) -> None:
         headers = {"X-Diyu-Portal": "same-origin-v1"}
