@@ -53,6 +53,18 @@ AUTHORIZED_CURRENT_LIVE_PATHS = frozenset(
         CHECKER_PATH,
         WORKFLOW_PATH,
         STATUS_PATH,
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "result/ui_full_decision_live_delivery_result.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "delivery/ui_full_decision_live_delivery_execution_review_request.v1.yaml"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "delivery/founder_point_by_point_ui_acceptance_guide.v1.md"
+        ),
     }
 )
 PACKAGE10_FINAL_CLOSEOUT_PATHS = frozenset(
@@ -169,6 +181,7 @@ REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
         Path("17_dify_runtime/dify_end_to_end_001/deploy_remote.sh"),
         Path("17_dify_runtime/dify_end_to_end_001/dify_app.v1.yaml"),
         Path("17_dify_runtime/dify_end_to_end_001/dify_chat.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/dify_knowledge.py"),
         Path("17_dify_runtime/dify_end_to_end_001/persistence.py"),
         Path("17_dify_runtime/dify_end_to_end_001/portal.css"),
         Path("17_dify_runtime/dify_end_to_end_001/portal.html"),

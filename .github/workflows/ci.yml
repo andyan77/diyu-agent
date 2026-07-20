@@ -83,7 +83,7 @@ jobs:
           python3 controlled_content_generator_v2_001/gate1_v1_1_001/p1a_standard_baseline_review_packet_and_governance_preflight_001/run_p1a_standard_baseline_review_packet_freezer.py --check
           python3 ci/checkers/check_gate1_v1_1_current.py
           python3 ci/checkers/check_gate1_v1_1_current.py --selftest
-          test "$(sha256sum ci/checkers/check_product_foundation.py | cut -d ' ' -f 1)" = "26d8fa0fe3bdcea9fe8d06579cc2865db0c9f2c6bbff6a30f20c2ab893c0a847"
+          test "$(sha256sum ci/checkers/check_product_foundation.py | cut -d ' ' -f 1)" = "cbd4abb77a3d7344cc0ff5147b618e920dbf0a5ae14d6ae88b66a65072de4106"
           python3 ci/checkers/check_product_foundation.py
           python3 ci/checkers/check_product_foundation.py --selftest
       - name: Run reserved downstream package checks
