@@ -1,0 +1,112 @@
+{
+  "schema": "diyu.ui_full_decision_live_delivery.result.v1",
+  "task_id": "DIYU_UI_FULL_DECISION_LIVE_DELIVERY_001",
+  "state": "PREMERGE_ACCEPTANCE_PASS_AUTHORIZED_FOR_PROTECTED_MERGE_AND_DEPLOYMENT",
+  "baseline_commit": "7898f3ed90dbbf9990f1e848be911b33cb4d9e77",
+  "reviewed_candidate_commit": "e9b7bb943920c41d20113ca25dd3974427833a78",
+  "reviewed_candidate_tree": "7d904ef298ddc5cc53d7c4a1114da181040f0c66",
+  "acceptance": {
+    "UI-01": "PASS",
+    "UI-02": "PASS",
+    "UI-03": "PASS",
+    "UI-04": "PASS",
+    "UI-05": "PASS",
+    "UI-06": "PASS",
+    "UI-07": "PASS",
+    "UI-08": "PASS",
+    "UI-09": "PASS",
+    "UI-10": "PASS",
+    "UI-11": "PASS",
+    "UI-12": "PASS",
+    "UI-13": "PASS_STAGE_BOUND_DEPLOYMENT_UPDATE_REQUIRED",
+    "UI-14": "PASS_CODE_BOUND_LIVE_LOGIN_REQUIRED"
+  },
+  "product_result": {
+    "enterprise_admin_sections": 5,
+    "account_family_count": 7,
+    "representative_login_principal_count": 12,
+    "content_account_count": 11,
+    "content_product_count": 20,
+    "deliverable_format_count": 7,
+    "single_and_three_episode_series": true,
+    "structured_page_state": true,
+    "enterprise_content_approval": false
+  },
+  "checks": {
+    "targeted_tests": "PASS",
+    "necessary_local_regression": "PASS_ONCE",
+    "existing_package_checker": "PASS",
+    "changed_python_ruff": "PASS",
+    "portal_javascript_syntax": "PASS",
+    "git_diff_check": "PASS",
+    "candidate_secret_scan": "PASS",
+    "desktop_browser_journey": "PASS",
+    "mobile_browser_journey": "PASS"
+  },
+  "independent_reviews": {
+    "product_novice_page": {
+      "reviewer_identity": "/root/product_novice_final_review",
+      "initial_candidate_commit": "824cd4ae9f5ed0d4b1ffb29833f182b621d24927",
+      "initial_score": 88,
+      "initial_verdict": "FAIL",
+      "initial_blocking_acceptance_ids": ["UI-01", "UI-12"],
+      "targeted_rereview_candidate_commit": "e9b7bb943920c41d20113ca25dd3974427833a78",
+      "targeted_rereview_score": 98,
+      "targeted_rereview_verdict": "PASS",
+      "final_hard_blockers": []
+    },
+    "interface_isolation_deployment_rollback": {
+      "reviewer_identity": "/root/interface_isolation_final_review",
+      "candidate_commit": "824cd4ae9f5ed0d4b1ffb29833f182b621d24927",
+      "score": 96,
+      "verdict": "PASS",
+      "hard_blockers": [],
+      "deployment_stage_obligations": [
+        "update_current_truth_after_exact_deployment",
+        "verify_founder_dify_member_and_single_app_canvas",
+        "verify_current_backup_manifest_and_rollback_entry"
+      ]
+    }
+  },
+  "model_budget": {
+    "pre_task_cumulative_model_call_upper_bound": 689,
+    "authorized_new_model_node_calls": 30,
+    "authorized_new_cost_rmb": 2,
+    "authorized_technical_retries": 2,
+    "premerge_new_model_calls": 0,
+    "quality_rerolls": 0
+  },
+  "controls": {
+    "automatic_publish": false,
+    "public_self_registration": false,
+    "real_customer_data_imported": false,
+    "enterprise_content_approval": false,
+    "data_access_authorization_enforced": true
+  },
+  "deployment": {
+    "ordinary_protected_merge_required": true,
+    "administrator_bypass": false,
+    "force_push": false,
+    "rebase": false,
+    "squash": false,
+    "exact_merge_commit_deployment_required": true,
+    "live_acceptance_pending": true
+  },
+  "core_numbers": {
+    "300": 300,
+    "120": 120,
+    "86": 86,
+    "changed": false
+  },
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "release_ready": false,
+    "production_ready": false
+  }
+}
