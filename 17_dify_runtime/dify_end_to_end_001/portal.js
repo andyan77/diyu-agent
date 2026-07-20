@@ -42,6 +42,37 @@ function formatSeriesOutline(outline) {
   }).join("；")}`;
 }
 
+function buildPortalTaskPayload(input) {
+  return {
+    account_display_name: String(input.accountDisplayName || ""),
+    operation: input.operation,
+    topic_label: input.topicLabel || null,
+    primary_audience: input.primaryAudience || null,
+    message: String(input.message || "").trim() || "请先帮我理一理现在最值得讲的内容。",
+    target_platform: input.targetPlatform || "其他",
+    candidate_number: input.candidateNumber ?? null,
+    content_goal: input.contentGoal || null,
+    key_takeaway: input.keyTakeaway || null,
+    speaker_role_name: input.speakerRoleName || null,
+    storyline_name: null,
+    column_name: null,
+    continue_previous: Boolean(input.continuePrevious),
+    localization_allowed: false,
+    duration_label: input.durationLabel || "由系统建议",
+    expression_feeling: input.expressionFeeling || "由系统建议",
+    content_format: input.contentFormat || "短视频",
+    organization_level: input.organizationLevel || null,
+    content_identity: null,
+    long_term_storyline: null,
+    content_direction: null,
+    business_goal: input.businessGoal || null,
+    expression_method: null,
+    existing_material_kinds: Array.isArray(input.existingMaterialKinds) ? input.existingMaterialKinds : [],
+    series_mode: input.seriesMode || "SINGLE",
+    episode_index: Number(input.episodeIndex || 1)
+  };
+}
+
 async function runGenerationAfterOutline({
   seriesMode,
   currentOutline,
@@ -58,6 +89,7 @@ async function runGenerationAfterOutline({
 
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
+    buildPortalTaskPayload,
     createSeriesOutlineGate,
     formatSeriesOutline,
     runGenerationAfterOutline
@@ -149,7 +181,7 @@ const state = {
   isAdmin: false,
   step: "home",
   maxStep: 0,
-  startMode: "make",
+  startMode: "inspire",
   idea: "",
   selectedDirection: null,
   angles: [],
@@ -160,6 +192,15 @@ const state = {
   contentFormat: "短视频",
   platform: "其他",
   duration: "由系统建议",
+  primaryAudience: "",
+  expressionFeeling: "由系统建议",
+  materialKinds: [],
+  businessGoal: null,
+  speakerRoleName: null,
+  exampleDirection: null,
+  resolvedClassification: null,
+  currentStage: "home",
+  legalNextActions: [],
   seriesMode: "SINGLE",
   seriesOutline: [],
   seriesNote: "",
@@ -172,7 +213,20 @@ const state = {
   versions: [],
   versionIndex: -1,
   revisionMessages: [],
-  admin: {accounts: [], organizations: [], accountFamilies: [], personaTypes: [], personaTypesByFamily: {}, organizationKindsByFamily: {}, principals: []},
+  admin: {
+    accounts: [],
+    organizations: [],
+    accountFamilies: [],
+    personaTypes: [],
+    personaTypesByFamily: {},
+    organizationKindsByFamily: {},
+    principals: [],
+    enterpriseProfile: {},
+    organizationPeople: [],
+    usage: [],
+    systemStatus: {},
+    contentProducts: []
+  },
   busy: false
 };
 
@@ -246,6 +300,8 @@ async function requestJson(path, init = {}, fallbackMessage = "系统暂时无�
     const message = pick(value, ["user_visible_text", "message", "error"], fallbackMessage);
     const error = new Error(String(message));
     error.status = response.status;
+    error.errorType = String(pick(value, ["error_type"], response.status === 401 ? "SESSION_EXPIRED" : "SYSTEM_TEMPORARY"));
+    error.response = value;
     throw error;
   }
   return value;
@@ -325,8 +381,10 @@ function activateWorkspace(payload) {
   state.contentFormats = formats.length === FORMATS.length ? formats : [...FORMATS];
   const platforms = asArray(root.platforms);
   const durations = asArray(root.durations);
+  const feelings = asArray(root.feelings);
   fillSimpleSelect(document.querySelector("#platform-select"), platforms.length ? platforms : ["其他"]);
   fillSimpleSelect(document.querySelector("#duration-select"), durations.length ? durations : ["由系统建议"]);
+  fillSimpleSelect(document.querySelector("#feeling-select"), feelings.length ? feelings : ["由系统建议"]);
   state.platform = state.currentAccount?.recommendedPlatform || platforms[0] || "其他";
   state.duration = state.currentAccount?.recommendedDuration || (durations.includes("由系统建议") ? "由系统建议" : durations[0]) || "由系统建议";
   state.contentFormat = state.currentAccount?.recommendedFormat || state.contentFormats[0] || "短视频";
@@ -339,9 +397,10 @@ function activateWorkspace(payload) {
   setHidden(ui.creativeWorkspace, state.isAdmin);
   renderIdentity();
   if (state.isAdmin) {
-    configureAdmin(root.admin || root.account_matrix || {});
+    configureAdmin(root.management || root.admin || root.account_matrix || {});
     loadAdminAccounts();
   } else {
+    configureContentProductSearch();
     resetCreation();
   }
 }
@@ -360,6 +419,12 @@ function renderIdentity() {
   document.querySelector("#identity-family").textContent = family;
   document.querySelector("#identity-persona-type").textContent = persona;
   document.querySelector("#identity-account").textContent = outward;
+  document.querySelector("#identity-product").textContent = state.isAdmin
+    ? "不参与内容创作"
+    : (state.resolvedClassification?.content_product || "尚未分类");
+  document.querySelector("#identity-format").textContent = state.isAdmin
+    ? "不参与内容创作"
+    : (state.contentFormat || "由系统建议");
 
   const wrap = document.querySelector("#account-switcher-wrap");
   const select = document.querySelector("#account-switcher");
@@ -380,7 +445,7 @@ function resetCreation() {
   seriesOutlineGate.reset();
   state.step = "home";
   state.maxStep = 0;
-  state.startMode = "make";
+  state.startMode = "inspire";
   state.idea = "";
   state.selectedDirection = null;
   state.angles = [];
@@ -402,18 +467,32 @@ function resetCreation() {
   state.contentFormat = state.currentAccount?.recommendedFormat || state.contentFormats[0] || "短视频";
   state.platform = state.currentAccount?.recommendedPlatform || asArray(state.options.platforms)[0] || "其他";
   state.duration = state.currentAccount?.recommendedDuration || (asArray(state.options.durations).includes("由系统建议") ? "由系统建议" : asArray(state.options.durations)[0]) || "由系统建议";
+  state.primaryAudience = state.currentAccount?.primaryAudience || "希望从这个账号获得真实、有用内容的人";
+  state.expressionFeeling = "由系统建议";
+  state.materialKinds = [];
+  state.businessGoal = null;
+  state.speakerRoleName = state.currentAccount?.speakerRole || null;
+  state.exampleDirection = null;
+  state.resolvedClassification = null;
+  state.currentStage = "home";
+  state.legalNextActions = [];
   ui.idea.value = "";
   ui.angleDetail.value = "";
   ui.revisionInput.value = "";
+  document.querySelector("#content-product-search").value = "";
   setHidden(ui.homeResponse, true);
+  configureQuickFill();
+  document.querySelectorAll("[data-start-mode]").forEach((button) => button.classList.toggle("selected", button.dataset.startMode === state.startMode));
+  document.querySelectorAll("[data-example-direction]").forEach((button) => button.classList.remove("selected"));
   renderHome();
+  renderIdentity();
   setStep("home");
 }
 
 function renderHome() {
   const account = state.currentAccount;
-  document.querySelector("#creative-title").textContent = account?.headline || `今天，${account?.displayName || "这个账号"}想讲什么？`;
-  document.querySelector("#creative-intro").textContent = account?.intro || "一句话、一件事或一个模糊想法都可以。";
+  document.querySelector("#creative-title").textContent = "今天我可以怎样帮你？";
+  document.querySelector("#creative-intro").textContent = account?.intro || account?.headline || "一句话、一件事或一个模糊想法都可以。";
   ui.idea.placeholder = account?.placeholder || "比如：今天发生了一件小事，我不知道值不值得讲。";
   ui.directions.replaceChildren();
   accountDirections().forEach((direction, index) => {
@@ -426,6 +505,32 @@ function renderHome() {
       createElement("p", "", direction.description)
     );
     ui.directions.append(button);
+  });
+}
+
+function configureQuickFill() {
+  const speaker = document.querySelector("#quick-speaker");
+  speaker.replaceChildren(new Option("当前账号（系统建议）", ""));
+  if (state.currentAccount?.speakerRole) {
+    speaker.add(new Option(state.currentAccount.speakerRole, state.currentAccount.speakerRole));
+  }
+  speaker.value = state.speakerRoleName || "";
+  document.querySelector("#quick-material").value = state.materialKinds[0] || "";
+  document.querySelector("#quick-format").value = state.contentFormat;
+  document.querySelector("#quick-goal").value = state.businessGoal || "";
+}
+
+function configureContentProductSearch() {
+  const list = document.querySelector("#content-product-suggestions");
+  list.replaceChildren();
+  asArray(state.options.content_products).forEach((product) => {
+    const displayName = String(pick(product, ["display_name"], ""));
+    if (!displayName) return;
+    const option = document.createElement("option");
+    option.value = displayName;
+    const aliases = asArray(product.search_aliases).join("、");
+    if (aliases) option.label = aliases;
+    list.append(option);
   });
 }
 
@@ -461,48 +566,57 @@ function validTopicLabel() {
   const topic = state.selectedDirection?.topicLabel || selectedAngle()?.topicLabel;
   const allowed = asArray(state.options.topics);
   if (topic && (!allowed.length || allowed.includes(topic))) return topic;
-  return allowed[0] || null;
+  return null;
 }
 
 function taskPayload(operation, overrides = {}) {
   const account = state.currentAccount;
   const angle = selectedAngle();
   const message = String(overrides.message ?? state.idea ?? "").trim();
-  return {
-    account_display_name: account?.requestName || account?.displayName || "",
+  return buildPortalTaskPayload({
+    accountDisplayName: account?.requestName || account?.displayName || "",
     operation,
-    topic_label: overrides.topic_label !== undefined ? overrides.topic_label : validTopicLabel(),
-    primary_audience: account?.primaryAudience || "希望从这个账号获得真实、有用内容的人",
-    message: message || "请先帮我理一理现在最值得讲的内容。",
-    target_platform: overrides.target_platform || state.platform || "其他",
-    candidate_number: overrides.candidate_number ?? null,
-    content_goal: angle?.label || null,
-    key_takeaway: state.detail || null,
-    speaker_role_name: account?.speakerRole || null,
-    storyline_name: null,
-    column_name: null,
-    continue_previous: Boolean(overrides.continue_previous),
-    localization_allowed: false,
-    duration_label: state.duration || "由系统建议",
-    expression_feeling: "由系统建议",
-    content_format: overrides.content_format || state.contentFormat,
-    organization_level: account?.organizationLevel || null,
-    content_identity: null,
-    long_term_storyline: null,
-    content_direction: null,
-    business_goal: null,
-    expression_method: null,
-    existing_material_kinds: state.startMode === "improve" ? ["一段故事或概要"] : [],
-    series_mode: overrides.series_mode || state.seriesMode,
-    episode_index: Number(overrides.episode_index || state.episodeIndex || 1)
-  };
+    topicLabel: overrides.topic_label !== undefined ? overrides.topic_label : validTopicLabel(),
+    primaryAudience: state.primaryAudience || account?.primaryAudience,
+    message,
+    targetPlatform: overrides.target_platform || state.platform,
+    candidateNumber: overrides.candidate_number,
+    contentGoal: angle?.label || state.exampleDirection,
+    keyTakeaway: state.detail,
+    speakerRoleName: state.speakerRoleName || account?.speakerRole,
+    continuePrevious: overrides.continue_previous,
+    durationLabel: state.duration,
+    expressionFeeling: state.expressionFeeling,
+    contentFormat: overrides.content_format || state.contentFormat,
+    organizationLevel: account?.organizationLevel,
+    businessGoal: state.businessGoal,
+    existingMaterialKinds: state.materialKinds.length
+      ? state.materialKinds
+      : (state.startMode === "improve" ? ["一段故事或概要"] : []),
+    seriesMode: overrides.series_mode || state.seriesMode,
+    episodeIndex: overrides.episode_index || state.episodeIndex
+  });
 }
 
 async function sendTask(operation, overrides = {}) {
-  return requestJson("/v1/portal/chat", {
+  const value = await requestJson("/v1/portal/chat", {
     method: "POST",
     body: JSON.stringify(taskPayload(operation, overrides))
   });
+  state.currentStage = String(pick(value, ["current_stage", "stage"], pick(value, ["ui_state"], state.currentStage)));
+  state.legalNextActions = asArray(pick(value, ["legal_next_actions", "allowed_actions"], []));
+  const resolved = pick(value, ["resolved_classification"], null);
+  if (resolved && typeof resolved === "object") {
+    state.resolvedClassification = resolved;
+    renderIdentity();
+  }
+  if (value.error_type) {
+    const error = new Error(responseAnswer(value));
+    error.errorType = String(value.error_type);
+    error.response = value;
+    throw error;
+  }
+  return value;
 }
 
 function responseAnswer(value) {
@@ -571,7 +685,10 @@ async function requestAngles(mode, direction = null) {
     ui.idea.focus();
     return;
   }
-  const message = state.idea || "我还没有想好，请结合当前账号给我三个容易开始的内容方向。";
+  const baseMessage = state.idea || "我还没有想好，请结合当前账号给我三个容易开始的内容方向。";
+  const message = state.exampleDirection
+    ? `${baseMessage}\n请围绕本次主题，从“${state.exampleDirection}”这个方向帮助我展开，不沿用任何示例原文或固定结构。`
+    : baseMessage;
   try {
     setBusy(true, "正在理解你的想法…");
     const value = await sendTask("找点灵感", {message, topic_label: direction?.topicLabel || validTopicLabel()});
@@ -617,14 +734,22 @@ function renderAngles() {
 
 function renderConfirm() {
   const angle = selectedAngle() || {label: "按当前想法继续", description: state.idea};
-  document.querySelector("#confirm-angle-title").textContent = angle.label;
-  document.querySelector("#confirm-angle-description").textContent = angle.description || state.idea;
+  document.querySelector("#confirm-theme").value = state.idea;
+  document.querySelector("#confirm-angle-description").textContent = [
+    state.exampleDirection ? `内容方向：${state.exampleDirection}` : "",
+    angle.label,
+    angle.description
+  ].filter(Boolean).join("｜");
+  document.querySelector("#confirmed-account").textContent = state.currentAccount?.displayName || "当前账号";
+  document.querySelector("#confirmed-audience").textContent = state.primaryAudience || "由系统建议";
   document.querySelector("#recommended-format").textContent = state.contentFormat;
   document.querySelector("#recommended-platform").textContent = state.platform;
   document.querySelector("#recommended-duration").textContent = state.duration;
   document.querySelector("#recommended-persona").textContent = state.currentAccount?.persona || "当前账号人设";
   document.querySelector("#platform-select").value = state.platform;
   document.querySelector("#duration-select").value = state.duration;
+  document.querySelector("#audience-input").value = state.primaryAudience;
+  document.querySelector("#feeling-select").value = state.expressionFeeling;
   document.querySelectorAll("[data-series-mode]").forEach((button) => button.classList.toggle("selected", button.dataset.seriesMode === state.seriesMode));
   const formatOptions = document.querySelector("#format-options");
   formatOptions.replaceChildren();
@@ -686,6 +811,7 @@ function creationMessage(episodeIndex) {
   const angle = selectedAngle();
   const lines = [state.idea];
   if (angle?.label) lines.push(`切入角度：${angle.label}`);
+  if (state.exampleDirection) lines.push(`用户选择的内容方向：${state.exampleDirection}`);
   if (state.detail) lines.push(`必须保留的细节：${state.detail}`);
   if (state.seriesMode === "SERIES") {
     if (state.seriesOutline.length) lines.push(formatSeriesOutline(state.seriesOutline));
@@ -722,6 +848,7 @@ function loadVersion(index) {
   state.selectedOrdinal = version.selectedOrdinal;
   state.selectionConfirmed = version.selectionConfirmed;
   state.confirmedOrdinal = version.confirmedOrdinal || 0;
+  renderIdentity();
   if (state.step === "result") renderResult();
 }
 
@@ -791,6 +918,7 @@ function candidateDifference(candidate) {
 }
 
 function renderResult() {
+  document.querySelector("#result-product").textContent = state.resolvedClassification?.content_product || "系统已完成内容分类";
   document.querySelector("#result-format").textContent = state.contentFormat;
   document.querySelector("#result-episode").textContent = state.seriesMode === "SERIES" ? `3集系列 · 第${state.episodeIndex}集` : "单篇";
   document.querySelector("#version-label").textContent = `第 ${state.versionIndex + 1} 版`;
@@ -1121,6 +1249,11 @@ function configureAdmin(source) {
     state.admin.organizationKindsByFamily = organizationKindsByFamily;
   }
   if (principals.length) state.admin.principals = principals;
+  state.admin.enterpriseProfile = pick(source, ["enterprise_profile"], state.admin.enterpriseProfile);
+  state.admin.organizationPeople = asArray(pick(source, ["organization_people"], state.admin.organizationPeople));
+  state.admin.usage = asArray(pick(source, ["usage"], state.admin.usage));
+  state.admin.systemStatus = pick(source, ["system_status"], state.admin.systemStatus);
+  state.admin.contentProducts = asArray(pick(source, ["content_products"], state.admin.contentProducts));
   fillAdminFormOptions();
 }
 
@@ -1177,17 +1310,141 @@ function refreshAdminPrincipals() {
 
 async function loadAdminAccounts() {
   try {
-    setStatus("正在读取账号矩阵…");
+    setStatus("正在读取企业管理数据…");
     const value = await requestJson("/v1/admin/accounts");
     const source = value.account_matrix || value.admin || value;
     state.admin.accounts = asArray(pick(source, ["accounts", "items"], []));
     configureAdmin(source);
-    renderAdminMatrix();
+    renderAdminWorkspace();
     setStatus("");
   } catch (error) {
     setStatus(error.message, "error");
-    renderAdminMatrix();
+    renderAdminWorkspace();
   }
+}
+
+function localDateTime(value) {
+  if (!value) return "暂无新版本使用记录";
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleString("zh-CN", {hour12: false});
+}
+
+function renderAdminWorkspace() {
+  renderEnterpriseProfile();
+  renderOrganizationPeople();
+  renderAdminMatrix();
+  renderAdminUsage();
+  renderSystemStatus();
+}
+
+function renderEnterpriseProfile() {
+  const root = document.querySelector("#admin-enterprise-profile");
+  const profile = state.admin.enterpriseProfile || {};
+  root.replaceChildren();
+  const facts = [
+    ["当前企业", pick(profile, ["display_name"], "暂不可用")],
+    ["资料性质", profile.simulation_only ? "模拟验收企业" : "已授权企业资料"],
+    ["资料来源", pick(profile, ["data_source_display_name"], "暂不可用")],
+    ["资料版本", pick(profile, ["data_version"], "暂不可用")],
+    ["导入状态", pick(profile, ["import_status_display_name"], "暂不可用")],
+    ["最后更新时间", localDateTime(pick(profile, ["last_updated_at"], null))]
+  ];
+  facts.forEach(([label, value]) => {
+    const row = createElement("div");
+    row.append(createElement("dt", "", label), createElement("dd", "", value));
+    root.append(row);
+  });
+  const products = document.querySelector("#admin-content-products");
+  products.replaceChildren();
+  state.admin.contentProducts.forEach((product) => products.append(createElement("span", "", product)));
+}
+
+function renderOrganizationPeople() {
+  const root = document.querySelector("#admin-organization-list");
+  root.replaceChildren();
+  if (!state.admin.organizationPeople.length) {
+    root.append(createElement("p", "empty-state", "当前没有可展示的组织与人员。"));
+    return;
+  }
+  state.admin.organizationPeople.forEach((organization) => {
+    const card = createElement("article", "organization-card");
+    const header = createElement("header");
+    header.append(
+      createElement("h3", "", pick(organization, ["display_name"], "未命名组织")),
+      createElement("span", "", `${pick(organization, ["organization_kind_display_name"], "组织")} · ${organization.status === "ACTIVE" ? "使用中" : "已停用"}`)
+    );
+    card.append(header);
+    const people = asArray(organization.login_principals);
+    const list = createElement("ul");
+    if (!people.length) {
+      list.append(createElement("li", "", "当前没有登录使用人。"));
+    } else {
+      people.forEach((person) => {
+        const accounts = asArray(person.bound_content_accounts).map((account) => pick(account, ["outward_account_name"], "")).filter(Boolean);
+        const item = createElement("li");
+        item.append(
+          createElement("strong", "", pick(person, ["display_name"], "未命名使用人")),
+          createElement("span", "", ` · ${pick(person, ["business_role_name"], "岗位未标注")} · ${person.status === "ACTIVE" ? "可登录" : "已停用"} · ${accounts.length ? `已绑定：${accounts.join("、")}` : "未绑定内容账号"}`)
+        );
+        list.append(item);
+      });
+    }
+    card.append(list);
+    root.append(card);
+  });
+}
+
+function renderAdminUsage() {
+  const root = document.querySelector("#admin-usage");
+  root.replaceChildren();
+  if (!state.admin.usage.length) {
+    root.append(createElement("p", "empty-state", "当前没有可展示的使用记录。"));
+    return;
+  }
+  const wrap = createElement("div", "admin-table-wrap");
+  const table = createElement("table", "admin-table");
+  const head = createElement("thead");
+  const headRow = createElement("tr");
+  ["对外账号", "账号族", "所属组织", "请求次数", "最近活动", "状态"].forEach((label) => headRow.append(createElement("th", "", label)));
+  head.append(headRow);
+  const body = createElement("tbody");
+  state.admin.usage.forEach((usage) => {
+    const count = Number(pick(usage, ["activity_count"], 0));
+    const row = createElement("tr");
+    row.append(
+      createElement("td", "account-name-cell", pick(usage, ["outward_account_name"], "—")),
+      createElement("td", "", pick(usage, ["account_family_display_name"], "—")),
+      createElement("td", "", pick(usage, ["organization_display_name"], "—")),
+      createElement("td", "", count ? String(count) : "暂无新版本记录"),
+      createElement("td", "", localDateTime(pick(usage, ["last_activity_at"], null))),
+      createElement("td", "", usage.status === "ACTIVE" ? "使用中" : "已停用")
+    );
+    body.append(row);
+  });
+  table.append(head, body);
+  wrap.append(table);
+  root.append(wrap);
+}
+
+function renderSystemStatus() {
+  const root = document.querySelector("#admin-system-status");
+  const status = state.admin.systemStatus || {};
+  const services = asArray(pick(status, ["services"], []));
+  root.replaceChildren();
+  if (!services.length) {
+    root.append(createElement("p", "empty-state", "系统状态暂时无法读取，请稍后重试。"));
+    return;
+  }
+  services.forEach((service) => {
+    const available = Boolean(pick(service, ["available"], false));
+    const card = createElement("div", `system-status-card${available ? "" : " unavailable"}`);
+    card.append(
+      createElement("strong", "", pick(service, ["label"], "服务")),
+      createElement("span", "", available ? "可用" : "稍后重试")
+    );
+    root.append(card);
+  });
+  root.append(createElement("p", "system-status-note", `检查时间：${localDateTime(pick(status, ["checked_at"], null))}`));
 }
 
 function renderAdminMatrix() {
@@ -1301,6 +1558,7 @@ ui.idea.addEventListener("input", () => {
   state.idea = ui.idea.value;
   if (state.selectedDirection && state.idea.trim() !== state.selectedDirection.prompt) state.selectedDirection = null;
 });
+document.querySelector("#think-with-me").addEventListener("click", () => requestAngles(state.startMode));
 document.querySelector("#send-chat").addEventListener("click", async () => {
   state.idea = ui.idea.value.trim();
   if (!state.idea) {
@@ -1320,7 +1578,40 @@ document.querySelector("#send-chat").addEventListener("click", async () => {
   }
 });
 
-document.querySelectorAll("[data-start-mode]").forEach((button) => button.addEventListener("click", () => requestAngles(button.dataset.startMode)));
+document.querySelectorAll("[data-start-mode]").forEach((button) => button.addEventListener("click", () => {
+  state.startMode = button.dataset.startMode;
+  document.querySelectorAll("[data-start-mode]").forEach((row) => row.classList.toggle("selected", row === button));
+  if (state.startMode === "improve") ui.idea.placeholder = "贴入或概括旧内容，再点“陪我想”。";
+  else if (state.startMode === "make") ui.idea.placeholder = "说说这件事或你手里的资料，再点“陪我想”。";
+  else ui.idea.placeholder = state.currentAccount?.placeholder || "一个片段、问题或模糊想法都可以。";
+  ui.idea.focus();
+}));
+document.querySelectorAll("[data-example-direction]").forEach((button) => button.addEventListener("click", () => {
+  state.exampleDirection = button.dataset.exampleDirection;
+  document.querySelectorAll("[data-example-direction]").forEach((row) => row.classList.toggle("selected", row === button));
+  showToast(`已选“${button.dataset.exampleDirection}”，请继续说你的本次主题。`);
+  ui.idea.focus();
+}));
+document.querySelector("#quick-speaker").addEventListener("change", (event) => {
+  state.speakerRoleName = event.target.value || state.currentAccount?.speakerRole || null;
+});
+document.querySelector("#quick-material").addEventListener("change", (event) => {
+  state.materialKinds = event.target.value ? [event.target.value] : [];
+});
+document.querySelector("#quick-format").addEventListener("change", (event) => {
+  state.contentFormat = event.target.value || state.currentAccount?.recommendedFormat || "短视频";
+  renderIdentity();
+});
+document.querySelector("#quick-goal").addEventListener("change", (event) => {
+  state.businessGoal = event.target.value || null;
+});
+document.querySelector("#content-product-search").addEventListener("change", (event) => {
+  const direction = event.target.value.trim();
+  if (!direction) return;
+  state.exampleDirection = direction;
+  showToast(`已选择“${direction}”，系统会结合你的主题匹配后台内容产品。`);
+  ui.idea.focus();
+});
 ui.directions.addEventListener("click", (event) => {
   const button = event.target.closest("[data-direction-index]");
   if (!button) return;
@@ -1336,6 +1627,10 @@ document.querySelector("#confirm-angle").addEventListener("click", () => {
   state.detail = ui.angleDetail.value.trim();
   setStep("confirm");
 });
+document.querySelector("#confirm-theme").addEventListener("input", (event) => {
+  state.idea = event.target.value;
+  ui.idea.value = state.idea;
+});
 document.querySelectorAll("[data-back-step]").forEach((button) => button.addEventListener("click", () => setStep(button.dataset.backStep)));
 document.querySelectorAll("[data-step]").forEach((button) => button.addEventListener("click", () => {
   const index = STEP_ORDER.indexOf(button.dataset.step);
@@ -1346,10 +1641,16 @@ document.querySelector("#format-options").addEventListener("click", (event) => {
   const button = event.target.closest("[data-format]");
   if (!button) return;
   state.contentFormat = button.dataset.format;
+  renderIdentity();
   renderConfirm();
 });
 document.querySelector("#platform-select").addEventListener("change", (event) => { state.platform = event.target.value; renderConfirm(); });
 document.querySelector("#duration-select").addEventListener("change", (event) => { state.duration = event.target.value; renderConfirm(); });
+document.querySelector("#audience-input").addEventListener("input", (event) => {
+  state.primaryAudience = event.target.value;
+  document.querySelector("#confirmed-audience").textContent = state.primaryAudience || "由系统建议";
+});
+document.querySelector("#feeling-select").addEventListener("change", (event) => { state.expressionFeeling = event.target.value; });
 document.querySelector("#generate").addEventListener("click", () => generateContent());
 ui.candidates.addEventListener("click", (event) => {
   const button = event.target.closest("[data-candidate-ordinal]");
@@ -1376,6 +1677,10 @@ document.querySelector("#account-matrix").addEventListener("click", (event) => {
   const button = event.target.closest("[data-disable-account]");
   if (button) disableAdminAccount(button.dataset.disableAccount, button.dataset.accountName);
 });
+document.querySelectorAll("[data-admin-tab]").forEach((button) => button.addEventListener("click", () => {
+  document.querySelectorAll("[data-admin-tab]").forEach((row) => row.classList.toggle("selected", row === button));
+  document.querySelectorAll("[data-admin-panel]").forEach((panel) => setHidden(panel, panel.dataset.adminPanel !== button.dataset.adminTab));
+}));
 
 updateProgress();
 }

@@ -134,6 +134,12 @@ FAMILY_ORGANIZATION_KINDS = {
     "HEADQUARTERS_DIRECT_STORE": frozenset({"DIRECT_STORE"}),
     "FRANCHISE_STORE": frozenset({"FRANCHISE_STORE"}),
 }
+ORGANIZATION_KIND_LABELS = {
+    "BRAND_HEADQUARTERS": "总部",
+    "REGIONAL_AUTHORIZED_PARTNER": "省级代理",
+    "DIRECT_STORE": "直营门店",
+    "FRANCHISE_STORE": "加盟门店",
+}
 PROFESSIONAL_PERSONA_DIRECTIONS = {
     "商品人设": ("商品开发日常", "面料与版型判断", "商品改版取舍", "衣服如何服务真实生活"),
     "设计师人设": ("设计灵感与草图", "版型与色彩取舍", "一件衣服如何形成", "设计如何回应生活"),
@@ -697,6 +703,71 @@ class RuntimeRepository:
                 raise ValueError("Current principal and account scope is not active")
             return principal, account
 
+    def record_account_activity(
+        self,
+        principal_id: str,
+        account_id: str,
+    ) -> JsonObject:
+        """Record one real scoped account use without retaining content."""
+
+        scope = current_trusted_database_scope()
+        if (
+            scope.principal_id != principal_id
+            or scope.account_id != account_id
+            or not scope.browser_session_id
+        ):
+            raise ValueError("Account activity requires the selected browser scope")
+        now = utc_now()
+        with self.sessions.begin() as session:
+            principal = session.get(RuntimePrincipal, principal_id)
+            account = session.get(RuntimeAccount, account_id, with_for_update=True)
+            browser_session = session.get(
+                RuntimeBrowserSession,
+                scope.browser_session_id,
+            )
+            expires_at = None if browser_session is None else browser_session.expires_at
+            if (
+                principal is None
+                or principal.status != "ACTIVE"
+                or account is None
+                or account.status != "ACTIVE"
+                or account_id not in principal.allowed_account_ids
+                or principal.tenant_id != account.tenant_id
+                or scope.tenant_id != account.tenant_id
+                or scope.brand_id != account.brand_id
+                or scope.organization_id != account.organization_id
+                or scope.store_id != account.store_id
+                or browser_session is None
+                or browser_session.principal_id != principal_id
+                or browser_session.state != "ACTIVE"
+                or expires_at is None
+                or self._aware(expires_at) < now
+            ):
+                raise ValueError("Account activity scope is not active")
+            payload = copy.deepcopy(account.payload)
+            raw_count = payload.get("activity_count", 0)
+            activity_count = (
+                raw_count
+                if isinstance(raw_count, int)
+                and not isinstance(raw_count, bool)
+                and raw_count >= 0
+                else 0
+            ) + 1
+            last_activity_at = now.isoformat()
+            payload.update(
+                {
+                    "activity_count": activity_count,
+                    "last_activity_at": last_activity_at,
+                }
+            )
+            account.payload = payload
+            account.updated_at = now
+            return {
+                "account_id": account.account_id,
+                "activity_count": activity_count,
+                "last_activity_at": last_activity_at,
+            }
+
     def all_accounts(self) -> tuple[RuntimeAccount, ...]:
         with self.sessions() as session:
             return tuple(
@@ -905,35 +976,95 @@ class RuntimeRepository:
             raise ValueError("Enterprise administrator scope is required")
         return principal
 
-    def account_management_matrix(self, principal_id: str) -> JsonObject:
-        """Return the current tenant account matrix without credential material."""
+    def _enterprise_admin_metadata_scope(
+        self,
+        principal_id: str,
+    ) -> tuple[str, frozenset[str]]:
+        """Resolve a server-confirmed tenant and organization scope for admin metadata."""
 
         with self.sessions() as session:
             admin = self._require_enterprise_admin(session, principal_id)
-            organizations = list(
-                session.scalars(
-                    select(RuntimeOrganization)
-                    .where(RuntimeOrganization.tenant_id == admin.tenant_id)
-                    .order_by(RuntimeOrganization.organization_id)
-                ).all()
+            tenant_id = admin.tenant_id
+            raw_organization_ids = admin.payload.get("organization_scope_ids", [])
+            organization_ids = frozenset(
+                value
+                for value in raw_organization_ids
+                if isinstance(value, str) and value
             )
-            organization_names = {
-                row.organization_id: row.display_name for row in organizations
-            }
-            principals = list(
-                session.scalars(
-                    select(RuntimePrincipal)
-                    .where(RuntimePrincipal.tenant_id == admin.tenant_id)
-                    .order_by(RuntimePrincipal.principal_id)
-                ).all()
+        if not tenant_id or not organization_ids:
+            raise ValueError("Enterprise administrator metadata scope is empty")
+        return tenant_id, organization_ids
+
+    def account_management_matrix(self, principal_id: str) -> JsonObject:
+        """Return real enterprise metadata without credentials or content bodies."""
+
+        tenant_id, organization_scope_ids = self._enterprise_admin_metadata_scope(
+            principal_id
+        )
+        allowed_organization_ids = sorted(organization_scope_ids)
+        with trusted_database_scope(TrustedDatabaseScope(tenant_id=tenant_id)):
+            with self.sessions() as session:
+                tenant = session.get(RuntimeTenant, tenant_id)
+                brands = list(
+                    session.scalars(
+                        select(RuntimeBrand)
+                        .where(
+                            RuntimeBrand.tenant_id == tenant_id,
+                            RuntimeBrand.status == "ACTIVE",
+                        )
+                        .order_by(RuntimeBrand.brand_id)
+                    ).all()
+                )
+                identity_setting = session.get(
+                    RuntimeSetting,
+                    f"identity_authority:{tenant_id}",
+                )
+                organizations = list(
+                    session.scalars(
+                        select(RuntimeOrganization)
+                        .where(
+                            RuntimeOrganization.tenant_id == tenant_id,
+                            RuntimeOrganization.organization_id.in_(
+                                allowed_organization_ids
+                            ),
+                        )
+                        .order_by(RuntimeOrganization.organization_id)
+                    ).all()
+                )
+                tenant_principals = list(
+                    session.scalars(
+                        select(RuntimePrincipal)
+                        .where(RuntimePrincipal.tenant_id == tenant_id)
+                        .order_by(RuntimePrincipal.principal_id)
+                    ).all()
+                )
+                accounts = list(
+                    session.scalars(
+                        select(RuntimeAccount)
+                        .where(
+                            RuntimeAccount.tenant_id == tenant_id,
+                            RuntimeAccount.organization_id.in_(
+                                allowed_organization_ids
+                            ),
+                        )
+                        .order_by(RuntimeAccount.account_id)
+                    ).all()
+                )
+        if tenant is None:
+            raise ValueError("Enterprise tenant is unavailable")
+        principals = [
+            row
+            for row in tenant_principals
+            if row.payload.get("workspace_kind") != "ENTERPRISE_ADMIN"
+            and organization_scope_ids.intersection(
+                value
+                for value in row.payload.get("organization_scope_ids", [])
+                if isinstance(value, str)
             )
-            accounts = list(
-                session.scalars(
-                    select(RuntimeAccount)
-                    .where(RuntimeAccount.tenant_id == admin.tenant_id)
-                    .order_by(RuntimeAccount.account_id)
-                ).all()
-            )
+        ]
+        organization_names = {
+            row.organization_id: row.display_name for row in organizations
+        }
         bound_principals: dict[str, list[str]] = {}
         principal_names = {
             row.principal_id: str(row.payload.get("display_name", row.username))
@@ -944,8 +1075,149 @@ class RuntimeRepository:
                 bound_principals.setdefault(account_id, []).append(
                     principal.principal_id
                 )
+        brand = brands[0] if len(brands) == 1 else None
+        imported = brand is not None and identity_setting is not None
+        simulation_only = bool(tenant.payload.get("simulation_only", False))
+        updated_values = [tenant.updated_at]
+        if brand is not None:
+            updated_values.append(brand.updated_at)
+        if identity_setting is not None:
+            updated_values.append(identity_setting.updated_at)
+        last_updated_at = max(self._aware(value) for value in updated_values).isoformat()
+        identity_payload = (
+            identity_setting.payload if identity_setting is not None else {}
+        )
+        data_version = (
+            str(
+                identity_payload.get(
+                    "schema_version",
+                    identity_setting.setting_version,
+                )
+            )
+            if identity_setting is not None
+            else ""
+        )
+        organization_people = []
+        for organization in organizations:
+            organization_id = organization.organization_id
+            organization_accounts = [
+                account for account in accounts if account.organization_id == organization_id
+            ]
+            people = []
+            for principal in principals:
+                principal_scope = {
+                    value
+                    for value in principal.payload.get("organization_scope_ids", [])
+                    if isinstance(value, str)
+                }
+                if organization_id not in principal_scope:
+                    continue
+                bound_accounts = [
+                    account
+                    for account in organization_accounts
+                    if account.account_id in principal.allowed_account_ids
+                ]
+                people.append(
+                    {
+                        "principal_id": principal.principal_id,
+                        "display_name": principal.payload.get(
+                            "display_name", principal.username
+                        ),
+                        "business_role_name": principal.payload.get(
+                            "business_role_name", ""
+                        ),
+                        "status": principal.status,
+                        "bound_content_accounts": [
+                            {
+                                "account_id": account.account_id,
+                                "outward_account_name": account.display_name,
+                                "status": account.status,
+                            }
+                            for account in bound_accounts
+                        ],
+                    }
+                )
+            organization_people.append(
+                {
+                    "organization_id": organization_id,
+                    "display_name": organization.display_name,
+                    "organization_kind": organization.payload.get(
+                        "organization_kind", ""
+                    ),
+                    "organization_kind_display_name": ORGANIZATION_KIND_LABELS.get(
+                        str(organization.payload.get("organization_kind", "")),
+                        "组织",
+                    ),
+                    "parent_organization_id": organization.payload.get(
+                        "parent_organization_id"
+                    )
+                    or organization.payload.get("authorized_by_organization_id"),
+                    "status": organization.status,
+                    "login_principals": people,
+                    "content_accounts": [
+                        {
+                            "account_id": account.account_id,
+                            "outward_account_name": account.display_name,
+                            "status": account.status,
+                        }
+                        for account in organization_accounts
+                    ],
+                }
+            )
+        usage = []
+        for account in accounts:
+            raw_count = account.payload.get("activity_count", 0)
+            activity_count = (
+                raw_count
+                if isinstance(raw_count, int)
+                and not isinstance(raw_count, bool)
+                and raw_count >= 0
+                else 0
+            )
+            last_activity_at = account.payload.get("last_activity_at")
+            usage.append(
+                {
+                    "account_id": account.account_id,
+                    "outward_account_name": account.display_name,
+                    "account_family_display_name": account.payload.get(
+                        "account_family_display_name",
+                        ACCOUNT_FAMILY_LABELS.get(
+                            str(account.payload.get("account_family", "")),
+                            "内容账号",
+                        ),
+                    ),
+                    "organization_display_name": organization_names.get(
+                        account.organization_id, ""
+                    ),
+                    "status": account.status,
+                    "activity_count": activity_count,
+                    "last_activity_at": (
+                        last_activity_at
+                        if isinstance(last_activity_at, str) and last_activity_at
+                        else None
+                    ),
+                }
+            )
         return {
             "workspace_kind": "ENTERPRISE_ADMIN",
+            "enterprise_profile": {
+                "tenant_id": tenant.tenant_id,
+                "display_name": tenant.display_name,
+                "simulation_only": simulation_only,
+                "data_source": (
+                    "SIMULATION" if simulation_only else "AUTHORIZED_REAL"
+                ),
+                "data_source_display_name": (
+                    "内置模拟资料" if simulation_only else "已授权企业资料"
+                ),
+                "data_version": data_version,
+                "existing_data_imported": imported,
+                "import_status": "IMPORTED" if imported else "UNAVAILABLE",
+                "import_status_display_name": "已导入" if imported else "暂不可用",
+                "last_updated_at": last_updated_at,
+            },
+            "organization_people": organization_people,
+            "usage": usage,
             "account_families": [
                 {
                     "value": family,
@@ -997,7 +1269,6 @@ class RuntimeRepository:
                     "status": row.status,
                 }
                 for row in principals
-                if row.payload.get("workspace_kind") != "ENTERPRISE_ADMIN"
             ],
             "accounts": [
                 {
@@ -1057,9 +1328,16 @@ class RuntimeRepository:
             raise ValueError("Fixed account families cannot be created")
         if persona_type not in FAMILY_PERSONAS[account_family]:
             raise ValueError("Persona is unavailable for this account family")
+        tenant_id, organization_scope_ids = self._enterprise_admin_metadata_scope(
+            admin_principal_id
+        )
+        if organization_id not in organization_scope_ids:
+            raise ValueError("Account organization is outside administrator scope")
         now = utc_now()
-        with self.sessions.begin() as session:
-            admin = self._require_enterprise_admin(session, admin_principal_id)
+        with (
+            trusted_database_scope(TrustedDatabaseScope(tenant_id=tenant_id)),
+            self.sessions.begin() as session,
+        ):
             organization = session.get(
                 RuntimeOrganization,
                 organization_id,
@@ -1073,26 +1351,22 @@ class RuntimeRepository:
             if (
                 organization is None
                 or organization.status != "ACTIVE"
-                or organization.tenant_id != admin.tenant_id
+                or organization.tenant_id != tenant_id
                 or target is None
                 or target.status != "ACTIVE"
-                or target.tenant_id != admin.tenant_id
+                or target.tenant_id != tenant_id
                 or target.payload.get("workspace_kind") == "ENTERPRISE_ADMIN"
             ):
                 raise ValueError("Account organization or principal is unavailable")
-            admin_scopes = admin.payload.get("organization_scope_ids", [])
             target_scopes = target.payload.get("organization_scope_ids", [])
-            if (
-                organization_id not in admin_scopes
-                or organization_id not in target_scopes
-            ):
+            if organization_id not in target_scopes:
                 raise ValueError("Account organization is outside principal scope")
             organization_kind = str(organization.payload.get("organization_kind", ""))
             if organization_kind not in FAMILY_ORGANIZATION_KINDS[account_family]:
                 raise ValueError("Account family does not match the organization")
             duplicate = session.scalar(
                 select(RuntimeAccount.account_id).where(
-                    RuntimeAccount.tenant_id == admin.tenant_id,
+                    RuntimeAccount.tenant_id == tenant_id,
                     RuntimeAccount.display_name == outward_account_name,
                 )
             )
@@ -1101,7 +1375,7 @@ class RuntimeRepository:
             brands = list(
                 session.scalars(
                     select(RuntimeBrand).where(
-                        RuntimeBrand.tenant_id == admin.tenant_id,
+                        RuntimeBrand.tenant_id == tenant_id,
                         RuntimeBrand.status == "ACTIVE",
                     )
                 ).all()
@@ -1129,7 +1403,7 @@ class RuntimeRepository:
             account_id = (
                 "ACCOUNT-DIYU-EXT-"
                 + digest_object(
-                    [admin.tenant_id, account_family, outward_account_name, now.isoformat()]
+                    [tenant_id, account_family, outward_account_name, now.isoformat()]
                 )[:20].upper()
             )
             payload: JsonObject = {
@@ -1159,7 +1433,7 @@ class RuntimeRepository:
             session.add(
                 RuntimeAccount(
                     account_id=account_id,
-                    tenant_id=admin.tenant_id,
+                    tenant_id=tenant_id,
                     brand_id=brands[0].brand_id,
                     organization_id=organization_id,
                     store_id=store_id,
@@ -1187,13 +1461,19 @@ class RuntimeRepository:
     ) -> JsonObject:
         """Disable an extensible account and revoke every principal binding."""
 
+        tenant_id, organization_scope_ids = self._enterprise_admin_metadata_scope(
+            admin_principal_id
+        )
         now = utc_now()
-        with self.sessions.begin() as session:
-            admin = self._require_enterprise_admin(session, admin_principal_id)
+        with (
+            trusted_database_scope(TrustedDatabaseScope(tenant_id=tenant_id)),
+            self.sessions.begin() as session,
+        ):
             account = session.get(RuntimeAccount, account_id, with_for_update=True)
             if (
                 account is None
-                or account.tenant_id != admin.tenant_id
+                or account.tenant_id != tenant_id
+                or account.organization_id not in organization_scope_ids
                 or account.status != "ACTIVE"
                 or account.payload.get("account_family")
                 not in EXTENSIBLE_ACCOUNT_FAMILIES
@@ -1204,16 +1484,12 @@ class RuntimeRepository:
                 )
             ):
                 raise ValueError("Only an active extensible account can be disabled")
-            if account.organization_id not in admin.payload.get(
-                "organization_scope_ids", []
-            ):
-                raise ValueError("Account is outside administrator organization scope")
             account.status = "INACTIVE"
             account.updated_at = now
             principals = list(
                 session.scalars(
                     select(RuntimePrincipal).where(
-                        RuntimePrincipal.tenant_id == admin.tenant_id,
+                        RuntimePrincipal.tenant_id == tenant_id,
                     )
                 ).all()
             )

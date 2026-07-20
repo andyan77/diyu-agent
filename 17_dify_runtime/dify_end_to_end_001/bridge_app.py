@@ -187,11 +187,45 @@ def _series_outline(*, reply: str, message: str) -> list[JsonObject]:
     ]
 
 
-def _portal_result(result: JsonObject) -> JsonObject:
+def _confirmation_card(payload: PortalTaskRequest) -> JsonObject:
+    return {
+        "account": payload.account_display_name,
+        "theme": payload.message,
+        "primary_audience": payload.primary_audience or "由系统建议",
+        "content_format": payload.content_format,
+        "target_platform": payload.target_platform,
+        "duration_label": payload.duration_label,
+        "expression_feeling": payload.expression_feeling,
+    }
+
+
+def _portal_result(
+    result: JsonObject,
+    *,
+    confirmation_card: JsonObject | None = None,
+) -> JsonObject:
+    result_class = str(result.get("result_class", ""))
+    error_type = str(result.get("error_type", ""))
+    if not error_type:
+        error_type = {
+            "MATERIAL_GAP": "MORE_CONTEXT_NEEDED",
+            "CANDIDATE_NOT_SELECTED": "CANDIDATE_NOT_SELECTED",
+            "AUTHORIZATION_OR_SCOPE_BLOCK": "ACCOUNT_SCOPE_DENIED",
+            "MODEL_OUTPUT_CONTRACT_ERROR": "SYSTEM_TEMPORARY",
+            "HARD_FACT_REFERENCE_ERROR": "SYSTEM_TEMPORARY",
+            "SYSTEM_OR_PROVIDER_ERROR": "SYSTEM_TEMPORARY",
+        }.get(result_class, "")
+    answer = str(result.get("user_visible_text", "当前请求已停止。"))
+    if error_type == "MORE_CONTEXT_NEEDED":
+        answer = f"还需补一句：{answer}"
+    elif error_type == "CANDIDATE_NOT_SELECTED":
+        answer = f"尚未选择候选：{answer}"
     payload: JsonObject = {
-        "answer": str(result.get("user_visible_text", "当前请求已停止。")),
+        "answer": answer,
         "simulation_only": True,
         "publish_allowed": False,
+        "current_stage": str(result.get("ui_state", "conversation")),
+        "confirmation_card": copy.deepcopy(confirmation_card or {}),
     }
     for key in (
         "ui_state",
@@ -207,6 +241,99 @@ def _portal_result(result: JsonObject) -> JsonObject:
     ):
         if key in result:
             payload[key] = copy.deepcopy(result[key])
+    candidates = result.get("candidates")
+    payload["candidate_cards"] = (
+        copy.deepcopy(candidates) if isinstance(candidates, list) else []
+    )
+    if error_type:
+        payload["error_type"] = error_type
+    if isinstance(result.get("legal_next_actions"), list):
+        payload["legal_next_actions"] = copy.deepcopy(
+            result["legal_next_actions"]
+        )
+    elif error_type == "MORE_CONTEXT_NEEDED":
+        payload["legal_next_actions"] = ["补充一句", "重试"]
+    elif error_type == "CANDIDATE_NOT_SELECTED":
+        payload["legal_next_actions"] = ["选择候选"]
+    elif isinstance(candidates, list) and candidates:
+        payload["legal_next_actions"] = [
+            "选择候选",
+            "局部修改",
+            "更换角度",
+            "更换成品",
+            "导出",
+        ]
+    elif result.get("ui_state") == "angles":
+        payload["legal_next_actions"] = ["选择方向", "补充细节", "返回修改想法"]
+    else:
+        payload["legal_next_actions"] = ["继续对话", "返回修改想法"]
+    return payload
+
+
+def _service_available(service: object) -> bool:
+    checker = getattr(service, "check_availability", None)
+    if not callable(checker):
+        return False
+    try:
+        return checker() is True
+    except (
+        DifyChatError,
+        KnowledgeRetrievalError,
+        OSError,
+        RuntimeError,
+        ValueError,
+    ):
+        return False
+
+
+def _admin_system_status(
+    runtime: Package7Runtime,
+    chat: DifyChatClient | None,
+    enterprise_profile: object,
+) -> JsonObject:
+    profile = enterprise_profile if isinstance(enterprise_profile, dict) else {}
+    retrieval_service = getattr(runtime.adapter, "retrieval_service", None)
+    knowledge_client = getattr(retrieval_service, "knowledge_client", None)
+    return {
+        "checked_at": datetime.now(timezone.utc).isoformat(),
+        "services": [
+            {"label": "网页服务", "available": True},
+            {
+                "label": "品牌资料",
+                "available": bool(profile.get("existing_data_imported")),
+            },
+            {
+                "label": "检索服务",
+                "available": _service_available(knowledge_client),
+            },
+            {"label": "内容模型", "available": _service_available(chat)},
+            {"label": "导出服务", "available": True},
+        ],
+    }
+
+
+def _candidate_not_selected_result() -> JsonObject:
+    return {
+        "response_kind": "DIRECT",
+        "result_class": "CANDIDATE_NOT_SELECTED",
+        "error_type": "CANDIDATE_NOT_SELECTED",
+        "user_visible_text": "请先点选一份候选，再继续修改或导出。",
+        "ui_state": "result",
+        "legal_next_actions": ["选择候选"],
+    }
+
+
+def _with_resolved_classification(
+    payload: JsonObject,
+    classification: JsonObject | None,
+) -> JsonObject:
+    if classification is None:
+        return payload
+    payload["resolved_classification"] = copy.deepcopy(classification)
+    confirmation = payload.get("confirmation_card")
+    if isinstance(confirmation, dict):
+        confirmation["topic"] = classification["topic"]
+        confirmation["content_product"] = classification["content_product"]
     return payload
 
 
@@ -512,7 +639,10 @@ def create_app(
             session = _portal_session(signing_key, active_repository)
             return jsonify(active_runtime.portal_options(str(session["principal_id"])))
         except ValueError:
-            return _plain_error("登录已失效，请重新登录。"), 401
+            return _plain_error(
+                "登录已失效，请重新登录。",
+                error_type="SESSION_EXPIRED",
+            ), 401
 
     @app.get("/v1/admin/accounts")
     def admin_accounts() -> Any:
@@ -520,11 +650,19 @@ def create_app(
             return _plain_error("当前访问未通过页面确认。"), 404
         try:
             session = _portal_session(signing_key, active_repository)
-            return jsonify(
-                active_repository.account_management_matrix(
-                    str(session["principal_id"])
-                )
+            matrix = active_repository.account_management_matrix(
+                str(session["principal_id"])
             )
+            matrix["system_status"] = _admin_system_status(
+                active_runtime,
+                active_chat,
+                matrix.get("enterprise_profile"),
+            )
+            matrix["content_products"] = [
+                active_runtime.user_product_labels[product_id]
+                for product_id in sorted(active_runtime.user_product_labels)
+            ]
+            return jsonify(matrix)
         except ValueError:
             return _plain_error("当前登录身份不能管理账号。"), 403
 
@@ -574,10 +712,16 @@ def create_app(
     def portal_chat() -> Any:
         if request.headers.get("X-Diyu-Portal") != PORTAL_HEADER:
             return _plain_error("当前访问未通过页面确认。"), 404
+        try:
+            session = _portal_session(signing_key, active_repository)
+        except ValueError:
+            return _plain_error(
+                "登录已失效，请重新登录。",
+                error_type="SESSION_EXPIRED",
+            ), 401
         failure_stage = "REQUEST_VALIDATION"
         run_id: str | None = None
         try:
-            session = _portal_session(signing_key, active_repository)
             payload = PortalTaskRequest.model_validate(
                 request.get_json(force=True, silent=False)
             )
@@ -585,6 +729,7 @@ def create_app(
             browser_session_id = str(session["browser_session_id"])
             failure_stage = "PORTAL_INPUT_PROJECTION"
             runtime_request = _portal_inputs(payload, principal_id, active_repository)
+            classification_projection: JsonObject | None = None
             failure_stage = "ACCOUNT_SCOPE"
             try:
                 _, account = active_repository.require_active_scope_by_display_name(
@@ -602,11 +747,20 @@ def create_app(
                     principal_id,
                     trusted_scope=unselected_scope,
                 )
-                return jsonify(_portal_result(prepared))
+                return jsonify(
+                    _portal_result(
+                        prepared,
+                        confirmation_card=_confirmation_card(payload),
+                    )
+                )
             selected_scope = install_selected_account_scope(
                 principal_id,
                 browser_session_id,
                 account,
+            )
+            active_repository.record_account_activity(
+                principal_id=principal_id,
+                account_id=account.account_id,
             )
             options = active_runtime.portal_options(principal_id)
             account_projection = next(
@@ -624,6 +778,20 @@ def create_app(
                     "希望从这个账号获得真实、有用内容的人",
                 )
             conversation_scope = account.account_id
+            if (
+                runtime_request["operation"] in {"导出", "查看来源"}
+                and active_repository.selected_candidate(
+                    principal_id,
+                    conversation_scope,
+                )
+                is None
+            ):
+                return jsonify(
+                    _portal_result(
+                        _candidate_not_selected_result(),
+                        confirmation_card=_confirmation_card(payload),
+                    )
+                )
             user_key = hashlib.sha256(
                 (
                     f"package7-dify-user:{principal_id}:{conversation_scope}:"
@@ -653,15 +821,30 @@ def create_app(
                     ).decode("ascii"),
                     trusted_scope=selected_scope,
                 )
-                return jsonify(_portal_result(finalized))
+                return jsonify(
+                    _portal_result(
+                        finalized,
+                        confirmation_card=_confirmation_card(payload),
+                    )
+                )
             if (
                 runtime_request["operation"]
                 in {"普通聊天", "找灵感", "确认制作", "局部修改"}
                 and active_chat is None
             ):
-                return _plain_error("Dify内部入口尚未连接。"), 503
+                return _plain_error(
+                    "系统暂时故障，内容模型尚未连接，请稍后重试。",
+                    error_type="SYSTEM_TEMPORARY",
+                ), 503
             if runtime_request["operation"] == "确认制作":
                 failure_stage = "CLASSIFIER_INVOKE"
+                classification_options = active_runtime.classification_options(
+                    payload.topic_label
+                )
+                if not classification_options:
+                    raise RuntimeContractError(
+                        "No legal content product classification options"
+                    )
                 classification_request = "\n".join(
                     (
                         f"用户原始需求：{payload.message}",
@@ -685,7 +868,7 @@ def create_app(
                         "topic_label": payload.topic_label or "未指定题材",
                         "message": classification_request,
                         "classification_options": json.dumps(
-                            active_runtime.classification_options(payload.topic_label),
+                            classification_options,
                             ensure_ascii=False,
                             separators=(",", ":"),
                         ),
@@ -694,9 +877,24 @@ def create_app(
                     reuse_conversation=False,
                 )
                 failure_stage = "CLASSIFIER_RESULT"
-                runtime_request["selected_content_product_id"] = _selected_product(
-                    classifier["answer"]
+                classification_choice = active_runtime.validate_classification_choice(
+                    _selected_product(classifier["answer"]),
+                    classification_options,
                 )
+                if classification_choice is None:
+                    raise RuntimeContractError(
+                        "Classifier result is outside server options"
+                    )
+                runtime_request.update(classification_choice)
+                selected_product_id = str(
+                    classification_choice["selected_content_product_id"]
+                )
+                classification_projection = {
+                    "topic": str(classification_choice["topic_label"]),
+                    "content_product": active_runtime.user_product_labels[
+                        selected_product_id
+                    ],
+                }
             failure_stage = "RUNTIME_PREPARE"
             prepared = active_runtime.prepare(
                 BridgePrepareRequest.model_validate(runtime_request),
@@ -704,7 +902,15 @@ def create_app(
                 trusted_scope=selected_scope,
             )
             if prepared.get("response_kind") != "MODEL_REQUIRED":
-                return jsonify(_portal_result(prepared))
+                return jsonify(
+                    _with_resolved_classification(
+                        _portal_result(
+                            prepared,
+                            confirmation_card=_confirmation_card(payload),
+                        ),
+                        classification_projection,
+                    )
+                )
             author_prompt = prepared.get("author_prompt")
             prepared_run_id = prepared.get("run_id")
             if not isinstance(author_prompt, dict) or not isinstance(
@@ -727,7 +933,7 @@ def create_app(
                 inputs={
                     "execution_phase": "AUTHOR",
                     "operation": runtime_request["operation"],
-                    "topic_label": payload.topic_label or "未指定题材",
+                    "topic_label": runtime_request["topic_label"] or "未指定题材",
                     "message": payload.message,
                     "classification_options": "[]",
                     "author_prompt": json.dumps(
@@ -746,7 +952,13 @@ def create_app(
                 base64.b64encode(result["answer"].encode("utf-8")).decode("ascii"),
                 trusted_scope=selected_scope,
             )
-            response_payload = _portal_result(finalized)
+            response_payload = _with_resolved_classification(
+                _portal_result(
+                    finalized,
+                    confirmation_card=_confirmation_card(payload),
+                ),
+                classification_projection,
+            )
             if runtime_request["operation"] == "找灵感":
                 directions = account_projection.get("directions", [])
                 response_payload["angles"] = _inspiration_angles(
@@ -764,6 +976,12 @@ def create_app(
                         ),
                     }
                 response_payload["ui_state"] = "angles"
+                response_payload["current_stage"] = "angles"
+                response_payload["legal_next_actions"] = [
+                    "选择方向",
+                    "补充细节",
+                    "返回修改想法",
+                ]
             return jsonify(response_payload)
         except DifyChatError as exc:
             if failure_stage == "AUTHOR_INVOKE" and run_id is not None:
@@ -781,7 +999,8 @@ def create_app(
                 type(exc).__name__,
             )
             return _plain_error(
-                "内容服务当前未完成响应，请稍后重试；无需补充品牌资料。"
+                "系统暂时故障，请稍后重试；无需补充品牌资料。",
+                error_type="SYSTEM_TEMPORARY",
             ), 503
         except (ValidationError, RuntimeContractError) as exc:
             app.logger.warning(
@@ -790,7 +1009,8 @@ def create_app(
                 type(exc).__name__,
             )
             return _plain_error(
-                "本次结果未通过结构检查，首次结果已保留；无需补充品牌资料。"
+                "系统暂时故障，本次结果未能稳定接收，请稍后重试。",
+                error_type="SYSTEM_TEMPORARY",
             ), 400
         except (KnowledgeRetrievalError, ValueError, KeyError) as exc:
             app.logger.warning(
@@ -992,13 +1212,24 @@ def _selected_product(answer: str) -> str | None:
     return None
 
 
-def _plain_error(message: str) -> Any:
+def _plain_error(
+    message: str,
+    *,
+    error_type: str = "SYSTEM_TEMPORARY",
+) -> Any:
     return jsonify(
         {
             "response_kind": "DIRECT",
             "result_class": "SYSTEM_OR_PROVIDER_ERROR",
             "user_visible_text": message,
             "action_card": False,
+            "current_stage": "error",
+            "confirmation_card": {},
+            "candidate_cards": [],
+            "legal_next_actions": (
+                ["重新登录"] if error_type == "SESSION_EXPIRED" else ["重试"]
+            ),
+            "error_type": error_type,
         }
     )
 

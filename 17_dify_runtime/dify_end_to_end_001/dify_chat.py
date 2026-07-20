@@ -48,6 +48,31 @@ class DifyChatClient:
         self.timeout_seconds = timeout_seconds
         self.maximum_model_calls = maximum_model_calls
 
+    def check_availability(self) -> bool:
+        """Verify the existing app API without invoking a model."""
+
+        request = urllib.request.Request(
+            f"{self.base_url}/parameters",
+            headers={
+                "Authorization": f"Bearer {self.app_api_token}",
+                "Accept": "application/json",
+            },
+        )
+        try:
+            with urllib.request.urlopen(
+                request,
+                timeout=min(float(self.timeout_seconds), 5.0),
+            ) as response:
+                value = json.loads(response.read(200_001).decode("utf-8"))
+        except (
+            urllib.error.URLError,
+            TimeoutError,
+            UnicodeDecodeError,
+            json.JSONDecodeError,
+        ):
+            return False
+        return isinstance(value, dict)
+
     def invoke(
         self,
         *,
