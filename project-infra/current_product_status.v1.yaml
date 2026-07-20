@@ -13,11 +13,30 @@ current_product_status:
     - checker-compatibility_success
     - secret-scan_success
     may_not_self_activate_from_branch: true
+  current_delivery:
+    task_id: DIYU_UI_FULL_DECISION_LIVE_DELIVERY_001
+    state: READY_FOR_FOUNDER_POINT_BY_POINT_UI_ACCEPTANCE
+    deployed_runtime_commit: 0ee66680e77907a83692e6c68aeee89896e92618
+    deployed_runtime_tree: 73a1bd0ad871cf6f6d8bc05d70051cfade54752f
+    master_check_run_id: 29785677276
+    checker_compatibility: SUCCESS
+    secret_scan: SUCCESS
+    founder_acceptance_pending: true
+    result_path: 20_internal_pilot/release_evaluation_001/result/ui_full_decision_live_delivery_result.v1.json
+    acceptance_guide_path: 20_internal_pilot/release_evaluation_001/delivery/founder_point_by_point_ui_acceptance_guide.v1.md
   active_product_semantics:
     task_id: DIYU_ACCOUNT_PERSONA_UI_AND_NO_APPROVAL_FLOW_001
-    candidate_state: IMPLEMENTED_ON_TASK_BRANCH_NOT_DEPLOYED
+    delivery_task_id: DIYU_UI_FULL_DECISION_LIVE_DELIVERY_001
+    candidate_state: DEPLOYED_AWAITING_FOUNDER_POINT_BY_POINT_UI_ACCEPTANCE
+    deployed_runtime_commit: 0ee66680e77907a83692e6c68aeee89896e92618
     account_family_count: 7
     representative_login_principal_count: 12
+    active_content_account_count: 11
+    inactive_acceptance_account_count: 1
+    enterprise_admin_section_count: 5
+    internal_content_product_count: 20
+    deliverable_format_count: 7
+    web_mode: UNIFIED_DYNAMIC_ADMIN_AND_CREATOR_WORKSPACES
     enterprise_content_approval_enabled: false
     cross_level_content_confirmation_required: false
     account_user_self_check_before_use: true
