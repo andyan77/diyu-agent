@@ -56,6 +56,8 @@
           <div><dt>账号族</dt><dd id="identity-family">—</dd></div>
           <div><dt>长期人设</dt><dd id="identity-persona-type">—</dd></div>
           <div><dt>对外账号</dt><dd id="identity-account">—</dd></div>
+          <div><dt>本次内容产品</dt><dd id="identity-product">尚未分类</dd></div>
+          <div><dt>本次成品</dt><dd id="identity-format">尚未选择</dd></div>
         </dl>
         <label id="account-switcher-wrap" class="account-switcher hidden">切换获准使用的账号
           <select id="account-switcher"></select>
@@ -69,32 +71,74 @@
         <section id="admin-workspace" class="admin-workspace hidden" aria-labelledby="admin-title">
           <header class="page-heading">
             <p class="eyebrow">企业管理工作区</p>
-            <h1 id="admin-title">账号矩阵</h1>
-            <p>管理组织、登录使用人与对外内容账号的绑定关系。内容由各账号使用人自行决定。</p>
+            <h1 id="admin-title">企业管理</h1>
+            <p>查看企业、组织、人员、内容账号和服务状态。这里不查看或审批任何人的候选内容。</p>
           </header>
-          <div class="admin-toolbar">
-            <div>
-              <strong>内容账号</strong>
-              <span id="admin-account-count">正在读取…</span>
+          <nav class="admin-tabs" aria-label="企业管理栏目">
+            <button class="selected" type="button" data-admin-tab="enterprise">企业资料</button>
+            <button type="button" data-admin-tab="organizations">组织与人员</button>
+            <button type="button" data-admin-tab="accounts">账号矩阵</button>
+            <button type="button" data-admin-tab="usage">使用情况</button>
+            <button type="button" data-admin-tab="system">系统状态</button>
+          </nav>
+
+          <section class="admin-panel" data-admin-panel="enterprise" aria-labelledby="enterprise-profile-title">
+            <div class="admin-section-heading">
+              <div><h2 id="enterprise-profile-title">企业资料</h2><p>当前工作区实际使用的企业资料概况。</p></div>
             </div>
-            <button id="open-account-create" class="primary-button" type="button">新增内容账号</button>
-          </div>
-          <form id="account-create-form" class="admin-create-form hidden">
-            <header>
-              <h2>新增可扩展内容账号</h2>
-              <p>只填写所属组织、账号族、长期人设、对外账号名和绑定的登录使用人。</p>
-            </header>
-            <label>所属组织<select name="organization_id" required></select></label>
-            <label>账号族<select name="account_family" required></select></label>
-            <label>长期人设<select name="persona_type" required></select></label>
-            <label>对外账号名<input name="outward_account_name" maxlength="200" required></label>
-            <label>绑定登录使用人<select name="principal_id" required></select></label>
-            <div class="form-actions">
-              <button class="secondary-button" id="cancel-account-create" type="button">取消</button>
-              <button class="primary-button" type="submit">创建账号</button>
+            <dl id="admin-enterprise-profile" class="admin-facts" aria-live="polite"></dl>
+            <details class="admin-capabilities">
+              <summary>查看后台可理解的20项内容产品</summary>
+              <div id="admin-content-products" class="capability-tags"></div>
+            </details>
+          </section>
+
+          <section class="admin-panel hidden" data-admin-panel="organizations" aria-labelledby="organization-people-title">
+            <div class="admin-section-heading">
+              <div><h2 id="organization-people-title">组织与人员</h2><p>现有组织、登录使用人与获准使用的内容账号。</p></div>
             </div>
-          </form>
-          <div id="account-matrix" class="account-matrix" aria-live="polite"></div>
+            <div id="admin-organization-list" class="organization-list" aria-live="polite"></div>
+          </section>
+
+          <section class="admin-panel hidden" data-admin-panel="accounts" aria-labelledby="account-matrix-title">
+            <div class="admin-toolbar">
+              <div>
+                <strong id="account-matrix-title">账号矩阵</strong>
+                <span id="admin-account-count">正在读取…</span>
+              </div>
+              <button id="open-account-create" class="primary-button" type="button">新增内容账号</button>
+            </div>
+            <form id="account-create-form" class="admin-create-form hidden">
+              <header>
+                <h2>新增可扩展内容账号</h2>
+                <p>只填写所属组织、账号族、长期人设、对外账号名和绑定的登录使用人。</p>
+              </header>
+              <label>所属组织<select name="organization_id" required></select></label>
+              <label>账号族<select name="account_family" required></select></label>
+              <label>长期人设<select name="persona_type" required></select></label>
+              <label>对外账号名<input name="outward_account_name" maxlength="200" required></label>
+              <label>绑定登录使用人<select name="principal_id" required></select></label>
+              <div class="form-actions">
+                <button class="secondary-button" id="cancel-account-create" type="button">取消</button>
+                <button class="primary-button" type="submit">创建账号</button>
+              </div>
+            </form>
+            <div id="account-matrix" class="account-matrix" aria-live="polite"></div>
+          </section>
+
+          <section class="admin-panel hidden" data-admin-panel="usage" aria-labelledby="usage-title">
+            <div class="admin-section-heading">
+              <div><h2 id="usage-title">使用情况</h2><p>只显示账号请求次数和最近活动，不显示内容正文。</p></div>
+            </div>
+            <div id="admin-usage" class="account-matrix" aria-live="polite"></div>
+          </section>
+
+          <section class="admin-panel hidden" data-admin-panel="system" aria-labelledby="system-status-title">
+            <div class="admin-section-heading">
+              <div><h2 id="system-status-title">系统状态</h2><p>当前网页、资料、检索、模型和导出服务的实际可用情况。</p></div>
+            </div>
+            <div id="admin-system-status" class="system-status-list" aria-live="polite"></div>
+          </section>
         </section>
 
         <section id="creative-workspace" class="creative-workspace hidden" aria-labelledby="creative-title">
@@ -108,26 +152,66 @@
           <section id="step-home" class="flow-step" aria-labelledby="creative-title">
             <header class="page-heading">
               <p class="eyebrow">今天，从这里开始</p>
-              <h1 id="creative-title">今天想讲什么？</h1>
+              <h1 id="creative-title">今天我可以怎样帮你？</h1>
               <p id="creative-intro">一句话、一件事或一个模糊想法都可以。</p>
             </header>
+            <details class="quick-fill">
+              <summary>快速填写</summary>
+              <div class="quick-fill-grid">
+                <label>1. 谁来讲<select id="quick-speaker"><option value="">当前账号（系统建议）</option></select></label>
+                <label>2. 手里有什么<select id="quick-material">
+                  <option value="">由系统建议</option>
+                  <option value="一个想法">一个想法</option>
+                  <option value="一段故事或概要">一段故事或概要</option>
+                  <option value="商品或活动事实">商品或活动事实</option>
+                  <option value="图片或视频">图片或视频线索</option>
+                  <option value="什么都没有">什么都没有</option>
+                </select></label>
+                <label>3. 做成什么<select id="quick-format">
+                  <option value="">由系统建议</option>
+                  <option value="短视频">短视频</option>
+                  <option value="图文">图文</option>
+                  <option value="直播内容包">直播内容包</option>
+                  <option value="私域沟通内容">私域沟通内容</option>
+                  <option value="门店线下物料">门店线下物料</option>
+                </select></label>
+                <label>4. 希望带来什么<select id="quick-goal">
+                  <option value="">由系统建议</option>
+                  <option value="品牌认知">让更多人认识</option>
+                  <option value="商品理解">讲清商品</option>
+                  <option value="建立信任">建立信任</option>
+                  <option value="引发咨询">引发咨询</option>
+                  <option value="到店">吸引到店</option>
+                </select></label>
+              </div>
+            </details>
             <div class="composer">
               <label class="sr-only" for="idea-input">说说你现在想聊或想做什么</label>
               <textarea id="idea-input" maxlength="4000" placeholder="比如：今天店里发生了一件小事，我不知道值不值得讲。"></textarea>
               <div class="composer-footer">
-                <span>普通聊天不会被强行变成内容任务</span>
-                <button id="send-chat" class="secondary-button" type="button">先聊一聊</button>
+                <details class="example-picker">
+                  <summary>看看例子</summary>
+                  <div>
+                    <button type="button" data-example-direction="讲清一个真实问题">围绕我的主题，讲清一个问题</button>
+                    <button type="button" data-example-direction="记录一个过程或变化">围绕我的主题，记录过程变化</button>
+                    <button type="button" data-example-direction="从一个专业判断切入">围绕我的主题，说说专业判断</button>
+                  </div>
+                </details>
+                <div class="composer-actions">
+                  <button id="send-chat" class="text-button" type="button">只是聊聊</button>
+                  <button id="think-with-me" class="primary-button" type="button">陪我想</button>
+                </div>
               </div>
             </div>
-            <div class="start-grid" aria-label="三个创作起点">
+            <div class="start-prompts" aria-label="创作提示词">
               <button type="button" data-start-mode="inspire">
-                <span class="start-index">01</span><strong>帮我想</strong><small>我还没有方向，从一个片段开始</small>
+                <strong>帮我想</strong><small>我还没有方向</small>
               </button>
               <button type="button" data-start-mode="make">
-                <span class="start-index">02</span><strong>帮我做</strong><small>我有一件事或一些资料</small>
+                <strong>帮我做</strong><small>我有一件事或一些资料</small>
               </button>
               <button type="button" data-start-mode="improve">
-                <span class="start-index">03</span><strong>帮我改</strong><small>我有旧内容，想让它更自然</small>
+                <strong>帮我改</strong><small>我有旧内容</small>
               </button>
             </div>
             <div id="home-response" class="conversation-response hidden" aria-live="polite"></div>
@@ -136,6 +220,10 @@
               <span>根据当前账号和长期人设推荐</span>
             </div>
             <div id="direction-list" class="direction-grid"></div>
+            <label class="capability-search">搜索其他内容方向
+              <input id="content-product-search" list="content-product-suggestions" maxlength="80" placeholder="比如：真实服务复盘">
+              <datalist id="content-product-suggestions"></datalist>
+            </label>
           </section>
 
           <section id="step-angles" class="flow-step hidden" aria-labelledby="angles-title">
@@ -164,8 +252,10 @@
             </header>
             <div class="confirm-card">
               <div>
-                <p class="field-caption">本次角度</p>
-                <h2 id="confirm-angle-title"></h2>
+                <p class="field-caption">系统已经理解</p>
+                <label class="confirm-theme">本次主题
+                  <input id="confirm-theme" maxlength="4000">
+                </label>
                 <p id="confirm-angle-description"></p>
                 <div class="segmented" aria-label="单篇或系列">
                   <button type="button" data-series-mode="SINGLE">先做一篇</button>
@@ -178,14 +268,16 @@
                 </div>
               </div>
               <dl class="recommendation-list">
-                <div><dt>建议成品</dt><dd id="recommended-format"></dd></div>
-                <div><dt>发布方向</dt><dd id="recommended-platform"></dd></div>
-                <div><dt>建议长度</dt><dd id="recommended-duration"></dd></div>
+                <div><dt>当前账号</dt><dd id="confirmed-account"></dd></div>
+                <div><dt>主要受众</dt><dd id="confirmed-audience"></dd></div>
+                <div><dt>成品</dt><dd id="recommended-format"></dd></div>
+                <div><dt>平台</dt><dd id="recommended-platform"></dd></div>
+                <div><dt>长度</dt><dd id="recommended-duration"></dd></div>
                 <div><dt>当前人设</dt><dd id="recommended-persona"></dd></div>
               </dl>
             </div>
             <details class="format-details">
-              <summary>更换成品、平台或长度</summary>
+              <summary>更多调整</summary>
               <fieldset>
                 <legend>七种成品</legend>
                 <div id="format-options" class="choice-row"></div>
@@ -193,6 +285,15 @@
               <div class="setting-grid">
                 <label>发布方向<select id="platform-select"></select></label>
                 <label>建议长度<select id="duration-select"></select></label>
+                <label>主要受众<input id="audience-input" maxlength="300"></label>
+                <label>表达感觉<select id="feeling-select">
+                  <option value="由系统建议">由系统建议</option>
+                  <option value="真实记录">真实记录</option>
+                  <option value="专业讲明白">专业讲明白</option>
+                  <option value="生活分享">生活分享</option>
+                  <option value="情绪故事">情绪故事</option>
+                  <option value="质感画面">质感画面</option>
+                </select></label>
               </div>
             </details>
             <div class="flow-actions">
@@ -204,7 +305,7 @@
           <section id="step-result" class="flow-step result-step hidden" aria-labelledby="result-title">
             <header class="result-heading">
               <div><p class="eyebrow">可以直接选择、修改和使用</p><h1 id="result-title">成品工作台</h1></div>
-              <div class="result-meta"><span id="result-format"></span><span id="result-episode"></span></div>
+              <div class="result-meta"><span id="result-product"></span><span id="result-format"></span><span id="result-episode"></span></div>
             </header>
             <div id="candidate-list" class="candidate-list" aria-label="候选方案"></div>
             <div class="result-workbench">

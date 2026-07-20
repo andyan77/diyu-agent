@@ -114,6 +114,18 @@ PUBLIC_FOUNDATION_EXACT_PATHS = frozenset(
             "20_internal_pilot/release_evaluation_001/"
             "delivery/internal_production_entry.v1.yaml"
         ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "result/ui_full_decision_live_delivery_result.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "delivery/ui_full_decision_live_delivery_execution_review_request.v1.yaml"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "delivery/founder_point_by_point_ui_acceptance_guide.v1.md"
+        ),
     }
 )
 PUBLIC_FOUNDATION_CHECKER_PATH = Path("ci/checkers/check_product_foundation.py")
@@ -127,7 +139,7 @@ PUBLIC_FOUNDATION_LEGACY_CHECKER_AS_BUILT_SHA256 = (
     "1fae78276fe8d3e69da4a1cda369b792cd091bbca96094c8a76880c9859a75a8"
 )
 PUBLIC_FOUNDATION_SUCCESSOR_CHECKER_SHA256 = (
-    "26d8fa0fe3bdcea9fe8d06579cc2865db0c9f2c6bbff6a30f20c2ab893c0a847"
+    "cbd4abb77a3d7344cc0ff5147b618e920dbf0a5ae14d6ae88b66a65072de4106"
 )
 PUBLIC_FOUNDATION_WORKFLOW_REQUIRED_ACTIVE_LINES = (
     "python3 ci/checkers/check_product_foundation.py",

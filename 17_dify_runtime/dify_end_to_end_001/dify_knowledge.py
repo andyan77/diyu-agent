@@ -33,6 +33,31 @@ class DifyKnowledgeClient:
     dataset_id: str
     timeout_seconds: float = 20.0
 
+    def check_availability(self) -> bool:
+        """Verify the existing dataset API without running retrieval or a model."""
+
+        request = urllib.request.Request(
+            f"{self.base_url.rstrip('/')}/datasets/{self.dataset_id}/documents?page=1&limit=1",
+            headers={
+                "Authorization": f"Bearer {self.dataset_api_token}",
+                "Accept": "application/json",
+            },
+        )
+        try:
+            with urllib.request.urlopen(
+                request,
+                timeout=min(float(self.timeout_seconds), 5.0),
+            ) as response:
+                value = json.loads(response.read(200_001).decode("utf-8"))
+        except (
+            urllib.error.URLError,
+            TimeoutError,
+            UnicodeDecodeError,
+            json.JSONDecodeError,
+        ):
+            return False
+        return isinstance(value, dict) and isinstance(value.get("data"), list)
+
     def _conditions(self, scope: JsonObject, query_at: str) -> list[JsonObject]:
         normalized = query_at[:-1] + "+00:00" if query_at.endswith("Z") else query_at
         query_timestamp = datetime.fromisoformat(normalized).timestamp()

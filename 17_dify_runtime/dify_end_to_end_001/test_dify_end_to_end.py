@@ -759,6 +759,349 @@ class Package7RecoveryTests(unittest.TestCase):
                 str(created_accounts[0]["account_id"]),
             )
 
+    def test_admin_workspace_has_five_real_sections_and_scoped_usage(self) -> None:
+        app = create_app(self.runtime, self.repository, FakeDifyChatClient())
+        app.testing = True
+        headers = {"X-Diyu-Portal": "same-origin-v1"}
+        admin_client = app.test_client()
+        creator_client = app.test_client()
+        self.assertEqual(
+            admin_client.post(
+                "/login",
+                json={
+                    "username": "package7-test-owner-admin",
+                    "password": "package7-test-password",
+                },
+            ).status_code,
+            200,
+        )
+        self.assertEqual(
+            creator_client.post(
+                "/login",
+                json={
+                    "username": "package7-test-owner",
+                    "password": "package7-test-password",
+                },
+            ).status_code,
+            200,
+        )
+        self.assertEqual(
+            creator_client.get("/v1/admin/accounts", headers=headers).status_code,
+            403,
+        )
+
+        before_response = admin_client.get("/v1/admin/accounts", headers=headers)
+        self.assertEqual(before_response.status_code, 200)
+        before = before_response.get_json()
+        expected_sections = {
+            "enterprise_profile",
+            "organization_people",
+            "accounts",
+            "usage",
+            "system_status",
+        }
+        self.assertTrue(expected_sections.issubset(before))
+        self.assertEqual(before["workspace_kind"], "ENTERPRISE_ADMIN")
+        self.assertEqual(before["enterprise_profile"]["display_name"], "笛语童装")
+        self.assertTrue(before["organization_people"])
+        self.assertEqual(len(before["accounts"]), 11)
+        self.assertEqual(len(before["usage"]), 11)
+        self.assertEqual(len(before["content_products"]), 20)
+        self.assertEqual(
+            {row["label"] for row in before["system_status"]["services"]},
+            {"网页服务", "品牌资料", "检索服务", "内容模型", "导出服务"},
+        )
+        usage_before = next(
+            row for row in before["usage"] if row["outward_account_name"] == "笛语童装"
+        )
+
+        portal_response = creator_client.post(
+            "/v1/portal/chat",
+            json={
+                "account_display_name": "笛语童装",
+                "operation": "随便聊聊",
+                "message": "今天先聊聊门店里值得记录的一件小事。",
+            },
+            headers=headers,
+        )
+        self.assertEqual(portal_response.status_code, 200, portal_response.get_json())
+        after = admin_client.get("/v1/admin/accounts", headers=headers).get_json()
+        usage_after = next(
+            row for row in after["usage"] if row["outward_account_name"] == "笛语童装"
+        )
+        self.assertEqual(
+            usage_after["activity_count"],
+            usage_before["activity_count"] + 1,
+        )
+        self.assertIsInstance(usage_after["last_activity_at"], str)
+        self.assertTrue(usage_after["last_activity_at"])
+
+        def nested_keys(value: object) -> set[str]:
+            if isinstance(value, dict):
+                return {
+                    str(key).lower()
+                    for key in value
+                }.union(*(nested_keys(item) for item in value.values()))
+            if isinstance(value, list):
+                return set().union(*(nested_keys(item) for item in value))
+            return set()
+
+        response_keys = nested_keys(after)
+        for marker in ("password", "token", "prompt", "candidate"):
+            self.assertFalse(
+                any(marker in key for key in response_keys),
+                f"administrator response leaked {marker}",
+            )
+        self.assertTrue(
+            {"content", "body", "answer", "message", "copy", "text"}.isdisjoint(
+                response_keys
+            )
+        )
+
+        portal_html = (PACKAGE_ROOT / "portal.html").read_text(encoding="utf-8")
+        self.assertEqual(portal_html.count("data-admin-tab="), 5)
+        self.assertEqual(portal_html.count("data-admin-panel="), 5)
+        for heading in ("企业资料", "组织与人员", "账号矩阵", "使用情况", "系统状态"):
+            self.assertIn(heading, portal_html)
+        enterprise_panel = portal_html.split(
+            'data-admin-panel="enterprise"', maxsplit=1
+        )[1].split("</section>", maxsplit=1)[0]
+        people_panel = portal_html.split(
+            'data-admin-panel="organizations"', maxsplit=1
+        )[1].split("</section>", maxsplit=1)[0]
+        self.assertNotIn("<button", enterprise_panel)
+        self.assertNotIn("<button", people_panel)
+        for fake_action in (
+            "上传资料",
+            "导入资料",
+            "编辑企业资料",
+            "新增人员",
+            "删除人员",
+        ):
+            self.assertNotIn(fake_action, portal_html)
+
+    def test_progressive_ui_payload_and_twenty_classification_pairs(self) -> None:
+        node_script = r"""
+const {buildPortalTaskPayload} = require("./portal.js");
+const payload = buildPortalTaskPayload({
+  accountDisplayName: "测试对外账号",
+  operation: "直接做内容",
+  topicLabel: "测试题材",
+  primaryAudience: "测试受众",
+  message: "测试主题",
+  targetPlatform: "测试平台",
+  durationLabel: "测试时长",
+  expressionFeeling: "测试感觉",
+  contentFormat: "测试成品",
+  existingMaterialKinds: ["测试材料"],
+  businessGoal: "测试目标",
+  speakerRoleName: "测试讲述人"
+});
+process.stdout.write(JSON.stringify(payload));
+"""
+        completed = subprocess.run(
+            ["node", "-e", node_script],
+            cwd=PACKAGE_ROOT,
+            text=True,
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stderr)
+        payload = json.loads(completed.stdout)
+        self.assertEqual(
+            {
+                "target_platform": payload["target_platform"],
+                "duration_label": payload["duration_label"],
+                "primary_audience": payload["primary_audience"],
+                "expression_feeling": payload["expression_feeling"],
+                "content_format": payload["content_format"],
+                "existing_material_kinds": payload["existing_material_kinds"],
+                "business_goal": payload["business_goal"],
+                "speaker_role_name": payload["speaker_role_name"],
+            },
+            {
+                "target_platform": "测试平台",
+                "duration_label": "测试时长",
+                "primary_audience": "测试受众",
+                "expression_feeling": "测试感觉",
+                "content_format": "测试成品",
+                "existing_material_kinds": ["测试材料"],
+                "business_goal": "测试目标",
+                "speaker_role_name": "测试讲述人",
+            },
+        )
+
+        classification_options = self.runtime.classification_options(None)
+        self.assertEqual(len(classification_options), 20)
+        self.assertEqual(
+            {row["content_product_id"] for row in classification_options},
+            {f"CP{index:02d}" for index in range(1, 21)},
+        )
+        for option in classification_options:
+            product_id = str(option["content_product_id"])
+            public_topic = str(option["public_topic_label"])
+            self.assertIn(product_id, self.runtime.topic_by_label[public_topic]["internal_product_ids"])
+            self.assertEqual(
+                self.runtime.validate_classification_choice(
+                    product_id,
+                    classification_options,
+                ),
+                {
+                    "selected_content_product_id": product_id,
+                    "topic_label": public_topic,
+                },
+            )
+
+        portal_html = (PACKAGE_ROOT / "portal.html").read_text(encoding="utf-8")
+        for label in (
+            "陪我想",
+            "快速填写",
+            "1. 谁来讲",
+            "2. 手里有什么",
+            "3. 做成什么",
+            "4. 希望带来什么",
+            "看看例子",
+            "更多调整",
+            "搜索其他内容方向",
+        ):
+            self.assertIn(label, portal_html)
+        portal_js = (PACKAGE_ROOT / "portal.js").read_text(encoding="utf-8")
+        portal_css = (PACKAGE_ROOT / "portal.css").read_text(encoding="utf-8")
+        self.assertIn(
+            'ui.workspace.classList.toggle("admin-mode", state.isAdmin)',
+            portal_js,
+        )
+        self.assertIn(
+            ".workspace.admin-mode .identity-list, .use-boundary { display: none; }",
+            portal_css,
+        )
+        self.assertNotIn(
+            "\n  .identity-list, .use-boundary { display: none; }\n",
+            portal_css,
+        )
+
+    def test_portal_state_contract_keeps_four_error_types_distinct(self) -> None:
+        headers = {"X-Diyu-Portal": "same-origin-v1"}
+        app = create_app(self.runtime, self.repository, FakeDifyChatClient())
+        app.testing = True
+        anonymous = app.test_client()
+        expired = anonymous.get("/v1/portal/options")
+        self.assertEqual(expired.status_code, 401)
+        self.assertEqual(expired.get_json()["error_type"], "SESSION_EXPIRED")
+
+        client = app.test_client()
+        self.assertEqual(
+            client.post(
+                "/login",
+                json={
+                    "username": "package7-test-owner",
+                    "password": "package7-test-password",
+                },
+            ).status_code,
+            200,
+        )
+        common_payload = {
+            "account_display_name": "笛语童装",
+            "topic_label": "用户问题与理性选择",
+            "message": "围绕孩子选衣的一次真实判断开始创作。",
+            "primary_audience": "正在挑选童装的家长",
+            "content_format": "短视频",
+        }
+        unselected = client.post(
+            "/v1/portal/chat",
+            json={**common_payload, "operation": "导出"},
+            headers=headers,
+        )
+        self.assertEqual(unselected.status_code, 200)
+        self.assertEqual(
+            unselected.get_json()["error_type"],
+            "CANDIDATE_NOT_SELECTED",
+        )
+
+        material_gap = client.post(
+            "/v1/portal/chat",
+            json={
+                **common_payload,
+                "operation": "直接做内容",
+                "message": "请使用我尚未上传的视频文件直接剪成短视频。",
+            },
+            headers=headers,
+        )
+        self.assertEqual(material_gap.status_code, 200, material_gap.get_json())
+        self.assertEqual(material_gap.get_json()["error_type"], "MORE_CONTEXT_NEEDED")
+        self.assertTrue(material_gap.get_json()["answer"].startswith("还需补一句"))
+
+        completed = client.post(
+            "/v1/portal/chat",
+            json={**common_payload, "operation": "直接做内容"},
+            headers=headers,
+        )
+        self.assertEqual(completed.status_code, 200, completed.get_json())
+        completed_payload = completed.get_json()
+        self.assertTrue(
+            {
+                "current_stage",
+                "confirmation_card",
+                "candidate_cards",
+                "legal_next_actions",
+            }.issubset(completed_payload)
+        )
+        self.assertEqual(
+            completed_payload["confirmation_card"]["primary_audience"],
+            common_payload["primary_audience"],
+        )
+        self.assertTrue(completed_payload["candidate_cards"])
+        self.assertTrue(completed_payload["legal_next_actions"])
+        self.assertEqual(
+            completed_payload["resolved_classification"]["content_product"],
+            "专业判断切片",
+        )
+        self.assertNotIn(
+            "selected_content_product_id",
+            completed_payload["resolved_classification"],
+        )
+
+        class ProviderFailureChat(FakeDifyChatClient):
+            def invoke(self, **kwargs: Any) -> JsonObject:
+                if kwargs["inputs"]["execution_phase"] == "AUTHOR":
+                    raise DifyChatError("simulated provider failure")
+                return super().invoke(**kwargs)
+
+        provider_app = create_app(
+            self.runtime,
+            self.repository,
+            ProviderFailureChat(),
+        )
+        provider_app.testing = True
+        provider_client = provider_app.test_client()
+        self.assertEqual(
+            provider_client.post(
+                "/login",
+                json={
+                    "username": "package7-test-owner",
+                    "password": "package7-test-password",
+                },
+            ).status_code,
+            200,
+        )
+        provider_error = provider_client.post(
+            "/v1/portal/chat",
+            json={
+                **common_payload,
+                "operation": "随便聊聊",
+                "message": "验证内容服务故障不会被说成资料不足。",
+            },
+            headers=headers,
+        )
+        self.assertEqual(provider_error.status_code, 503)
+        provider_payload = provider_error.get_json()
+        self.assertEqual(provider_payload["error_type"], "SYSTEM_TEMPORARY")
+        self.assertNotEqual(
+            provider_payload["error_type"],
+            material_gap.get_json()["error_type"],
+        )
+        self.assertNotIn("还需补一句", provider_payload["user_visible_text"])
+
     def test_brand_import_contract_still_fails_closed(self) -> None:
         bundle = load_simulation_bundle()
         self.assertEqual(preflight_brand_bundle(bundle)["state"], "CAN_IMPORT")

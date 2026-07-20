@@ -440,8 +440,33 @@ class Package7Runtime:
             raise RuntimeContractError("Content capability mapping is invalid")
         public_topics = capability_doc.get("public_topics")
         content_formats = capability_doc.get("content_formats")
-        if not isinstance(public_topics, list) or not isinstance(content_formats, list):
+        content_products = capability_doc.get("content_products")
+        if (
+            not isinstance(public_topics, list)
+            or not isinstance(content_formats, list)
+            or not isinstance(content_products, list)
+        ):
             raise RuntimeContractError("Content capability mapping is incomplete")
+        self.user_product_labels: dict[str, str] = {}
+        self.product_search_aliases: dict[str, tuple[str, ...]] = {}
+        for row in content_products:
+            if not isinstance(row, dict):
+                raise RuntimeContractError("Content product display mapping is invalid")
+            product_id = str(row.get("content_product_id", ""))
+            display_name = str(row.get("display_name", ""))
+            aliases = row.get("search_aliases")
+            if (
+                product_id not in self.product_labels
+                or not display_name
+                or not isinstance(aliases, list)
+                or not aliases
+                or any(not isinstance(value, str) or not value for value in aliases)
+            ):
+                raise RuntimeContractError("Content product display mapping is invalid")
+            self.user_product_labels[product_id] = display_name
+            self.product_search_aliases[product_id] = tuple(aliases)
+        if set(self.user_product_labels) != set(self.product_labels):
+            raise RuntimeContractError("Content product display mapping is incomplete")
         for row in public_topics:
             if not isinstance(row, dict):
                 raise RuntimeContractError("Public topic mapping is invalid")
@@ -897,6 +922,13 @@ class Package7Runtime:
                 for storyline in storylines.values()
             },
             "topics": sorted(self.topic_by_label),
+            "content_products": [
+                {
+                    "display_name": self.user_product_labels[product_id],
+                    "search_aliases": list(self.product_search_aliases[product_id]),
+                }
+                for product_id in sorted(self.user_product_labels)
+            ],
             "platforms": ["抖音", "视频号", "小红书", "公众号或图文", "其他"],
             "durations": [
                 "15秒左右",
@@ -971,16 +1003,61 @@ class Package7Runtime:
         }
 
     def classification_options(self, topic_label: str | None) -> list[JsonObject]:
-        topic = self.topic_by_label.get(str(topic_label))
-        if topic is None:
-            return []
-        return [
-            {
-                "content_product_id": product_id,
-                "internal_label": self.product_labels[product_id],
+        if topic_label is not None:
+            topic = self.topic_by_label.get(topic_label)
+            if topic is None:
+                return []
+            return [
+                {
+                    "content_product_id": product_id,
+                    "internal_label": self.product_labels[product_id],
+                    "user_visible_label": self.user_product_labels[product_id],
+                    "search_aliases": list(self.product_search_aliases[product_id]),
+                    "public_topic_label": topic_label,
+                }
+                for product_id in topic["internal_product_ids"]
+            ]
+
+        options_by_product: dict[str, JsonObject] = {}
+        for public_topic_label, topic in self.topic_by_label.items():
+            if "canonical_topic_category_id_by_product" not in topic:
+                continue
+            for product_id in topic["internal_product_ids"]:
+                options_by_product.setdefault(
+                    product_id,
+                    {
+                        "content_product_id": product_id,
+                        "internal_label": self.product_labels[product_id],
+                        "user_visible_label": self.user_product_labels[product_id],
+                        "search_aliases": list(self.product_search_aliases[product_id]),
+                        "public_topic_label": public_topic_label,
+                    },
+                )
+        return [options_by_product[product_id] for product_id in sorted(options_by_product)]
+
+    def validate_classification_choice(
+        self,
+        selected_content_product_id: str | None,
+        candidates: list[JsonObject],
+    ) -> JsonObject | None:
+        if selected_content_product_id is None:
+            return None
+        for candidate in candidates:
+            if candidate.get("content_product_id") != selected_content_product_id:
+                continue
+            public_topic_label = candidate.get("public_topic_label")
+            if not isinstance(public_topic_label, str):
+                continue
+            topic = self.topic_by_label.get(public_topic_label)
+            if topic is None or selected_content_product_id not in topic[
+                "internal_product_ids"
+            ]:
+                continue
+            return {
+                "selected_content_product_id": selected_content_product_id,
+                "topic_label": public_topic_label,
             }
-            for product_id in topic["internal_product_ids"]
-        ]
+        return None
 
     def _start_chat_run(
         self,

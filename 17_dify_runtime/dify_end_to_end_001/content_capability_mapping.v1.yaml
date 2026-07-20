@@ -1,5 +1,26 @@
 schema_version: v1.0
 mapping_kind: ONE_TASK_BOOK_WITH_CONFIGURED_PUBLIC_DIMENSIONS
+content_products:
+  - {content_product_id: CP01, display_name: 岗位任务视频日志, search_aliases: [岗位日志, 工作VLOG]}
+  - {content_product_id: CP02, display_name: 门店时段微纪录, search_aliases: [门店微纪录, 门店日常]}
+  - {content_product_id: CP03, display_name: 单项手艺全过程, search_aliases: [手艺过程, 工艺过程]}
+  - {content_product_id: CP04, display_name: 多岗位协作纪实, search_aliases: [团队协作, 多岗协作]}
+  - {content_product_id: CP05, display_name: 人物成长与职业史, search_aliases: [人物成长, 职业故事]}
+  - {content_product_id: CP06, display_name: 专业判断切片, search_aliases: [专业判断, 选择判断]}
+  - {content_product_id: CP07, display_name: 用户问题诊断室, search_aliases: [用户答疑, 顾客问题]}
+  - {content_product_id: CP08, display_name: 工艺、面料和版型解构, search_aliases: [工艺解构, 面料版型]}
+  - {content_product_id: CP09, display_name: 适用边界与反选指南, search_aliases: [反选指南, 不适合谁]}
+  - {content_product_id: CP10, display_name: 长期使用与验证记录, search_aliases: [长期验证, 使用记录]}
+  - {content_product_id: CP11, display_name: 产品诞生与设计取舍, search_aliases: [设计取舍, 产品诞生]}
+  - {content_product_id: CP12, display_name: 产品迭代与版本日志, search_aliases: [产品迭代, 版本变化]}
+  - {content_product_id: CP13, display_name: 产品的生活与衣橱角色, search_aliases: [衣橱角色, 生活穿搭]}
+  - {content_product_id: CP14, display_name: 物性影像与感官短片, search_aliases: [物性感官, 质感短片]}
+  - {content_product_id: CP15, display_name: 商品到店生命周期, search_aliases: [商品到店, 到店过程]}
+  - {content_product_id: CP16, display_name: 真实服务复盘, search_aliases: [服务复盘, 顾客服务]}
+  - {content_product_id: CP17, display_name: 陈列换陈与空间实验, search_aliases: [陈列实验, 空间调整]}
+  - {content_product_id: CP18, display_name: 城市门店生活志, search_aliases: [城市门店, 本地生活]}
+  - {content_product_id: CP19, display_name: 经营取舍与决策复盘, search_aliases: [经营复盘, 决策取舍]}
+  - {content_product_id: CP20, display_name: 承诺与兑现追踪, search_aliases: [承诺兑现, 兑现追踪]}
 public_topics:
   - display_name: 品牌和企业故事
     legacy_topic_labels: [真实工作与人物, 产品研发与验证]

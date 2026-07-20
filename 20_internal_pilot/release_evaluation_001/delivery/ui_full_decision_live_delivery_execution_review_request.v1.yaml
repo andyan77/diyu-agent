@@ -1,0 +1,40 @@
+execution_review_request:
+  task_id: DIYU_UI_FULL_DECISION_LIVE_DELIVERY_001
+  status: PREMERGE_ACCEPTANCE_PASS_PROCEED_UNDER_EXISTING_FOUNDER_AUTHORIZATION
+  baseline_commit: 7898f3ed90dbbf9990f1e848be911b33cb4d9e77
+  reviewed_candidate_commit: e9b7bb943920c41d20113ca25dd3974427833a78
+  reviewed_candidate_tree: 7d904ef298ddc5cc53d7c4a1114da181040f0c66
+  merge_authorized: true
+  deployment_authorized: true
+  draft_pull_request_required: true
+  merge_method: MERGE_COMMIT
+  administrator_bypass: false
+  force_push: false
+  rebase: false
+  squash: false
+  reviews:
+    product_novice_page:
+      initial_verdict: FAIL
+      initial_score: 88
+      blocking_acceptance_ids: [UI-01, UI-12]
+      targeted_rereview_verdict: PASS
+      targeted_rereview_score: 98
+      final_hard_blocker_count: 0
+    interface_isolation_deployment_rollback:
+      verdict: PASS
+      score: 96
+      hard_blocker_count: 0
+  checks:
+    necessary_local_regression: PASS_ONCE
+    real_candidate_browser_walk: PASS
+    model_calls_before_merge: 0
+    core_numbers_300_120_86_changed: false
+  next_actions:
+  - create_draft_pull_request
+  - run_one_existing_remote_check
+  - mark_ready_and_merge_by_ordinary_protected_path
+  - wait_for_first_master_checks
+  - deploy_exact_merge_commit
+  - complete_bounded_live_acceptance_and_secure_credential_handoff
+  result_path: 20_internal_pilot/release_evaluation_001/result/ui_full_decision_live_delivery_result.v1.json
+  founder_guide_path: 20_internal_pilot/release_evaluation_001/delivery/founder_point_by_point_ui_acceptance_guide.v1.md
