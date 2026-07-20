@@ -19,26 +19,31 @@ be used to infer the current product phase or silently rewritten.
 - Login identity and outward-facing content account are separate objects. Real
   people never share credentials. A simulation exception must be explicit and
   non-publishable.
+- The product has seven account families: one non-creative enterprise
+  administrator, two fixed creative families, and four extensible creative
+  families. Account family and persona guide recommendations; they do not
+  restrict otherwise supported topics or deliverables.
 - Narrative retrieval and precise facts are optional writing references. They
   never grant authorization or data access, but missing references do not block
-  a creative draft from entering human review.
+  a creative candidate from reaching the account user for self-check.
 - Expression components, rules, edges, and A/B paths are optional offline
   research, regression, diagnostic, or explicit-experiment assets. Normal
   requests and light content plans must work without them. They are not brand
   facts, permissions, stock records, or source text.
-- A confirmed requirement version may have one versioned light content plan.
+- A server-bound user task version may have one versioned light content plan.
   The expression `prepare` operation owns that plan; Dify, retrieval, and the
   generator may not create competing plans.
 - Brand expression profiles, high-level modes, examples, and client soft
   preferences guide expression only. They cannot grant authorization, data
   access, scope, or publishability, and client preferences cannot weaken
   server-side security controls.
-- Draft copy may creatively state product attributes, prices, inventory,
+- Candidate copy may creatively state product attributes, prices, inventory,
   dimensions, authorization wording, commitments, events, and material ideas
-  without sentence-level evidence binding. Human review is still required
-  before publication; writing that something is authorized never grants real
-  access. Only a specifically requested but unavailable file, image, video, or
-  audio object produces a material action card.
+  without sentence-level evidence binding. The account user may self-check and
+  export without a cross-level content approval record; the system still never
+  publishes automatically. Writing that something is authorized never grants
+  real access. Only a specifically requested but unavailable file, image,
+  video, or audio object produces a material action card.
 
 ## Historical and forbidden default writes
 

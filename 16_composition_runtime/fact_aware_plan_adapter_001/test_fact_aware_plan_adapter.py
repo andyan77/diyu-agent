@@ -90,12 +90,8 @@ class FactAwarePlanAdapterTests(unittest.TestCase):
             request_id=request_id or f"REQUEST-{case_id}",
             principal_id="SIM-LOGIN-DIYU-ACCEPTANCE-001",
             content_account_id="ACCOUNT-DIYU-HQ-OFFICIAL",
-            acting_role_id="ROLE-HQ-CONTENT-TEAM",
             query_at=FIXED_TIME,
             confirmed_requirement=requirement,
-            confirmation_evidence=copy.deepcopy(
-                self.base_request["confirmation_evidence"]
-            ),
             retrieval_query_text=str(case.get("query_text", "")),
             precise_fact_queries=tuple(
                 copy.deepcopy(case.get("precise_fact_queries", []))
@@ -134,7 +130,6 @@ class FactAwarePlanAdapterTests(unittest.TestCase):
         self.assertEqual(products, {f"CP{index:02d}" for index in range(1, 21)})
         self.assertEqual(topics, {f"TOPIC-{index:02d}" for index in range(1, 9)})
         plan_count = 0
-        action_count = 0
         for case in self.cases:
             with self.subTest(case_id=case["case_id"]):
                 result = self.adapter.prepare(self.task_for_case(case))
@@ -150,12 +145,7 @@ class FactAwarePlanAdapterTests(unittest.TestCase):
                         result["references"]["selected_internal_content_product_id"],
                         case["content_product_id"],
                     )
-                else:
-                    action_count += 1
-                    self.assertEqual(result["action_type"], "COLLECT_MATERIAL")
-        self.assertGreater(plan_count, 0)
-        self.assertGreater(action_count, 0)
-        self.assertEqual(plan_count + action_count, 20)
+        self.assertEqual(plan_count, 20)
 
     def test_precise_fact_plan_calls_package5_then_package2(self) -> None:
         result = self.adapter.prepare(self.task_for_case(self.case("CP03")))
@@ -385,7 +375,15 @@ class FactAwarePlanAdapterTests(unittest.TestCase):
                     self.adapter.author_materials(ref, access)
 
     def test_action_card_cannot_be_used_as_author_material_plan(self) -> None:
-        action = self.adapter.prepare(self.task_for_case(self.case("CP01")))
+        action = self.adapter.prepare(
+            self.task_for_case(
+                self.case("CP03"),
+                requirement_updates={
+                    "selected_internal_content_product_id": None
+                },
+            )
+        )
+        self.assertEqual(action["object_type"], "ACTION_CARD")
         with self.assertRaises(PlanMaterialAccessDenied):
             self.adapter.author_materials(action["action_card_id"], self.access())
 
@@ -403,7 +401,7 @@ class FactAwarePlanAdapterTests(unittest.TestCase):
         )
         self.assertEqual(passed["decision"], "PASS")
         self.assertEqual(
-            passed["semantic_fact_review_status"], "PENDING_EXTERNAL_REVIEW"
+            passed["usage_check_status"], "USER_SELF_CHECK"
         )
         blocked = self.adapter.validate_candidate(
             plan["composition_plan_ref"],
@@ -436,7 +434,9 @@ class FactAwarePlanAdapterTests(unittest.TestCase):
         self.assertNotEqual(first["plan_id"], next_version["plan_id"])
         self.assertEqual(next_version["requirement_version"], 2)
 
-    def test_fact_conflict_and_expiry_cannot_form_a_plan(self) -> None:
+    def test_fact_conflict_and_expiry_block_precise_claims_without_blocking_creative_only(
+        self,
+    ) -> None:
         base_index = self.adapter.retrieval_service.index
         original = next(
             row for row in base_index.facts if row["fact_id"] == "PKG5-BD-FACT-001"
@@ -497,8 +497,14 @@ class FactAwarePlanAdapterTests(unittest.TestCase):
         revoked_result = revoked_adapter.prepare(
             self.task_for_case(self.case("CP17"))
         )
-        self.assertEqual(revoked_result["object_type"], "ACTION_CARD")
-        self.assertEqual(revoked_result["action_type"], "COLLECT_MATERIAL")
+        self.assertEqual(revoked_result["object_type"], "LIGHT_CONTENT_PLAN")
+        self.assertEqual(
+            revoked_result["expression_guidance"]["material_mode"],
+            "CREATIVE_ONLY",
+        )
+        self.assertEqual(
+            revoked_result["references"]["retrieval_fragment_refs"], []
+        )
 
     def test_all_external_call_counters_and_readiness_remain_closed(self) -> None:
         self.adapter.prepare(self.task_for_case(self.case("CP17")))

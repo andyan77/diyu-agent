@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import base64
+import copy
 import hashlib
 import ipaddress
 import json
@@ -17,6 +18,8 @@ from flask import Flask, g, jsonify, request, send_from_directory
 from pydantic import ValidationError
 
 from contracts import (
+    AdminAccountCreateRequest,
+    AdminAccountDisableRequest,
     BridgeFinalizeRequest,
     BridgePrepareRequest,
     LoginRequest,
@@ -57,11 +60,34 @@ PORTAL_OPERATION_MAP = {
     "把已有内容改好": "局部修改",
     "继续一个系列": "确认制作",
     "选择候选": "选择候选",
-    "审核": "审核",
+    "查看上一版": "查看上一版",
     "导出": "导出",
     "查看来源": "查看来源",
     "提交反馈": "提交反馈",
 }
+
+
+def _portal_result(result: JsonObject) -> JsonObject:
+    payload: JsonObject = {
+        "answer": str(result.get("user_visible_text", "当前请求已停止。")),
+        "simulation_only": True,
+        "publish_allowed": False,
+    }
+    for key in (
+        "ui_state",
+        "response_kind",
+        "result_class",
+        "action_type",
+        "plain_language_reason",
+        "publishable_candidate_included",
+        "candidates",
+        "series",
+        "export_text",
+        "viewing_previous_version",
+    ):
+        if key in result:
+            payload[key] = copy.deepcopy(result[key])
+    return payload
 
 
 def required_env(name: str, *, minimum_length: int = 1) -> str:
@@ -368,12 +394,66 @@ def create_app(
         except ValueError:
             return _plain_error("登录已失效，请重新登录。"), 401
 
+    @app.get("/v1/admin/accounts")
+    def admin_accounts() -> Any:
+        if request.headers.get("X-Diyu-Portal") != PORTAL_HEADER:
+            return _plain_error("当前访问未通过页面确认。"), 404
+        try:
+            session = _portal_session(signing_key, active_repository)
+            return jsonify(
+                active_repository.account_management_matrix(
+                    str(session["principal_id"])
+                )
+            )
+        except ValueError:
+            return _plain_error("当前登录身份不能管理账号。"), 403
+
+    @app.post("/v1/admin/accounts")
+    def admin_create_account() -> Any:
+        if request.headers.get("X-Diyu-Portal") != PORTAL_HEADER:
+            return _plain_error("当前访问未通过页面确认。"), 404
+        try:
+            session = _portal_session(signing_key, active_repository)
+            payload = AdminAccountCreateRequest.model_validate(
+                request.get_json(force=True, silent=False)
+            )
+            created = active_repository.create_extensible_account(
+                admin_principal_id=str(session["principal_id"]),
+                organization_id=payload.organization_id,
+                account_family=payload.account_family,
+                persona_type=payload.persona_type,
+                outward_account_name=payload.outward_account_name,
+                principal_id=payload.principal_id,
+            )
+            return jsonify({"account": created}), 201
+        except ValidationError:
+            return _plain_error("新增账号信息不完整或不匹配。"), 400
+        except ValueError:
+            return _plain_error("当前账号、组织、人设或绑定使用人不匹配。"), 400
+
+    @app.post("/v1/admin/accounts/<account_id>/disable")
+    def admin_disable_account(account_id: str) -> Any:
+        if request.headers.get("X-Diyu-Portal") != PORTAL_HEADER:
+            return _plain_error("当前访问未通过页面确认。"), 404
+        try:
+            session = _portal_session(signing_key, active_repository)
+            payload = AdminAccountDisableRequest.model_validate(
+                {"account_id": account_id}
+            )
+            disabled = active_repository.disable_extensible_account(
+                admin_principal_id=str(session["principal_id"]),
+                account_id=payload.account_id,
+            )
+            return jsonify({"account": disabled})
+        except ValidationError:
+            return _plain_error("账号标识格式不正确。"), 400
+        except ValueError:
+            return _plain_error("当前账号不可停用或超出管理范围。"), 400
+
     @app.post("/v1/portal/chat")
     def portal_chat() -> Any:
         if request.headers.get("X-Diyu-Portal") != PORTAL_HEADER:
             return _plain_error("当前访问未通过页面确认。"), 404
-        if active_chat is None:
-            return _plain_error("Dify内部入口尚未连接。"), 503
         failure_stage = "REQUEST_VALIDATION"
         run_id: str | None = None
         try:
@@ -402,20 +482,27 @@ def create_app(
                     principal_id,
                     trusted_scope=unselected_scope,
                 )
-                return jsonify(
-                    {
-                        "answer": str(
-                            prepared.get("user_visible_text", "当前请求已停止。")
-                        ),
-                        "simulation_only": True,
-                        "publish_allowed": False,
-                    }
-                )
+                return jsonify(_portal_result(prepared))
             selected_scope = install_selected_account_scope(
                 principal_id,
                 browser_session_id,
                 account,
             )
+            options = active_runtime.portal_options(principal_id)
+            account_projection = next(
+                (
+                    row
+                    for row in options.get("accounts", [])
+                    if isinstance(row, dict)
+                    and row.get("display_name") == account.display_name
+                ),
+                {},
+            )
+            if not runtime_request.get("primary_audience"):
+                runtime_request["primary_audience"] = account_projection.get(
+                    "primary_audience",
+                    "希望从这个账号获得真实、有用内容的人",
+                )
             conversation_scope = account.account_id
             user_key = hashlib.sha256(
                 (
@@ -446,17 +533,13 @@ def create_app(
                     ).decode("ascii"),
                     trusted_scope=selected_scope,
                 )
-                return jsonify(
-                    {
-                        "answer": str(
-                            finalized.get(
-                                "user_visible_text", "当前结果已恢复并完成处理。"
-                            )
-                        ),
-                        "simulation_only": True,
-                        "publish_allowed": False,
-                    }
-                )
+                return jsonify(_portal_result(finalized))
+            if (
+                runtime_request["operation"]
+                in {"普通聊天", "找灵感", "确认制作", "局部修改"}
+                and active_chat is None
+            ):
+                return _plain_error("Dify内部入口尚未连接。"), 503
             if runtime_request["operation"] == "确认制作":
                 failure_stage = "CLASSIFIER_INVOKE"
                 classification_request = "\n".join(
@@ -501,15 +584,7 @@ def create_app(
                 trusted_scope=selected_scope,
             )
             if prepared.get("response_kind") != "MODEL_REQUIRED":
-                return jsonify(
-                    {
-                        "answer": str(
-                            prepared.get("user_visible_text", "当前请求已停止。")
-                        ),
-                        "simulation_only": True,
-                        "publish_allowed": False,
-                    }
-                )
+                return jsonify(_portal_result(prepared))
             author_prompt = prepared.get("author_prompt")
             prepared_run_id = prepared.get("run_id")
             if not isinstance(author_prompt, dict) or not isinstance(
@@ -551,15 +626,15 @@ def create_app(
                 base64.b64encode(result["answer"].encode("utf-8")).decode("ascii"),
                 trusted_scope=selected_scope,
             )
-            return jsonify(
-                {
-                    "answer": str(
-                        finalized.get("user_visible_text", "当前结果已停止。")
-                    ),
-                    "simulation_only": True,
-                    "publish_allowed": False,
-                }
-            )
+            response_payload = _portal_result(finalized)
+            if runtime_request["operation"] == "找灵感":
+                directions = account_projection.get("directions", [])
+                if isinstance(directions, list):
+                    response_payload["angles"] = [
+                        str(value) for value in directions[:3] if str(value).strip()
+                    ]
+                response_payload["ui_state"] = "angles"
+            return jsonify(response_payload)
         except DifyChatError as exc:
             if failure_stage == "AUTHOR_INVOKE" and run_id is not None:
                 try:
@@ -734,8 +809,6 @@ def _portal_inputs(
         previous_ref = previous.candidate_id
     operation = PORTAL_OPERATION_MAP[payload.operation]
     candidate_number = payload.candidate_number
-    if operation == "局部修改" and candidate_number is None:
-        candidate_number = 1
     return {
         "session_token": request.cookies.get(SESSION_COOKIE, ""),
         "account_display_name": payload.account_display_name,
@@ -756,6 +829,8 @@ def _portal_inputs(
         "duration_label": payload.duration_label,
         "expression_feeling": payload.expression_feeling,
         "content_format": payload.content_format,
+        "series_mode": payload.series_mode,
+        "episode_index": payload.episode_index,
         "organization_level": payload.organization_level,
         "content_identity": payload.content_identity,
         "long_term_storyline": payload.long_term_storyline,

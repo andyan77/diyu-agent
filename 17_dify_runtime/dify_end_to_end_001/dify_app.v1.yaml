@@ -71,7 +71,7 @@ workflow:
           type: select
           variable: execution_phase
         - label: 想做什么
-          options: [普通聊天, 找灵感, 确认制作, 选择候选, 局部修改, 审核, 导出, 查看来源, 提交反馈]
+          options: [普通聊天, 找灵感, 确认制作, 选择候选, 局部修改, 查看上一版, 导出, 查看来源, 提交反馈]
           required: true
           type: select
           variable: operation

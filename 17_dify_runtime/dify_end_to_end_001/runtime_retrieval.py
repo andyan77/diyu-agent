@@ -43,7 +43,7 @@ class RepositoryIdentityAuthority:
     def resolve_scope(self, principal_id: str, account_id: str) -> TrustedScope:
         principal, account = self.repository.require_active_scope(principal_id, account_id)
         authority = RuntimeBrandFactRetrievalService._identity_authority(
-            self.repository.setting(f"identity_authority:{principal.tenant_id}")
+            self.repository.identity_authority(principal.tenant_id)
         )
         scope = authority.resolve_scope(principal_id, account_id)
         if scope.brand_id != account.brand_id:
@@ -131,7 +131,7 @@ class RuntimeBrandFactRetrievalService(BrandFactRetrievalService):  # type: igno
         )
         scoped_retrieval = BrandFactRetrievalService(
             self._identity_authority(
-                self.repository.setting(f"identity_authority:{scope.tenant_id}")
+                self.repository.identity_authority(scope.tenant_id)
             ),
             runtime_index,
         )

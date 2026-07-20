@@ -7,57 +7,239 @@
   <link rel="stylesheet" href="portal.css">
 </head>
 <body>
-  <header><div class="brand">笛语内容工作台</div><div class="state">内部模拟 · 不可发布</div></header>
-  <main>
-    <section id="login-section">
-      <h1>登录</h1>
-      <form id="login-form" class="grid">
-        <label>账号<input name="username" autocomplete="username" required></label>
-        <label>密码<input name="password" type="password" autocomplete="current-password" minlength="12" required></label>
-        <div class="actions"><button class="primary" type="submit">进入工作台</button></div>
+  <header class="topbar">
+    <a class="brand-mark" href="#main-content" aria-label="笛语内容工作台首页">
+      <span class="brand-seal" aria-hidden="true">笛</span>
+      <span>笛语内容工作台</span>
+    </a>
+    <div id="session-summary" class="session-summary hidden">
+      <span class="session-dot" aria-hidden="true"></span>
+      <span id="session-user"></span>
+      <button id="logout" class="quiet-button" type="button">退出</button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section id="login-section" class="login-layout" aria-labelledby="login-title">
+      <div class="login-intro">
+        <p class="eyebrow">从真实工作里，找到值得讲的内容</p>
+        <h1>一句话开始，慢慢把内容做清楚。</h1>
+        <p>系统会按照你的登录身份、所在组织和获准使用的对外账号提供建议。内容由你决定是否使用，系统不会自动向外发布。</p>
+      </div>
+      <form id="login-form" class="login-card">
+        <div>
+          <p class="eyebrow">欢迎回来</p>
+          <h2 id="login-title">登录工作台</h2>
+        </div>
+        <label>登录账号
+          <input name="username" autocomplete="username" required>
+        </label>
+        <label>密码
+          <input name="password" type="password" autocomplete="current-password" minlength="12" required>
+        </label>
+        <button class="primary-button" type="submit">进入工作台</button>
+        <p id="login-feedback" class="form-feedback" role="status" aria-live="polite"></p>
       </form>
     </section>
-    <section id="workbench" class="hidden">
-      <h2>内容任务</h2>
-      <form id="task-form" class="grid">
-        <label>你现在想做什么<select name="operation"></select></label>
-        <label>用哪个账号来讲<select name="account_display_name"></select></label>
-        <label class="wide">想说什么，或想修改什么<textarea name="message" maxlength="4000" required></textarea></label>
-        <div id="quick-prompts" class="wide suggestion-row" aria-label="可选话题建议"></div>
-        <div id="production-fields" class="wide field-band grid hidden">
-          <label>今天想讲什么<select name="topic_label"></select></label>
-          <label>成品类型<select name="content_format"></select></label>
-          <label>准备发到哪里<select name="target_platform"></select></label>
-          <div class="wide"><strong>你已经有什么</strong><div id="materials" class="checks"></div></div>
+
+    <div id="workspace" class="workspace hidden">
+      <aside class="identity-rail" aria-labelledby="identity-title">
+        <div>
+          <p class="eyebrow">当前工作身份</p>
+          <h2 id="identity-title">—</h2>
+          <p id="identity-persona" class="identity-persona"></p>
         </div>
-        <div id="candidate-fields" class="wide field-band grid hidden">
-          <label>候选编号<input name="candidate_number" type="number" min="1" max="3"></label>
-        </div>
-        <details id="advanced-fields" class="wide hidden">
-          <summary>更多偏好</summary>
-          <div class="grid detail-grid">
-            <label>大约做多长<select name="duration_label"></select></label>
-            <label>想要什么感觉<select name="expression_feeling"></select></label>
-            <label>谁来讲<select name="speaker_role_name"></select></label>
-            <label>长期主线<select name="storyline_name"></select></label>
-            <label>栏目<select name="column_name"></select></label>
-            <label>组织层级<select name="organization_level"></select></label>
-            <label>这次以什么身份表达<select name="content_identity"></select></label>
-            <label>长期叙事方向<select name="long_term_storyline"></select></label>
-            <label>内容方向<select name="content_direction"></select></label>
-            <label>业务目标<select name="business_goal"></select></label>
-            <label>表达方法<select name="expression_method"></select></label>
-            <label>主要给谁看<input name="primary_audience" maxlength="300"></label>
-            <label class="wide">这次想达到什么目的<input name="content_goal" maxlength="500"></label>
-            <label class="wide">最希望用户记住什么<input name="key_takeaway" maxlength="500"></label>
-            <div class="wide checks"><label><input name="localization_allowed" type="checkbox">只在已有真实材料支持时加入区域或门店条件</label></div>
+        <dl class="identity-list">
+          <div><dt>登录使用人</dt><dd id="identity-principal">—</dd></div>
+          <div><dt>企业岗位</dt><dd id="identity-role">—</dd></div>
+          <div><dt>所属组织</dt><dd id="identity-organization">—</dd></div>
+          <div><dt>账号族</dt><dd id="identity-family">—</dd></div>
+          <div><dt>长期人设</dt><dd id="identity-persona-type">—</dd></div>
+          <div><dt>对外账号</dt><dd id="identity-account">—</dd></div>
+        </dl>
+        <label id="account-switcher-wrap" class="account-switcher hidden">切换获准使用的账号
+          <select id="account-switcher"></select>
+        </label>
+        <p class="use-boundary">请自行检查后使用。内容不会提交给其他层级，也不会自动发布。</p>
+      </aside>
+
+      <div class="workspace-main">
+        <div id="global-status" class="global-status hidden" role="status" aria-live="polite"></div>
+
+        <section id="admin-workspace" class="admin-workspace hidden" aria-labelledby="admin-title">
+          <header class="page-heading">
+            <p class="eyebrow">企业管理工作区</p>
+            <h1 id="admin-title">账号矩阵</h1>
+            <p>管理组织、登录使用人与对外内容账号的绑定关系。内容由各账号使用人自行决定。</p>
+          </header>
+          <div class="admin-toolbar">
+            <div>
+              <strong>内容账号</strong>
+              <span id="admin-account-count">正在读取…</span>
+            </div>
+            <button id="open-account-create" class="primary-button" type="button">新增内容账号</button>
           </div>
-        </details>
-        <div class="wide actions"><button id="send" class="primary" type="submit">提交</button><button id="logout" class="secondary" type="button">退出</button></div>
-      </form>
-    </section>
-    <section id="result-section" class="hidden"><h2>结果</h2><div id="output" class="output"></div></section>
+          <form id="account-create-form" class="admin-create-form hidden">
+            <header>
+              <h2>新增可扩展内容账号</h2>
+              <p>只填写所属组织、账号族、长期人设、对外账号名和绑定的登录使用人。</p>
+            </header>
+            <label>所属组织<select name="organization_id" required></select></label>
+            <label>账号族<select name="account_family" required></select></label>
+            <label>长期人设<select name="persona_type" required></select></label>
+            <label>对外账号名<input name="outward_account_name" maxlength="200" required></label>
+            <label>绑定登录使用人<select name="principal_id" required></select></label>
+            <div class="form-actions">
+              <button class="secondary-button" id="cancel-account-create" type="button">取消</button>
+              <button class="primary-button" type="submit">创建账号</button>
+            </div>
+          </form>
+          <div id="account-matrix" class="account-matrix" aria-live="polite"></div>
+        </section>
+
+        <section id="creative-workspace" class="creative-workspace hidden" aria-labelledby="creative-title">
+          <nav class="progress" aria-label="创作进度">
+            <button type="button" data-step="home"><span>1</span>说想法</button>
+            <button type="button" data-step="angles"><span>2</span>选方向</button>
+            <button type="button" data-step="confirm"><span>3</span>确认成品</button>
+            <button type="button" data-step="result"><span>4</span>修改与交付</button>
+          </nav>
+
+          <section id="step-home" class="flow-step" aria-labelledby="creative-title">
+            <header class="page-heading">
+              <p class="eyebrow">今天，从这里开始</p>
+              <h1 id="creative-title">今天想讲什么？</h1>
+              <p id="creative-intro">一句话、一件事或一个模糊想法都可以。</p>
+            </header>
+            <div class="composer">
+              <label class="sr-only" for="idea-input">说说你现在想聊或想做什么</label>
+              <textarea id="idea-input" maxlength="4000" placeholder="比如：今天店里发生了一件小事，我不知道值不值得讲。"></textarea>
+              <div class="composer-footer">
+                <span>普通聊天不会被强行变成内容任务</span>
+                <button id="send-chat" class="secondary-button" type="button">先聊一聊</button>
+              </div>
+            </div>
+            <div class="start-grid" aria-label="三个创作起点">
+              <button type="button" data-start-mode="inspire">
+                <span class="start-index">01</span><strong>帮我想</strong><small>我还没有方向，从一个片段开始</small>
+              </button>
+              <button type="button" data-start-mode="make">
+                <span class="start-index">02</span><strong>帮我做</strong><small>我有一件事或一些资料</small>
+              </button>
+              <button type="button" data-start-mode="improve">
+                <span class="start-index">03</span><strong>帮我改</strong><small>我有旧内容，想让它更自然</small>
+              </button>
+            </div>
+            <div id="home-response" class="conversation-response hidden" aria-live="polite"></div>
+            <div class="section-heading">
+              <h2>也可以从这些方向开始</h2>
+              <span>根据当前账号和长期人设推荐</span>
+            </div>
+            <div id="direction-list" class="direction-grid"></div>
+          </section>
+
+          <section id="step-angles" class="flow-step hidden" aria-labelledby="angles-title">
+            <header class="page-heading">
+              <p class="eyebrow">系统先理解，不让你填整张表</p>
+              <h1 id="angles-title">这件事可以这样讲</h1>
+              <p>选择一个最有感觉的切入，也可以补一句真正重要的细节。</p>
+            </header>
+            <div class="heard-card"><strong>我听到的是</strong><p id="heard-text"></p></div>
+            <div id="angles-message" class="conversation-response hidden"></div>
+            <div id="angle-list" class="angle-grid" role="radiogroup" aria-label="内容角度"></div>
+            <label class="detail-input">最不想丢掉的细节（可选）
+              <input id="angle-detail" maxlength="500" placeholder="一个人物、动作或现场细节">
+            </label>
+            <div class="flow-actions">
+              <button class="text-button" type="button" data-back-step="home">← 返回改想法</button>
+              <button id="confirm-angle" class="primary-button" type="button">就按这个方向</button>
+            </div>
+          </section>
+
+          <section id="step-confirm" class="flow-step hidden" aria-labelledby="confirm-title">
+            <header class="page-heading">
+              <p class="eyebrow">只确认真正影响结果的事项</p>
+              <h1 id="confirm-title">准备好了，看看这次怎么做</h1>
+              <p>系统先推荐一种成品；需要时再展开更换。</p>
+            </header>
+            <div class="confirm-card">
+              <div>
+                <p class="field-caption">本次角度</p>
+                <h2 id="confirm-angle-title"></h2>
+                <p id="confirm-angle-description"></p>
+                <div class="segmented" aria-label="单篇或系列">
+                  <button type="button" data-series-mode="SINGLE">先做一篇</button>
+                  <button type="button" data-series-mode="SERIES">做成3集系列</button>
+                </div>
+                <div id="series-plan" class="series-plan hidden">
+                  <h3>3集提纲</h3>
+                  <ol id="series-outline"></ol>
+                  <p id="series-outline-note" class="muted"></p>
+                </div>
+              </div>
+              <dl class="recommendation-list">
+                <div><dt>建议成品</dt><dd id="recommended-format"></dd></div>
+                <div><dt>发布方向</dt><dd id="recommended-platform"></dd></div>
+                <div><dt>建议长度</dt><dd id="recommended-duration"></dd></div>
+                <div><dt>当前人设</dt><dd id="recommended-persona"></dd></div>
+              </dl>
+            </div>
+            <details class="format-details">
+              <summary>更换成品、平台或长度</summary>
+              <fieldset>
+                <legend>七种成品</legend>
+                <div id="format-options" class="choice-row"></div>
+              </fieldset>
+              <div class="setting-grid">
+                <label>发布方向<select id="platform-select"></select></label>
+                <label>建议长度<select id="duration-select"></select></label>
+              </div>
+            </details>
+            <div class="flow-actions">
+              <button class="text-button" type="button" data-back-step="angles">← 返回换方向</button>
+              <button id="generate" class="primary-button" type="button">生成第一版</button>
+            </div>
+          </section>
+
+          <section id="step-result" class="flow-step result-step hidden" aria-labelledby="result-title">
+            <header class="result-heading">
+              <div><p class="eyebrow">可以直接选择、修改和使用</p><h1 id="result-title">成品工作台</h1></div>
+              <div class="result-meta"><span id="result-format"></span><span id="result-episode"></span></div>
+            </header>
+            <div id="candidate-list" class="candidate-list" aria-label="候选方案"></div>
+            <div class="result-workbench">
+              <aside class="revision-pane">
+                <h2>继续和笛语一起改</h2>
+                <p>选择右边的方案后，直接说想改哪一段。</p>
+                <div id="revision-thread" class="revision-thread"></div>
+                <label for="revision-input">自然语言修改</label>
+                <textarea id="revision-input" maxlength="4000" placeholder="比如：开头更自然，保留第三镜，结尾短一点。"></textarea>
+                <button id="apply-revision" class="primary-button" type="button">生成修改版</button>
+              </aside>
+              <article class="artifact-pane">
+                <div class="artifact-toolbar">
+                  <div><strong>当前成品</strong><span id="version-label"></span></div>
+                  <button id="previous-version" class="quiet-button" type="button">← 上一版</button>
+                </div>
+                <div id="artifact-content" class="artifact-content"></div>
+              </article>
+            </div>
+            <div class="result-actions">
+              <div>
+                <button id="change-angle" class="secondary-button" type="button">换个角度</button>
+                <button id="change-format" class="secondary-button" type="button">更换成品</button>
+                <button id="next-episode" class="secondary-button hidden" type="button">继续下一集</button>
+              </div>
+              <button id="export-result" class="primary-button" type="button">导出或使用</button>
+            </div>
+            <p class="self-check-note">请自行检查后使用；系统不会提交给管理员、总部或其他层级，也不会自动发布。</p>
+          </section>
+        </section>
+      </div>
+    </div>
   </main>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
   <script src="portal.js" defer></script>
 </body>
 </html>

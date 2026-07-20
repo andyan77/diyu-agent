@@ -48,6 +48,7 @@ from runtime_models import (  # noqa: E402
     Base,
     RuntimeAccount,
     RuntimeAuthorization,
+    RuntimeBrand,
     RuntimeBrowserSession,
     RuntimeCandidate,
     RuntimeDifyConversation,
@@ -60,9 +61,85 @@ from runtime_models import (  # noqa: E402
     RuntimePrincipal,
     RuntimeRequirement,
     RuntimeSetting,
+    RuntimeOrganization,
+    RuntimeStore,
     RuntimeSubjectConfirmation,
+    RuntimeTenant,
     RuntimeValidation,
 )
+
+
+ACCOUNT_FAMILY_LABELS = {
+    "ENTERPRISE_ADMIN": "企业管理员",
+    "HEADQUARTERS_BRAND": "总部品牌账号",
+    "FOUNDER": "创始人账号",
+    "HEADQUARTERS_PROFESSIONAL_PERSONA": "总部专业人设账号",
+    "PROVINCIAL_AGENT": "省级代理商账号",
+    "HEADQUARTERS_DIRECT_STORE": "总部直营门店账号",
+    "FRANCHISE_STORE": "加盟门店账号",
+}
+EXTENSIBLE_ACCOUNT_FAMILIES = frozenset(
+    {
+        "HEADQUARTERS_PROFESSIONAL_PERSONA",
+        "PROVINCIAL_AGENT",
+        "HEADQUARTERS_DIRECT_STORE",
+        "FRANCHISE_STORE",
+    }
+)
+PERSONA_LABELS = {
+    "商品人设": "商品人设",
+    "设计师人设": "设计师人设",
+    "终端运营人设": "终端运营人设",
+    "品控人设": "品控人设",
+    "陈列搭配人设": "陈列搭配人设",
+    "供应链人设": "供应链人设",
+    "内容策划人设": "内容策划人设",
+    "区域官方人设": "区域官方人设",
+    "区域主理人人设": "区域主理人人设",
+    "区域专业人设": "区域专业人设",
+    "门店官方人设": "门店官方人设",
+    "店主人设": "店主人设",
+    "门店员工人设": "门店员工人设",
+}
+FAMILY_PERSONAS = {
+    "HEADQUARTERS_PROFESSIONAL_PERSONA": frozenset(
+        {
+            "商品人设",
+            "设计师人设",
+            "终端运营人设",
+            "品控人设",
+            "陈列搭配人设",
+            "供应链人设",
+            "内容策划人设",
+        }
+    ),
+    "PROVINCIAL_AGENT": frozenset(
+        {
+            "区域官方人设",
+            "区域主理人人设",
+            "区域专业人设",
+            "陈列搭配人设",
+        }
+    ),
+    "HEADQUARTERS_DIRECT_STORE": frozenset(
+        {"门店官方人设", "店主人设", "门店员工人设", "陈列搭配人设"}
+    ),
+    "FRANCHISE_STORE": frozenset(
+        {"门店官方人设", "店主人设", "门店员工人设", "陈列搭配人设"}
+    ),
+}
+FAMILY_ORGANIZATION_KINDS = {
+    "HEADQUARTERS_PROFESSIONAL_PERSONA": frozenset({"BRAND_HEADQUARTERS"}),
+    "PROVINCIAL_AGENT": frozenset({"REGIONAL_AUTHORIZED_PARTNER"}),
+    "HEADQUARTERS_DIRECT_STORE": frozenset({"DIRECT_STORE"}),
+    "FRANCHISE_STORE": frozenset({"FRANCHISE_STORE"}),
+}
+FAMILY_DIRECTIONS = {
+    "HEADQUARTERS_PROFESSIONAL_PERSONA": ["岗位日常", "专业判断", "产品怎样改变", "真实工作过程"],
+    "PROVINCIAL_AGENT": ["本地市场", "区域门店协作", "培训服务", "区域经营"],
+    "HEADQUARTERS_DIRECT_STORE": ["新品到店", "顾客常问", "陈列变化", "店员日常"],
+    "FRANCHISE_STORE": ["店里今天", "商品搭配", "顾客常问", "到店陈列", "店主人设"],
+}
 
 
 @dataclass(frozen=True)
@@ -646,6 +723,494 @@ class RuntimeRepository:
                     for row in session.scalars(confirmation_statement).all()
                 ],
             }
+
+    def identity_authority(self, tenant_id: str) -> JsonObject:
+        """Project the active identity authority from authoritative database rows."""
+
+        with self.sessions() as session:
+            tenant = session.get(RuntimeTenant, tenant_id)
+            if tenant is None or tenant.status != "ACTIVE":
+                raise KeyError("Runtime tenant is unavailable")
+            brands = list(
+                session.scalars(
+                    select(RuntimeBrand).where(
+                        RuntimeBrand.tenant_id == tenant_id,
+                        RuntimeBrand.status == "ACTIVE",
+                    )
+                ).all()
+            )
+            if len(brands) != 1:
+                raise ValueError("Runtime tenant must have one active brand")
+            brand = brands[0]
+            organizations = list(
+                session.scalars(
+                    select(RuntimeOrganization)
+                    .where(
+                        RuntimeOrganization.tenant_id == tenant_id,
+                        RuntimeOrganization.status == "ACTIVE",
+                    )
+                    .order_by(RuntimeOrganization.organization_id)
+                ).all()
+            )
+            organization_ids = {row.organization_id for row in organizations}
+            stores = list(
+                session.scalars(
+                    select(RuntimeStore)
+                    .where(
+                        RuntimeStore.organization_id.in_(organization_ids),
+                        RuntimeStore.status == "ACTIVE",
+                    )
+                    .order_by(RuntimeStore.store_id)
+                ).all()
+            )
+            accounts = list(
+                session.scalars(
+                    select(RuntimeAccount)
+                    .where(
+                        RuntimeAccount.tenant_id == tenant_id,
+                        RuntimeAccount.status == "ACTIVE",
+                    )
+                    .order_by(RuntimeAccount.account_id)
+                ).all()
+            )
+            account_by_id = {row.account_id: row for row in accounts}
+            principals = list(
+                session.scalars(
+                    select(RuntimePrincipal)
+                    .where(
+                        RuntimePrincipal.tenant_id == tenant_id,
+                        RuntimePrincipal.status == "ACTIVE",
+                    )
+                    .order_by(RuntimePrincipal.principal_id)
+                ).all()
+            )
+            authorizations = list(
+                session.scalars(
+                    select(RuntimeAuthorization)
+                    .where(RuntimeAuthorization.tenant_id == tenant_id)
+                    .order_by(RuntimeAuthorization.authorization_id)
+                ).all()
+            )
+
+        tenant_payload = copy.deepcopy(tenant.payload)
+        tenant_payload.update(
+            {
+                "tenant_id": tenant.tenant_id,
+                "brand_id": brand.brand_id,
+                "display_name": tenant.display_name,
+            }
+        )
+        principal_payloads: list[JsonObject] = []
+        for row in principals:
+            allowed = [
+                account_id
+                for account_id in row.allowed_account_ids
+                if account_id in account_by_id
+            ]
+            payload = copy.deepcopy(row.payload)
+            payload.update(
+                {
+                    "principal_id": row.principal_id,
+                    "tenant_id": row.tenant_id,
+                    "trusted_identity_source": "SERVER_MANAGED_ONLY",
+                    "allowed_content_account_ids": allowed,
+                    "account_role_grants": [
+                        {
+                            "account_id": account_id,
+                            "maker_role_ids": list(
+                                account_by_id[account_id].maker_role_ids
+                            ),
+                        }
+                        for account_id in allowed
+                    ],
+                }
+            )
+            principal_payloads.append(payload)
+        account_payloads: list[JsonObject] = []
+        for row in accounts:
+            payload = copy.deepcopy(row.payload)
+            payload.update(
+                {
+                    "account_id": row.account_id,
+                    "display_name": row.display_name,
+                    "organization_id": row.organization_id,
+                    "store_id": row.store_id,
+                    "maker_role_ids": list(row.maker_role_ids),
+                }
+            )
+            account_payloads.append(payload)
+        organization_payloads = []
+        for row in organizations:
+            payload = copy.deepcopy(row.payload)
+            payload.update(
+                {
+                    "organization_id": row.organization_id,
+                    "tenant_id": row.tenant_id,
+                    "display_name": row.display_name,
+                }
+            )
+            organization_payloads.append(payload)
+        store_payloads = []
+        for row in stores:
+            payload = copy.deepcopy(row.payload)
+            payload.update(
+                {
+                    "store_id": row.store_id,
+                    "organization_id": row.organization_id,
+                }
+            )
+            store_payloads.append(payload)
+        return {
+            "tenant": tenant_payload,
+            "login_principals": principal_payloads,
+            "organizations": organization_payloads,
+            "stores": store_payloads,
+            "content_accounts": account_payloads,
+            "authorization_grants": [
+                copy.deepcopy(row.payload) for row in authorizations
+            ],
+        }
+
+    @staticmethod
+    def _require_enterprise_admin(
+        session: Session,
+        principal_id: str,
+    ) -> RuntimePrincipal:
+        principal = session.get(RuntimePrincipal, principal_id)
+        if (
+            principal is None
+            or principal.status != "ACTIVE"
+            or principal.payload.get("account_family") != "ENTERPRISE_ADMIN"
+            or principal.payload.get("workspace_kind") != "ENTERPRISE_ADMIN"
+        ):
+            raise ValueError("Enterprise administrator scope is required")
+        return principal
+
+    def account_management_matrix(self, principal_id: str) -> JsonObject:
+        """Return the current tenant account matrix without credential material."""
+
+        with self.sessions() as session:
+            admin = self._require_enterprise_admin(session, principal_id)
+            organizations = list(
+                session.scalars(
+                    select(RuntimeOrganization)
+                    .where(RuntimeOrganization.tenant_id == admin.tenant_id)
+                    .order_by(RuntimeOrganization.organization_id)
+                ).all()
+            )
+            organization_names = {
+                row.organization_id: row.display_name for row in organizations
+            }
+            principals = list(
+                session.scalars(
+                    select(RuntimePrincipal)
+                    .where(RuntimePrincipal.tenant_id == admin.tenant_id)
+                    .order_by(RuntimePrincipal.principal_id)
+                ).all()
+            )
+            accounts = list(
+                session.scalars(
+                    select(RuntimeAccount)
+                    .where(RuntimeAccount.tenant_id == admin.tenant_id)
+                    .order_by(RuntimeAccount.account_id)
+                ).all()
+            )
+        bound_principals: dict[str, list[str]] = {}
+        principal_names = {
+            row.principal_id: str(row.payload.get("display_name", row.username))
+            for row in principals
+        }
+        for principal in principals:
+            for account_id in principal.allowed_account_ids:
+                bound_principals.setdefault(account_id, []).append(
+                    principal.principal_id
+                )
+        return {
+            "workspace_kind": "ENTERPRISE_ADMIN",
+            "account_families": [
+                {
+                    "value": family,
+                    "label": ACCOUNT_FAMILY_LABELS[family],
+                    "extensible": family in EXTENSIBLE_ACCOUNT_FAMILIES,
+                }
+                for family in ACCOUNT_FAMILY_LABELS
+            ],
+            "creatable_account_families": [
+                {
+                    "account_family": family,
+                    "display_name": ACCOUNT_FAMILY_LABELS[family],
+                }
+                for family in ACCOUNT_FAMILY_LABELS
+                if family in EXTENSIBLE_ACCOUNT_FAMILIES
+            ],
+            "persona_types_by_family": {
+                family: [
+                    {"value": persona, "label": PERSONA_LABELS[persona]}
+                    for persona in sorted(personas)
+                ]
+                for family, personas in FAMILY_PERSONAS.items()
+            },
+            "organization_kinds_by_family": {
+                family: sorted(kinds)
+                for family, kinds in FAMILY_ORGANIZATION_KINDS.items()
+            },
+            "persona_types": [
+                {"persona_type": persona, "display_name": PERSONA_LABELS[persona]}
+                for persona in PERSONA_LABELS
+            ],
+            "organizations": [
+                {
+                    "organization_id": row.organization_id,
+                    "display_name": row.display_name,
+                    "organization_kind": row.payload.get("organization_kind"),
+                    "status": row.status,
+                }
+                for row in organizations
+            ],
+            "principals": [
+                {
+                    "principal_id": row.principal_id,
+                    "display_name": row.payload.get("display_name", row.username),
+                    "business_role_name": row.payload.get("business_role_name", ""),
+                    "organization_scope_ids": list(
+                        row.payload.get("organization_scope_ids", [])
+                    ),
+                    "status": row.status,
+                }
+                for row in principals
+                if row.payload.get("workspace_kind") != "ENTERPRISE_ADMIN"
+            ],
+            "accounts": [
+                {
+                    "account_id": row.account_id,
+                    "outward_account_name": row.display_name,
+                    "account_family": row.payload.get("account_family"),
+                    "account_family_display_name": row.payload.get(
+                        "account_family_display_name",
+                        ACCOUNT_FAMILY_LABELS.get(
+                            str(row.payload.get("account_family", "")),
+                            "内容账号",
+                        ),
+                    ),
+                    "persona_type": row.payload.get("persona_type"),
+                    "persona_display_name": row.payload.get(
+                        "persona_display_name", row.payload.get("persona_type", "")
+                    ),
+                    "organization_id": row.organization_id,
+                    "organization_display_name": organization_names.get(
+                        row.organization_id, ""
+                    ),
+                    "bound_principal_ids": sorted(
+                        bound_principals.get(row.account_id, [])
+                    ),
+                    "principal_display_name": "、".join(
+                        principal_names.get(value, value)
+                        for value in sorted(bound_principals.get(row.account_id, []))
+                    ),
+                    "extensible": bool(
+                        row.payload.get("expandable_account", row.payload.get("extensible"))
+                    ),
+                    "can_disable": bool(
+                        row.status == "ACTIVE"
+                        and row.payload.get(
+                            "expandable_account", row.payload.get("extensible")
+                        )
+                    ),
+                    "status": row.status,
+                }
+                for row in accounts
+            ],
+        }
+
+    def create_extensible_account(
+        self,
+        *,
+        admin_principal_id: str,
+        organization_id: str,
+        account_family: str,
+        persona_type: str,
+        outward_account_name: str,
+        principal_id: str,
+    ) -> JsonObject:
+        """Create and bind one explicitly scoped extensible content account."""
+
+        if account_family not in EXTENSIBLE_ACCOUNT_FAMILIES:
+            raise ValueError("Fixed account families cannot be created")
+        if persona_type not in FAMILY_PERSONAS[account_family]:
+            raise ValueError("Persona is unavailable for this account family")
+        now = utc_now()
+        with self.sessions.begin() as session:
+            admin = self._require_enterprise_admin(session, admin_principal_id)
+            organization = session.get(
+                RuntimeOrganization,
+                organization_id,
+                with_for_update=True,
+            )
+            target = session.get(
+                RuntimePrincipal,
+                principal_id,
+                with_for_update=True,
+            )
+            if (
+                organization is None
+                or organization.status != "ACTIVE"
+                or organization.tenant_id != admin.tenant_id
+                or target is None
+                or target.status != "ACTIVE"
+                or target.tenant_id != admin.tenant_id
+                or target.payload.get("workspace_kind") == "ENTERPRISE_ADMIN"
+            ):
+                raise ValueError("Account organization or principal is unavailable")
+            admin_scopes = admin.payload.get("organization_scope_ids", [])
+            target_scopes = target.payload.get("organization_scope_ids", [])
+            if (
+                organization_id not in admin_scopes
+                or organization_id not in target_scopes
+            ):
+                raise ValueError("Account organization is outside principal scope")
+            organization_kind = str(organization.payload.get("organization_kind", ""))
+            if organization_kind not in FAMILY_ORGANIZATION_KINDS[account_family]:
+                raise ValueError("Account family does not match the organization")
+            duplicate = session.scalar(
+                select(RuntimeAccount.account_id).where(
+                    RuntimeAccount.tenant_id == admin.tenant_id,
+                    RuntimeAccount.display_name == outward_account_name,
+                )
+            )
+            if duplicate is not None:
+                raise ValueError("Outward account name is already in use")
+            brands = list(
+                session.scalars(
+                    select(RuntimeBrand).where(
+                        RuntimeBrand.tenant_id == admin.tenant_id,
+                        RuntimeBrand.status == "ACTIVE",
+                    )
+                ).all()
+            )
+            if len(brands) != 1:
+                raise ValueError("Account brand scope is unavailable")
+            stores = list(
+                session.scalars(
+                    select(RuntimeStore).where(
+                        RuntimeStore.organization_id == organization_id,
+                        RuntimeStore.status == "ACTIVE",
+                    )
+                ).all()
+            )
+            store_required = account_family in {
+                "HEADQUARTERS_DIRECT_STORE",
+                "FRANCHISE_STORE",
+            }
+            if store_required and len(stores) != 1:
+                raise ValueError("Store account requires one active store")
+            store_id = stores[0].store_id if store_required else None
+            role_id = target.payload.get("business_role_id")
+            if not isinstance(role_id, str) or not role_id:
+                raise ValueError("Bound principal business role is unavailable")
+            account_id = (
+                "ACCOUNT-DIYU-EXT-"
+                + digest_object(
+                    [admin.tenant_id, account_family, outward_account_name, now.isoformat()]
+                )[:20].upper()
+            )
+            payload: JsonObject = {
+                "account_id": account_id,
+                "display_name": outward_account_name,
+                "outward_account_name": outward_account_name,
+                "account_kind": persona_type,
+                "account_family": account_family,
+                "account_family_display_name": ACCOUNT_FAMILY_LABELS[account_family],
+                "persona_type": persona_type,
+                "persona_display_name": PERSONA_LABELS[persona_type],
+                "organization_id": organization_id,
+                "store_id": store_id,
+                "maker_role_ids": [role_id],
+                "bound_principal_ids": [principal_id],
+                "allowed_source_organization_ids": [organization_id],
+                "cross_organization_source_requires_explicit_grant": True,
+                "directions": list(FAMILY_DIRECTIONS[account_family]),
+                "recommended_content_format": "短视频",
+                "fixed_account": False,
+                "expandable_account": True,
+                "simulation_only": True,
+                "publish_allowed": False,
+            }
+            session.add(
+                RuntimeAccount(
+                    account_id=account_id,
+                    tenant_id=admin.tenant_id,
+                    brand_id=brands[0].brand_id,
+                    organization_id=organization_id,
+                    store_id=store_id,
+                    display_name=outward_account_name,
+                    status="ACTIVE",
+                    maker_role_ids=[role_id],
+                    payload=payload,
+                    updated_at=now,
+                )
+            )
+            target.allowed_account_ids = [*target.allowed_account_ids, account_id]
+            target_payload = copy.deepcopy(target.payload)
+            target_payload["allowed_content_account_ids"] = list(
+                target.allowed_account_ids
+            )
+            target.payload = target_payload
+            target.updated_at = now
+        return copy.deepcopy(payload)
+
+    def disable_extensible_account(
+        self,
+        *,
+        admin_principal_id: str,
+        account_id: str,
+    ) -> JsonObject:
+        """Disable an extensible account and revoke every principal binding."""
+
+        now = utc_now()
+        with self.sessions.begin() as session:
+            admin = self._require_enterprise_admin(session, admin_principal_id)
+            account = session.get(RuntimeAccount, account_id, with_for_update=True)
+            if (
+                account is None
+                or account.tenant_id != admin.tenant_id
+                or account.status != "ACTIVE"
+                or account.payload.get("account_family")
+                not in EXTENSIBLE_ACCOUNT_FAMILIES
+                or not bool(
+                    account.payload.get(
+                        "expandable_account", account.payload.get("extensible")
+                    )
+                )
+            ):
+                raise ValueError("Only an active extensible account can be disabled")
+            if account.organization_id not in admin.payload.get(
+                "organization_scope_ids", []
+            ):
+                raise ValueError("Account is outside administrator organization scope")
+            account.status = "INACTIVE"
+            account.updated_at = now
+            principals = list(
+                session.scalars(
+                    select(RuntimePrincipal).where(
+                        RuntimePrincipal.tenant_id == admin.tenant_id,
+                    )
+                ).all()
+            )
+            for principal in principals:
+                if account_id not in principal.allowed_account_ids:
+                    continue
+                principal.allowed_account_ids = [
+                    value
+                    for value in principal.allowed_account_ids
+                    if value != account_id
+                ]
+                payload = copy.deepcopy(principal.payload)
+                payload["allowed_content_account_ids"] = list(
+                    principal.allowed_account_ids
+                )
+                principal.payload = payload
+                principal.updated_at = now
+        return {"account_id": account_id, "status": "INACTIVE"}
 
     def narrative_fragments(
         self,
@@ -1528,6 +2093,43 @@ class RuntimeRepository:
                 row for row in rows if self._candidate_is_current(session, row)
             )
 
+    def previous_candidates(
+        self,
+        principal_id: str,
+        account_id: str,
+    ) -> tuple[RuntimeCandidate, ...]:
+        """Return the preceding browser-local candidate version, if one exists."""
+
+        browser_session_id = current_browser_session_id()
+        with self.sessions() as session:
+            rows = list(
+                session.scalars(
+                    select(RuntimeCandidate)
+                    .where(
+                        RuntimeCandidate.principal_id == principal_id,
+                        RuntimeCandidate.account_id == account_id,
+                        RuntimeCandidate.browser_session_id == browser_session_id,
+                    )
+                    .order_by(
+                        RuntimeCandidate.created_at.desc(),
+                        RuntimeCandidate.ordinal,
+                    )
+                ).all()
+            )
+            run_ids: list[str] = []
+            for row in rows:
+                if row.run_id not in run_ids:
+                    run_ids.append(row.run_id)
+            if len(run_ids) < 2:
+                return ()
+            previous_run_id = run_ids[1]
+            return tuple(
+                row
+                for row in rows
+                if row.run_id == previous_run_id
+                and self._candidate_is_current(session, row)
+            )
+
     @staticmethod
     def _aware(value: datetime) -> datetime:
         return value if value.tzinfo is not None else value.replace(tzinfo=timezone.utc)
@@ -1720,6 +2322,17 @@ class RuntimeRepository:
                 if isinstance(surfaces, dict)
                 else {}
             )
+            run = session.get(RuntimeModelRun, row.run_id)
+            task_brief = (
+                run.payload.get("task_brief", {})
+                if run is not None and isinstance(run.payload, dict)
+                else {}
+            )
+            series_outline = (
+                task_brief.get("series_outline", [])
+                if isinstance(task_brief, dict)
+                else []
+            )
             return {
                 "title": str(surfaces.get("title", ""))
                 if isinstance(surfaces, dict)
@@ -1736,6 +2349,11 @@ class RuntimeRepository:
                     str(production.get("ending_and_action", ""))
                     if isinstance(production, dict)
                     else ""
+                ),
+                "series_outline": (
+                    copy.deepcopy(series_outline)
+                    if isinstance(series_outline, list)
+                    else []
                 ),
                 "continuity_only_not_a_fact_source": True,
             }
@@ -1830,7 +2448,7 @@ class RuntimeRepository:
                     previous_content_ref=previous_content_ref,
                     fact_refs=list(fact_refs),
                     material_refs=list(material_refs),
-                    review_state="PENDING_REVIEW",
+                    review_state="RECORDED",
                     short_reason=short_reason,
                     created_at=utc_now(),
                 )

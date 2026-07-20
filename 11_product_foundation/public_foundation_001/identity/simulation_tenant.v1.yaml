@@ -15,6 +15,58 @@ simulation_tenant:
     publish_allowed: false
     production_fact_eligible: false
 
+  account_families:
+  - account_family: ENTERPRISE_ADMIN
+    display_name: 企业管理员
+    content_creation_allowed: false
+    fixed_account: true
+    expandable_account: false
+  - account_family: HEADQUARTERS_BRAND
+    display_name: 总部品牌账号
+    content_creation_allowed: true
+    fixed_account: true
+    expandable_account: false
+  - account_family: FOUNDER
+    display_name: 创始人账号
+    content_creation_allowed: true
+    fixed_account: true
+    expandable_account: false
+  - account_family: HEADQUARTERS_PROFESSIONAL_PERSONA
+    display_name: 总部专业人设账号
+    content_creation_allowed: true
+    fixed_account: false
+    expandable_account: true
+  - account_family: PROVINCIAL_AGENT
+    display_name: 省级代理商账号
+    content_creation_allowed: true
+    fixed_account: false
+    expandable_account: true
+  - account_family: HEADQUARTERS_DIRECT_STORE
+    display_name: 总部直营门店账号
+    content_creation_allowed: true
+    fixed_account: false
+    expandable_account: true
+  - account_family: FRANCHISE_STORE
+    display_name: 加盟门店账号
+    content_creation_allowed: true
+    fixed_account: false
+    expandable_account: true
+
+  supported_persona_types:
+  - 品牌官方人设
+  - 创始人IP
+  - 商品人设
+  - 设计师人设
+  - 终端运营人设
+  - 品控人设
+  - 陈列搭配人设
+  - 供应链人设
+  - 内容策划人设
+  - 区域官方人设
+  - 区域主理人人设
+  - 区域专业人设
+  - 门店官方人设
+
   login_policy:
     real_enterprise:
       one_principal_per_real_person: true
@@ -22,8 +74,8 @@ simulation_tenant:
       server_confirmed_identity_required: true
       Dify_user_id_is_authoritative: false
     simulation_exception:
-      exception_id: SIM-LOGIN-SWITCH-11-ACCOUNTS
-      login_principal_count: 1
+      exception_id: SIM-DISTINCT-ACCOUNT-OPERATORS
+      login_principal_count: 12
       content_account_count: 11
       credential_material_in_repository: false
       credential_delivery: EXTERNAL_SECRET_CHANNEL_AT_DEPLOYMENT
@@ -31,78 +83,236 @@ simulation_tenant:
       changes_real_enterprise_policy: false
   login_principals:
   - principal_id: SIM-LOGIN-DIYU-ACCEPTANCE-001
-    identity_class: SIMULATED_ACCEPTANCE_LOGIN
+    identity_class: SIMULATED_CONTENT_OPERATOR_LOGIN
     tenant_id: TENANT-DIYU-SIM-001
+    principal_display_name: 总部品牌账号使用人
+    username_mode: BASE
+    business_role_id: ROLE-LU-QINGLAN
+    organization_scope_ids: [ORG-DIYU-HQ]
+    store_scope_ids: []
+    system_permissions: [CONTENT_CREATION]
     trusted_identity_source: SERVER_MANAGED_ONLY
     Dify_user_id_is_authoritative: false
     simulation_only: true
     publish_allowed: false
-    allowed_content_account_ids:
-    - ACCOUNT-DIYU-HQ-OFFICIAL
-    - ACCOUNT-DIYU-FOUNDER
-    - ACCOUNT-DIYU-PRODUCT-LEAD
-    - ACCOUNT-DIYU-RETAIL-DISPLAY
-    - ACCOUNT-DIYU-CONTENT-LEAD
-    - ACCOUNT-DIYU-HZ-BINJIANG
-    - ACCOUNT-DIYU-JS-OFFICIAL
-    - ACCOUNT-DIYU-JS-PRINCIPAL
-    - ACCOUNT-DIYU-JS-STYLING-SERVICE
-    - ACCOUNT-DIYU-SZ-PARK
-    - ACCOUNT-DIYU-WX-BINHU
+    allowed_content_account_ids: [ACCOUNT-DIYU-HQ-OFFICIAL]
     account_role_grants:
     - account_id: ACCOUNT-DIYU-HQ-OFFICIAL
-      maker_role_ids: [ROLE-HQ-CONTENT-TEAM]
-      confirmer_role_ids: [ROLE-LU-QINGLAN, ROLE-XU-WENCHUAN, ROLE-ZHOU-JINGYI, ROLE-GU-JINYAN]
+      maker_role_ids: [ROLE-LU-QINGLAN]
       simulation_only: true
       publish_allowed: false
+  - principal_id: SIM-LOGIN-DIYU-ADMIN-001
+    identity_class: SIMULATED_ENTERPRISE_ADMIN_LOGIN
+    tenant_id: TENANT-DIYU-SIM-001
+    principal_display_name: 企业管理员
+    account_family: ENTERPRISE_ADMIN
+    username_suffix: admin
+    business_role_id: ROLE-ENTERPRISE-ADMIN
+    organization_scope_ids:
+    - ORG-DIYU-HQ
+    - ORG-DIYU-HZ-BINJIANG
+    - ORG-DIYU-JS-AGENT
+    - ORG-DIYU-SZ-PARK
+    - ORG-DIYU-WX-BINHU
+    store_scope_ids:
+    - STORE-DIYU-HZ-BINJIANG
+    - STORE-DIYU-SZ-PARK
+    - STORE-DIYU-WX-BINHU
+    system_permissions: [ENTERPRISE_ADMIN]
+    trusted_identity_source: SERVER_MANAGED_ONLY
+    Dify_user_id_is_authoritative: false
+    simulation_only: true
+    publish_allowed: false
+    allowed_content_account_ids: []
+    account_role_grants: []
+  - principal_id: SIM-LOGIN-DIYU-FOUNDER-001
+    identity_class: SIMULATED_CONTENT_OPERATOR_LOGIN
+    tenant_id: TENANT-DIYU-SIM-001
+    principal_display_name: 林知远
+    username_suffix: founder
+    business_role_id: ROLE-LIN-ZHIYUAN
+    organization_scope_ids: [ORG-DIYU-HQ]
+    store_scope_ids: []
+    system_permissions: [CONTENT_CREATION]
+    trusted_identity_source: SERVER_MANAGED_ONLY
+    Dify_user_id_is_authoritative: false
+    simulation_only: true
+    publish_allowed: false
+    allowed_content_account_ids: [ACCOUNT-DIYU-FOUNDER]
+    account_role_grants:
     - account_id: ACCOUNT-DIYU-FOUNDER
-      maker_role_ids: [ROLE-HQ-CONTENT-TEAM]
-      confirmer_role_ids: [ROLE-LIN-ZHIYUAN]
+      maker_role_ids: [ROLE-LIN-ZHIYUAN]
       simulation_only: true
       publish_allowed: false
+  - principal_id: SIM-LOGIN-DIYU-PRODUCT-001
+    identity_class: SIMULATED_CONTENT_OPERATOR_LOGIN
+    tenant_id: TENANT-DIYU-SIM-001
+    principal_display_name: 许闻川
+    username_suffix: product
+    business_role_id: ROLE-XU-WENCHUAN
+    organization_scope_ids: [ORG-DIYU-HQ]
+    store_scope_ids: []
+    system_permissions: [CONTENT_CREATION]
+    trusted_identity_source: SERVER_MANAGED_ONLY
+    Dify_user_id_is_authoritative: false
+    simulation_only: true
+    publish_allowed: false
+    allowed_content_account_ids: [ACCOUNT-DIYU-PRODUCT-LEAD]
+    account_role_grants:
     - account_id: ACCOUNT-DIYU-PRODUCT-LEAD
-      maker_role_ids: [ROLE-PRODUCT-ASSISTANT, ROLE-HQ-CONTENT-TEAM]
-      confirmer_role_ids: [ROLE-XU-WENCHUAN, ROLE-LU-QINGLAN]
+      maker_role_ids: [ROLE-XU-WENCHUAN]
       simulation_only: true
       publish_allowed: false
+  - principal_id: SIM-LOGIN-DIYU-RETAIL-001
+    identity_class: SIMULATED_CONTENT_OPERATOR_LOGIN
+    tenant_id: TENANT-DIYU-SIM-001
+    principal_display_name: 周静宜
+    username_suffix: retail
+    business_role_id: ROLE-ZHOU-JINGYI
+    organization_scope_ids: [ORG-DIYU-HQ]
+    store_scope_ids: []
+    system_permissions: [CONTENT_CREATION]
+    trusted_identity_source: SERVER_MANAGED_ONLY
+    Dify_user_id_is_authoritative: false
+    simulation_only: true
+    publish_allowed: false
+    allowed_content_account_ids: [ACCOUNT-DIYU-RETAIL-DISPLAY]
+    account_role_grants:
     - account_id: ACCOUNT-DIYU-RETAIL-DISPLAY
-      maker_role_ids: [ROLE-RETAIL-OPS-TEAM]
-      confirmer_role_ids: [ROLE-ZHOU-JINGYI, ROLE-GU-ZHIXIA]
+      maker_role_ids: [ROLE-ZHOU-JINGYI]
       simulation_only: true
       publish_allowed: false
+  - principal_id: SIM-LOGIN-DIYU-CONTENT-001
+    identity_class: SIMULATED_CONTENT_OPERATOR_LOGIN
+    tenant_id: TENANT-DIYU-SIM-001
+    principal_display_name: 唐予安
+    username_suffix: content
+    business_role_id: ROLE-TANG-YUAN
+    organization_scope_ids: [ORG-DIYU-HQ]
+    store_scope_ids: []
+    system_permissions: [CONTENT_CREATION]
+    trusted_identity_source: SERVER_MANAGED_ONLY
+    Dify_user_id_is_authoritative: false
+    simulation_only: true
+    publish_allowed: false
+    allowed_content_account_ids: [ACCOUNT-DIYU-CONTENT-LEAD]
+    account_role_grants:
     - account_id: ACCOUNT-DIYU-CONTENT-LEAD
-      maker_role_ids: [ROLE-HQ-CONTENT-TEAM]
-      confirmer_role_ids: [ROLE-TANG-YUAN]
+      maker_role_ids: [ROLE-TANG-YUAN]
       simulation_only: true
       publish_allowed: false
+  - principal_id: SIM-LOGIN-DIYU-HZ-BINJIANG-001
+    identity_class: SIMULATED_CONTENT_OPERATOR_LOGIN
+    tenant_id: TENANT-DIYU-SIM-001
+    principal_display_name: 沈言
+    username_suffix: hz-binjiang
+    business_role_id: ROLE-SHEN-YAN
+    organization_scope_ids: [ORG-DIYU-HZ-BINJIANG]
+    store_scope_ids: [STORE-DIYU-HZ-BINJIANG]
+    system_permissions: [CONTENT_CREATION]
+    trusted_identity_source: SERVER_MANAGED_ONLY
+    Dify_user_id_is_authoritative: false
+    simulation_only: true
+    publish_allowed: false
+    allowed_content_account_ids: [ACCOUNT-DIYU-HZ-BINJIANG]
+    account_role_grants:
     - account_id: ACCOUNT-DIYU-HZ-BINJIANG
-      maker_role_ids: [ROLE-SHEN-YAN, ROLE-HZ-STORE-STAFF]
-      confirmer_role_ids: [ROLE-SHEN-YAN]
+      maker_role_ids: [ROLE-SHEN-YAN]
       simulation_only: true
       publish_allowed: false
+  - principal_id: SIM-LOGIN-DIYU-JS-OFFICIAL-001
+    identity_class: SIMULATED_CONTENT_OPERATOR_LOGIN
+    tenant_id: TENANT-DIYU-SIM-001
+    principal_display_name: 江苏官方账号使用人
+    username_suffix: js-official
+    business_role_id: ROLE-JS-OFFICIAL-OPERATOR
+    organization_scope_ids: [ORG-DIYU-JS-AGENT]
+    store_scope_ids: []
+    system_permissions: [CONTENT_CREATION]
+    trusted_identity_source: SERVER_MANAGED_ONLY
+    Dify_user_id_is_authoritative: false
+    simulation_only: true
+    publish_allowed: false
+    allowed_content_account_ids: [ACCOUNT-DIYU-JS-OFFICIAL]
+    account_role_grants:
     - account_id: ACCOUNT-DIYU-JS-OFFICIAL
-      maker_role_ids: [ROLE-JS-CONTENT-SPECIALIST]
-      confirmer_role_ids: [ROLE-GU-ZHIXIA, ROLE-LU-QINGLAN]
+      maker_role_ids: [ROLE-JS-OFFICIAL-OPERATOR]
       simulation_only: true
       publish_allowed: false
+  - principal_id: SIM-LOGIN-DIYU-JS-PRINCIPAL-001
+    identity_class: SIMULATED_CONTENT_OPERATOR_LOGIN
+    tenant_id: TENANT-DIYU-SIM-001
+    principal_display_name: 顾知夏
+    username_suffix: js-principal
+    business_role_id: ROLE-GU-ZHIXIA
+    organization_scope_ids: [ORG-DIYU-JS-AGENT]
+    store_scope_ids: []
+    system_permissions: [CONTENT_CREATION]
+    trusted_identity_source: SERVER_MANAGED_ONLY
+    Dify_user_id_is_authoritative: false
+    simulation_only: true
+    publish_allowed: false
+    allowed_content_account_ids: [ACCOUNT-DIYU-JS-PRINCIPAL]
+    account_role_grants:
     - account_id: ACCOUNT-DIYU-JS-PRINCIPAL
-      maker_role_ids: [ROLE-JS-REGIONAL-TEAM]
-      confirmer_role_ids: [ROLE-GU-ZHIXIA, ROLE-YE-CHENGQI, ROLE-FANG-NING]
+      maker_role_ids: [ROLE-GU-ZHIXIA]
       simulation_only: true
       publish_allowed: false
+  - principal_id: SIM-LOGIN-DIYU-JS-STYLING-001
+    identity_class: SIMULATED_CONTENT_OPERATOR_LOGIN
+    tenant_id: TENANT-DIYU-SIM-001
+    principal_display_name: 许知宁
+    username_suffix: js-styling
+    business_role_id: ROLE-XU-ZHINING
+    organization_scope_ids: [ORG-DIYU-JS-AGENT]
+    store_scope_ids: []
+    system_permissions: [CONTENT_CREATION]
+    trusted_identity_source: SERVER_MANAGED_ONLY
+    Dify_user_id_is_authoritative: false
+    simulation_only: true
+    publish_allowed: false
+    allowed_content_account_ids: [ACCOUNT-DIYU-JS-STYLING-SERVICE]
+    account_role_grants:
     - account_id: ACCOUNT-DIYU-JS-STYLING-SERVICE
-      maker_role_ids: [ROLE-XU-ZHINING, ROLE-JS-CONTENT-SPECIALIST]
-      confirmer_role_ids: [ROLE-XU-ZHINING]
+      maker_role_ids: [ROLE-XU-ZHINING]
       simulation_only: true
       publish_allowed: false
+  - principal_id: SIM-LOGIN-DIYU-SZ-PARK-001
+    identity_class: SIMULATED_CONTENT_OPERATOR_LOGIN
+    tenant_id: TENANT-DIYU-SIM-001
+    principal_display_name: 叶成蹊
+    username_suffix: sz-park
+    business_role_id: ROLE-YE-CHENGQI
+    organization_scope_ids: [ORG-DIYU-SZ-PARK]
+    store_scope_ids: [STORE-DIYU-SZ-PARK]
+    system_permissions: [CONTENT_CREATION]
+    trusted_identity_source: SERVER_MANAGED_ONLY
+    Dify_user_id_is_authoritative: false
+    simulation_only: true
+    publish_allowed: false
+    allowed_content_account_ids: [ACCOUNT-DIYU-SZ-PARK]
+    account_role_grants:
     - account_id: ACCOUNT-DIYU-SZ-PARK
-      maker_role_ids: [ROLE-YE-CHENGQI, ROLE-SZ-CONTENT-STAFF]
-      confirmer_role_ids: [ROLE-YE-CHENGQI]
+      maker_role_ids: [ROLE-YE-CHENGQI]
       simulation_only: true
       publish_allowed: false
+  - principal_id: SIM-LOGIN-DIYU-WX-BINHU-001
+    identity_class: SIMULATED_CONTENT_OPERATOR_LOGIN
+    tenant_id: TENANT-DIYU-SIM-001
+    principal_display_name: 方宁
+    username_suffix: wx-binhu
+    business_role_id: ROLE-FANG-NING
+    organization_scope_ids: [ORG-DIYU-WX-BINHU]
+    store_scope_ids: [STORE-DIYU-WX-BINHU]
+    system_permissions: [CONTENT_CREATION]
+    trusted_identity_source: SERVER_MANAGED_ONLY
+    Dify_user_id_is_authoritative: false
+    simulation_only: true
+    publish_allowed: false
+    allowed_content_account_ids: [ACCOUNT-DIYU-WX-BINHU]
+    account_role_grants:
     - account_id: ACCOUNT-DIYU-WX-BINHU
-      maker_role_ids: [ROLE-FANG-NING, ROLE-WX-STORE-STAFF]
-      confirmer_role_ids: [ROLE-FANG-NING]
+      maker_role_ids: [ROLE-FANG-NING]
       simulation_only: true
       publish_allowed: false
 
@@ -182,22 +392,6 @@ simulation_tenant:
     status: GRANTED
     simulation_only: true
     publish_allowed: false
-  - authorization_id: AUTH-SIM-CONFIRM-001
-    authorization_kind: REQUIREMENT_CONFIRMATION
-    tenant_id: TENANT-DIYU-SIM-001
-    brand_id: BRAND-DIYU-SIM-001
-    source_organization_id: ORG-DIYU-HQ
-    source_store_id: null
-    permitted_organization_ids: [ORG-DIYU-HQ]
-    permitted_store_ids: [null]
-    permitted_content_account_ids: [ACCOUNT-DIYU-HQ-OFFICIAL]
-    disclosure_scope: REQUIREMENT_CONFIRMATION_ONLY
-    valid_from: '2026-07-01T00:00:00Z'
-    valid_until: '2026-12-31T23:59:59Z'
-    status: GRANTED
-    simulation_only: true
-    publish_allowed: false
-
   subject_confirmation_records:
   - subject_confirmation_id: SUBJECT-CONFIRM-SIM-001
     tenant_id: TENANT-DIYU-SIM-001
@@ -272,6 +466,12 @@ simulation_tenant:
     publish_allowed: false
 
   work_roles:
+  - role_id: ROLE-ENTERPRISE-ADMIN
+    display_name: 企业管理员
+    organization_id: ORG-DIYU-HQ
+    role_kind: PERSON_RESPONSIBILITY
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-HQ-CONTENT-TEAM
     display_name: 总部内容团队
     organization_id: ORG-DIYU-HQ
@@ -344,6 +544,12 @@ simulation_tenant:
     role_kind: TEAM
     simulation_only: true
     publish_allowed: false
+  - role_id: ROLE-JS-OFFICIAL-OPERATOR
+    display_name: 江苏官方账号使用人
+    organization_id: ORG-DIYU-JS-AGENT
+    role_kind: PERSON_RESPONSIBILITY
+    simulation_only: true
+    publish_allowed: false
   - role_id: ROLE-GU-ZHIXIA
     display_name: 顾知夏
     organization_id: ORG-DIYU-JS-AGENT
@@ -392,36 +598,16 @@ simulation_tenant:
   - account_id: ACCOUNT-DIYU-HQ-OFFICIAL
     display_name: 笛语童装
     account_kind: BRAND_OFFICIAL
+    account_family: HEADQUARTERS_BRAND
+    persona_type: 品牌官方人设
+    outward_account_name: 笛语童装
+    bound_principal_id: SIM-LOGIN-DIYU-ACCEPTANCE-001
+    fixed_account: true
+    expandable_account: false
     represented_scope: BRAND_HEADQUARTERS
     organization_id: ORG-DIYU-HQ
     store_id: null
-    maker_role_ids:
-    - ROLE-HQ-CONTENT-TEAM
-    confirmation_routes:
-    - scope: brand_formal_conclusion
-      confirmer_role_ids: [ROLE-LU-QINGLAN]
-      approval_mode: ANY_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
-    - scope: product_content
-      confirmer_role_ids: [ROLE-XU-WENCHUAN]
-      approval_mode: ANY_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
-    - scope: store_and_display_content
-      confirmer_role_ids: [ROLE-ZHOU-JINGYI]
-      approval_mode: ANY_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
-    - scope: person_and_customer_authorization
-      confirmer_role_ids: [ROLE-GU-JINYAN]
-      approval_mode: ANY_OF
-      subject_confirmation_required: true
-      simulation_only: true
-      publish_allowed: false
+    maker_role_ids: [ROLE-LU-QINGLAN, ROLE-HQ-CONTENT-TEAM]
     allowed_source_organization_ids:
     - ORG-DIYU-HQ
     - ORG-DIYU-HZ-BINJIANG
@@ -429,283 +615,213 @@ simulation_tenant:
     - ORG-DIYU-SZ-PARK
     - ORG-DIYU-WX-BINHU
     cross_organization_source_requires_explicit_grant: true
-    forbidden_claim_scopes:
-    - franchise_employee_experience_as_headquarters_story
-    - unconfirmed_price_or_quality_or_national_commitment
     simulation_only: true
     publish_allowed: false
   - account_id: ACCOUNT-DIYU-FOUNDER
     display_name: 林知远｜笛语
     account_kind: FOUNDER_PERSONAL
-    represented_scope: LIN_ZHIYUAN_CONFIRMED_VIEWPOINT
+    account_family: FOUNDER
+    persona_type: 创始人IP
+    outward_account_name: 林知远｜笛语
+    bound_principal_id: SIM-LOGIN-DIYU-FOUNDER-001
+    fixed_account: true
+    expandable_account: false
+    represented_scope: LIN_ZHIYUAN_VIEWPOINT
     organization_id: ORG-DIYU-HQ
     store_id: null
-    maker_role_ids: [ROLE-HQ-CONTENT-TEAM]
-    confirmation_routes:
-    - scope: personal_viewpoint
-      confirmer_role_ids: [ROLE-LIN-ZHIYUAN]
-      approval_mode: ANY_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
+    maker_role_ids: [ROLE-LIN-ZHIYUAN, ROLE-HQ-CONTENT-TEAM]
     allowed_source_organization_ids: [ORG-DIYU-HQ]
     cross_organization_source_requires_explicit_grant: true
-    forbidden_claim_scopes:
-    - other_person_experience_as_first_person
-    - unconfirmed_price_stock_quality_policy
     simulation_only: true
     publish_allowed: false
   - account_id: ACCOUNT-DIYU-PRODUCT-LEAD
     display_name: 许闻川的产品记录
     account_kind: PRODUCT_LEAD_PERSONAL
+    account_family: HEADQUARTERS_PROFESSIONAL_PERSONA
+    persona_type: 商品人设
+    outward_account_name: 许闻川｜笛语商品主理人
+    bound_principal_id: SIM-LOGIN-DIYU-PRODUCT-001
+    fixed_account: false
+    expandable_account: true
     represented_scope: PRODUCT_RESEARCH_WORK
     organization_id: ORG-DIYU-HQ
     store_id: null
-    maker_role_ids: [ROLE-PRODUCT-ASSISTANT, ROLE-HQ-CONTENT-TEAM]
-    confirmation_routes:
-    - scope: product_research_work
-      confirmer_role_ids: [ROLE-XU-WENCHUAN]
-      approval_mode: ANY_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
-    - scope: safety_quality_testing_supplier_responsibility
-      confirmer_role_ids: [ROLE-XU-WENCHUAN, ROLE-LU-QINGLAN]
-      approval_mode: ALL_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
+    maker_role_ids: [ROLE-XU-WENCHUAN, ROLE-PRODUCT-ASSISTANT, ROLE-HQ-CONTENT-TEAM]
     allowed_source_organization_ids: [ORG-DIYU-HQ]
     cross_organization_source_requires_explicit_grant: true
-    forbidden_claim_scopes:
-    - store_inventory_announcement
-    - consumer_preference_from_comments
     simulation_only: true
     publish_allowed: false
   - account_id: ACCOUNT-DIYU-RETAIL-DISPLAY
     display_name: 周静宜｜门店与陈列
     account_kind: RETAIL_DISPLAY_LEAD
+    account_family: HEADQUARTERS_PROFESSIONAL_PERSONA
+    persona_type: 终端运营人设
+    outward_account_name: 周静宜｜终端运营负责人
+    bound_principal_id: SIM-LOGIN-DIYU-RETAIL-001
+    fixed_account: false
+    expandable_account: true
     represented_scope: RETAIL_OPERATION_AND_DISPLAY_WORK
     organization_id: ORG-DIYU-HQ
     store_id: null
-    maker_role_ids: [ROLE-RETAIL-OPS-TEAM]
-    confirmation_routes:
-    - scope: retail_and_display_judgment
-      confirmer_role_ids: [ROLE-ZHOU-JINGYI]
-      approval_mode: ANY_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
-    - scope: cross_store_or_regional_comparison
-      confirmer_role_ids: [ROLE-ZHOU-JINGYI, ROLE-GU-ZHIXIA]
-      approval_mode: ALL_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
+    maker_role_ids: [ROLE-ZHOU-JINGYI, ROLE-RETAIL-OPS-TEAM]
     allowed_source_organization_ids:
     - ORG-DIYU-HQ
     - ORG-DIYU-HZ-BINJIANG
     - ORG-DIYU-SZ-PARK
     - ORG-DIYU-WX-BINHU
     cross_organization_source_requires_explicit_grant: true
-    forbidden_claim_scopes:
-    - franchise_employee_experience
-    - product_quality_cause
     simulation_only: true
     publish_allowed: false
   - account_id: ACCOUNT-DIYU-CONTENT-LEAD
     display_name: 唐予安｜内容现场
     account_kind: CONTENT_LEAD_PERSONAL
+    account_family: HEADQUARTERS_PROFESSIONAL_PERSONA
+    persona_type: 内容策划人设
+    outward_account_name: 唐予安｜笛语内容负责人
+    bound_principal_id: SIM-LOGIN-DIYU-CONTENT-001
+    fixed_account: false
+    expandable_account: true
     represented_scope: CONTENT_PRODUCTION_AND_GOVERNANCE_WORK
     organization_id: ORG-DIYU-HQ
     store_id: null
-    maker_role_ids: [ROLE-HQ-CONTENT-TEAM]
-    confirmation_routes:
-    - scope: content_governance_work
-      confirmer_role_ids: [ROLE-TANG-YUAN]
-      approval_mode: ANY_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
-    - scope: quoted_person_viewpoint
-      confirmer_role_ids: [ROLE-TANG-YUAN]
-      approval_mode: ANY_OF
-      subject_confirmation_required: true
-      simulation_only: true
-      publish_allowed: false
+    maker_role_ids: [ROLE-TANG-YUAN, ROLE-HQ-CONTENT-TEAM]
     allowed_source_organization_ids: [ORG-DIYU-HQ]
     cross_organization_source_requires_explicit_grant: true
-    forbidden_claim_scopes:
-    - unauthorized_employee_error
-    - rejected_draft_as_brand_fact
     simulation_only: true
     publish_allowed: false
   - account_id: ACCOUNT-DIYU-HZ-BINJIANG
     display_name: 笛语杭州滨江店
     account_kind: DIRECT_STORE
+    account_family: HEADQUARTERS_DIRECT_STORE
+    persona_type: 门店官方人设
+    outward_account_name: 笛语杭州滨江店
+    bound_principal_id: SIM-LOGIN-DIYU-HZ-BINJIANG-001
+    fixed_account: false
+    expandable_account: true
     represented_scope: HANGZHOU_BINJIANG_STORE
     organization_id: ORG-DIYU-HZ-BINJIANG
     store_id: STORE-DIYU-HZ-BINJIANG
     maker_role_ids: [ROLE-SHEN-YAN, ROLE-HZ-STORE-STAFF]
-    confirmation_routes:
-    - scope: store_content
-      confirmer_role_ids: [ROLE-SHEN-YAN]
-      approval_mode: ANY_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
     allowed_source_organization_ids: [ORG-DIYU-HZ-BINJIANG, ORG-DIYU-HQ]
     cross_organization_source_requires_explicit_grant: true
-    forbidden_claim_scopes:
-    - other_store_experience
-    - national_policy
-    - unconfirmed_customer_case_or_unreleased_product
     simulation_only: true
     publish_allowed: false
   - account_id: ACCOUNT-DIYU-JS-OFFICIAL
     display_name: 笛语江苏
     account_kind: REGIONAL_OFFICIAL
+    account_family: PROVINCIAL_AGENT
+    persona_type: 区域官方人设
+    outward_account_name: 笛语江苏
+    bound_principal_id: SIM-LOGIN-DIYU-JS-OFFICIAL-001
+    fixed_account: false
+    expandable_account: true
     represented_scope: JIANGSU_REGIONAL_OPERATION
     organization_id: ORG-DIYU-JS-AGENT
     store_id: null
-    maker_role_ids: [ROLE-JS-CONTENT-SPECIALIST]
-    confirmation_routes:
-    - scope: regional_operation_content
-      confirmer_role_ids: [ROLE-GU-ZHIXIA]
-      approval_mode: ANY_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
-    - scope: quality_brand_history_national_policy
-      confirmer_role_ids: [ROLE-GU-ZHIXIA, ROLE-LU-QINGLAN]
-      approval_mode: ALL_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
+    maker_role_ids: [ROLE-JS-OFFICIAL-OPERATOR, ROLE-JS-CONTENT-SPECIALIST]
     allowed_source_organization_ids:
     - ORG-DIYU-JS-AGENT
     - ORG-DIYU-SZ-PARK
     - ORG-DIYU-WX-BINHU
     - ORG-DIYU-HQ
     cross_organization_source_requires_explicit_grant: true
-    forbidden_claim_scopes:
-    - single_store_experience_as_all_jiangsu_stores
-    - unconfirmed_national_policy_or_brand_history
     simulation_only: true
     publish_allowed: false
   - account_id: ACCOUNT-DIYU-JS-PRINCIPAL
     display_name: 顾知夏｜江苏笛语
     account_kind: REGIONAL_PRINCIPAL_PERSONAL
+    account_family: PROVINCIAL_AGENT
+    persona_type: 区域主理人人设
+    outward_account_name: 顾知夏｜江苏笛语
+    bound_principal_id: SIM-LOGIN-DIYU-JS-PRINCIPAL-001
+    fixed_account: false
+    expandable_account: true
     represented_scope: GU_ZHIXIA_REGIONAL_WORK
     organization_id: ORG-DIYU-JS-AGENT
     store_id: null
-    maker_role_ids: [ROLE-JS-REGIONAL-TEAM]
-    confirmation_routes:
-    - scope: personal_regional_judgment
-      confirmer_role_ids: [ROLE-GU-ZHIXIA]
-      approval_mode: ANY_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
-    - scope: two_store_dispute
-      confirmer_role_ids: [ROLE-GU-ZHIXIA, ROLE-YE-CHENGQI, ROLE-FANG-NING]
-      approval_mode: ALL_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
+    maker_role_ids: [ROLE-GU-ZHIXIA, ROLE-JS-REGIONAL-TEAM]
     allowed_source_organization_ids:
     - ORG-DIYU-JS-AGENT
     - ORG-DIYU-SZ-PARK
     - ORG-DIYU-WX-BINHU
     - ORG-DIYU-HQ
     cross_organization_source_requires_explicit_grant: true
-    forbidden_claim_scopes:
-    - national_policy_commitment
-    - store_employee_or_customer_authorization
     simulation_only: true
     publish_allowed: false
   - account_id: ACCOUNT-DIYU-JS-STYLING-SERVICE
     display_name: 许知宁｜搭配与门店服务
     account_kind: STYLING_AND_STORE_SERVICE_PERSONAL
+    account_family: PROVINCIAL_AGENT
+    persona_type: 区域专业人设
+    outward_account_name: 许知宁｜搭配与门店服务
+    bound_principal_id: SIM-LOGIN-DIYU-JS-STYLING-001
+    fixed_account: false
+    expandable_account: true
     represented_scope: STYLING_TRAINING_AND_SERVICE_WORK
     organization_id: ORG-DIYU-JS-AGENT
     store_id: null
     maker_role_ids: [ROLE-XU-ZHINING, ROLE-JS-CONTENT-SPECIALIST]
-    confirmation_routes:
-    - scope: styling_training_and_service_judgment
-      confirmer_role_ids: [ROLE-XU-ZHINING]
-      approval_mode: ANY_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
     allowed_source_organization_ids:
     - ORG-DIYU-JS-AGENT
     - ORG-DIYU-SZ-PARK
     - ORG-DIYU-WX-BINHU
     cross_organization_source_requires_explicit_grant: true
-    forbidden_claim_scopes:
-    - material_function_confirmation
-    - customer_body_or_aesthetic_judgment
     simulation_only: true
     publish_allowed: false
   - account_id: ACCOUNT-DIYU-SZ-PARK
     display_name: 笛语苏州园区店
     account_kind: FRANCHISE_STORE
+    account_family: FRANCHISE_STORE
+    persona_type: 门店官方人设
+    outward_account_name: 笛语苏州园区店
+    bound_principal_id: SIM-LOGIN-DIYU-SZ-PARK-001
+    fixed_account: false
+    expandable_account: true
     represented_scope: SUZHOU_PARK_STORE
     organization_id: ORG-DIYU-SZ-PARK
     store_id: STORE-DIYU-SZ-PARK
     maker_role_ids: [ROLE-YE-CHENGQI, ROLE-SZ-CONTENT-STAFF]
-    confirmation_routes:
-    - scope: store_content
-      confirmer_role_ids: [ROLE-YE-CHENGQI]
-      approval_mode: ANY_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
     allowed_source_organization_ids:
     - ORG-DIYU-SZ-PARK
     - ORG-DIYU-JS-AGENT
     - ORG-DIYU-HQ
     cross_organization_source_requires_explicit_grant: true
-    forbidden_claim_scopes:
-    - regional_or_headquarters_policy
-    - unconfirmed_customer_employee_or_paused_product
     simulation_only: true
     publish_allowed: false
   - account_id: ACCOUNT-DIYU-WX-BINHU
     display_name: 笛语无锡滨湖店
     account_kind: FRANCHISE_STORE
+    account_family: FRANCHISE_STORE
+    persona_type: 门店官方人设
+    outward_account_name: 笛语无锡滨湖店
+    bound_principal_id: SIM-LOGIN-DIYU-WX-BINHU-001
+    fixed_account: false
+    expandable_account: true
     represented_scope: WUXI_BINHU_STORE
     organization_id: ORG-DIYU-WX-BINHU
     store_id: STORE-DIYU-WX-BINHU
     maker_role_ids: [ROLE-FANG-NING, ROLE-WX-STORE-STAFF]
-    confirmation_routes:
-    - scope: store_content
-      confirmer_role_ids: [ROLE-FANG-NING]
-      approval_mode: ANY_OF
-      subject_confirmation_required: false
-      simulation_only: true
-      publish_allowed: false
     allowed_source_organization_ids:
     - ORG-DIYU-WX-BINHU
     - ORG-DIYU-JS-AGENT
     - ORG-DIYU-HQ
     cross_organization_source_requires_explicit_grant: true
-    forbidden_claim_scopes:
-    - suzhou_customer_experience_as_local_case
-    - new_store_as_brand_entry_to_jiangsu
-    - regional_commitment
     simulation_only: true
     publish_allowed: false
 
   invariants:
-    login_principal_count: 1
+    account_family_count: 7
+    login_principal_count: 12
+    enterprise_admin_principal_count: 1
+    content_operator_principal_count: 11
     content_account_count: 11
     organization_count: 5
     store_count: 3
-    authorization_grant_count: 6
+    authorization_grant_count: 5
     subject_confirmation_record_count: 1
-    every_account_retains_own_material_maker_and_confirmer_scope: true
+    every_content_account_has_one_bound_principal: true
+    every_content_account_retains_own_material_maker_scope: true
+    no_requirement_confirmation_or_approval_grants: true
     every_record_simulation_only: true
     every_record_publish_allowed: false
     continuous_30_day_fact_body_included: false
