@@ -1490,7 +1490,7 @@ class Package7Runtime:
                         "家长与童装语境，不得漂移到成人身材、面试或成人女装。"
                         "用户明确要求标注‘演绎’时，必须在正文、分镜字幕或其他成品可见位置标注；"
                         "用户未要求时不要自行添加演绎声明或免责声明。"
-                        "一次写1至3份候选；根据题材自然采用纪实、故事、问答、对比、观察或演示，"
+                        "一次写2至3份候选；根据题材自然采用纪实、故事、问答、对比、观察或演示，"
                         "不要让所有内容固定套用同一种起承转合。有多份时，每份必须在点子、人物视角、"
                         "情绪入口、叙事结构或画面组织上真正不同，换标题或同义改写不算不同。"
                         "同一成品的正文、台词、分镜、字幕、话术、结尾和发布辅助内容必须对人物、"
@@ -1909,6 +1909,8 @@ class Package7Runtime:
                     "result_class": "MODEL_OUTPUT_CONTRACT_ERROR",
                     "failure_stage": "CANDIDATE_ENVELOPE",
                     "error_type": type(exc).__name__,
+                    "model_wrapper_normalization": normalization,
+                    "original_envelope": copy.deepcopy(parsed),
                     "run_id": run.run_id,
                     "first_output_preserved": True,
                 },
@@ -2167,8 +2169,13 @@ class Package7Runtime:
             evidence_panel["similarity_notes"] = [
                 row for row in similarity_notes if ordinal in row["candidate_ordinals"]
             ]
-        if not accepted:
+        if len(accepted) < 2:
             result_class = "MODEL_OUTPUT_CONTRACT_ERROR"
+            failure_reason = (
+                "NO_COMPLETE_SAFE_CANDIDATE"
+                if not accepted
+                else "INSUFFICIENT_COMPLETE_CANDIDATES"
+            )
             self.repository.preserve_first_output(
                 run.run_id,
                 output_digest,
@@ -2178,16 +2185,14 @@ class Package7Runtime:
                     "failure_stage": "CANDIDATE_VALIDATION",
                     "candidate_failures": candidate_failures,
                     "accepted_candidate_count": len(accepted),
-                    "failure_reason": "NO_COMPLETE_SAFE_CANDIDATE",
+                    "failure_reason": failure_reason,
                     "original_envelope": copy.deepcopy(original_envelope),
                     "run_id": run.run_id,
                     "first_output_preserved": True,
                 },
             )
             return self._failure_result(result_class, run.run_id)
-        candidate_option_warning = (
-            "本轮可选方案不足" if len(accepted) == 1 else None
-        )
+        candidate_option_warning = None
         self.repository.save_candidate_set(
             run_id=run.run_id,
             account_id=run.account_id,
