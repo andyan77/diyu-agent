@@ -3,8 +3,8 @@
   "task_id": "DIYU_ACCOUNT_PERSONA_UI_AND_NO_APPROVAL_FLOW_001",
   "state": "PASS_DRAFT_PR_PENDING_FOUNDER_MERGE_APPROVAL",
   "baseline_commit": "bb11e8cdfd9584136c0be85d4d7fcfc52caf614c",
-  "candidate_commit": "12c762439042d71a2c797e1c8c9952ae33efb5f1",
-  "candidate_tree": "79505bb36012984a149bcd532f15506445d3b909",
+  "candidate_commit": "aaaddca094ab7411ebb68dd22990b79cce720975",
+  "candidate_tree": "7135fef3311c4d1907d6d627b97de7e23a628100",
   "acceptance": {
     "A01": true,
     "A02": true,
@@ -45,55 +45,39 @@
   },
   "independent_reviews": [
     {
-      "review_id": "APR-ACCOUNT-PRODUCT-NOVICE-12c76243-FINAL",
+      "review_id": "APR-A03-aaaddca0-DIRECTED",
       "review_type": "ACCOUNT_PRODUCT_STRUCTURE_AND_NOVICE_EXPERIENCE",
       "reviewer_identity": "/root/account_product_novice_review",
-      "reviewer_session_id": "review-session-account-product-novice-12c76243",
-      "reviewer_run_id": "review-run-account-product-novice-12c76243-binding-r2",
-      "candidate_commit": "12c762439042d71a2c797e1c8c9952ae33efb5f1",
-      "candidate_tree": "79505bb36012984a149bcd532f15506445d3b909",
-      "score": 95,
+      "reviewer_session_id": "review-session-a03-aaaddca0",
+      "reviewer_run_id": "review-run-a03-aaaddca0-r1",
+      "candidate_commit": "aaaddca094ab7411ebb68dd22990b79cce720975",
+      "candidate_tree": "7135fef3311c4d1907d6d627b97de7e23a628100",
+      "score": 98,
       "verdict": "PASS",
       "hard_blockers": [],
       "non_blocking_findings": [],
       "acceptance_ids": [
-        "A01",
-        "A02",
-        "A03",
-        "A04",
-        "A05",
-        "A06",
-        "A07",
-        "A08",
-        "A09",
-        "A10",
-        "A15"
+        "A03"
       ],
-      "evidence": "Read the frozen implementation, tests and screenshots; the targeted A07/A09/A15.5 re-review passed after input-specific angles and the pre-generation three-episode outline were connected to the existing portal request."
+      "evidence": "Targeted A03 re-review verified six professional personas each have four role-aligned recommendations, product and retail recommendations differ, both can use the same non-priority topic, and one shared configuration feeds account creation and the existing portal."
     },
     {
-      "review_id": "ICN-ISOLATION-CONTRACT-12c76243-FINAL",
+      "review_id": "A09_A15_SERIES_RACE_REVIEW_001",
       "review_type": "ISOLATION_CONTRACT_COMPATIBILITY_AND_NO_APPROVAL",
       "reviewer_identity": "/root/isolation_contract_review",
-      "reviewer_session_id": "isolation-contract-12c76243-20260720",
-      "reviewer_run_id": "isolation-contract-12c76243-binding-001",
-      "candidate_commit": "12c762439042d71a2c797e1c8c9952ae33efb5f1",
-      "candidate_tree": "79505bb36012984a149bcd532f15506445d3b909",
-      "score": 97,
+      "reviewer_session_id": "series-race-aaaddca0-20260720",
+      "reviewer_run_id": "series-race-aaaddca0-run-001",
+      "candidate_commit": "aaaddca094ab7411ebb68dd22990b79cce720975",
+      "candidate_tree": "7135fef3311c4d1907d6d627b97de7e23a628100",
+      "score": 98,
       "verdict": "PASS",
       "hard_blockers": [],
       "non_blocking_findings": [],
       "acceptance_ids": [
-        "A01",
-        "A02",
-        "A03",
-        "A11",
-        "A12",
-        "A13",
-        "A14",
+        "A09",
         "A15"
       ],
-      "evidence": "Read the frozen identity, persistence, runtime, contract, status and tests; server-owned tenant, organization, store, account, principal and browser-session scope remains enforced while approval semantics are absent from generation through export."
+      "evidence": "Targeted A09/A15 re-review verified generation waits for the shared outline request, displays the complete outline before sending episode one with all three titles and descriptions, and leaves retry or single-mode recovery available after outline failure."
     }
   ],
   "resolved_review_history": [
@@ -106,6 +90,17 @@
       "blocking_acceptance_ids": ["A07", "A09", "A15"],
       "finding": "The portal returned fixed homepage directions for different inputs and did not return the three-episode outline before first-episode generation.",
       "resolution_commit": "9bb0c6807f99d5218127d54f80d818fb90559a13",
+      "targeted_rereview": "PASS"
+    },
+    {
+      "review_id": "ROOT-DECISION-HOLD-PR30-TWO-TARGETED-FIXES",
+      "candidate_commit": "b0c836651aa5f600cc5547377adb7476d56243eb",
+      "candidate_tree": "29d0b9ce4107ad4d2bbdff20e43e509a14db6fbb",
+      "verdict": "HOLD",
+      "blocking_acceptance_ids": ["A03", "A09", "A15"],
+      "finding": "Headquarters professional personas shared generic recommendations, and episode-one generation could race the three-episode outline request.",
+      "resolution_commit": "aaaddca094ab7411ebb68dd22990b79cce720975",
+      "resolution_tree": "7135fef3311c4d1907d6d627b97de7e23a628100",
       "targeted_rereview": "PASS"
     }
   ],
