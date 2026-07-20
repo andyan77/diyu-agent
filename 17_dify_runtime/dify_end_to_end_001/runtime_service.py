@@ -46,10 +46,11 @@ from persistence import (
     TrustedDatabaseScope,
     current_trusted_database_scope,
     digest_object,
+    recommended_directions,
     runtime_browser_session,
     trusted_database_scope,
 )
-from runtime_models import RuntimeModelRun
+from runtime_models import RuntimeCandidate, RuntimeModelRun
 from runtime_retrieval import RuntimeBrandFactRetrievalService
 
 
@@ -74,7 +75,6 @@ from fact_aware_plan_adapter import (  # type: ignore[import-not-found]  # noqa:
 )
 from light_expression_service import (  # type: ignore[import-not-found]  # noqa: E402
     AccountAuthority,
-    ConfirmationRoute,
     LightExpressionService,
     TrustedUpstreamContext,
     digest_object as digest_plan_object,
@@ -508,9 +508,7 @@ class Package7Runtime:
         runtime_principal = self.repository.principal_by_id(principal_id)
         if runtime_principal is None or runtime_principal.status != "ACTIVE":
             raise RuntimeContractError("Trusted principal is unavailable")
-        root = self.repository.setting(
-            f"identity_authority:{runtime_principal.tenant_id}"
-        )
+        root = self.repository.identity_authority(runtime_principal.tenant_id)
         tenant = root["tenant"]
         principal = next(
             row
@@ -522,25 +520,12 @@ class Package7Runtime:
         for raw in root["content_accounts"]:
             if raw["account_id"] not in allowed:
                 continue
-            routes = tuple(
-                ConfirmationRoute(
-                    scope=str(route["scope"]),
-                    confirmer_role_ids=tuple(
-                        str(value) for value in route["confirmer_role_ids"]
-                    ),
-                    approval_mode=str(route["approval_mode"]),
-                    subject_confirmation_required=bool(
-                        route["subject_confirmation_required"]
-                    ),
-                )
-                for route in raw["confirmation_routes"]
-            )
             accounts[str(raw["account_id"])] = AccountAuthority(
                 account_id=str(raw["account_id"]),
                 organization_id=str(raw["organization_id"]),
                 store_id=raw.get("store_id"),
                 maker_role_ids=tuple(str(value) for value in raw["maker_role_ids"]),
-                confirmation_routes=routes,
+                confirmation_routes=(),
             )
         return TrustedUpstreamContext(
             tenant_id=str(tenant["tenant_id"]),
@@ -551,10 +536,7 @@ class Package7Runtime:
                 str(row["authorization_id"]): copy.deepcopy(row)
                 for row in root["authorization_grants"]
             },
-            subject_confirmations={
-                str(row["subject_confirmation_id"]): copy.deepcopy(row)
-                for row in root["subject_confirmation_records"]
-            },
+            subject_confirmations={},
             trusted_requirement_digests=frozenset(
                 {digest_plan_object(request["confirmed_requirement"])}
             ),
@@ -680,14 +662,21 @@ class Package7Runtime:
             return {
                 "response_kind": "DIRECT",
                 "user_visible_text": f"已选择第{chosen.ordinal}份候选。需要时可以继续说想修改哪里。",
+                "ui_state": "result",
+                "candidates": self._candidate_workbench(
+                    self.repository.latest_candidates(
+                        principal_id,
+                        account.account_id,
+                    )
+                ),
             }
         if request.operation == "局部修改":
             try:
                 return self._prepare_revision(request, principal_id, account.account_id)
             except (KeyError, ValueError):
                 return self._failure_result("AUTHORIZATION_OR_SCOPE_BLOCK", None)
-        if request.operation == "审核":
-            return self._review_selected(principal_id, account.account_id)
+        if request.operation == "查看上一版":
+            return self._previous_version(principal_id, account.account_id)
         if request.operation == "导出":
             return self._export_selected(principal_id, account.account_id)
         if request.operation == "查看来源":
@@ -733,21 +722,81 @@ class Package7Runtime:
         principal = self.repository.principal_by_id(principal_id)
         if principal is None or principal.status != "ACTIVE":
             raise RuntimeContractError("Unknown portal principal")
+        principal_payload = copy.deepcopy(principal.payload)
+        identity = {
+            "principal_id": principal.principal_id,
+            "login_principal_id": principal.principal_id,
+            "display_name": principal_payload.get(
+                "display_name",
+                principal_payload.get("principal_display_name", principal.username),
+            ),
+            "login_display_name": principal_payload.get(
+                "display_name",
+                principal_payload.get("principal_display_name", principal.username),
+            ),
+            "business_role_id": principal_payload.get("business_role_id"),
+            "business_role_name": principal_payload.get("business_role_name", ""),
+            "employee_role": principal_payload.get("business_role_name", ""),
+            "organization_scope_ids": list(
+                principal_payload.get("organization_scope_ids", [])
+            ),
+            "workspace_kind": principal_payload.get(
+                "workspace_kind", "CONTENT_CREATOR"
+            ),
+        }
+        if identity["workspace_kind"] == "ENTERPRISE_ADMIN":
+            return {
+                "workspace_kind": "ENTERPRISE_ADMIN",
+                "identity": identity,
+                "content_accounts": [],
+                "accounts": [],
+                "management": self.repository.account_management_matrix(principal_id),
+                "simulation_only": True,
+                "publish_allowed": False,
+            }
         allowed = set(principal.allowed_account_ids)
         accounts = [
             account
             for account in self.repository.all_accounts()
             if account.status == "ACTIVE" and account.account_id in allowed
         ]
-        profiles = {
-            account.account_id: self._brand_profile_for_account(account.brand_id)
-            for account in accounts
+        authority = self.repository.identity_authority(principal.tenant_id)
+        organization_names = {
+            str(row["organization_id"]): str(row.get("display_name", ""))
+            for row in authority["organizations"]
+        }
+        direction_fallbacks = {
+            "HEADQUARTERS_BRAND": ["品牌为什么存在", "真实生活里的衣服", "商品为什么这样设计", "团队幕后"],
+            "FOUNDER": ["创业经历", "价值判断", "重要选择", "工作日常"],
+            "HEADQUARTERS_PROFESSIONAL_PERSONA": ["岗位日常", "专业判断", "产品怎样改变", "真实工作过程"],
+            "PROVINCIAL_AGENT": ["本地市场", "区域门店协作", "培训服务", "区域经营"],
+            "HEADQUARTERS_DIRECT_STORE": ["新品到店", "顾客常问", "陈列变化", "总部活动落地", "店员日常"],
+            "FRANCHISE_STORE": ["店里今天", "商品搭配", "顾客常问", "到店陈列", "店主人设"],
+        }
+        audience_fallbacks = {
+            "HEADQUARTERS_BRAND": "关注品牌理念、商品与真实团队故事的人",
+            "FOUNDER": "关注创业判断、品牌价值与真实工作过程的人",
+            "HEADQUARTERS_PROFESSIONAL_PERSONA": "希望理解商品与专业工作过程的人",
+            "PROVINCIAL_AGENT": "关注本地市场、门店服务与区域经营的人",
+            "HEADQUARTERS_DIRECT_STORE": "关注到店体验、商品搭配与门店日常的人",
+            "FRANCHISE_STORE": "关注本地门店、商品选择与店主日常的人",
+        }
+        family_labels = {
+            "HEADQUARTERS_BRAND": "总部品牌账号",
+            "FOUNDER": "创始人账号",
+            "HEADQUARTERS_PROFESSIONAL_PERSONA": "总部专业人设账号",
+            "PROVINCIAL_AGENT": "省级代理商账号",
+            "HEADQUARTERS_DIRECT_STORE": "总部直营门店账号",
+            "FRANCHISE_STORE": "加盟门店账号",
         }
         roles_by_account: dict[str, list[str]] = {}
         storylines: dict[str, JsonObject] = {}
         columns: dict[str, JsonObject] = {}
+        account_projections: list[JsonObject] = []
         for account in accounts:
-            profile = profiles[account.account_id]
+            profile = self._brand_profile_for_account(account.brand_id)
+            payload = copy.deepcopy(account.payload)
+            family = str(payload.get("account_family", ""))
             role_cards = {
                 str(row["account_id"]): row
                 for row in profile.get("account_role_cards", [])
@@ -763,6 +812,60 @@ class Package7Runtime:
                 role = roles.get(str(role_card.get("default_role_id")))
                 if isinstance(role, dict):
                     roles_by_account[account.display_name] = [str(role["display_name"])]
+            if account.display_name not in roles_by_account:
+                roles_by_account[account.display_name] = [
+                    str(
+                        payload.get("persona_display_name")
+                        or principal_payload.get("business_role_name")
+                        or "账号使用人"
+                    )
+                ]
+            persona_type = str(payload.get("persona_type", ""))
+            configured_directions = recommended_directions(family, persona_type)
+            directions = payload.get("directions")
+            if family == "HEADQUARTERS_PROFESSIONAL_PERSONA" and configured_directions:
+                directions = configured_directions
+            elif not isinstance(directions, list) or not 3 <= len(directions) <= 5:
+                directions = configured_directions or direction_fallbacks.get(
+                    family,
+                    direction_fallbacks["HEADQUARTERS_PROFESSIONAL_PERSONA"],
+                )
+            account_projections.append(
+                {
+                    "display_name": account.display_name,
+                    "outward_account_name": payload.get(
+                        "outward_account_name", account.display_name
+                    ),
+                    "account_family": family,
+                    "account_family_display_name": payload.get(
+                        "account_family_display_name",
+                        family_labels.get(family, "内容账号"),
+                    ),
+                    "persona_type": persona_type,
+                    "persona_display_name": payload.get(
+                        "persona_display_name",
+                        payload.get(
+                            "persona_type", roles_by_account[account.display_name][0]
+                        ),
+                    ),
+                    "organization_display_name": organization_names.get(
+                        account.organization_id, ""
+                    ),
+                    "directions": list(map(str, directions)),
+                    "primary_audience": payload.get(
+                        "primary_audience",
+                        audience_fallbacks.get(
+                            family,
+                            audience_fallbacks[
+                                "HEADQUARTERS_PROFESSIONAL_PERSONA"
+                            ],
+                        ),
+                    ),
+                    "recommended_content_format": payload.get(
+                        "recommended_content_format", "短视频"
+                    ),
+                }
+            )
             for storyline in profile.get("storylines", []):
                 if isinstance(storyline, dict) and isinstance(
                     storyline.get("storyline_id"), str
@@ -774,6 +877,9 @@ class Package7Runtime:
                 ):
                     columns[str(column["column_id"])] = column
         return {
+            "workspace_kind": "CONTENT_CREATOR",
+            "identity": identity,
+            "accounts": account_projections,
             "content_accounts": [account.display_name for account in accounts],
             "roles_by_account": roles_by_account,
             "storylines": [
@@ -884,12 +990,20 @@ class Package7Runtime:
         *,
         inspiration: bool,
     ) -> JsonObject:
-        instruction = (
-            "给出三种可以直接选择的通俗内容方向；每种只说方向，不使用任何品牌私有事实。"
-            "最后只追问一个真正影响下一步的关键问题，不要一次抛出整张表单。"
-            if inspiration
-            else "自然回应用户；不要声称任何企业事实，不读取或猜测品牌私有信息。"
-        )
+        if inspiration:
+            instruction = (
+                "结合用户本次输入给出三种真正不同、可以直接选择的通俗内容角度，不使用任何品牌私有事实。"
+                "reply字段先严格逐行输出三行：方向1｜短标题｜一句说明、方向2｜短标题｜一句说明、"
+                "方向3｜短标题｜一句说明；角度必须具体回应当前输入，不能复述固定首页方向。"
+            )
+            if request.series_mode == "SERIES":
+                instruction += (
+                    "随后严格逐行输出：第1集｜短标题｜本集讲什么、第2集｜短标题｜本集讲什么、"
+                    "第3集｜短标题｜本集讲什么；三集主题连续且内容彼此不同。"
+                )
+            instruction += "最后只追问一个真正影响下一步的关键问题，不要一次抛出整张表单。"
+        else:
+            instruction = "自然回应用户；不要声称任何企业事实，不读取或猜测品牌私有信息。"
         instruction += (
             "conversation_context只用于理解本账号内用户的延续意图，"
             "不能成为品牌事实、授权、资料或内容引用来源。"
@@ -937,13 +1051,22 @@ class Package7Runtime:
         topic = self.topic_by_label.get(str(request.topic_label))
         product_id = str(request.selected_content_product_id)
         if topic is None or product_id not in topic["internal_product_ids"]:
+            topic = next(
+                (
+                    candidate
+                    for candidate in self.topic_by_label.values()
+                    if product_id in candidate["internal_product_ids"]
+                ),
+                None,
+            )
+        if topic is None:
             return self._plain_action("COLLECT_MATERIAL")
         if self._explicit_required_object_missing(request):
             return self._missing_object_result()
         profile = self._brand_profile_for_account(str(account["brand_id"]))
         role_card = self._role_card(
             profile,
-            str(account["account_id"]),
+            account,
             request.speaker_role_id,
             request.speaker_role_name,
         )
@@ -999,6 +1122,8 @@ class Package7Runtime:
             "duration_label": request.duration_label,
             "expression_feeling": request.expression_feeling,
             "content_format": request.content_format,
+            "series_mode": request.series_mode,
+            "episode_index": request.episode_index,
             "organization_level": request.organization_level,
             "content_identity": request.content_identity,
             "long_term_storyline": request.long_term_storyline,
@@ -1011,7 +1136,6 @@ class Package7Runtime:
         self.repository.save_requirement(
             requirement, principal_id, str(account["account_id"])
         )
-        route = account["confirmation_routes"][0]
         task = ServerConfirmedProductionTask(
             server_task_ref=f"server-task://{requirement_id}",
             authority_source=SERVER_TASK_AUTHORITY,
@@ -1019,18 +1143,8 @@ class Package7Runtime:
             request_id=f"REQUEST-{requirement_id}",
             principal_id=principal_id,
             content_account_id=str(account["account_id"]),
-            acting_role_id=str(account["maker_role_ids"][0]),
             query_at=now,
             confirmed_requirement=requirement,
-            confirmation_evidence={
-                "confirmed_by_principal_id": principal_id,
-                "confirmed_by_role_ids": list(route["confirmer_role_ids"]),
-                "confirmation_scope": route["scope"],
-                "authorization_refs": [
-                    account["runtime_confirmation_authorization_ref"]
-                ],
-                "subject_confirmation_ref": None,
-            },
             retrieval_query_text=request.message,
             precise_fact_queries=tuple(precise_queries),
             requested_high_level_mode_refs=(
@@ -1073,11 +1187,17 @@ class Package7Runtime:
         principal_id: str,
         account_id: str,
     ) -> JsonObject:
-        selected = self.repository.select_candidate(
-            principal_id,
-            account_id,
-            int(request.candidate_number or 0),
+        selected = (
+            self.repository.selected_candidate(principal_id, account_id)
+            if request.candidate_number is None
+            else self.repository.select_candidate(
+                principal_id,
+                account_id,
+                request.candidate_number,
+            )
         )
+        if selected is None:
+            raise KeyError("No selected candidate exists")
         if not selected.plan_ref:
             return self._plain_action("BLOCK")
         plan_record = self.adapter.expression_service.store.get(selected.plan_ref)
@@ -1147,6 +1267,28 @@ class Package7Runtime:
         storyline: JsonObject,
         column: JsonObject,
     ) -> JsonObject:
+        previous_context = (
+            None
+            if request.previous_content_ref is None
+            else self.repository.candidate_context(
+                request.previous_content_ref,
+                principal_id,
+                account_id,
+            )
+        )
+        previous_outline = (
+            previous_context.get("series_outline", [])
+            if isinstance(previous_context, dict)
+            else []
+        )
+        if request.series_mode != "SERIES":
+            series_outline: list[JsonObject] = []
+        elif isinstance(previous_outline, list) and len(previous_outline) == 3:
+            series_outline = copy.deepcopy(previous_outline)
+        else:
+            series_outline = self._series_outline(
+                request.message, request.content_direction
+            )
         task_brief = {
             "confirmed_user_request": request.message,
             "public_topic": str(request.topic_label),
@@ -1158,20 +1300,15 @@ class Package7Runtime:
             "storyline_purpose": storyline["purpose"],
             "column": column["display_name"],
             "previous_content_ref_present": request.previous_content_ref is not None,
-            "previous_content_context": (
-                None
-                if request.previous_content_ref is None
-                else self.repository.candidate_context(
-                    request.previous_content_ref,
-                    principal_id,
-                    account_id,
-                )
-            ),
+            "previous_content_context": previous_context,
             "localization_allowed": request.localization_allowed,
             "target_platform": request.target_platform,
             "duration_label": request.duration_label,
             "expression_feeling": request.expression_feeling,
             "content_format": request.content_format,
+            "series_mode": request.series_mode,
+            "series_outline": series_outline,
+            "episode_index": request.episode_index,
             "primary_audience": request.primary_audience,
             "organization_level": request.organization_level,
             "content_identity": request.content_identity,
@@ -1207,6 +1344,30 @@ class Package7Runtime:
             "run_id": run_id,
             "author_prompt": prompt,
         }
+
+    @staticmethod
+    def _series_outline(
+        user_request: str,
+        content_direction: str | None,
+    ) -> list[JsonObject]:
+        subject = (content_direction or user_request).strip()[:80]
+        return [
+            {
+                "episode_index": 1,
+                "title": "先把问题讲清",
+                "summary": f"从真实场景切入，讲清“{subject}”为什么值得关注。",
+            },
+            {
+                "episode_index": 2,
+                "title": "再看专业判断",
+                "summary": f"换到具体选择与工作过程，展开“{subject}”背后的判断。",
+            },
+            {
+                "episode_index": 3,
+                "title": "最后落到行动",
+                "summary": f"用不同场景收束“{subject}”，给出可以继续观察或尝试的方向。",
+            },
+        ]
 
     @staticmethod
     def _author_prompt(
@@ -1257,6 +1418,8 @@ class Package7Runtime:
                         "情绪入口、叙事结构或画面组织上真正不同，换标题或同义改写不算不同。"
                         "同一成品的正文、台词、分镜、字幕、话术、结尾和发布辅助内容必须对人物、"
                         "事件结果、核心选择和行动建议保持一致。"
+                        "series_mode为SERIES时，只创作episode_index指定的一集，遵守series_outline中"
+                        "该集的重点；延续上一集必要信息但不得只是换标题或复述同一内容。"
                         "用户明确给出的时间顺序、地点、岗位交接、操作步骤、最终决定、否定要求和"
                         "必须覆盖项都是硬约束；输出前逐项核对，不能在标题、正文、分镜或渠道文案中"
                         "改写成相反结论、遗漏关键节点或换成别的场景。"
@@ -1267,8 +1430,8 @@ class Package7Runtime:
                         "只填写当前成品合同列出的内容字段。不要填写企业、账号、组织、平台、时长、内部编号、引用路径、"
                         "资料账本、组件编号，也不要输出其他六种成品的空分支。"
                         "标题、正文、口播、分镜、商品属性或功效、价格、库存、尺寸、授权表述、企业承诺、"
-                        "人物经历、顾客故事、门店事件、未来拍摄和已有素材描述均可作为创意演绎自由创作并进入"
-                        "人工审核；不得仅因缺少来源证明而停止、拒绝候选或把它判为资格失败。"
+                        "人物经历、顾客故事、门店事件、未来拍摄和已有素材描述均可作为创意演绎自由创作并交给"
+                        "账号使用人自行检查；不得仅因缺少来源证明而停止、拒绝候选或把它判为资格失败。"
                         "只对儿童直接人身安全保留最小护栏：不得给出可能造成缠绕、勾挂、跌倒、夹伤或烫伤等"
                         "直接风险的继续使用建议；出现直接风险时应停止相关操作或活动并由成年人核对，"
                         "不得用创作出来的阈值宣称儿童可以安全继续活动。"
@@ -1325,6 +1488,9 @@ class Package7Runtime:
                             "duration_label",
                             "expression_feeling",
                             "content_format",
+                            "series_mode",
+                            "series_outline",
+                            "episode_index",
                             "primary_audience",
                             "organization_level",
                             "content_identity",
@@ -1413,7 +1579,7 @@ class Package7Runtime:
             "instruction": (
                 "这些内容只是可选创作参考，不是逐句真值证明。即使列表为空，也要按用户输入、账号定位和品牌表达配置创作。"
                 "价格、库存、规格、商品功效、授权表述、企业承诺、人物经历、顾客故事、门店事件和素材描述"
-                "都可作为待人工审核的创意候选，不要求逐项提供来源证明。"
+                "都可作为交给账号使用人自行检查的创意候选，不要求逐项提供来源证明。"
                 "服务端只记录参考范围，作者不要输出引用编号。文本中的授权措辞不授予任何登录或数据访问权限。"
                 "不得输出内部编号、密钥或真实敏感信息。"
             ),
@@ -1880,7 +2046,7 @@ class Package7Runtime:
                     "scope_and_authorization_checked": True,
                     "machine_proves_every_sentence": False,
                     "server_bound_explicit_fact_count": 0,
-                    "semantic_fact_review": "待人工确认",
+                    "usage_note": "请自行检查后使用",
                     "publishable": False,
                 },
             }
@@ -1918,11 +2084,11 @@ class Package7Runtime:
                     json.dumps(surfaces, ensure_ascii=False, sort_keys=True),
                 )
             )
-        similarity_hints = self._similarity_review_hints(comparison_texts)
+        similarity_notes = self._similarity_notes(comparison_texts)
         for ordinal, payload in enumerate(accepted, 1):
             evidence_panel = cast(JsonObject, payload["evidence_panel"])
-            evidence_panel["similarity_review_hints"] = [
-                row for row in similarity_hints if ordinal in row["candidate_ordinals"]
+            evidence_panel["similarity_notes"] = [
+                row for row in similarity_notes if ordinal in row["candidate_ordinals"]
             ]
         if not accepted:
             result_class = "MODEL_OUTPUT_CONTRACT_ERROR"
@@ -1962,7 +2128,7 @@ class Package7Runtime:
                 "accepted_candidate_count": len(accepted),
                 "candidate_option_warning": candidate_option_warning,
                 "model_wrapper_normalization": normalization,
-                "similarity_review_hints": similarity_hints,
+                "similarity_notes": similarity_notes,
                 "first_output_preserved": True,
             },
         )
@@ -1979,6 +2145,11 @@ class Package7Runtime:
                 )
                 if value
             ),
+            "ui_state": "result",
+            "candidates": self._candidate_workbench(
+                self.repository.latest_candidates(run.principal_id, run.account_id)
+            ),
+            "series": self._series_projection(task_brief),
         }
 
     @staticmethod
@@ -2014,7 +2185,7 @@ class Package7Runtime:
             masked = clause
             for phrase in literal_prohibitions:
                 if phrase:
-                    masked = masked.replace(phrase, "[表达偏好待人工审查]")
+                    masked = masked.replace(phrase, "[表达偏好由使用人自行检查]")
             return masked
 
         def visit(value: object) -> object:
@@ -2102,7 +2273,7 @@ class Package7Runtime:
         else:
             raise RuntimeContractError("Unknown content format")
         opening = spoken[0] if spoken else candidate.body[:500]
-        ending = candidate.cta or "请先人工核对，再决定是否继续使用。"
+        ending = candidate.cta or "请自行检查后使用。"
         production = ProductionPackage.model_validate(
             {
                 "production_format": content_format,
@@ -2123,7 +2294,7 @@ class Package7Runtime:
                 "duration_label": str(task_brief.get("duration_label") or "由系统建议"),
                 "ending_and_action": ending,
                 "publishing_copy": candidate.body,
-                "next_actions": ["选择候选", "提出局部修改", "人工审核"],
+                "next_actions": ["选择候选", "提出局部修改", "直接导出"],
                 **branches,
             }
         )
@@ -2196,7 +2367,7 @@ class Package7Runtime:
         return sorted(failures)
 
     @staticmethod
-    def _similarity_review_hints(texts: list[str]) -> list[JsonObject]:
+    def _similarity_notes(texts: list[str]) -> list[JsonObject]:
         return [
             {
                 "candidate_ordinals": [index + 1, other_index + 1],
@@ -2204,7 +2375,7 @@ class Package7Runtime:
                     SequenceMatcher(None, left, right, autojunk=False).ratio(),
                     4,
                 ),
-                "review_required": SequenceMatcher(
+                "worth_comparing": SequenceMatcher(
                     None,
                     left,
                     right,
@@ -2610,8 +2781,7 @@ class Package7Runtime:
                         len(effective_claim_bindings) - len(candidate.claim_bindings)
                     ),
                     "scope_and_authorization_checked": True,
-                    "semantic_fact_review": "待人工确认",
-                    "pending_confirmation": [],
+                    "usage_note": "请自行检查后使用",
                     "publishable": False,
                 },
             }
@@ -2700,15 +2870,78 @@ class Package7Runtime:
         return {
             "response_kind": "DIRECT",
             "user_visible_text": self._render_candidates(candidates),
+            "ui_state": "result",
+            "candidates": self._candidate_workbench(
+                self.repository.latest_candidates(run.principal_id, run.account_id)
+            ),
+            "series": self._series_projection(task_brief),
+        }
+
+    @staticmethod
+    def _candidate_workbench(
+        candidates: tuple[RuntimeCandidate, ...],
+    ) -> list[JsonObject]:
+        result: list[JsonObject] = []
+        for candidate in candidates:
+            surfaces = candidate.candidate_payload.get(
+                "candidate_user_visible_surfaces", {}
+            )
+            package = surfaces.get("execution_payload", {})
+            if not isinstance(surfaces, dict) or not isinstance(package, dict):
+                continue
+            result.append(
+                {
+                    "key": f"candidate-{candidate.ordinal}",
+                    "ordinal": candidate.ordinal,
+                    "label": (
+                        "推荐候选" if candidate.ordinal == 1 else f"备选{candidate.ordinal - 1}"
+                    ),
+                    "selected": candidate.selected,
+                    "creative_difference": str(
+                        candidate.candidate_payload.get("creative_difference", "")
+                    ),
+                    "content_format": str(package.get("production_format", "")),
+                    "candidate_user_visible_surfaces": copy.deepcopy(surfaces),
+                }
+            )
+        return result
+
+    @staticmethod
+    def _series_projection(task_brief: JsonObject) -> JsonObject:
+        mode = str(task_brief.get("series_mode", "SINGLE"))
+        episode_index = int(task_brief.get("episode_index", 1))
+        outline = task_brief.get("series_outline", [])
+        return {
+            "mode": mode,
+            "outline": copy.deepcopy(outline) if isinstance(outline, list) else [],
+            "current_episode": episode_index,
+            "next_episode": episode_index + 1 if mode == "SERIES" and episode_index < 3 else None,
+        }
+
+    def _previous_version(self, principal_id: str, account_id: str) -> JsonObject:
+        previous = self.repository.previous_candidates(principal_id, account_id)
+        if not previous:
+            return {
+                "response_kind": "DIRECT",
+                "user_visible_text": "当前还没有更早的版本。",
+                "ui_state": "result",
+                "candidates": [],
+            }
+        return {
+            "response_kind": "DIRECT",
+            "user_visible_text": "已显示上一版；当前版本仍保留，不会被覆盖。",
+            "ui_state": "result",
+            "candidates": self._candidate_workbench(previous),
+            "viewing_previous_version": True,
         }
 
     @staticmethod
     def _render_candidates(candidates: list[JsonObject]) -> str:
         candidate_count = len(candidates)
         opening = (
-            "已准备好1份候选。它仍是内部测试内容，请先人工确认。"
+            "已准备好1份候选。它仍是内部测试内容，请自行检查后使用。"
             if candidate_count == 1
-            else "已准备好推荐候选和备选。它们仍是内部测试内容，请先人工确认。"
+            else "已准备好推荐候选和备选。它们仍是内部测试内容，请自行检查后使用。"
         )
         blocks = [opening]
         for ordinal, candidate in enumerate(candidates, 1):
@@ -2730,10 +2963,9 @@ class Package7Runtime:
                 f"接下来可以：{'、'.join(package['next_actions'])}"
             )
         if candidate_count == 1:
-            blocks.append("\n可以选择第1份，也可以说明想局部修改哪里。")
+            blocks.append("\n可以直接点选候选卡片，也可以说明想局部修改哪里。")
         else:
-            choices = "、".join(str(value) for value in range(1, candidate_count + 1))
-            blocks.append(f"\n可以选择第{choices}份，也可以说明想局部修改哪里。")
+            blocks.append("\n可以直接点选喜欢的候选卡片，也可以说明想局部修改哪里。")
         return "\n".join(blocks)
 
     @staticmethod
@@ -2827,25 +3059,6 @@ class Package7Runtime:
             f"拍摄角度：{'；'.join(display.get('shooting_angles', []))}"
         )
 
-    def _review_selected(self, principal_id: str, account_id: str) -> JsonObject:
-        selected = self.repository.selected_candidate(principal_id, account_id)
-        if selected is None:
-            return self._failure_result("AUTHORIZATION_OR_SCOPE_BLOCK", None)
-        self.repository.record_selected_candidate_activity(
-            principal_id=principal_id,
-            account_id=account_id,
-            operation="REVIEW",
-        )
-        return {
-            "response_kind": "DIRECT",
-            "user_visible_text": (
-                "人工审核确认\n"
-                "当前登录用户已确认：成品符合本次需求；人物与事件没有漂移；"
-                "正文、台词、字幕、画面和行动建议一致；商品与活动信息准确。\n"
-                "现在可以导出；当前仍是内部测试稿，不可直接发布。"
-            ),
-        }
-
     def _export_selected(self, principal_id: str, account_id: str) -> JsonObject:
         selected = self.repository.selected_candidate(principal_id, account_id)
         if selected is None:
@@ -2858,16 +3071,20 @@ class Package7Runtime:
         surfaces = selected.candidate_payload["candidate_user_visible_surfaces"]
         package = surfaces["execution_payload"]
         spoken = "\n".join(f"- {line}" for line in surfaces.get("spoken_lines", []))
+        export_text = (
+            f"标题\n{surfaces['title']}\n\n正文\n{surfaces['body']}\n\n"
+            f"口播\n{spoken or '无单独口播'}\n\n"
+            f"结尾\n{surfaces.get('CTA') or package['ending_and_action']}\n\n"
+            f"制作安排\n{self._format_production_package(package)}\n\n"
+            f"发布辅助文案\n{package['publishing_copy']}\n\n"
+            "内部测试稿，不可直接发布。"
+        )
         return {
             "response_kind": "DIRECT",
-            "user_visible_text": (
-                f"标题\n{surfaces['title']}\n\n正文\n{surfaces['body']}\n\n"
-                f"口播\n{spoken or '无单独口播'}\n\n"
-                f"结尾\n{surfaces.get('CTA') or package['ending_and_action']}\n\n"
-                f"制作安排\n{self._format_production_package(package)}\n\n"
-                f"发布辅助文案\n{package['publishing_copy']}\n\n"
-                "内部测试稿，不可直接发布。"
-            ),
+            "user_visible_text": export_text,
+            "ui_state": "result",
+            "export_text": export_text,
+            "candidates": self._candidate_workbench((selected,)),
         }
 
     def _source_lookup(self, principal_id: str, account_id: str) -> JsonObject:
@@ -2987,10 +3204,11 @@ class Package7Runtime:
     @staticmethod
     def _role_card(
         profile: JsonObject,
-        account_id: str,
+        account: JsonObject,
         requested_role_id: str | None,
         requested_role_name: str | None,
     ) -> JsonObject:
+        account_id = str(account["account_id"])
         account_card = next(
             (
                 row
@@ -3000,7 +3218,26 @@ class Package7Runtime:
             None,
         )
         if not isinstance(account_card, dict):
-            raise RuntimeContractError("Account role card is unavailable")
+            maker_role_ids = account.get("maker_role_ids")
+            if (
+                not isinstance(maker_role_ids, list)
+                or not maker_role_ids
+                or requested_role_id not in {None, maker_role_ids[0]}
+                or requested_role_name
+                not in {None, account.get("persona_display_name")}
+            ):
+                raise RuntimeContractError("Account role card is unavailable")
+            return {
+                "role_id": str(maker_role_ids[0]),
+                "display_name": str(
+                    account.get("persona_display_name")
+                    or account.get("outward_account_name")
+                    or account.get("display_name")
+                ),
+                "boundary": (
+                    "只以当前账号和组织范围表达，不冒充其他组织或真实个人经历。"
+                ),
+            }
         named_role = next(
             (
                 row
@@ -3120,15 +3357,8 @@ class Package7Runtime:
     def _precise_fact_queries(
         request: BridgePrepareRequest, account: JsonObject
     ) -> list[JsonObject]:
-        queries = [
-            {
-                "fact_kind": "AUTHORIZATION",
-                "selectors": {"account_id": account["account_id"]},
-                "required": True,
-            }
-        ]
-        queries.extend(row.model_dump() for row in request.precise_fact_requests)
-        return queries
+        del account
+        return [row.model_dump() for row in request.precise_fact_requests]
 
     @staticmethod
     def _scope_identity_only_request(request: BridgePrepareRequest) -> bool:

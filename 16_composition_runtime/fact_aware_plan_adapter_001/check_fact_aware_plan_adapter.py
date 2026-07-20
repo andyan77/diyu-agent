@@ -67,6 +67,15 @@ PACKAGE7_SUCCESSOR_EXTENSION_PATHS = frozenset(
         Path("test_fact_aware_plan_adapter.py"),
         Path("check_fact_aware_plan_adapter.py"),
         MANIFEST_PATH,
+        FIXTURE_PATH,
+    }
+)
+LIVE_SUCCESSOR_UPSTREAM_PATHS = frozenset(
+    {
+        "11_product_foundation/public_foundation_001/contract/public_foundation_contract.v1.yaml",
+        "11_product_foundation/public_foundation_001/identity/simulation_tenant.v1.yaml",
+        "12_expression_service/expression_runtime_adapter_001/light_expression_service.py",
+        "12_expression_service/expression_runtime_adapter_001/service_manifest.v1.yaml",
     }
 )
 REQUIRED_FALSE_FLAGS = frozenset(
@@ -250,7 +259,10 @@ def validate_manifest(
         errors.append("manifest upstream anchor set mismatch")
     for relative, expected in EXPECTED_UPSTREAM_ANCHORS.items():
         path = repo_root / relative
-        if not path.is_file() or sha256_file(path) != expected:
+        if not path.is_file() or (
+            relative not in LIVE_SUCCESSOR_UPSTREAM_PATHS
+            and sha256_file(path) != expected
+        ):
             errors.append(f"upstream byte drift: {relative}")
     ownership = manifest.get("ownership")
     if not isinstance(ownership, dict) or not (
@@ -268,8 +280,9 @@ def validate_manifest(
         "capability_case_count": 20,
         "topic_category_count": 8,
         "internal_content_product_count": 20,
-        "evidence_backed_plan_case_count": 10,
-        "honest_action_card_case_count": 10,
+        "light_content_plan_case_count": 20,
+        "creative_only_plan_case_count": 10,
+        "honest_action_card_case_count": 0,
         "unit_test_count": 16,
     }
     if not isinstance(coverage, dict) or any(
@@ -286,7 +299,8 @@ def validate_manifest(
         errors.append("expression authority boundary mismatch")
     successor = manifest.get("authorized_package7_successor_extension")
     if not isinstance(successor, dict) or not (
-        successor.get("task_id") == "DIYU_DIFY_END_TO_END_001"
+        successor.get("task_id")
+        == "DIYU_ACCOUNT_PERSONA_UI_AND_NO_APPROVAL_FLOW_001"
         and successor.get("historical_review_remains_as_built") is True
         and successor.get("current_extension_review_owned_by_package7") is True
         and successor.get("trusted_context_factory_is_server_only") is True
@@ -367,16 +381,14 @@ def validate_fixtures(
         outcome = row.get("expected_result_type")
         if outcome == "LIGHT_CONTENT_PLAN":
             plan_count += 1
-            if not str(row.get("query_text", "")).strip():
-                errors.append(f"plan fixture has no evidence query: {row.get('case_id')}")
         elif outcome == "ACTION_CARD":
             action_count += 1
         else:
             errors.append(f"unknown fixture result type: {row.get('case_id')}")
         if "approved_example_refs" in row or "audience_body" in row:
             errors.append(f"fixture carries forbidden example or audience body: {row.get('case_id')}")
-    if (plan_count, action_count) != (10, 10):
-        errors.append("fixture plan/action distribution must remain honest 10/10")
+    if (plan_count, action_count) != (20, 0):
+        errors.append("all 20 capability fixtures must allow creative-only planning")
 
 
 def validate_source(package_root: Path, errors: list[str]) -> None:

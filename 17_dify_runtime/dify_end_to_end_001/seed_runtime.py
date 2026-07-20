@@ -62,6 +62,16 @@ def normalize_knowledge_text(value: str) -> str:
     return value.replace("\r\n", "\n").replace("\r", "\n").strip()
 
 
+def _is_requirement_approval_grant(value: JsonObject) -> bool:
+    return value.get("authorization_kind") in {
+        "REQUIREMENT_CONFIRMATION",
+        "CONTENT_APPROVAL",
+    } or value.get("disclosure_scope") in {
+        "REQUIREMENT_CONFIRMATION_ONLY",
+        "CONTENT_APPROVAL_ONLY",
+    }
+
+
 def _replace_payload(target: object, source: object) -> None:
     for key, value in vars(source).items():
         if key.startswith("_" ):
@@ -113,61 +123,43 @@ def seed_database(
     brand_id = str(tenant["brand_id"])
     now = utc_now()
     fragments = bundle.narrative_fragments
-    grants = [copy.deepcopy(row) for row in identity["authorization_grants"]]
+    grants = [
+        copy.deepcopy(row)
+        for row in identity["authorization_grants"]
+        if not _is_requirement_approval_grant(row)
+    ]
+    identity["authorization_grants"] = grants
     grant_window_start = min(str(row["valid_from"]) for row in grants)
     grant_window_end = max(str(row["valid_until"]) for row in grants)
     identity_digest = digest_object(identity)
-    derived_confirmation_refs: dict[str, str] = {}
     derived_facts: list[JsonObject] = []
     for raw_account in identity["content_accounts"]:
         account = copy.deepcopy(raw_account)
         account_id = str(account["account_id"])
         suffix = hashlib.sha256(account_id.encode("utf-8")).hexdigest()[:16].upper()
         disclosure_ref = f"PKG7-AUTH-ACCOUNT-SELF-{suffix}"
-        confirmation_ref = f"PKG7-AUTH-TASK-CONFIRM-{suffix}"
         organization_id = str(account["organization_id"])
         store_id = account.get("store_id")
-        grants.extend(
-            [
-                {
-                    "authorization_id": disclosure_ref,
-                    "authorization_kind": "FACT_DISCLOSURE",
-                    "tenant_id": tenant_id,
-                    "brand_id": brand_id,
-                    "source_organization_id": organization_id,
-                    "source_store_id": store_id,
-                    "permitted_organization_ids": [organization_id],
-                    "permitted_store_ids": [store_id],
-                    "permitted_content_account_ids": [account_id],
-                    "disclosure_scope": "CONTENT_ACCOUNT_ONLY",
-                    "valid_from": grant_window_start,
-                    "valid_until": grant_window_end,
-                    "status": "GRANTED",
-                    "derived_from_account_self_scope": True,
-                    "simulation_only": True,
-                    "publish_allowed": False,
-                },
-                {
-                    "authorization_id": confirmation_ref,
-                    "authorization_kind": "REQUIREMENT_CONFIRMATION",
-                    "tenant_id": tenant_id,
-                    "brand_id": brand_id,
-                    "source_organization_id": organization_id,
-                    "source_store_id": store_id,
-                    "permitted_organization_ids": [organization_id],
-                    "permitted_store_ids": [store_id],
-                    "permitted_content_account_ids": [account_id],
-                    "disclosure_scope": "REQUIREMENT_CONFIRMATION_ONLY",
-                    "valid_from": grant_window_start,
-                    "valid_until": grant_window_end,
-                    "status": "GRANTED",
-                    "derived_from_confirmed_account_role_grant": True,
-                    "simulation_only": True,
-                    "publish_allowed": False,
-                },
-            ]
+        grants.append(
+            {
+                "authorization_id": disclosure_ref,
+                "authorization_kind": "FACT_DISCLOSURE",
+                "tenant_id": tenant_id,
+                "brand_id": brand_id,
+                "source_organization_id": organization_id,
+                "source_store_id": store_id,
+                "permitted_organization_ids": [organization_id],
+                "permitted_store_ids": [store_id],
+                "permitted_content_account_ids": [account_id],
+                "disclosure_scope": "CONTENT_ACCOUNT_ONLY",
+                "valid_from": grant_window_start,
+                "valid_until": grant_window_end,
+                "status": "GRANTED",
+                "derived_from_account_self_scope": True,
+                "simulation_only": True,
+                "publish_allowed": False,
+            }
         )
-        derived_confirmation_refs[account_id] = confirmation_ref
         derived_facts.append(
             {
                 "fact_id": f"PKG7-ACCOUNT-SCOPE-{suffix}",
@@ -271,32 +263,67 @@ def seed_database(
                     updated_at=now,
                 ),
             )
-        principal = dict(identity["login_principals"][0])
-        principal_id = str(principal["principal_id"])
-        existing_principal = session.get(RuntimePrincipal, principal_id)
-        password_hash = (
-            existing_principal.password_hash
-            if existing_principal is not None and verify_password(password, existing_principal.password_hash)
-            else hash_password(password)
-        )
-        apply(
-            RuntimePrincipal,
-            principal_id,
-            RuntimePrincipal(
-                principal_id=principal_id,
-                tenant_id=tenant_id,
-                username=username,
-                password_hash=password_hash,
-                status="ACTIVE",
-                allowed_account_ids=list(principal["allowed_content_account_ids"]),
-                payload=copy.deepcopy(principal),
-                updated_at=now,
-            ),
-        )
+        role_names = {
+            str(row["role_id"]): str(row["display_name"])
+            for row in identity["work_roles"]
+        }
+        principal_usernames: set[str] = set()
+        for raw_principal in identity["login_principals"]:
+            principal = dict(raw_principal)
+            principal_id = str(principal["principal_id"])
+            business_role_id = str(principal.get("business_role_id", ""))
+            principal["display_name"] = str(
+                principal.get("principal_display_name", principal_id)
+            )
+            principal["business_role_name"] = role_names.get(
+                business_role_id,
+                business_role_id,
+            )
+            principal["workspace_kind"] = (
+                "ENTERPRISE_ADMIN"
+                if principal.get("account_family") == "ENTERPRISE_ADMIN"
+                else "CONTENT_CREATOR"
+            )
+            if principal.get("username_mode") == "BASE":
+                principal_username = username
+            else:
+                username_suffix = str(principal.get("username_suffix", "")).strip()
+                if not username_suffix:
+                    raise ValueError(
+                        f"Login principal is missing a username suffix: {principal_id}"
+                    )
+                principal_username = f"{username}-{username_suffix}"
+            if len(principal_username) > 128:
+                raise ValueError(f"Login username is too long: {principal_id}")
+            if principal_username in principal_usernames:
+                raise ValueError(f"Login username is duplicated: {principal_id}")
+            principal_usernames.add(principal_username)
+            existing_principal = session.get(RuntimePrincipal, principal_id)
+            password_hash = (
+                existing_principal.password_hash
+                if existing_principal is not None
+                and verify_password(password, existing_principal.password_hash)
+                else hash_password(password)
+            )
+            apply(
+                RuntimePrincipal,
+                principal_id,
+                RuntimePrincipal(
+                    principal_id=principal_id,
+                    tenant_id=tenant_id,
+                    username=principal_username,
+                    password_hash=password_hash,
+                    status="ACTIVE",
+                    allowed_account_ids=list(
+                        principal["allowed_content_account_ids"]
+                    ),
+                    payload=copy.deepcopy(principal),
+                    updated_at=now,
+                ),
+            )
         for account in identity["content_accounts"]:
             row = dict(account)
             key = str(row["account_id"])
-            row["runtime_confirmation_authorization_ref"] = derived_confirmation_refs[key]
             apply(
                 RuntimeAccount,
                 key,
@@ -313,6 +340,13 @@ def seed_database(
                     updated_at=now,
                 ),
             )
+        for existing_authorization in session.scalars(
+            select(RuntimeAuthorization).where(
+                RuntimeAuthorization.tenant_id == tenant_id
+            )
+        ).all():
+            if _is_requirement_approval_grant(existing_authorization.payload):
+                session.delete(existing_authorization)
         for authorization in grants:
             row = dict(authorization)
             key = str(row["authorization_id"])

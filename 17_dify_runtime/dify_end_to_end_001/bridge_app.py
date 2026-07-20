@@ -4,10 +4,12 @@
 from __future__ import annotations
 
 import base64
+import copy
 import hashlib
 import ipaddress
 import json
 import os
+import re
 import secrets
 from datetime import datetime, timezone
 from pathlib import Path
@@ -17,6 +19,8 @@ from flask import Flask, g, jsonify, request, send_from_directory
 from pydantic import ValidationError
 
 from contracts import (
+    AdminAccountCreateRequest,
+    AdminAccountDisableRequest,
     BridgeFinalizeRequest,
     BridgePrepareRequest,
     LoginRequest,
@@ -57,11 +61,153 @@ PORTAL_OPERATION_MAP = {
     "把已有内容改好": "局部修改",
     "继续一个系列": "确认制作",
     "选择候选": "选择候选",
-    "审核": "审核",
+    "查看上一版": "查看上一版",
     "导出": "导出",
     "查看来源": "查看来源",
     "提交反馈": "提交反馈",
 }
+
+
+def _idea_subject(message: str) -> str:
+    first_line = next(
+        (line.strip() for line in message.splitlines() if line.strip()),
+        "这次内容",
+    )
+    compact = re.sub(r"\s+", " ", first_line).strip("。！？!? ")
+    return f"{compact[:32]}…" if len(compact) > 32 else compact
+
+
+def _inspiration_angles(
+    *,
+    reply: str,
+    message: str,
+    topic_label: str | None,
+    account_directions: list[object],
+) -> list[JsonObject]:
+    parsed: list[JsonObject] = []
+    pattern = re.compile(
+        r"^方向\s*[123一二三]\s*[｜|:：、.-]\s*([^｜|]+?)(?:\s*[｜|]\s*(.+))?$"
+    )
+    for line in reply.splitlines():
+        match = pattern.match(line.strip())
+        if match is None:
+            continue
+        label = match.group(1).strip()
+        description = (match.group(2) or "").strip()
+        if label:
+            parsed.append(
+                {
+                    "label": label,
+                    "description": description,
+                    "topic_label": topic_label,
+                }
+            )
+    if len(parsed) == 3:
+        return parsed
+
+    subject = _idea_subject(message)
+    if message.startswith("我还没有想好"):
+        labels = [
+            str(value).strip()
+            for value in account_directions[:3]
+            if str(value).strip()
+        ]
+        if len(labels) == 3:
+            descriptions = (
+                "先从一个具体场景讲起，让内容容易开始。",
+                "换一个人物或判断视角，说清这件事为什么值得讲。",
+                "把方向落到一个普通人会关心的问题上。",
+            )
+            return [
+                {
+                    "label": label,
+                    "description": descriptions[index],
+                    "topic_label": topic_label,
+                }
+                for index, label in enumerate(labels)
+            ]
+    return [
+        {
+            "label": f"从“{subject}”的过程讲起",
+            "description": "交代起因、关键动作和结果，做成一条容易跟随的真实记录。",
+            "topic_label": topic_label,
+        },
+        {
+            "label": f"说清“{subject}”背后的判断",
+            "description": "讲明为什么这样做、比较过什么，以及最后如何取舍。",
+            "topic_label": topic_label,
+        },
+        {
+            "label": f"把“{subject}”变成一个常见问题",
+            "description": "从别人最可能追问的一点切入，用通俗回答带出内容价值。",
+            "topic_label": topic_label,
+        },
+    ]
+
+
+def _series_outline(*, reply: str, message: str) -> list[JsonObject]:
+    ordinals = {"1": 1, "2": 2, "3": 3, "一": 1, "二": 2, "三": 3}
+    parsed: dict[int, JsonObject] = {}
+    pattern = re.compile(
+        r"^第?\s*([123一二三])\s*集\s*[｜|:：、.-]\s*([^｜|]+?)(?:\s*[｜|]\s*(.+))?$"
+    )
+    for line in reply.splitlines():
+        match = pattern.match(line.strip())
+        if match is None:
+            continue
+        ordinal = ordinals[match.group(1)]
+        title = match.group(2).strip()
+        description = (match.group(3) or "").strip()
+        if title:
+            parsed[ordinal] = {
+                "episode_index": ordinal,
+                "title": title,
+                "description": description,
+            }
+    if set(parsed) == {1, 2, 3}:
+        return [parsed[index] for index in (1, 2, 3)]
+
+    subject = _idea_subject(message)
+    return [
+        {
+            "episode_index": 1,
+            "title": f"起点：{subject}",
+            "description": "先讲这件事从哪里开始，以及最初遇到的具体问题。",
+        },
+        {
+            "episode_index": 2,
+            "title": f"过程：{subject}",
+            "description": "继续讲关键动作、协作或判断，不重复第一集的起点。",
+        },
+        {
+            "episode_index": 3,
+            "title": f"结果：{subject}",
+            "description": "用结果、变化或下一步收束，让三集形成完整连续内容。",
+        },
+    ]
+
+
+def _portal_result(result: JsonObject) -> JsonObject:
+    payload: JsonObject = {
+        "answer": str(result.get("user_visible_text", "当前请求已停止。")),
+        "simulation_only": True,
+        "publish_allowed": False,
+    }
+    for key in (
+        "ui_state",
+        "response_kind",
+        "result_class",
+        "action_type",
+        "plain_language_reason",
+        "publishable_candidate_included",
+        "candidates",
+        "series",
+        "export_text",
+        "viewing_previous_version",
+    ):
+        if key in result:
+            payload[key] = copy.deepcopy(result[key])
+    return payload
 
 
 def required_env(name: str, *, minimum_length: int = 1) -> str:
@@ -368,12 +514,66 @@ def create_app(
         except ValueError:
             return _plain_error("登录已失效，请重新登录。"), 401
 
+    @app.get("/v1/admin/accounts")
+    def admin_accounts() -> Any:
+        if request.headers.get("X-Diyu-Portal") != PORTAL_HEADER:
+            return _plain_error("当前访问未通过页面确认。"), 404
+        try:
+            session = _portal_session(signing_key, active_repository)
+            return jsonify(
+                active_repository.account_management_matrix(
+                    str(session["principal_id"])
+                )
+            )
+        except ValueError:
+            return _plain_error("当前登录身份不能管理账号。"), 403
+
+    @app.post("/v1/admin/accounts")
+    def admin_create_account() -> Any:
+        if request.headers.get("X-Diyu-Portal") != PORTAL_HEADER:
+            return _plain_error("当前访问未通过页面确认。"), 404
+        try:
+            session = _portal_session(signing_key, active_repository)
+            payload = AdminAccountCreateRequest.model_validate(
+                request.get_json(force=True, silent=False)
+            )
+            created = active_repository.create_extensible_account(
+                admin_principal_id=str(session["principal_id"]),
+                organization_id=payload.organization_id,
+                account_family=payload.account_family,
+                persona_type=payload.persona_type,
+                outward_account_name=payload.outward_account_name,
+                principal_id=payload.principal_id,
+            )
+            return jsonify({"account": created}), 201
+        except ValidationError:
+            return _plain_error("新增账号信息不完整或不匹配。"), 400
+        except ValueError:
+            return _plain_error("当前账号、组织、人设或绑定使用人不匹配。"), 400
+
+    @app.post("/v1/admin/accounts/<account_id>/disable")
+    def admin_disable_account(account_id: str) -> Any:
+        if request.headers.get("X-Diyu-Portal") != PORTAL_HEADER:
+            return _plain_error("当前访问未通过页面确认。"), 404
+        try:
+            session = _portal_session(signing_key, active_repository)
+            payload = AdminAccountDisableRequest.model_validate(
+                {"account_id": account_id}
+            )
+            disabled = active_repository.disable_extensible_account(
+                admin_principal_id=str(session["principal_id"]),
+                account_id=payload.account_id,
+            )
+            return jsonify({"account": disabled})
+        except ValidationError:
+            return _plain_error("账号标识格式不正确。"), 400
+        except ValueError:
+            return _plain_error("当前账号不可停用或超出管理范围。"), 400
+
     @app.post("/v1/portal/chat")
     def portal_chat() -> Any:
         if request.headers.get("X-Diyu-Portal") != PORTAL_HEADER:
             return _plain_error("当前访问未通过页面确认。"), 404
-        if active_chat is None:
-            return _plain_error("Dify内部入口尚未连接。"), 503
         failure_stage = "REQUEST_VALIDATION"
         run_id: str | None = None
         try:
@@ -402,20 +602,27 @@ def create_app(
                     principal_id,
                     trusted_scope=unselected_scope,
                 )
-                return jsonify(
-                    {
-                        "answer": str(
-                            prepared.get("user_visible_text", "当前请求已停止。")
-                        ),
-                        "simulation_only": True,
-                        "publish_allowed": False,
-                    }
-                )
+                return jsonify(_portal_result(prepared))
             selected_scope = install_selected_account_scope(
                 principal_id,
                 browser_session_id,
                 account,
             )
+            options = active_runtime.portal_options(principal_id)
+            account_projection = next(
+                (
+                    row
+                    for row in options.get("accounts", [])
+                    if isinstance(row, dict)
+                    and row.get("display_name") == account.display_name
+                ),
+                {},
+            )
+            if not runtime_request.get("primary_audience"):
+                runtime_request["primary_audience"] = account_projection.get(
+                    "primary_audience",
+                    "希望从这个账号获得真实、有用内容的人",
+                )
             conversation_scope = account.account_id
             user_key = hashlib.sha256(
                 (
@@ -446,17 +653,13 @@ def create_app(
                     ).decode("ascii"),
                     trusted_scope=selected_scope,
                 )
-                return jsonify(
-                    {
-                        "answer": str(
-                            finalized.get(
-                                "user_visible_text", "当前结果已恢复并完成处理。"
-                            )
-                        ),
-                        "simulation_only": True,
-                        "publish_allowed": False,
-                    }
-                )
+                return jsonify(_portal_result(finalized))
+            if (
+                runtime_request["operation"]
+                in {"普通聊天", "找灵感", "确认制作", "局部修改"}
+                and active_chat is None
+            ):
+                return _plain_error("Dify内部入口尚未连接。"), 503
             if runtime_request["operation"] == "确认制作":
                 failure_stage = "CLASSIFIER_INVOKE"
                 classification_request = "\n".join(
@@ -501,15 +704,7 @@ def create_app(
                 trusted_scope=selected_scope,
             )
             if prepared.get("response_kind") != "MODEL_REQUIRED":
-                return jsonify(
-                    {
-                        "answer": str(
-                            prepared.get("user_visible_text", "当前请求已停止。")
-                        ),
-                        "simulation_only": True,
-                        "publish_allowed": False,
-                    }
-                )
+                return jsonify(_portal_result(prepared))
             author_prompt = prepared.get("author_prompt")
             prepared_run_id = prepared.get("run_id")
             if not isinstance(author_prompt, dict) or not isinstance(
@@ -551,15 +746,25 @@ def create_app(
                 base64.b64encode(result["answer"].encode("utf-8")).decode("ascii"),
                 trusted_scope=selected_scope,
             )
-            return jsonify(
-                {
-                    "answer": str(
-                        finalized.get("user_visible_text", "当前结果已停止。")
-                    ),
-                    "simulation_only": True,
-                    "publish_allowed": False,
-                }
-            )
+            response_payload = _portal_result(finalized)
+            if runtime_request["operation"] == "找灵感":
+                directions = account_projection.get("directions", [])
+                response_payload["angles"] = _inspiration_angles(
+                    reply=str(response_payload.get("answer", "")),
+                    message=payload.message,
+                    topic_label=payload.topic_label,
+                    account_directions=(directions if isinstance(directions, list) else []),
+                )
+                if payload.series_mode == "SERIES":
+                    response_payload["series"] = {
+                        "mode": "SERIES",
+                        "outline": _series_outline(
+                            reply=str(response_payload.get("answer", "")),
+                            message=payload.message,
+                        ),
+                    }
+                response_payload["ui_state"] = "angles"
+            return jsonify(response_payload)
         except DifyChatError as exc:
             if failure_stage == "AUTHOR_INVOKE" and run_id is not None:
                 try:
@@ -734,8 +939,6 @@ def _portal_inputs(
         previous_ref = previous.candidate_id
     operation = PORTAL_OPERATION_MAP[payload.operation]
     candidate_number = payload.candidate_number
-    if operation == "局部修改" and candidate_number is None:
-        candidate_number = 1
     return {
         "session_token": request.cookies.get(SESSION_COOKIE, ""),
         "account_display_name": payload.account_display_name,
@@ -756,6 +959,8 @@ def _portal_inputs(
         "duration_label": payload.duration_label,
         "expression_feeling": payload.expression_feeling,
         "content_format": payload.content_format,
+        "series_mode": payload.series_mode,
+        "episode_index": payload.episode_index,
         "organization_level": payload.organization_level,
         "content_identity": payload.content_identity,
         "long_term_storyline": payload.long_term_storyline,

@@ -1,0 +1,159 @@
+{
+  "schema": "diyu.package7.account_persona_ui_no_approval.result.v1",
+  "task_id": "DIYU_ACCOUNT_PERSONA_UI_AND_NO_APPROVAL_FLOW_001",
+  "state": "PASS_DRAFT_PR_PENDING_FOUNDER_MERGE_APPROVAL",
+  "baseline_commit": "bb11e8cdfd9584136c0be85d4d7fcfc52caf614c",
+  "candidate_commit": "aaaddca094ab7411ebb68dd22990b79cce720975",
+  "candidate_tree": "7135fef3311c4d1907d6d627b97de7e23a628100",
+  "acceptance": {
+    "A01": true,
+    "A02": true,
+    "A03": true,
+    "A04": true,
+    "A05": true,
+    "A06": true,
+    "A07": true,
+    "A08": true,
+    "A09": true,
+    "A10": true,
+    "A11": true,
+    "A12": true,
+    "A13": true,
+    "A14": true,
+    "A15": true
+  },
+  "product_result": {
+    "account_family_count": 7,
+    "representative_login_principal_count": 12,
+    "content_account_count": 11,
+    "extensible_account_family_count": 4,
+    "content_product_count": 20,
+    "deliverable_count": 7,
+    "single_and_three_episode_series": true,
+    "six_creator_homepages_are_distinct": true,
+    "input_specific_inspiration_angles": true,
+    "generation_to_export_without_approval": true
+  },
+  "representative_journeys": {
+    "enterprise_admin_create_and_disable": true,
+    "headquarters_professional_non_priority_topic_to_export": true,
+    "provincial_agent_to_export": true,
+    "franchise_store_to_export": true,
+    "three_episode_outline_episode_one_and_continuation": true,
+    "seven_deliverables_rendered": true,
+    "cross_account_and_cross_browser_session_rejected": true
+  },
+  "independent_reviews": [
+    {
+      "review_id": "APR-A03-aaaddca0-DIRECTED",
+      "review_type": "ACCOUNT_PRODUCT_STRUCTURE_AND_NOVICE_EXPERIENCE",
+      "reviewer_identity": "/root/account_product_novice_review",
+      "reviewer_session_id": "review-session-a03-aaaddca0",
+      "reviewer_run_id": "review-run-a03-aaaddca0-r1",
+      "candidate_commit": "aaaddca094ab7411ebb68dd22990b79cce720975",
+      "candidate_tree": "7135fef3311c4d1907d6d627b97de7e23a628100",
+      "score": 98,
+      "verdict": "PASS",
+      "hard_blockers": [],
+      "non_blocking_findings": [],
+      "acceptance_ids": [
+        "A03"
+      ],
+      "evidence": "Targeted A03 re-review verified six professional personas each have four role-aligned recommendations, product and retail recommendations differ, both can use the same non-priority topic, and one shared configuration feeds account creation and the existing portal."
+    },
+    {
+      "review_id": "A09_A15_SERIES_RACE_REVIEW_001",
+      "review_type": "ISOLATION_CONTRACT_COMPATIBILITY_AND_NO_APPROVAL",
+      "reviewer_identity": "/root/isolation_contract_review",
+      "reviewer_session_id": "series-race-aaaddca0-20260720",
+      "reviewer_run_id": "series-race-aaaddca0-run-001",
+      "candidate_commit": "aaaddca094ab7411ebb68dd22990b79cce720975",
+      "candidate_tree": "7135fef3311c4d1907d6d627b97de7e23a628100",
+      "score": 98,
+      "verdict": "PASS",
+      "hard_blockers": [],
+      "non_blocking_findings": [],
+      "acceptance_ids": [
+        "A09",
+        "A15"
+      ],
+      "evidence": "Targeted A09/A15 re-review verified generation waits for the shared outline request, displays the complete outline before sending episode one with all three titles and descriptions, and leaves retry or single-mode recovery available after outline failure."
+    }
+  ],
+  "resolved_review_history": [
+    {
+      "review_id": "APR-ACCOUNT-PRODUCT-NOVICE-603ce101",
+      "candidate_commit": "603ce1018245b892aff6edd00f0e38f1359f605a",
+      "candidate_tree": "b8fdb605dab4fd73ecdb602fc8e6089f356bea47",
+      "score": 86,
+      "verdict": "FAIL",
+      "blocking_acceptance_ids": ["A07", "A09", "A15"],
+      "finding": "The portal returned fixed homepage directions for different inputs and did not return the three-episode outline before first-episode generation.",
+      "resolution_commit": "9bb0c6807f99d5218127d54f80d818fb90559a13",
+      "targeted_rereview": "PASS"
+    },
+    {
+      "review_id": "ROOT-DECISION-HOLD-PR30-TWO-TARGETED-FIXES",
+      "candidate_commit": "b0c836651aa5f600cc5547377adb7476d56243eb",
+      "candidate_tree": "29d0b9ce4107ad4d2bbdff20e43e509a14db6fbb",
+      "verdict": "HOLD",
+      "blocking_acceptance_ids": ["A03", "A09", "A15"],
+      "finding": "Headquarters professional personas shared generic recommendations, and episode-one generation could race the three-episode outline request.",
+      "resolution_commit": "aaaddca094ab7411ebb68dd22990b79cce720975",
+      "resolution_tree": "7135fef3311c4d1907d6d627b97de7e23a628100",
+      "targeted_rereview": "PASS"
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "17_dify_runtime/dify_end_to_end_001/result/account_persona_ui_screenshots/admin-desktop.png",
+      "sha256": "6c686aa829bfe4b0840cfc8faa64f7984cca03ce99e2e587126a4511ad9bc74d"
+    },
+    {
+      "path": "17_dify_runtime/dify_end_to_end_001/result/account_persona_ui_screenshots/professional-desktop.png",
+      "sha256": "2d48e70069f586922055f22193cb50f1604b4df469104a9714eecec15eb7a4a0"
+    },
+    {
+      "path": "17_dify_runtime/dify_end_to_end_001/result/account_persona_ui_screenshots/franchise-desktop.png",
+      "sha256": "c06a52128c1aca66f574d8a9483ab8b94f3facfd8d23be3730219c8a654231ab"
+    },
+    {
+      "path": "17_dify_runtime/dify_end_to_end_001/result/account_persona_ui_screenshots/mobile-result.png",
+      "sha256": "e5f57c2d91278178a03606e4034471e2a6f60eceb11f14bad56c0763497cb6eb"
+    }
+  ],
+  "controls": {
+    "automatic_publish": false,
+    "public_self_registration": false,
+    "real_customer_data_imported": false,
+    "enterprise_content_approval": false,
+    "user_self_check_not_persisted": true,
+    "data_access_authorization_enforced": true
+  },
+  "model_calls": 0,
+  "paid_model_calls": 0,
+  "deployment_performed": false,
+  "ecs_operation_performed": false,
+  "secrets_read_or_disclosed": false,
+  "core_numbers": {
+    "300": 300,
+    "120": 120,
+    "86": 86,
+    "changed": false
+  },
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "generator_qualified": false,
+    "retrieval_ready": false,
+    "runtime_ready": false,
+    "release_ready": false,
+    "production_ready": false
+  },
+  "draft_pull_request_url": "https://github.com/andyan77/diyu-agent/pull/30"
+}

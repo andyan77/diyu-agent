@@ -13,6 +13,20 @@ current_product_status:
     - checker-compatibility_success
     - secret-scan_success
     may_not_self_activate_from_branch: true
+  active_product_semantics:
+    task_id: DIYU_ACCOUNT_PERSONA_UI_AND_NO_APPROVAL_FLOW_001
+    candidate_state: IMPLEMENTED_ON_TASK_BRANCH_NOT_DEPLOYED
+    account_family_count: 7
+    representative_login_principal_count: 12
+    enterprise_content_approval_enabled: false
+    cross_level_content_confirmation_required: false
+    account_user_self_check_before_use: true
+    self_check_is_persisted_as_approval: false
+    export_requires_approval_event: false
+    automatic_external_publish: false
+    public_self_registration: false
+    real_customer_data_imported: false
+    data_access_authorization_enforced: true
   expression_v1:
     asset_runtime_role: OPTIONAL_OFFLINE_RESEARCH_REGRESSION_AND_EXPERIMENT
     normal_runtime_requires_asset_refs: false
@@ -55,6 +69,7 @@ current_product_status:
     release_ready: false
     production_ready: false
   package10_release_closeout:
+    historical_snapshot: true
     task_id: DIYU_PACKAGE10_FINAL_PRODUCT_CLOSEOUT_001
     business_release_decision: PASS_INTERNAL_PRODUCTION_READY_WITH_HUMAN_REVIEW
     scope: INTERNAL_GENERATED_CANDIDATES_WITH_MANDATORY_HUMAN_REVIEW

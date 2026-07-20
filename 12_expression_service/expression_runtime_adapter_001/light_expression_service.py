@@ -25,6 +25,7 @@ SIMULATION_IDENTITY_PATH = FOUNDATION_ROOT / "identity/simulation_tenant.v1.yaml
 TOPIC_MAPPING_PATH = FOUNDATION_ROOT / "taxonomy/topic_product_mapping.v1.yaml"
 NEUTRAL_PROFILE_PATH = PACKAGE_ROOT / "neutral_expression_profile.v1.yaml"
 SERVICE_MANIFEST_PATH = PACKAGE_ROOT / "service_manifest.v1.yaml"
+LOCAL_SIMULATION_PRINCIPAL_ID = "SIM-LOGIN-DIYU-ACCEPTANCE-001"
 
 PREPARE_FIELDS = frozenset(
     {
@@ -32,9 +33,7 @@ PREPARE_FIELDS = frozenset(
         "request_id",
         "trusted_scope_ref",
         "trusted_scope",
-        "acting_role_id",
         "confirmed_requirement",
-        "confirmation_evidence",
         "scoped_retrieval_fragments",
         "verified_precise_facts",
         "server_expression_profile",
@@ -64,9 +63,7 @@ REQUIRED_PREPARE_FIELDS = frozenset(
         "request_id",
         "trusted_scope_ref",
         "trusted_scope",
-        "acting_role_id",
         "confirmed_requirement",
-        "confirmation_evidence",
         "scoped_retrieval_fragments",
         "verified_precise_facts",
         "server_expression_profile",
@@ -88,14 +85,11 @@ REQUIRED_REQUIREMENT_FIELDS = frozenset(
     {
         "requirement_id",
         "requirement_version",
-        "status",
         "plain_language_summary",
         "tenant_id",
         "content_account_id",
         "topic_category_id",
         "target_platform",
-        "confirmed_by_principal_id",
-        "confirmed_at",
     }
 )
 REQUIRED_ROUTING_REQUIREMENT_FIELDS = frozenset(
@@ -105,14 +99,11 @@ REQUIRED_ROUTING_REQUIREMENT_FIELDS = frozenset(
         "required_precise_fact_kinds",
     }
 )
-REQUIRED_CONFIRMATION_FIELDS = frozenset(
-    {
-        "confirmed_by_principal_id",
-        "confirmed_by_role_ids",
-        "confirmation_scope",
-        "authorization_refs",
-        "subject_confirmation_ref",
-    }
+LEGACY_PREPARE_APPROVAL_FIELDS = frozenset(
+    {"acting_role_id", "confirmation_evidence"}
+)
+LEGACY_REQUIREMENT_APPROVAL_FIELDS = frozenset(
+    {"status", "confirmed_by_principal_id", "confirmed_at"}
 )
 REQUIRED_FRAGMENT_FIELDS = frozenset(
     {
@@ -225,6 +216,27 @@ def digest_object(value: Any) -> str:
     return hashlib.sha256(canonical_json(value).encode("utf-8")).hexdigest()
 
 
+def normalize_task_requirement(requirement: JsonObject) -> JsonObject:
+    """Drop legacy approval metadata without changing the user's task."""
+
+    normalized = copy.deepcopy(requirement)
+    for field in LEGACY_REQUIREMENT_APPROVAL_FIELDS:
+        normalized.pop(field, None)
+    return normalized
+
+
+def normalize_prepare_request(request: JsonObject) -> JsonObject:
+    """Accept legacy callers while keeping approval data out of the plan contract."""
+
+    normalized = copy.deepcopy(request)
+    for field in LEGACY_PREPARE_APPROVAL_FIELDS:
+        normalized.pop(field, None)
+    requirement = normalized.get("confirmed_requirement")
+    if isinstance(requirement, dict):
+        normalized["confirmed_requirement"] = normalize_task_requirement(requirement)
+    return normalized
+
+
 def load_yaml(path: Path) -> JsonObject:
     payload = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
@@ -266,6 +278,8 @@ def require_fields(value: JsonObject, required: frozenset[str], name: str) -> No
 
 @dataclass(frozen=True)
 class ConfirmationRoute:
+    """Legacy identity shape retained for current runtime constructor compatibility."""
+
     scope: str
     confirmer_role_ids: tuple[str, ...]
     approval_mode: str
@@ -305,13 +319,21 @@ class TrustedUpstreamContext:
         trusted_requirements: tuple[JsonObject, ...] = (),
         trusted_fragments: tuple[JsonObject, ...] = (),
         trusted_facts: tuple[JsonObject, ...] = (),
+        *,
+        principal_id: str = LOCAL_SIMULATION_PRINCIPAL_ID,
     ) -> TrustedUpstreamContext:
         raw = load_yaml(path)["simulation_tenant"]
         tenant = require_mapping(raw.get("tenant"), "simulation tenant")
         principal_rows = require_list(raw.get("login_principals"), "login principals")
-        if len(principal_rows) != 1:
-            raise ValueError("The local simulation must expose exactly one server-owned principal")
-        principal = require_mapping(principal_rows[0], "simulation principal")
+        principals = [
+            require_mapping(row, "simulation principal") for row in principal_rows
+        ]
+        matching_principals = [
+            row for row in principals if row.get("principal_id") == principal_id
+        ]
+        if len(matching_principals) != 1:
+            raise ValueError("The requested server-owned simulation principal is unavailable")
+        principal = matching_principals[0]
         allowed_accounts = set(require_list(principal.get("allowed_content_account_ids"), "allowed accounts"))
         accounts: dict[str, AccountAuthority] = {}
         for item in require_list(raw.get("content_accounts"), "content accounts"):
@@ -319,29 +341,16 @@ class TrustedUpstreamContext:
             account_id = str(account.get("account_id"))
             if account_id not in allowed_accounts:
                 continue
-            routes = tuple(
-                ConfirmationRoute(
-                    scope=str(route["scope"]),
-                    confirmer_role_ids=tuple(str(value) for value in route["confirmer_role_ids"]),
-                    approval_mode=str(route["approval_mode"]),
-                    subject_confirmation_required=bool(route["subject_confirmation_required"]),
-                )
-                for route in account.get("confirmation_routes", [])
-            )
             accounts[account_id] = AccountAuthority(
                 account_id=account_id,
                 organization_id=str(account["organization_id"]),
                 store_id=account.get("store_id"),
                 maker_role_ids=tuple(str(value) for value in account.get("maker_role_ids", [])),
-                confirmation_routes=routes,
+                confirmation_routes=(),
             )
         grants = {
             str(item["authorization_id"]): copy.deepcopy(item)
             for item in require_list(raw.get("authorization_grants"), "authorization grants")
-        }
-        confirmations = {
-            str(item["subject_confirmation_id"]): copy.deepcopy(item)
-            for item in require_list(raw.get("subject_confirmation_records"), "subject confirmations")
         }
         return cls(
             tenant_id=str(tenant["tenant_id"]),
@@ -349,8 +358,11 @@ class TrustedUpstreamContext:
             login_principal_id=str(principal["principal_id"]),
             accounts=accounts,
             authorization_grants=grants,
-            subject_confirmations=confirmations,
-            trusted_requirement_digests=frozenset(digest_object(item) for item in trusted_requirements),
+            subject_confirmations={},
+            trusted_requirement_digests=frozenset(
+                digest_object(normalize_task_requirement(item))
+                for item in trusted_requirements
+            ),
             trusted_fragment_digests=frozenset(digest_object(item) for item in trusted_fragments),
             trusted_fact_digests=frozenset(digest_object(item) for item in trusted_facts),
             simulation_only=bool(tenant["simulation_only"]),
@@ -480,7 +492,7 @@ class LightExpressionService:
         )
 
     def local_simulation_request(self) -> JsonObject:
-        """Return the public example with the package-owned confirmed-task extension."""
+        """Return the public example with the package-owned task extension."""
 
         prepare_api = require_mapping(next(
             row
@@ -488,10 +500,10 @@ class LightExpressionService:
             if row.get("method") == "POST" and row.get("path") == "/v1/content/prepare"
         ), "本地模拟准备合同")
         request = copy.deepcopy(require_mapping(prepare_api["request_example"], "本地模拟准备请求"))
-        requirement = require_mapping(request["confirmed_requirement"], "本地模拟确认任务")
+        requirement = require_mapping(request["confirmed_requirement"], "本地模拟任务")
         extension = require_mapping(
             self.service_manifest["confirmed_requirement_extension"],
-            "确认任务扩展",
+            "任务扩展",
         )
         values = require_mapping(extension["local_simulation_values"], "本地模拟任务扩展值")
         requirement.update(copy.deepcopy(values))
@@ -526,22 +538,23 @@ class LightExpressionService:
         evaluation_time: datetime | None = None,
     ) -> JsonObject:
         try:
+            request = normalize_prepare_request(request)
             if trusted_context is None:
                 raise PreparationIssue(
                     "BLOCK",
-                    "缺少服务端确认的身份和企业范围，不能依据请求中的自我声明继续。",
-                    ["server_confirmed_scope"],
+                    "缺少服务端受信的身份和企业范围，不能依据请求中的自我声明继续。",
+                    ["server_trusted_scope"],
                 )
             now = evaluation_time or utc_now()
             self._validate_top_level(request, PREPARE_FIELDS, REQUIRED_PREPARE_FIELDS, "准备请求")
             self._validate_scope(request, trusted_context)
-            account = self._validate_requirement_and_confirmation(request, trusted_context, now)
+            account = self._validate_requirement(request, trusted_context)
             profile = self._resolve_profile(request, trusted_context)
             modes, soft_preferences, expression_warnings = self._validate_expression_hints(request)
             output_requirements = self._validate_output_and_evaluation(request)
             fragments = self._validate_fragments(request, trusted_context, account, now)
             facts = self._validate_facts(request, trusted_context, account, now)
-            requirement = require_mapping(request["confirmed_requirement"], "确认任务书")
+            requirement = require_mapping(request["confirmed_requirement"], "任务要求")
             required_fact_kinds = set(
                 self._string_list(requirement["required_precise_fact_kinds"], "所需精确事实类型")
             )
@@ -550,14 +563,8 @@ class LightExpressionService:
             if missing_fact_kinds:
                 raise PreparationIssue(
                     "COLLECT_FACT",
-                    "已确认任务需要的精确事实尚未齐全，请先补充对应事实。",
+                    "任务明确需要的精确事实尚未齐全，请先补充对应事实。",
                     missing_fact_kinds,
-                )
-            if not fragments and not facts:
-                raise PreparationIssue(
-                    "COLLECT_MATERIAL",
-                    "当前没有可追溯的叙事资料或精确事实，请先补充材料。",
-                    ["scoped_retrieval_fragments", "verified_precise_facts"],
                 )
             return self._materialize_plan(
                 request,
@@ -587,7 +594,7 @@ class LightExpressionService:
         if trusted_context is None:
             return self._validation_block(
                 request,
-                "缺少服务端确认的身份和企业范围，不能依据请求中的自我声明校验。",
+                "缺少服务端受信的身份和企业范围，不能依据请求中的自我声明校验。",
                 "trusted_scope",
             )
         try:
@@ -667,16 +674,16 @@ class LightExpressionService:
                 )
             if hard_issues:
                 decision = "BLOCK"
-                semantic_status = "NOT_REACHED"
+                usage_status = "NOT_REACHED"
                 reason = "结构化硬边界检查发现问题，候选暂不能继续。"
             elif revise_reasons:
                 decision = "REVISE"
-                semantic_status = "PENDING_EXTERNAL_REVIEW"
+                usage_status = "USER_SELF_CHECK"
                 reason = revise_reasons[0]
             else:
                 decision = "PASS"
-                semantic_status = "PENDING_EXTERNAL_REVIEW"
-                reason = "结构化引用和硬边界检查通过；正文语义事实仍需外部复核。"
+                usage_status = "USER_SELF_CHECK"
+                reason = "结构化引用和硬边界检查通过；候选交由账号使用人自行检查后使用。"
             decision_seed = {
                 "plan_ref": plan_ref,
                 "candidate": candidate,
@@ -691,7 +698,7 @@ class LightExpressionService:
                 "composition_plan_ref": plan_ref,
                 "hard_issues": hard_issues,
                 "soft_evaluation_tasks": self._pending_soft_tasks(),
-                "semantic_fact_review_status": semantic_status,
+                "usage_check_status": usage_status,
                 "structured_hard_checks_prove_candidate_semantics": False,
                 "actually_used_fact_refs": fact_refs,
                 "actually_used_material_refs": material_refs,
@@ -743,39 +750,35 @@ class LightExpressionService:
             or scope["store_id"] != account.store_id
             or request.get("trusted_scope_ref") != expected_ref
         ):
-            raise PreparationIssue("BLOCK", "请求范围与服务端确认的企业或账号范围不一致。", ["trusted_scope"])
+            raise PreparationIssue("BLOCK", "请求范围与服务端受信的企业或账号范围不一致。", ["trusted_scope"])
 
-    def _validate_requirement_and_confirmation(
+    def _validate_requirement(
         self,
         request: JsonObject,
         context: TrustedUpstreamContext,
-        now: datetime,
     ) -> AccountAuthority:
         scope = require_mapping(request["trusted_scope"], "可信范围")
         account = context.accounts[str(scope["content_account_id"])]
-        requirement = require_mapping(request["confirmed_requirement"], "确认任务书")
-        require_fields(requirement, REQUIRED_REQUIREMENT_FIELDS, "确认任务书")
+        requirement = require_mapping(request["confirmed_requirement"], "任务要求")
+        require_fields(requirement, REQUIRED_REQUIREMENT_FIELDS, "任务要求")
         missing_routing = sorted(REQUIRED_ROUTING_REQUIREMENT_FIELDS - requirement.keys())
         if missing_routing:
             raise PreparationIssue(
                 "COLLECT_MATERIAL",
-                "已确认任务还缺少明确的内容方向、主要受众或精确事实需求，请补充后再继续。",
+                "任务还缺少明确的内容方向、主要受众或精确事实需求，请补充后再继续。",
                 missing_routing,
             )
         if digest_object(requirement) not in context.trusted_requirement_digests:
             raise PreparationIssue(
                 "BLOCK",
-                "确认任务书没有出现在服务端受信上游登记中。",
+                "任务要求没有出现在服务端受信上游登记中。",
                 [str(requirement.get("requirement_id", "unresolved"))],
             )
-        if requirement["status"] != "CONFIRMED":
-            raise PreparationIssue("BLOCK", "任务书尚未由用户确认。", ["confirmed_requirement"])
         if (
             requirement["tenant_id"] != context.tenant_id
             or requirement["content_account_id"] != account.account_id
-            or requirement["confirmed_by_principal_id"] != context.login_principal_id
         ):
-            raise PreparationIssue("BLOCK", "任务书与当前企业、账号或登录身份不一致。", ["confirmed_requirement"])
+            raise PreparationIssue("BLOCK", "任务要求与当前企业或账号不一致。", ["confirmed_requirement"])
         topic_id = str(requirement["topic_category_id"])
         if topic_id not in self.topic_products:
             raise PreparationIssue("BLOCK", "题材入口不在当前公共分类中。", ["topic_category_id"])
@@ -783,13 +786,13 @@ class LightExpressionService:
         if selected_product not in self.topic_products[topic_id]:
             raise PreparationIssue(
                 "BLOCK",
-                "已确认的内部内容方向不属于当前所选通俗题材。",
+                "内部内容方向不属于当前所选通俗题材。",
                 ["selected_internal_content_product_id"],
             )
         if not isinstance(requirement["primary_audience"], str) or not requirement["primary_audience"].strip():
             raise PreparationIssue(
                 "COLLECT_MATERIAL",
-                "已确认任务还缺少明确的主要受众，请补充后再继续。",
+                "任务还缺少明确的主要受众，请补充后再继续。",
                 ["primary_audience"],
             )
         required_fact_kinds = self._string_list(
@@ -799,59 +802,13 @@ class LightExpressionService:
         if not set(required_fact_kinds).issubset(ALLOWED_FACT_KINDS):
             raise PreparationIssue(
                 "BLOCK",
-                "已确认任务包含当前合同不支持的精确事实类型。",
+                "任务包含当前合同不支持的精确事实类型。",
                 sorted(set(required_fact_kinds) - ALLOWED_FACT_KINDS),
             )
         if not isinstance(requirement["requirement_version"], int) or requirement["requirement_version"] < 1:
             raise PreparationIssue("BLOCK", "任务书版本无效。", ["requirement_version"])
         if not str(requirement["plain_language_summary"]).strip():
             raise PreparationIssue("BLOCK", "任务目标不能为空。", ["plain_language_summary"])
-        acting_role = str(request["acting_role_id"])
-        if acting_role not in account.maker_role_ids:
-            raise PreparationIssue("BLOCK", "当前岗位无权为这个内容账号准备任务。", [acting_role])
-        evidence = require_mapping(request["confirmation_evidence"], "确认记录")
-        require_fields(evidence, REQUIRED_CONFIRMATION_FIELDS, "确认记录")
-        if evidence["confirmed_by_principal_id"] != context.login_principal_id:
-            raise PreparationIssue("BLOCK", "确认记录不属于当前登录身份。", ["confirmed_by_principal_id"])
-        route = next(
-            (item for item in account.confirmation_routes if item.scope == evidence["confirmation_scope"]),
-            None,
-        )
-        if route is None:
-            raise PreparationIssue("BLOCK", "当前内容账号没有这类任务的确认路径。", ["confirmation_scope"])
-        confirmed_roles = set(self._string_list(evidence["confirmed_by_role_ids"], "确认岗位"))
-        required_roles = set(route.confirmer_role_ids)
-        approved = required_roles.issubset(confirmed_roles) if route.approval_mode == "ALL_OF" else bool(
-            required_roles & confirmed_roles
-        )
-        if not approved:
-            raise PreparationIssue("BLOCK", "任务尚未由所需责任岗位确认。", sorted(required_roles))
-        confirmation_refs = self._string_list(evidence["authorization_refs"], "确认授权引用")
-        if not confirmation_refs:
-            raise PreparationIssue("REQUEST_AUTHORIZATION", "缺少任务确认授权。", ["authorization_refs"])
-        if not any(
-            self._grant_is_valid(
-                context.authorization_grants.get(ref),
-                context,
-                account,
-                now,
-                allowed_kinds=frozenset({"REQUIREMENT_CONFIRMATION"}),
-                allowed_disclosure_scopes=frozenset({"REQUIREMENT_CONFIRMATION_ONLY"}),
-            )
-            for ref in confirmation_refs
-        ):
-            raise PreparationIssue("REQUEST_AUTHORIZATION", "任务确认授权无效或已过期。", confirmation_refs)
-        subject_ref = evidence.get("subject_confirmation_ref")
-        if route.subject_confirmation_required:
-            subject = context.subject_confirmations.get(str(subject_ref)) if subject_ref else None
-            if not self._subject_confirmation_is_valid(
-                subject,
-                context,
-                account,
-                now,
-                route.scope,
-            ):
-                raise PreparationIssue("ANONYMIZE", "人物观点尚无有效本人确认，请补确认或改为匿名表达。", [str(subject_ref)])
         return account
 
     def _resolve_profile(self, request: JsonObject, context: TrustedUpstreamContext) -> JsonObject:
@@ -1093,31 +1050,6 @@ class LightExpressionService:
             and account.account_id in grant.get("permitted_content_account_ids", [])
         )
 
-    def _subject_confirmation_is_valid(
-        self,
-        record: JsonObject | None,
-        context: TrustedUpstreamContext,
-        account: AccountAuthority,
-        now: datetime,
-        expected_scope: str,
-    ) -> bool:
-        if record is None:
-            return False
-        try:
-            return bool(
-                record.get("status") == "ACTIVE"
-                and record.get("tenant_id") == context.tenant_id
-                and record.get("brand_id") == context.brand_id
-                and record.get("organization_id") == account.organization_id
-                and record.get("store_id") == account.store_id
-                and record.get("content_account_id") == account.account_id
-                and record.get("confirmation_scope") == expected_scope
-                and parse_time(record["confirmed_at"]) <= now
-                and parse_time(record["valid_until"]) >= now
-            )
-        except (KeyError, TypeError, ValueError):
-            return False
-
     def _materialize_plan(
         self,
         request: JsonObject,
@@ -1156,9 +1088,14 @@ class LightExpressionService:
 
         def factory(revision: int) -> JsonObject:
             composition_ref = f"plan://{plan_id}/revisions/{revision}"
-            material_mode = "FULL_MATERIAL" if fragments and facts else (
-                "DEGRADED_FACT_ONLY" if facts else "DEGRADED_NARRATIVE_ONLY"
-            )
+            if fragments and facts:
+                material_mode = "FULL_MATERIAL"
+            elif facts:
+                material_mode = "DEGRADED_FACT_ONLY"
+            elif fragments:
+                material_mode = "DEGRADED_NARRATIVE_ONLY"
+            else:
+                material_mode = "CREATIVE_ONLY"
             return {
                 "object_type": "LIGHT_CONTENT_PLAN",
                 "plan_id": plan_id,
@@ -1222,7 +1159,7 @@ class LightExpressionService:
                 "authoring_boundary": {
                     "may_add_facts": False,
                     "audience_body_in_plan": False,
-                    "semantic_fact_review_status": "PENDING_EXTERNAL_REVIEW",
+                    "usage_check_status": "USER_SELF_CHECK",
                 },
             }
 
@@ -1273,7 +1210,7 @@ class LightExpressionService:
             "composition_plan_ref": plan_ref,
             "hard_issues": [{"category": category, "reason": reason}],
             "soft_evaluation_tasks": self._pending_soft_tasks(),
-            "semantic_fact_review_status": "NOT_REACHED",
+            "usage_check_status": "NOT_REACHED",
             "structured_hard_checks_prove_candidate_semantics": False,
             "actually_used_fact_refs": fact_refs,
             "actually_used_material_refs": material_refs,
@@ -1318,9 +1255,7 @@ class LightExpressionService:
             "COLLECT_FACT": "补充或确认当前有效事实后重新准备。",
             "COLLECT_MATERIAL": "补充可追溯资料后重新准备。",
             "REQUEST_AUTHORIZATION": "取得有效授权后重新准备。",
-            "INTERVIEW": "完成采访和本人确认后重新准备。",
             "RESHOOT": "完成所需补拍后重新准备。",
-            "ANONYMIZE": "补齐本人确认，或改为不识别具体人物的表达。",
             "DEGRADE": "按当前可用资料缩小表达范围。",
             "BLOCK": "由可信上游修正范围或输入后再试。",
         }.get(action_type, "修正输入后重新准备。")

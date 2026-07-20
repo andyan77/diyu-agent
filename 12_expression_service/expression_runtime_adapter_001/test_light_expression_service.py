@@ -58,7 +58,7 @@ def valid_candidate() -> dict[str, Any]:
             "spoken_lines": ["先把能够确认的部分讲清楚。"],
             "CTA": "需要时可以继续核对资料。",
             "execution_payload": {"visual_direction": "只拍已有材料能够支持的画面"},
-            "surface_units": [{"kind": "caption", "text": "语义事实仍待独立复核"}],
+            "surface_units": [{"kind": "caption", "text": "使用前请自行检查"}],
         },
     }
 
@@ -213,7 +213,7 @@ class PrepareTests(unittest.TestCase):
         self.assertEqual(result["object_type"], "ACTION_CARD")
         self.assertEqual(result["action_type"], "COLLECT_MATERIAL")
 
-    def test_unregistered_requirement_change_cannot_reuse_confirmation(self) -> None:
+    def test_unregistered_requirement_change_cannot_reuse_trusted_context(self) -> None:
         changed = copy.deepcopy(self.request)
         changed["confirmed_requirement"]["primary_audience"] = "未经登记的新受众"
         result = self.prepare(changed)
@@ -298,7 +298,7 @@ class PrepareTests(unittest.TestCase):
         changed["verified_precise_facts"][0]["verified"] = True
         result = self.service.prepare(changed, None, FIXED_TIME)
         self.assertEqual(result["action_type"], "BLOCK")
-        self.assertIn("服务端确认", result["plain_language_reason"])
+        self.assertIn("服务端受信", result["plain_language_reason"])
 
     def test_fact_only_input_degrades_safely(self) -> None:
         changed = copy.deepcopy(self.request)
@@ -325,15 +325,14 @@ class PrepareTests(unittest.TestCase):
         self.assertEqual(result["action_type"], "COLLECT_FACT")
         self.assertEqual(result["missing_or_invalid_refs"], ["PRICE", "STOCK"])
 
-    def test_empty_material_and_facts_returns_collection_card(self) -> None:
+    def test_empty_material_and_facts_uses_creative_only_plan(self) -> None:
         changed = copy.deepcopy(self.request)
         changed["scoped_retrieval_fragments"] = []
         changed["verified_precise_facts"] = []
         changed["confirmed_requirement"]["required_precise_fact_kinds"] = []
         result = self.prepare(changed, register_request_evidence=True)
-        self.assertEqual(result["object_type"], "ACTION_CARD")
-        self.assertEqual(result["action_type"], "COLLECT_MATERIAL")
-        self.assertFalse(result["publishable_candidate_included"])
+        self.assertEqual(result["object_type"], "LIGHT_CONTENT_PLAN")
+        self.assertEqual(result["expression_guidance"]["material_mode"], "CREATIVE_ONLY")
 
     def test_missing_fact_authorization_requests_authorization(self) -> None:
         changed = copy.deepcopy(self.request)
@@ -412,17 +411,22 @@ class PrepareTests(unittest.TestCase):
                 result = self.prepare(changed, register_request_evidence=True)
                 self.assertNotEqual(result["object_type"], "LIGHT_CONTENT_PLAN")
 
-    def test_requirement_confirmation_grant_is_purpose_and_scope_bound(self) -> None:
+    def test_legacy_requirement_approval_grant_is_ignored(self) -> None:
         for field, value in (
             ("authorization_kind", "FACT_DISCLOSURE"),
             ("disclosure_scope", "CONTENT_ACCOUNT_ONLY"),
         ):
             with self.subTest(field=field):
                 context = copy.deepcopy(self.context)
-                context.authorization_grants["AUTH-SIM-CONFIRM-001"][field] = value
-                result = self.service.prepare(self.request, context, FIXED_TIME)
-                self.assertEqual(result["object_type"], "ACTION_CARD")
-                self.assertEqual(result["action_type"], "REQUEST_AUTHORIZATION")
+                context.authorization_grants["AUTH-LEGACY-APPROVAL"] = {
+                    field: value
+                }
+                changed = copy.deepcopy(self.request)
+                changed["confirmation_evidence"] = {
+                    "authorization_refs": ["AUTH-LEGACY-APPROVAL"]
+                }
+                result = self.service.prepare(changed, context, FIXED_TIME)
+                self.assertEqual(result["object_type"], "LIGHT_CONTENT_PLAN")
 
     def test_future_or_empty_evidence_is_not_usable(self) -> None:
         mutations: tuple[tuple[str, Callable[[dict[str, Any]], None]], ...] = (
@@ -447,7 +451,7 @@ class PrepareTests(unittest.TestCase):
                 result = self.prepare(changed, register_request_evidence=True)
                 self.assertIn(result["action_type"], {"COLLECT_FACT", "COLLECT_MATERIAL"})
 
-    def test_missing_person_confirmation_routes_to_anonymize(self) -> None:
+    def test_legacy_missing_person_approval_metadata_is_ignored(self) -> None:
         changed = copy.deepcopy(self.request)
         changed["acting_role_id"] = "ROLE-HQ-CONTENT-TEAM"
         changed["confirmation_evidence"] = {
@@ -458,9 +462,14 @@ class PrepareTests(unittest.TestCase):
             "subject_confirmation_ref": None,
         }
         result = self.prepare(changed)
-        self.assertEqual(result["action_type"], "ANONYMIZE")
+        self.assertEqual(result["object_type"], "LIGHT_CONTENT_PLAN")
+        record = self.service.store.get(result["composition_plan_ref"])
+        self.assertIsNotNone(record)
+        source = {} if record is None else record.source_request
+        self.assertNotIn("acting_role_id", source)
+        self.assertNotIn("confirmation_evidence", source)
 
-    def test_subject_confirmation_cannot_be_replayed_across_scope_or_account(self) -> None:
+    def test_legacy_subject_approval_metadata_is_ignored(self) -> None:
         changed = copy.deepcopy(self.request)
         changed["confirmation_evidence"] = {
             "confirmed_by_principal_id": "SIM-LOGIN-DIYU-ACCEPTANCE-001",
@@ -470,7 +479,11 @@ class PrepareTests(unittest.TestCase):
             "subject_confirmation_ref": "SUBJECT-CONFIRM-SIM-001",
         }
         result = self.prepare(changed)
-        self.assertEqual(result["action_type"], "ANONYMIZE")
+        self.assertEqual(result["object_type"], "LIGHT_CONTENT_PLAN")
+        record = self.service.store.get(result["composition_plan_ref"])
+        self.assertIsNotNone(record)
+        source = {} if record is None else record.source_request
+        self.assertNotIn("confirmation_evidence", source)
 
     def test_candidate_count_and_difference_policy_are_explicit(self) -> None:
         result = self.prepare()
@@ -494,13 +507,13 @@ class ValidateTests(unittest.TestCase):
     def validate(self, request: dict[str, Any] | None = None) -> dict[str, Any]:
         return self.service.validate(request or self.request, self.context, FIXED_TIME)
 
-    def test_structured_pass_keeps_semantic_review_pending_and_scores_empty(self) -> None:
+    def test_structured_pass_leaves_usage_to_user_self_check(self) -> None:
         result = self.validate()
         self.assertEqual(result["decision"], "PASS")
         self.assertEqual(result["hard_issues"], [])
-        self.assertEqual(result["semantic_fact_review_status"], "PENDING_EXTERNAL_REVIEW")
+        self.assertEqual(result["usage_check_status"], "USER_SELF_CHECK")
         self.assertFalse(result["structured_hard_checks_prove_candidate_semantics"])
-        self.assertIn("语义事实仍需外部复核", result["plain_language_reason"])
+        self.assertIn("自行检查", result["plain_language_reason"])
         self.assertTrue(
             all(item["score"] is None for item in result["soft_evaluation_tasks"])
         )
@@ -600,7 +613,7 @@ class ValidateTests(unittest.TestCase):
             parse_time("2027-01-01T00:00:00Z"),
         )
         self.assertEqual(result["decision"], "BLOCK")
-        self.assertEqual(result["semantic_fact_review_status"], "NOT_REACHED")
+        self.assertEqual(result["usage_check_status"], "NOT_REACHED")
         self.assertIn(
             "effective_time_and_revocation",
             {item["category"] for item in result["hard_issues"]},

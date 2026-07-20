@@ -256,7 +256,7 @@ class RuntimeFeedback(Base):
     previous_content_ref: Mapped[str | None] = mapped_column(String(240), nullable=True)
     fact_refs: Mapped[list[str]] = mapped_column(JSON, nullable=False, default=list)
     material_refs: Mapped[list[str]] = mapped_column(JSON, nullable=False, default=list)
-    review_state: Mapped[str] = mapped_column(String(64), nullable=False, default="PENDING_REVIEW")
+    review_state: Mapped[str] = mapped_column(String(64), nullable=False, default="RECORDED")
     short_reason: Mapped[str] = mapped_column(String(500), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
 

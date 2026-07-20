@@ -180,6 +180,38 @@ RECOVERY_DELIVERY_FILES = frozenset(
 RECOVERY_EXPECTED_PACKAGE_FILES = (
     EXPECTED_PACKAGE_FILES | RECOVERY_IMPLEMENTATION_FILES | RECOVERY_DELIVERY_FILES
 )
+ACCOUNT_PERSONA_TASK_ID = "DIYU_ACCOUNT_PERSONA_UI_AND_NO_APPROVAL_FLOW_001"
+ACCOUNT_PERSONA_BASELINE_COMMIT = "bb11e8cdfd9584136c0be85d4d7fcfc52caf614c"
+ACCOUNT_PERSONA_RESULT_PATH = Path(
+    "result/account_persona_ui_no_approval_result.v1.json"
+)
+ACCOUNT_PERSONA_DELIVERY_PATH = Path(
+    "delivery/account_persona_ui_no_approval_execution_review_request.v1.yaml"
+)
+ACCOUNT_PERSONA_SCREENSHOT_PATHS = (
+    Path("result/account_persona_ui_screenshots/admin-desktop.png"),
+    Path("result/account_persona_ui_screenshots/professional-desktop.png"),
+    Path("result/account_persona_ui_screenshots/franchise-desktop.png"),
+    Path("result/account_persona_ui_screenshots/mobile-result.png"),
+)
+ACCOUNT_PERSONA_EXPECTED_PACKAGE_FILES = RECOVERY_EXPECTED_PACKAGE_FILES | {
+    ACCOUNT_PERSONA_RESULT_PATH,
+    ACCOUNT_PERSONA_DELIVERY_PATH,
+    *ACCOUNT_PERSONA_SCREENSHOT_PATHS,
+}
+ACCOUNT_PERSONA_FAMILIES = {
+    "ENTERPRISE_ADMIN",
+    "HEADQUARTERS_BRAND",
+    "FOUNDER",
+    "HEADQUARTERS_PROFESSIONAL_PERSONA",
+    "PROVINCIAL_AGENT",
+    "HEADQUARTERS_DIRECT_STORE",
+    "FRANCHISE_STORE",
+}
+ACCOUNT_PERSONA_REVIEW_TYPES = {
+    "ACCOUNT_PRODUCT_STRUCTURE_AND_NOVICE_EXPERIENCE",
+    "ISOLATION_CONTRACT_COMPATIBILITY_AND_NO_APPROVAL",
+}
 RECOVERY_HISTORICAL_FROZEN_FILES = frozenset(
     {
         MANIFEST_PATH,
@@ -3282,6 +3314,379 @@ def run_recovery_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
     }
 
 
+def account_persona_task_active() -> bool:
+    status_path = REPOSITORY_ROOT / "project-infra/current_product_status.v1.yaml"
+    if not status_path.is_file():
+        return False
+    document = yaml.safe_load(status_path.read_text(encoding="utf-8"))
+    if not isinstance(document, dict):
+        return False
+    status = document.get("current_product_status")
+    if not isinstance(status, dict):
+        return False
+    semantics = status.get("active_product_semantics")
+    return bool(
+        isinstance(semantics, dict)
+        and semantics.get("task_id") == ACCOUNT_PERSONA_TASK_ID
+    )
+
+
+def validate_account_persona_file_set(
+    root: Path, *, implementation_only: bool
+) -> None:
+    actual = package_file_set(root)
+    require(not list(root.rglob("*.pyc")), "E_ACCOUNT_PERSONA_BYTECODE_PRESENT")
+    require(not list(root.rglob("__pycache__")), "E_ACCOUNT_PERSONA_PYCACHE_PRESENT")
+    if implementation_only:
+        required = RECOVERY_EXPECTED_PACKAGE_FILES | set(
+            ACCOUNT_PERSONA_SCREENSHOT_PATHS
+        )
+        require(
+            required <= actual,
+            "E_ACCOUNT_PERSONA_IMPLEMENTATION_FILE_MISSING",
+        )
+        require(
+            actual <= ACCOUNT_PERSONA_EXPECTED_PACKAGE_FILES,
+            "E_ACCOUNT_PERSONA_FILE_SET_EXTRA:"
+            f"{sorted(map(str, actual - ACCOUNT_PERSONA_EXPECTED_PACKAGE_FILES))}",
+        )
+        return
+    require(
+        actual == ACCOUNT_PERSONA_EXPECTED_PACKAGE_FILES,
+        "E_ACCOUNT_PERSONA_FILE_SET:"
+        f"{sorted(map(str, actual ^ ACCOUNT_PERSONA_EXPECTED_PACKAGE_FILES))}",
+    )
+
+
+def validate_account_persona_source_contract(root: Path) -> None:
+    identity_path = (
+        REPOSITORY_ROOT
+        / "11_product_foundation/public_foundation_001/identity/"
+        "simulation_tenant.v1.yaml"
+    )
+    identity = load_yaml_root(identity_path, "simulation_tenant")
+    principals = identity.get("login_principals")
+    accounts = identity.get("content_accounts")
+    families = identity.get("account_families")
+    require(
+        isinstance(principals, list) and len(principals) == 12,
+        "E_ACCOUNT_PERSONA_PRINCIPAL_COUNT",
+    )
+    require(
+        isinstance(accounts, list) and len(accounts) == 11,
+        "E_ACCOUNT_PERSONA_ACCOUNT_COUNT",
+    )
+    require(
+        isinstance(families, list)
+        and {
+            str(row.get("account_family"))
+            for row in families
+            if isinstance(row, dict)
+        }
+        == ACCOUNT_PERSONA_FAMILIES,
+        "E_ACCOUNT_PERSONA_FAMILY_SET",
+    )
+    portal = (root / "portal.html").read_text(encoding="utf-8") + (
+        root / "portal.js"
+    ).read_text(encoding="utf-8")
+    for prohibited in ("审核", "送审", "批准"):
+        require(
+            prohibited not in portal,
+            f"E_ACCOUNT_PERSONA_PORTAL_APPROVAL:{prohibited}",
+        )
+    contracts = (root / "contracts.py").read_text(encoding="utf-8")
+    bridge = (root / "bridge_app.py").read_text(encoding="utf-8")
+    dify_app = (root / "dify_app.v1.yaml").read_text(encoding="utf-8")
+    for source_name, source in (
+        ("contracts", contracts),
+        ("bridge", bridge),
+        ("dify", dify_app),
+    ):
+        require(
+            '"审核"' not in source and '"送审"' not in source,
+            f"E_ACCOUNT_PERSONA_ACTIVE_APPROVAL_OPERATION:{source_name}",
+        )
+    tests = (root / "test_dify_end_to_end.py").read_text(encoding="utf-8")
+    required_tests = (
+        "test_seed_has_seven_account_families_and_twelve_isolated_principals",
+        "test_six_creator_families_have_distinct_directions_and_open_topics",
+        "test_admin_matrix_creates_uses_and_disables_four_extensible_families",
+        "test_public_capability_mapping_exposes_ten_topics_and_seven_formats",
+        "test_all_seven_formats_render_select_revise_export_and_reference",
+        "test_generation_select_revision_export_and_feedback_need_no_approval_fields",
+        "test_series_returns_three_episode_outline_and_creates_a_continuation",
+        "test_internal_identifiers_sensitive_data_and_secrets_are_blocked",
+        "test_same_account_candidates_and_actions_do_not_cross_browser_sessions",
+        "test_portal_unauthenticated_and_cross_account_requests_are_isolated",
+    )
+    for test_name in required_tests:
+        require(test_name in tests, f"E_ACCOUNT_PERSONA_TEST:{test_name}")
+    status = load_yaml_root(
+        REPOSITORY_ROOT / "project-infra/current_product_status.v1.yaml",
+        "current_product_status",
+    )
+    semantics = cast(Mapping[str, Any], status.get("active_product_semantics", {}))
+    require(
+        semantics.get("account_family_count") == 7
+        and semantics.get("representative_login_principal_count") == 12
+        and semantics.get("enterprise_content_approval_enabled") is False
+        and semantics.get("cross_level_content_confirmation_required") is False
+        and semantics.get("account_user_self_check_before_use") is True
+        and semantics.get("self_check_is_persisted_as_approval") is False
+        and semantics.get("export_requires_approval_event") is False
+        and semantics.get("automatic_external_publish") is False
+        and semantics.get("data_access_authorization_enforced") is True,
+        "E_ACCOUNT_PERSONA_CURRENT_SEMANTICS",
+    )
+
+
+def validate_account_persona_screenshots(root: Path) -> None:
+    for path in ACCOUNT_PERSONA_SCREENSHOT_PATHS:
+        payload = (root / path).read_bytes()
+        require(
+            payload.startswith(b"\x89PNG\r\n\x1a\n") and len(payload) >= 10_000,
+            f"E_ACCOUNT_PERSONA_SCREENSHOT:{path}",
+        )
+
+
+def run_account_persona_unit_tests(root: Path) -> int:
+    environment = os.environ.copy()
+    environment["PYTHONDONTWRITEBYTECODE"] = "1"
+    process = subprocess.run(
+        [sys.executable, "-m", "unittest", "test_dify_end_to_end.py"],
+        cwd=root,
+        capture_output=True,
+        check=False,
+        text=True,
+        env=environment,
+    )
+    require(
+        process.returncode == 0,
+        f"E_ACCOUNT_PERSONA_UNIT_TESTS:{process.stdout[-500:]}:{process.stderr[-500:]}",
+    )
+    combined = process.stdout + process.stderr
+    match = re.search(r"Ran (\d+) tests?", combined)
+    require(
+        match is not None and "OK" in combined,
+        "E_ACCOUNT_PERSONA_UNIT_TEST_SUMMARY",
+    )
+    node = subprocess.run(
+        ["node", "--check", "portal.js"],
+        cwd=root,
+        capture_output=True,
+        check=False,
+        text=True,
+    )
+    require(node.returncode == 0, f"E_ACCOUNT_PERSONA_PORTAL_JS:{node.stderr}")
+    return int(match.group(1))
+
+
+def validate_account_persona_implementation(
+    root: Path, *, implementation_only: bool
+) -> JsonObject:
+    validate_account_persona_file_set(root, implementation_only=implementation_only)
+    validate_recovery_historical_bytes(root)
+    validate_account_persona_source_contract(root)
+    validate_account_persona_screenshots(root)
+    unit_test_count = run_account_persona_unit_tests(root)
+    return {
+        "task_id": ACCOUNT_PERSONA_TASK_ID,
+        "status": "PASS",
+        "account_family_count": 7,
+        "representative_login_principal_count": 12,
+        "content_account_count": 11,
+        "content_product_count": 20,
+        "format_count": 7,
+        "screenshot_count": len(ACCOUNT_PERSONA_SCREENSHOT_PATHS),
+        "unit_test_count": unit_test_count,
+        "model_call_count": 0,
+    }
+
+
+def validate_account_persona_reviews(
+    reviews: object, *, candidate_commit: str, candidate_tree: str
+) -> None:
+    require(
+        isinstance(reviews, list) and len(reviews) == 2,
+        "E_ACCOUNT_PERSONA_REVIEW_COUNT",
+    )
+    typed_reviews = [
+        cast(Mapping[str, Any], review)
+        for review in reviews
+        if isinstance(review, dict)
+    ]
+    require(len(typed_reviews) == 2, "E_ACCOUNT_PERSONA_REVIEW_OBJECTS")
+    require(
+        {str(review.get("review_type")) for review in typed_reviews}
+        == ACCOUNT_PERSONA_REVIEW_TYPES,
+        "E_ACCOUNT_PERSONA_REVIEW_TYPES",
+    )
+    for review in typed_reviews:
+        require(
+            review.get("candidate_commit") == candidate_commit
+            and review.get("candidate_tree") == candidate_tree
+            and review.get("verdict") == "PASS"
+            and isinstance(review.get("score"), int)
+            and int(review["score"]) >= 90
+            and review.get("hard_blockers") == []
+            and isinstance(review.get("acceptance_ids"), list)
+            and bool(review["acceptance_ids"]),
+            "E_ACCOUNT_PERSONA_REVIEW_RESULT",
+        )
+        for key in (
+            "review_id",
+            "reviewer_identity",
+            "reviewer_session_id",
+            "reviewer_run_id",
+        ):
+            require(
+                isinstance(review.get(key), str) and bool(review[key]),
+                f"E_ACCOUNT_PERSONA_REVIEW_BINDING:{key}",
+            )
+    for key in (
+        "reviewer_identity",
+        "reviewer_session_id",
+        "reviewer_run_id",
+    ):
+        require(
+            len({str(review.get(key)) for review in typed_reviews}) == 2,
+            f"E_ACCOUNT_PERSONA_REVIEW_INDEPENDENCE:{key}",
+        )
+
+
+def validate_account_persona_all(root: Path = PACKAGE_ROOT) -> JsonObject:
+    implementation = validate_account_persona_implementation(
+        root, implementation_only=False
+    )
+    result = load_json(root / ACCOUNT_PERSONA_RESULT_PATH)
+    delivery = load_yaml_root(
+        root / ACCOUNT_PERSONA_DELIVERY_PATH,
+        "execution_review_request",
+    )
+    require(
+        result.get("schema")
+        == "diyu.package7.account_persona_ui_no_approval.result.v1"
+        and result.get("task_id") == ACCOUNT_PERSONA_TASK_ID
+        and result.get("baseline_commit") == ACCOUNT_PERSONA_BASELINE_COMMIT,
+        "E_ACCOUNT_PERSONA_RESULT_IDENTITY",
+    )
+    candidate_commit = str(result.get("candidate_commit", ""))
+    candidate_tree = str(result.get("candidate_tree", ""))
+    require(
+        bool(re.fullmatch(r"[0-9a-f]{40}", candidate_commit))
+        and git_output("rev-parse", f"{candidate_commit}^{{tree}}") == candidate_tree
+        and subprocess.run(
+            ["git", "merge-base", "--is-ancestor", candidate_commit, "HEAD"],
+            cwd=REPOSITORY_ROOT,
+            check=False,
+        ).returncode
+        == 0,
+        "E_ACCOUNT_PERSONA_CANDIDATE_BINDING",
+    )
+    acceptance = result.get("acceptance")
+    expected_acceptance = {f"A{number:02d}" for number in range(1, 16)}
+    require(
+        isinstance(acceptance, dict)
+        and set(acceptance) == expected_acceptance
+        and all(acceptance.get(key) is True for key in expected_acceptance),
+        "E_ACCOUNT_PERSONA_ACCEPTANCE",
+    )
+    validate_account_persona_reviews(
+        result.get("independent_reviews"),
+        candidate_commit=candidate_commit,
+        candidate_tree=candidate_tree,
+    )
+    screenshots = result.get("screenshots")
+    require(
+        isinstance(screenshots, list)
+        and {
+            str(row.get("path"))
+            for row in screenshots
+            if isinstance(row, dict)
+        }
+        == {
+            (PACKAGE_RELATIVE_ROOT / path).as_posix()
+            for path in ACCOUNT_PERSONA_SCREENSHOT_PATHS
+        },
+        "E_ACCOUNT_PERSONA_RESULT_SCREENSHOTS",
+    )
+    for row in cast(list[Any], screenshots):
+        require(isinstance(row, dict), "E_ACCOUNT_PERSONA_RESULT_SCREENSHOT_OBJECT")
+        path = Path(str(row["path"]))
+        require(
+            row.get("sha256") == sha256_file(REPOSITORY_ROOT / path),
+            f"E_ACCOUNT_PERSONA_RESULT_SCREENSHOT_DIGEST:{path}",
+        )
+    controls = cast(Mapping[str, Any], result.get("controls", {}))
+    require(
+        controls.get("automatic_publish") is False
+        and controls.get("public_self_registration") is False
+        and controls.get("real_customer_data_imported") is False
+        and controls.get("enterprise_content_approval") is False
+        and controls.get("user_self_check_not_persisted") is True
+        and controls.get("data_access_authorization_enforced") is True,
+        "E_ACCOUNT_PERSONA_CONTROLS",
+    )
+    require(
+        result.get("model_calls") == 0
+        and result.get("paid_model_calls") == 0
+        and result.get("deployment_performed") is False
+        and result.get("ecs_operation_performed") is False
+        and result.get("secrets_read_or_disclosed") is False
+        and result.get("core_numbers")
+        == {"300": 300, "120": 120, "86": 86, "changed": False},
+        "E_ACCOUNT_PERSONA_BOUNDARIES",
+    )
+    require(
+        delivery.get("task_id") == ACCOUNT_PERSONA_TASK_ID
+        and delivery.get("candidate_commit") == candidate_commit
+        and delivery.get("candidate_tree") == candidate_tree
+        and delivery.get("required_founder_approval")
+        == "APPROVE_UI_ACCOUNT_PERSONA_NO_APPROVAL_MERGE"
+        and delivery.get("merge_authorized") is False
+        and delivery.get("deployment_authorized") is False
+        and delivery.get("draft_pull_request_url")
+        == result.get("draft_pull_request_url"),
+        "E_ACCOUNT_PERSONA_DELIVERY",
+    )
+    return {
+        **implementation,
+        "draft_pull_request_url": result.get("draft_pull_request_url"),
+        "review_count": 2,
+        "acceptance_pass": True,
+        "core_numbers_changed": False,
+    }
+
+
+def run_account_persona_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
+    result = load_json(root / ACCOUNT_PERSONA_RESULT_PATH)
+    changed = copy.deepcopy(result)
+    changed["acceptance"]["A11"] = False
+    expect_failure(
+        lambda: require(
+            all(changed["acceptance"].values()),
+            "E_ACCOUNT_PERSONA_SELFTEST_ACCEPTANCE",
+        ),
+        "E_ACCOUNT_PERSONA_SELFTEST_ACCEPTANCE",
+    )
+    reviews = copy.deepcopy(result["independent_reviews"])
+    reviews[0]["score"] = 89
+    expect_failure(
+        lambda: validate_account_persona_reviews(
+            reviews,
+            candidate_commit=str(result["candidate_commit"]),
+            candidate_tree=str(result["candidate_tree"]),
+        ),
+        "E_ACCOUNT_PERSONA_REVIEW_RESULT",
+    )
+    return {
+        "task_id": ACCOUNT_PERSONA_TASK_ID,
+        "selftest": "PASS",
+        "negative_cases": 2,
+        "optimized_mode_fail_closed": True,
+    }
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--selftest", action="store_true")
@@ -3294,8 +3699,18 @@ def main() -> int:
     try:
         if args.selftest and args.implementation:
             raise CheckFailure("E_ARGUMENT_MODE_CONFLICT")
+        current_task_active = account_persona_task_active()
         recovery_active = (PACKAGE_ROOT / RECOVERY_REPLAY_PATH).is_file()
-        if recovery_active and args.selftest:
+        if current_task_active and args.selftest:
+            result = run_account_persona_selftest()
+        elif current_task_active and args.implementation:
+            result = validate_account_persona_implementation(
+                PACKAGE_ROOT,
+                implementation_only=True,
+            )
+        elif current_task_active:
+            result = validate_account_persona_all()
+        elif recovery_active and args.selftest:
             result = run_recovery_selftest()
         elif recovery_active and args.implementation:
             result = validate_recovery_implementation(

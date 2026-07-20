@@ -46,6 +46,9 @@ FROZEN_REVIEWED_COMMIT = "3f610726943dee5545d4d310f107239f2eeb9234"
 AUTHORIZED_CURRENT_LIVE_PATHS = frozenset(
     {
         Path("AGENTS.md"),
+        CONTRACT_PATH,
+        CASES_PATH,
+        IDENTITY_PATH,
         LEGACY_GATE1_CHECKER_PATH,
         CHECKER_PATH,
         WORKFLOW_PATH,
@@ -167,6 +170,7 @@ REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
         Path("17_dify_runtime/dify_end_to_end_001/dify_app.v1.yaml"),
         Path("17_dify_runtime/dify_end_to_end_001/dify_chat.py"),
         Path("17_dify_runtime/dify_end_to_end_001/persistence.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/portal.css"),
         Path("17_dify_runtime/dify_end_to_end_001/portal.html"),
         Path("17_dify_runtime/dify_end_to_end_001/portal.js"),
         Path("17_dify_runtime/dify_end_to_end_001/provision_dify.py"),
@@ -174,6 +178,7 @@ REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS = {
         Path("17_dify_runtime/dify_end_to_end_001/runtime_retrieval.py"),
         Path("17_dify_runtime/dify_end_to_end_001/runtime_service.py"),
         Path("17_dify_runtime/dify_end_to_end_001/security.py"),
+        Path("17_dify_runtime/dify_end_to_end_001/seed_runtime.py"),
         Path("17_dify_runtime/dify_end_to_end_001/test_dify_end_to_end.py"),
         Path(
             "17_dify_runtime/dify_end_to_end_001/output_contract_recovery_002/"
@@ -232,6 +237,33 @@ REFERENCE_SAFE_SUCCESSOR_ADDITIONAL_PATHS = {
         if path.name in {"author_contract.py", "content_capability_mapping.v1.yaml"}
         or "output_contract_recovery_002" in path.parts
     }
+    | (
+        {
+            Path(
+                "17_dify_runtime/dify_end_to_end_001/delivery/"
+                "account_persona_ui_no_approval_execution_review_request.v1.yaml"
+            ),
+            Path(
+                "17_dify_runtime/dify_end_to_end_001/result/"
+                "account_persona_ui_no_approval_result.v1.json"
+            ),
+            *{
+                Path(
+                    "17_dify_runtime/dify_end_to_end_001/result/"
+                    f"account_persona_ui_screenshots/{filename}"
+                )
+                for filename in (
+                    "admin-desktop.png",
+                    "professional-desktop.png",
+                    "franchise-desktop.png",
+                    "mobile-result.png",
+                )
+            },
+        }
+        if checker
+        == Path("17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py")
+        else set()
+    )
     for checker, mutable_paths in REFERENCE_SAFE_SUCCESSOR_MUTABLE_PATHS.items()
 }
 SUCCESSOR_NORMAL_STEP_NAME = "Run reserved downstream package checks"
@@ -594,11 +626,6 @@ PREPARE_CASE_INPUT_FIELDS = frozenset(
     {
         "principal_id",
         "content_account_id",
-        "acting_maker_role_id",
-        "confirmed_by_role_id",
-        "confirmed_by_role_ids",
-        "confirmation_scope",
-        "subject_confirmation_ref",
         "trusted_scope_match",
         "trusted_scope",
         "requirement_status",
@@ -626,7 +653,7 @@ VALIDATE_CASE_INPUT_FIELDS = frozenset(
         "plan_allowed_material_refs",
         "actually_used_fact_refs",
         "actually_used_material_refs",
-        "semantic_fact_review_status",
+        "usage_check_status",
         "soft_evaluation_scores",
         "authorization_state",
         "internal_identifier_leak",
@@ -727,9 +754,18 @@ def git_blob(root: Path, commit: str, relative_path: Path) -> bytes:
 
 
 def snapshot_digest(root: Path) -> str:
+    status_document = yaml.safe_load((root / STATUS_PATH).read_text(encoding="utf-8"))
+    active_semantics = status_document.get("current_product_status", {}).get(
+        "active_product_semantics", {}
+    )
+    preserve_historical_snapshot = (
+        isinstance(active_semantics, dict)
+        and active_semantics.get("task_id")
+        == "DIYU_ACCOUNT_PERSONA_UI_AND_NO_APPROVAL_FLOW_001"
+    )
     digest = hashlib.sha256()
     for relative_path in SNAPSHOT_PATHS:
-        if relative_path in AUTHORIZED_CURRENT_LIVE_PATHS:
+        if preserve_historical_snapshot or relative_path in AUTHORIZED_CURRENT_LIVE_PATHS:
             payload = git_blob(root, FROZEN_REVIEWED_COMMIT, relative_path)
         else:
             path = root / relative_path
@@ -1183,7 +1219,7 @@ def validate_contract_data(
         "E_CROSS_ACCOUNT_POLICY",
     )
     require(
-        trusted.get("server_confirmed_acting_role_required") is True,
+        trusted.get("server_trusted_login_principal_required") is True,
         "E_ACTING_ROLE_POLICY",
     )
     require(
@@ -1218,7 +1254,7 @@ def validate_contract_data(
             "NORMAL_CHAT",
             "FIND_INSPIRATION",
             "NEED_MORE_INFORMATION",
-            "AWAITING_CONFIRMATION",
+            "AWAITING_TASK_ALIGNMENT",
             "START_CREATION",
             "REVISE_OUTPUT",
         },
@@ -1239,11 +1275,12 @@ def validate_contract_data(
     requirement = intent_contract.get("requirement_version")
     require(isinstance(requirement, dict), "E_REQUIREMENT_VERSION")
     require(
-        requirement.get("prepare_requires_status") == "CONFIRMED", "E_PREPARE_STATUS"
+        requirement.get("prepare_requires_user_task_alignment") is True,
+        "E_PREPARE_TASK_ALIGNMENT",
     )
     require(
-        requirement.get("unconfirmed_requirement_may_enter_prepare") is False,
-        "E_UNCONFIRMED_PREPARE",
+        requirement.get("cross_role_content_approval_required") is False,
+        "E_CROSS_ROLE_CONTENT_APPROVAL",
     )
 
     fact_contract = contract.get("brand_fact_contract")
@@ -1557,9 +1594,7 @@ def validate_contract_data(
         "request_id",
         "trusted_scope_ref",
         "trusted_scope",
-        "acting_role_id",
         "confirmed_requirement",
-        "confirmation_evidence",
         "scoped_retrieval_fragments",
         "verified_precise_facts",
         "server_expression_profile",
@@ -1572,8 +1607,6 @@ def validate_contract_data(
         == {
             "trusted_scope_ref",
             "trusted_scope",
-            "acting_role_id",
-            "confirmation_evidence",
             "scoped_retrieval_fragments",
             "verified_precise_facts",
             "server_expression_profile",
@@ -1587,6 +1620,15 @@ def validate_contract_data(
         }
         and prepare.get("client_trust_or_verified_labels_are_authoritative") is False,
         "E_PREPARE_TRUST_BOUNDARY",
+    )
+    require(
+        set(prepare.get("legacy_ignored_optional_fields", []))
+        == {"acting_role_id", "confirmation_evidence"}
+        and not {
+            "acting_role_id",
+            "confirmation_evidence",
+        }.intersection(prepare_request),
+        "E_PREPARE_LEGACY_APPROVAL_FIELDS",
     )
     require(
         set(prepare.get("request_required_fields", [])) == expected_prepare_fields
@@ -1644,55 +1686,6 @@ def validate_contract_data(
         and set(evaluation_rules.get("soft_evaluation_tasks", []))
         == SOFT_EVALUATION_TASKS,
         "E_PREPARE_HARD_SOFT_RULES",
-    )
-    confirmation_example = prepare_request.get("confirmation_evidence")
-    require(
-        isinstance(confirmation_example, dict)
-        and set(confirmation_example)
-        == {
-            "confirmed_by_principal_id",
-            "confirmed_by_role_ids",
-            "confirmation_scope",
-            "authorization_refs",
-            "subject_confirmation_ref",
-        },
-        "E_PREPARE_CONFIRMATION_EXAMPLE",
-    )
-    confirmed_role_ids = confirmation_example.get("confirmed_by_role_ids")
-    authorization_refs = confirmation_example.get("authorization_refs")
-    require(
-        confirmation_example.get("confirmed_by_principal_id")
-        == trusted_scope_example.get("login_principal_id")
-        and isinstance(confirmed_role_ids, list)
-        and confirmed_role_ids
-        and account_role_is_authorized(
-            identity,
-            str(trusted_scope_example.get("login_principal_id")),
-            str(trusted_scope_example.get("content_account_id")),
-            [str(item) for item in confirmed_role_ids],
-            "CONFIRM",
-            str(confirmation_example.get("confirmation_scope")),
-            confirmation_example.get("subject_confirmation_ref"),
-        ),
-        "E_PREPARE_CONFIRMATION_AUTHORITY",
-    )
-    require(
-        isinstance(authorization_refs, list)
-        and authorization_refs
-        and all(
-            authorization_grant_covers(
-                identity,
-                authorization_ref,
-                trusted_scope_example.get("organization_id"),
-                trusted_scope_example.get("store_id"),
-                trusted_scope_example,
-                "REQUIREMENT_CONFIRMATION_ONLY",
-                FIXTURE_SERVER_EVALUATION_TIME,
-                frozenset({"REQUIREMENT_CONFIRMATION"}),
-            )
-            for authorization_ref in authorization_refs
-        ),
-        "E_PREPARE_CONFIRMATION_GRANT",
     )
     example_facts = prepare_request.get("verified_precise_facts")
     require(
@@ -1899,7 +1892,7 @@ def validate_contract_data(
         "composition_plan_ref",
         "hard_issues",
         "soft_evaluation_tasks",
-        "semantic_fact_review_status",
+        "usage_check_status",
         "actually_used_fact_refs",
         "actually_used_material_refs",
         "plain_language_reason",
@@ -1939,9 +1932,9 @@ def validate_contract_data(
             "E_VALIDATE_SOFT_EVALUATION_TASKS",
         )
         require(
-            response.get("semantic_fact_review_status")
-            in {"PENDING_EXTERNAL_REVIEW", "NOT_REACHED"},
-            "E_VALIDATE_SEMANTIC_REVIEW_STATUS",
+            response.get("usage_check_status")
+            in {"USER_SELF_CHECK", "NOT_REACHED"},
+            "E_VALIDATE_USAGE_CHECK_STATUS",
         )
         require(
             isinstance(response.get("plain_language_reason"), str)
@@ -1963,8 +1956,7 @@ def validate_contract_data(
     require(
         isinstance(pass_response, dict)
         and pass_response.get("hard_issues") == []
-        and pass_response.get("semantic_fact_review_status")
-        == "PENDING_EXTERNAL_REVIEW"
+        and pass_response.get("usage_check_status") == "USER_SELF_CHECK"
         and {item.get("task_id") for item in pass_response["soft_evaluation_tasks"]}
         == SOFT_EVALUATION_TASKS,
         "E_VALIDATE_PASS_IS_NOT_SEMANTIC_PROOF",
@@ -1972,7 +1964,7 @@ def validate_contract_data(
     require(
         set(validate.get("checks", [])) == HARD_CHECK_CATEGORIES | {"plan_consistency"}
         and validate.get("hard_checks_do_not_prove_candidate_semantics") is True
-        and validate.get("semantic_fact_review_required_before_publish") is True
+        and validate.get("user_self_check_advisory_not_persisted") is True
         and validate.get("evaluation_time_source") == "SERVER_CLOCK"
         and validate.get("client_supplied_evaluation_time_accepted") is False,
         "E_VALIDATE_BOUNDARY",
@@ -2124,7 +2116,7 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
     require(real.get("one_principal_per_real_person") is True, "E_REAL_LOGIN_PRINCIPAL")
     require(real.get("shared_credentials_allowed") is False, "E_REAL_LOGIN_SHARED")
     require(real.get("Dify_user_id_is_authoritative") is False, "E_REAL_DIFY_ID")
-    require(simulation.get("login_principal_count") == 1, "E_SIM_LOGIN_COUNT")
+    require(simulation.get("login_principal_count") == 12, "E_SIM_LOGIN_COUNT")
     require(
         simulation.get("content_account_count") == 11, "E_SIM_ACCOUNT_DECLARED_COUNT"
     )
@@ -2137,13 +2129,50 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
     )
 
     principals = identity.get("login_principals")
+    account_families = identity.get("account_families")
+    persona_types = identity.get("supported_persona_types")
     organizations = identity.get("organizations")
     stores = identity.get("stores")
     roles = identity.get("work_roles")
     accounts = identity.get("content_accounts")
     authorization_grants = identity.get("authorization_grants")
     subject_confirmations = identity.get("subject_confirmation_records")
-    require(isinstance(principals, list) and len(principals) == 1, "E_PRINCIPAL_COUNT")
+    require(isinstance(principals, list) and len(principals) == 12, "E_PRINCIPAL_COUNT")
+    expected_family_policy = {
+        "ENTERPRISE_ADMIN": (False, True, False),
+        "HEADQUARTERS_BRAND": (True, True, False),
+        "FOUNDER": (True, True, False),
+        "HEADQUARTERS_PROFESSIONAL_PERSONA": (True, False, True),
+        "PROVINCIAL_AGENT": (True, False, True),
+        "HEADQUARTERS_DIRECT_STORE": (True, False, True),
+        "FRANCHISE_STORE": (True, False, True),
+    }
+    require(
+        isinstance(account_families, list)
+        and {
+            str(item.get("account_family")): (
+                item.get("content_creation_allowed"),
+                item.get("fixed_account"),
+                item.get("expandable_account"),
+            )
+            for item in account_families
+            if isinstance(item, dict)
+        }
+        == expected_family_policy,
+        "E_ACCOUNT_FAMILY_POLICY",
+    )
+    require(
+        isinstance(persona_types, list)
+        and {
+            "商品人设",
+            "设计师人设",
+            "终端运营人设",
+            "品控人设",
+            "陈列搭配人设",
+            "供应链人设",
+        }.issubset(set(persona_types)),
+        "E_PERSONA_TYPES",
+    )
     require(
         isinstance(organizations, list) and len(organizations) == 5,
         "E_ORGANIZATION_COUNT",
@@ -2152,7 +2181,7 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
     require(isinstance(roles, list) and roles, "E_WORK_ROLES")
     require(isinstance(accounts, list) and len(accounts) == 11, "E_ACCOUNT_COUNT")
     require(
-        isinstance(authorization_grants, list) and len(authorization_grants) == 6,
+        isinstance(authorization_grants, list) and len(authorization_grants) == 5,
         "E_AUTHORIZATION_GRANT_COUNT",
     )
     require(
@@ -2234,46 +2263,37 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
             f"E_ACCOUNT_STORE_ORGANIZATION:{account_id}",
         )
         makers = account.get("maker_role_ids")
-        routes = account.get("confirmation_routes")
         require(isinstance(makers, list) and makers, f"E_ACCOUNT_MAKERS:{account_id}")
         require(set(makers).issubset(role_ids), f"E_ACCOUNT_MAKER_REF:{account_id}")
         require(
-            isinstance(routes, list) and routes, f"E_ACCOUNT_CONFIRMERS:{account_id}"
+            account.get("confirmation_routes", []) == [],
+            f"E_ACCOUNT_ACTIVE_CONFIRMATION_ROUTE:{account_id}",
         )
-        for route in routes:
-            confirmer_ids = route.get("confirmer_role_ids")
-            require(
-                isinstance(confirmer_ids, list) and confirmer_ids,
-                f"E_CONFIRMERS:{account_id}",
-            )
-            require(
-                set(confirmer_ids).issubset(role_ids), f"E_CONFIRMER_REF:{account_id}"
-            )
-            expected_mode = "ALL_OF" if len(confirmer_ids) > 1 else "ANY_OF"
-            require(
-                route.get("approval_mode") == expected_mode,
-                f"E_CONFIRMATION_MODE:{account_id}:{route.get('scope')}",
-            )
-            expected_subject_confirmation = (
-                account_id == "ACCOUNT-DIYU-CONTENT-LEAD"
-                and route.get("scope") == "quoted_person_viewpoint"
-            ) or (
-                account_id == "ACCOUNT-DIYU-HQ-OFFICIAL"
-                and route.get("scope") == "person_and_customer_authorization"
-            )
-            require(
-                route.get("subject_confirmation_required")
-                is expected_subject_confirmation,
-                f"E_SUBJECT_CONFIRMATION_POLICY:{account_id}:{route.get('scope')}",
-            )
-            require(
-                route.get("simulation_only") is True,
-                f"E_CONFIRMATION_ROUTE_SIMULATION:{account_id}:{route.get('scope')}",
-            )
-            require(
-                route.get("publish_allowed") is False,
-                f"E_CONFIRMATION_ROUTE_PUBLISH:{account_id}:{route.get('scope')}",
-            )
+        family_id = account.get("account_family")
+        require(
+            family_id in expected_family_policy and family_id != "ENTERPRISE_ADMIN",
+            f"E_ACCOUNT_FAMILY:{account_id}",
+        )
+        family_creation, family_fixed, family_expandable = expected_family_policy[
+            str(family_id)
+        ]
+        require(family_creation is True, f"E_ACCOUNT_CREATION_FAMILY:{account_id}")
+        require(
+            account.get("fixed_account") is family_fixed
+            and account.get("expandable_account") is family_expandable,
+            f"E_ACCOUNT_EXPANSION_POLICY:{account_id}",
+        )
+        require(
+            isinstance(account.get("persona_type"), str)
+            and account.get("persona_type") in persona_types
+            and isinstance(account.get("outward_account_name"), str)
+            and str(account.get("outward_account_name")).strip(),
+            f"E_ACCOUNT_PERSONA:{account_id}",
+        )
+        require(
+            isinstance(account.get("bound_principal_id"), str),
+            f"E_ACCOUNT_BOUND_PRINCIPAL:{account_id}",
+        )
         allowed_orgs = account.get("allowed_source_organization_ids")
         require(
             isinstance(allowed_orgs, list) and allowed_orgs,
@@ -2300,51 +2320,99 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
         require(
             account.get("publish_allowed") is False, f"E_ACCOUNT_PUBLISH:{account_id}"
         )
-        require(
-            bool(account.get("forbidden_claim_scopes")),
-            f"E_ACCOUNT_FORBIDDEN_SCOPE:{account_id}",
-        )
 
-    principal = principals[0]
-    require(
-        principal.get("principal_id") == "SIM-LOGIN-DIYU-ACCEPTANCE-001",
-        "E_SIM_PRINCIPAL_ID",
-    )
-    require(
-        principal.get("tenant_id") == tenant.get("tenant_id"),
-        "E_SIM_PRINCIPAL_TENANT",
-    )
-    require(
-        principal.get("trusted_identity_source") == "SERVER_MANAGED_ONLY",
-        "E_SIM_IDENTITY_SOURCE",
-    )
-    require(principal.get("Dify_user_id_is_authoritative") is False, "E_SIM_DIFY_ID")
-    require(principal.get("simulation_only") is True, "E_SIM_PRINCIPAL_FLAG")
-    require(principal.get("publish_allowed") is False, "E_SIM_PRINCIPAL_PUBLISH")
-    require(
-        set(principal.get("allowed_content_account_ids", [])) == set(by_account),
-        "E_SIM_ACCOUNT_ALLOWLIST",
-    )
-    grants = principal.get("account_role_grants")
-    require(isinstance(grants, list), "E_SIM_ACCOUNT_ROLE_GRANTS")
-    by_grant = {
-        item.get("account_id"): item for item in grants if isinstance(item, dict)
+    by_principal = {
+        item.get("principal_id"): item for item in principals if isinstance(item, dict)
     }
-    require(set(by_grant) == set(by_account), "E_SIM_ACCOUNT_ROLE_GRANT_IDS")
-    for account_id, account in by_account.items():
-        grant = by_grant[account_id]
-        expected_confirmers = {
-            role_id
-            for route in account["confirmation_routes"]
-            for role_id in route["confirmer_role_ids"]
-        }
+    require(
+        len(by_principal) == 12 and None not in by_principal,
+        "E_SIM_PRINCIPAL_IDS",
+    )
+    admin_principals = 0
+    bound_account_ids: set[str] = set()
+    for principal_id, principal in by_principal.items():
         require(
-            set(grant.get("maker_role_ids", [])) == set(account["maker_role_ids"]),
+            principal.get("tenant_id") == tenant.get("tenant_id"),
+            f"E_SIM_PRINCIPAL_TENANT:{principal_id}",
+        )
+        require(
+            principal.get("trusted_identity_source") == "SERVER_MANAGED_ONLY",
+            f"E_SIM_IDENTITY_SOURCE:{principal_id}",
+        )
+        require(
+            principal.get("Dify_user_id_is_authoritative") is False,
+            f"E_SIM_DIFY_ID:{principal_id}",
+        )
+        require(
+            principal.get("simulation_only") is True
+            and principal.get("publish_allowed") is False,
+            f"E_SIM_PRINCIPAL_BOUNDARY:{principal_id}",
+        )
+        organization_scopes = principal.get("organization_scope_ids")
+        store_scopes = principal.get("store_scope_ids")
+        require(
+            isinstance(organization_scopes, list)
+            and organization_scopes
+            and set(organization_scopes).issubset(organization_ids)
+            and isinstance(store_scopes, list)
+            and set(store_scopes).issubset(store_ids),
+            f"E_SIM_PRINCIPAL_SCOPE:{principal_id}",
+        )
+        allowed_accounts = principal.get("allowed_content_account_ids")
+        grants = principal.get("account_role_grants")
+        require(
+            isinstance(allowed_accounts, list) and isinstance(grants, list),
+            f"E_SIM_ACCOUNT_ROLE_GRANTS:{principal_id}",
+        )
+        if principal.get("identity_class") == "SIMULATED_ENTERPRISE_ADMIN_LOGIN":
+            admin_principals += 1
+            require(
+                principal.get("account_family") == "ENTERPRISE_ADMIN"
+                and set(principal.get("system_permissions", []))
+                == {"ENTERPRISE_ADMIN"}
+                and allowed_accounts == []
+                and grants == [],
+                "E_ADMIN_PRINCIPAL_POLICY",
+            )
+            continue
+        require(
+            principal.get("identity_class") == "SIMULATED_CONTENT_OPERATOR_LOGIN"
+            and set(principal.get("system_permissions", [])) == {"CONTENT_CREATION"}
+            and len(allowed_accounts) == 1,
+            "E_SIM_ACCOUNT_ALLOWLIST",
+        )
+        account_id = str(allowed_accounts[0])
+        account = by_account.get(account_id)
+        require(
+            isinstance(account, dict)
+            and account.get("bound_principal_id") == principal_id
+            and account_id not in bound_account_ids,
+            f"E_ACCOUNT_BOUND_PRINCIPAL:{account_id}",
+        )
+        bound_account_ids.add(account_id)
+        require(
+            account.get("organization_id") in organization_scopes
+            and (
+                account.get("store_id") is None
+                or account.get("store_id") in store_scopes
+            ),
+            f"E_SIM_PRINCIPAL_ACCOUNT_SCOPE:{account_id}",
+        )
+        by_grant = {
+            item.get("account_id"): item for item in grants if isinstance(item, dict)
+        }
+        require(set(by_grant) == {account_id}, "E_SIM_ACCOUNT_ROLE_GRANT_IDS")
+        grant = by_grant[account_id]
+        granted_roles = set(grant.get("maker_role_ids", []))
+        require(
+            bool(granted_roles)
+            and granted_roles.issubset(set(account["maker_role_ids"]))
+            and principal.get("business_role_id") in granted_roles,
             f"E_SIM_MAKER_GRANT:{account_id}",
         )
         require(
-            set(grant.get("confirmer_role_ids", [])) == expected_confirmers,
-            f"E_SIM_CONFIRMER_GRANT:{account_id}",
+            grant.get("confirmer_role_ids", []) == [],
+            f"E_SIM_ACTIVE_CONFIRMATION_GRANT:{account_id}",
         )
         require(
             grant.get("simulation_only") is True,
@@ -2354,6 +2422,8 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
             grant.get("publish_allowed") is False,
             f"E_SIM_ROLE_GRANT_PUBLISH:{account_id}",
         )
+    require(admin_principals == 1, "E_ADMIN_PRINCIPAL_COUNT")
+    require(bound_account_ids == set(by_account), "E_CONTENT_ACCOUNT_PRINCIPAL_COVERAGE")
 
     authorization_ids: set[str] = set()
     for grant in authorization_grants:
@@ -2418,19 +2488,13 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
             and valid_from <= valid_until,
             f"E_AUTHORIZATION_STATE:{authorization_id}",
         )
-        expected_disclosure_scope = (
-            "REQUIREMENT_CONFIRMATION_ONLY"
-            if grant.get("authorization_kind") == "REQUIREMENT_CONFIRMATION"
-            else "CONTENT_ACCOUNT_ONLY"
-        )
         require(
             grant.get("authorization_kind")
             in {
                 "FACT_DISCLOSURE",
                 "MATERIAL_AND_FACT_DISCLOSURE",
-                "REQUIREMENT_CONFIRMATION",
             }
-            and grant.get("disclosure_scope") == expected_disclosure_scope,
+            and grant.get("disclosure_scope") == "CONTENT_ACCOUNT_ONLY",
             f"E_AUTHORIZATION_KIND_SCOPE:{authorization_id}",
         )
         require(
@@ -2463,19 +2527,6 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
             and record.get("store_id") == account.get("store_id"),
             f"E_SUBJECT_CONFIRMATION_SCOPE:{confirmation_id}",
         )
-        route = next(
-            (
-                item
-                for item in account.get("confirmation_routes", [])
-                if item.get("scope") == record.get("confirmation_scope")
-            ),
-            None,
-        )
-        require(
-            isinstance(route, dict)
-            and route.get("subject_confirmation_required") is True,
-            f"E_SUBJECT_CONFIRMATION_ROUTE:{confirmation_id}",
-        )
         require(
             record.get("subject_role_id") in role_ids,
             f"E_SUBJECT_CONFIRMATION_ROLE:{confirmation_id}",
@@ -2506,17 +2557,28 @@ def validate_identity_data(identity: dict[str, Any]) -> None:
         require(forbidden not in serialized, f"E_SECRET_MATERIAL:{forbidden}")
     invariants = identity.get("invariants")
     require(isinstance(invariants, dict), "E_IDENTITY_INVARIANTS")
-    require(invariants.get("login_principal_count") == 1, "E_IDENTITY_LOGIN_INVARIANT")
+    require(invariants.get("account_family_count") == 7, "E_IDENTITY_FAMILY_INVARIANT")
+    require(invariants.get("login_principal_count") == 12, "E_IDENTITY_LOGIN_INVARIANT")
+    require(
+        invariants.get("enterprise_admin_principal_count") == 1
+        and invariants.get("content_operator_principal_count") == 11,
+        "E_IDENTITY_PRINCIPAL_KIND_INVARIANT",
+    )
     require(
         invariants.get("content_account_count") == 11, "E_IDENTITY_ACCOUNT_INVARIANT"
     )
     require(
-        invariants.get("authorization_grant_count") == 6,
+        invariants.get("authorization_grant_count") == 5,
         "E_IDENTITY_AUTHORIZATION_INVARIANT",
     )
     require(
         invariants.get("subject_confirmation_record_count") == 1,
         "E_IDENTITY_SUBJECT_CONFIRMATION_INVARIANT",
+    )
+    require(
+        invariants.get("every_content_account_has_one_bound_principal") is True
+        and invariants.get("no_requirement_confirmation_or_approval_grants") is True,
+        "E_IDENTITY_NO_APPROVAL_INVARIANT",
     )
     require(
         invariants.get("every_record_simulation_only") is True,
@@ -3174,33 +3236,6 @@ def evaluate_case(
                 "decision": "REJECT_SCOPE_OVERRIDE",
                 "light_plan_created": False,
             }
-        if identity is None or not account_role_is_authorized(
-            identity,
-            str(data.get("principal_id")),
-            str(data.get("content_account_id")),
-            [str(data.get("acting_maker_role_id"))],
-            "MAKE",
-        ):
-            return {
-                "decision": "REJECT_UNAUTHORIZED_ACCOUNT_ROLE",
-                "light_plan_created": False,
-            }
-        confirmed_role_ids = data.get("confirmed_by_role_ids")
-        if not isinstance(confirmed_role_ids, list):
-            confirmed_role_ids = [str(data.get("confirmed_by_role_id"))]
-        if not account_role_is_authorized(
-            identity,
-            str(data.get("principal_id")),
-            str(data.get("content_account_id")),
-            [str(item) for item in confirmed_role_ids],
-            "CONFIRM",
-            str(data.get("confirmation_scope")),
-            data.get("subject_confirmation_ref"),
-        ):
-            return {
-                "decision": "REJECT_UNAUTHORIZED_CONFIRMATION_ROLE",
-                "light_plan_created": False,
-            }
         if data.get("requirement_status") != "CONFIRMED":
             return {
                 "decision": "REJECT_UNCONFIRMED_REQUIREMENT",
@@ -3221,11 +3256,6 @@ def evaluate_case(
             }
         facts = data.get("verified_precise_facts")
         if not isinstance(trusted_scope, dict) or not isinstance(facts, list):
-            return {
-                "decision": "ACTION_CARD_COLLECT_FACT",
-                "light_plan_created": False,
-            }
-        if not facts and not data.get("missing_required"):
             return {
                 "decision": "ACTION_CARD_COLLECT_FACT",
                 "light_plan_created": False,
@@ -3252,17 +3282,6 @@ def evaluate_case(
         if any(fact_rejections):
             return {
                 "decision": "ACTION_CARD_REQUEST_AUTHORIZATION",
-                "light_plan_created": False,
-            }
-        if data.get("missing_required"):
-            missing = data["missing_required"]
-            if any(str(item).startswith("material:") for item in missing):
-                return {
-                    "decision": "ACTION_CARD_COLLECT_MATERIAL",
-                    "light_plan_created": False,
-                }
-            return {
-                "decision": "ACTION_CARD_COLLECT_FACT",
                 "light_plan_created": False,
             }
         return {"decision": "PREPARE_PLAN", "light_plan_created": True}
@@ -3374,9 +3393,9 @@ def evaluate_case(
             return {"decision": "VALIDATE_BLOCK"}
         if data.get("soft_evaluation_scores") != {}:
             return {"decision": "VALIDATE_BLOCK"}
-        if data.get("semantic_fact_review_status") != "PENDING_EXTERNAL_REVIEW":
+        if data.get("usage_check_status") != "USER_SELF_CHECK":
             return {"decision": "VALIDATE_BLOCK"}
-        return {"decision": "VALIDATE_PASS_PENDING_SEMANTIC_REVIEW"}
+        return {"decision": "VALIDATE_PASS_USER_SELF_CHECK"}
     if operation == "fact_input":
         if (
             data.get("input_kind") in EXPRESSION_GUIDANCE_INPUT_KINDS
@@ -3492,9 +3511,6 @@ def validate_cases(cases: list[dict[str, Any]], identity: dict[str, Any]) -> Non
         "REJECT_INTERNAL_IDENTIFIER_LEAK",
         "REJECT_BASELINE_TAMPER",
         "REJECT_UNAUTHORIZED_PATH",
-        "REJECT_UNAUTHORIZED_ACCOUNT_ROLE",
-        "REJECT_UNAUTHORIZED_CONFIRMATION_ROLE",
-        "ACTION_CARD_COLLECT_MATERIAL",
     }
     require(required_decisions.issubset(decisions), "E_CASE_NEGATIVE_COVERAGE")
 
@@ -3960,10 +3976,10 @@ def run_selftest() -> dict[str, Any]:
         for item in mutated_contract["api_contracts"]
         if item["path"] == "/v1/content/prepare"
     )
-    prepare_contract["request_example"].pop("confirmation_evidence")
+    prepare_contract["request_example"]["confirmation_evidence"] = {}
     expect_failure(
         lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_PREPARE_REQUEST_EXAMPLE_FIELDS",
+        "E_PREPARE_LEGACY_APPROVAL_FIELDS",
     )
 
     mutated_contract = copy.deepcopy(contract)
@@ -3984,12 +4000,12 @@ def run_selftest() -> dict[str, Any]:
         for item in mutated_contract["api_contracts"]
         if item["path"] == "/v1/content/prepare"
     )
-    prepare_contract["request_example"]["confirmation_evidence"][
-        "authorization_refs"
-    ] = ["AUTH-SIM-NOT-REGISTERED"]
+    prepare_contract["legacy_ignored_optional_fields"].remove(
+        "confirmation_evidence"
+    )
     expect_failure(
         lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_PREPARE_CONFIRMATION_GRANT",
+        "E_PREPARE_LEGACY_APPROVAL_FIELDS",
     )
 
     mutated_contract = copy.deepcopy(contract)
@@ -4078,12 +4094,10 @@ def run_selftest() -> dict[str, Any]:
         for item in mutated_contract["api_contracts"]
         if item["path"] == "/v1/content/validate"
     )
-    validate_contract["response_examples"]["pass"]["semantic_fact_review_status"] = (
-        "VERIFIED"
-    )
+    validate_contract["response_examples"]["pass"]["usage_check_status"] = "VERIFIED"
     expect_failure(
         lambda: validate_contract_data(ROOT, mutated_contract, identity),
-        "E_VALIDATE_SEMANTIC_REVIEW_STATUS",
+        "E_VALIDATE_USAGE_CHECK_STATUS",
     )
 
     mutated_contract = copy.deepcopy(contract)
@@ -4210,12 +4224,10 @@ def run_selftest() -> dict[str, Any]:
     )
 
     mutated_identity = copy.deepcopy(identity)
-    mutated_identity["content_accounts"][0]["confirmation_routes"][0][
-        "publish_allowed"
-    ] = True
+    mutated_identity["content_accounts"][0]["confirmation_routes"] = [{}]
     expect_failure(
         lambda: validate_identity_data(mutated_identity),
-        "E_CONFIRMATION_ROUTE_PUBLISH:ACCOUNT-DIYU-HQ-OFFICIAL:brand_formal_conclusion",
+        "E_ACCOUNT_ACTIVE_CONFIRMATION_ROUTE:ACCOUNT-DIYU-HQ-OFFICIAL",
     )
 
     mutated_identity = copy.deepcopy(identity)
@@ -4235,10 +4247,10 @@ def run_selftest() -> dict[str, Any]:
         for account in mutated_identity["content_accounts"]
         if account["account_id"] == "ACCOUNT-DIYU-PRODUCT-LEAD"
     )
-    product_account["confirmation_routes"][1]["approval_mode"] = "ANY_OF"
+    product_account["bound_principal_id"] = "SIM-LOGIN-DIYU-ACCEPTANCE-001"
     expect_failure(
         lambda: validate_identity_data(mutated_identity),
-        "E_CONFIRMATION_MODE:ACCOUNT-DIYU-PRODUCT-LEAD:safety_quality_testing_supplier_responsibility",
+        "E_ACCOUNT_BOUND_PRINCIPAL:ACCOUNT-DIYU-PRODUCT-LEAD",
     )
 
     mutated_identity = copy.deepcopy(identity)
@@ -4363,7 +4375,7 @@ def run_selftest() -> dict[str, Any]:
     )
     for field, invalid_value in (
         ("soft_evaluation_scores", {"naturalness": 95}),
-        ("semantic_fact_review_status", "VERIFIED"),
+        ("usage_check_status", "VERIFIED"),
     ):
         mutated_validate = copy.deepcopy(base_validate)
         mutated_validate["input"][field] = invalid_value
@@ -4486,12 +4498,10 @@ def run_selftest() -> dict[str, Any]:
     expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
 
     mutated_cases = copy.deepcopy(cases)
-    subject_confirmed = next(
+    creative_candidate = next(
         case for case in mutated_cases if case["case_id"] == "PF-POS-011"
     )
-    subject_confirmed["input"]["subject_confirmation_ref"] = (
-        "SUBJECT-CONFIRM-SIM-NOT-REGISTERED"
-    )
+    creative_candidate["input"]["confirmation_scope"] = "legacy_approval_field"
     expect_failure(lambda: validate_cases(mutated_cases, identity), "E_CASE_DECISION")
 
     mutated_cases = copy.deepcopy(cases)

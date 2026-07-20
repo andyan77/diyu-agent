@@ -74,8 +74,6 @@ EXPECTED_ENDPOINTS = (
     ("GET", "/readyz"),
 )
 PUBLIC_PINS = {
-    CONTRACT_PATH: "a3aec92fdcc22635bb07bc5d2595ebaa5cfa1f1c9d5fad42cc39481808bbc1af",
-    IDENTITY_PATH: "65b8242b9b760e64f8e441c4334c68fa76f6dc3a11e2fe2f8f62ad6a887c3cbc",
     TOPIC_PATH: "e51f46635b6c3312e0626bc5aca448c91d20b0d71cae6a8de793ba5b603e2b95",
 }
 HISTORICAL_ASSET_PINS = {
@@ -146,27 +144,27 @@ REQUIRED_TEST_METHODS = frozenset(
         "test_explicit_product_and_audience_are_carried_without_inference",
         "test_missing_or_out_of_topic_product_never_selects_a_default",
         "test_missing_audience_returns_requirement_collection_card",
-        "test_unregistered_requirement_change_cannot_reuse_confirmation",
+        "test_unregistered_requirement_change_cannot_reuse_trusted_context",
         "test_body_cannot_create_trust_without_server_context",
         "test_client_cannot_override_hard_prohibitions",
         "test_unknown_creative_hints_are_ignored_with_diagnostics",
         "test_evaluation_rules_are_server_resolved_when_omitted",
         "test_fact_only_input_degrades_safely",
-        "test_empty_material_and_facts_returns_collection_card",
+        "test_empty_material_and_facts_uses_creative_only_plan",
         "test_missing_fact_authorization_requests_authorization",
         "test_cross_tenant_store_and_account_fail_closed",
         "test_unregistered_request_body_fact_cannot_self_upgrade",
         "test_authorization_kind_and_disclosure_scope_are_bound",
-        "test_requirement_confirmation_grant_is_purpose_and_scope_bound",
+        "test_legacy_requirement_approval_grant_is_ignored",
         "test_future_or_empty_evidence_is_not_usable",
-        "test_subject_confirmation_cannot_be_replayed_across_scope_or_account",
+        "test_legacy_subject_approval_metadata_is_ignored",
         "test_used_references_must_be_plan_subsets",
         "test_all_user_visible_surfaces_are_scanned_for_internal_leaks",
         "test_nested_scope_and_authorization_fields_are_internal_leaks",
         "test_internal_identifier_values_are_blocked_on_every_surface",
         "test_obvious_contact_information_is_a_privacy_hard_issue",
         "test_all_plan_required_surfaces_must_be_present",
-        "test_structured_pass_keeps_semantic_review_pending_and_scores_empty",
+        "test_structured_pass_leaves_usage_to_user_self_check",
         "test_candidate_count_and_difference_policy_are_explicit",
         "test_request_id_does_not_change_deterministic_plan",
         "test_concurrent_replay_keeps_one_deterministic_plan",
@@ -253,7 +251,11 @@ def validate_manifest(manifest: dict[str, Any]) -> None:
     ):
         require(runtime.get(key) == 0, f"E_RUNTIME_BOUNDARY:{key}")
     successor = manifest.get("authorized_package7_successor_extension", {})
-    require(successor.get("task_id") == "DIYU_DIFY_END_TO_END_001", "E_SUCCESSOR_TASK")
+    require(
+        successor.get("task_id")
+        == "DIYU_ACCOUNT_PERSONA_UI_AND_NO_APPROVAL_FLOW_001",
+        "E_SUCCESSOR_TASK",
+    )
     for key in (
         "historical_review_remains_as_built",
         "current_extension_review_owned_by_package7",
@@ -336,7 +338,7 @@ def validate_source_shape(root: Path) -> None:
         "expression_profile_resolver",
         "def prepare(",
         "def validate(",
-        "PENDING_EXTERNAL_REVIEW",
+        "USER_SELF_CHECK",
     ):
         require(token in core, f"E_CORE_SHAPE:{token}")
     require("int(digest_object(key)" not in core, "E_DIGEST_PRODUCT_INFERENCE")

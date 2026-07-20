@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Thin Package 5 to Package 2 adapter for server-confirmed production tasks."""
+"""Thin Package 5 to Package 2 adapter for server-trusted creation tasks."""
 
 from __future__ import annotations
 
@@ -40,6 +40,7 @@ from light_expression_service import (  # type: ignore[import-not-found]  # noqa
     LightExpressionService,
     TrustedUpstreamContext,
     digest_object as digest_plan_object,
+    normalize_task_requirement,
     parse_time,
 )
 
@@ -71,7 +72,7 @@ def copy_mapping(value: Mapping[str, Any]) -> JsonObject:
 
 @dataclass(frozen=True)
 class ServerConfirmedProductionTask:
-    """Server-owned task projection; it is never built from a Dify request body."""
+    """Server-owned task projection; the legacy name preserves caller compatibility."""
 
     server_task_ref: str
     authority_source: str
@@ -79,11 +80,11 @@ class ServerConfirmedProductionTask:
     request_id: str
     principal_id: str
     content_account_id: str
-    acting_role_id: str
     query_at: str
     confirmed_requirement: Mapping[str, Any]
-    confirmation_evidence: Mapping[str, Any]
     retrieval_query_text: str
+    acting_role_id: str | None = None
+    confirmation_evidence: Mapping[str, Any] = field(default_factory=dict)
     precise_fact_queries: tuple[Mapping[str, Any], ...] = ()
     max_fragments: int = 5
     requested_high_level_mode_refs: tuple[str, ...] = ()
@@ -176,10 +177,12 @@ class FactAwarePlanAdapter:
         if not isinstance(task, ServerConfirmedProductionTask):
             return self._guard_action_card(
                 {},
-                "只有服务端确认的制作任务可以进入内容计划准备。",
-                ["server_confirmed_task"],
+                "只有服务端受信的创作任务可以进入内容计划准备。",
+                ["server_trusted_task"],
             )
-        requirement = copy_mapping(task.confirmed_requirement)
+        requirement = normalize_task_requirement(
+            copy_mapping(task.confirmed_requirement)
+        )
         action_request = {"confirmed_requirement": requirement}
         if (
             task.authority_source != SERVER_TASK_AUTHORITY
@@ -187,8 +190,8 @@ class FactAwarePlanAdapter:
         ):
             result = self._guard_action_card(
                 action_request,
-                "当前请求不是已经确认的开始内容制作任务。",
-                ["confirmed_production_intent"],
+                "当前请求不是明确的开始内容创作任务。",
+                ["creation_intent"],
             )
             self._append_record(
                 task,
@@ -375,9 +378,9 @@ class FactAwarePlanAdapter:
             "request_id": task.request_id,
             "trusted_scope_ref": retrieval["trusted_scope_ref"],
             "trusted_scope": scope,
-            "acting_role_id": task.acting_role_id,
-            "confirmed_requirement": copy_mapping(task.confirmed_requirement),
-            "confirmation_evidence": copy_mapping(task.confirmation_evidence),
+            "confirmed_requirement": normalize_task_requirement(
+                copy_mapping(task.confirmed_requirement)
+            ),
             "scoped_retrieval_fragments": copy.deepcopy(
                 retrieval["scoped_retrieval_fragments"]
             ),
@@ -410,6 +413,7 @@ class FactAwarePlanAdapter:
             (copy.deepcopy(request["confirmed_requirement"]),),
             tuple(copy.deepcopy(request["scoped_retrieval_fragments"])),
             tuple(copy.deepcopy(request["verified_precise_facts"])),
+            principal_id=str(request["trusted_scope"]["login_principal_id"]),
         )
 
     def _resolve_expression_profile(
@@ -503,7 +507,9 @@ class FactAwarePlanAdapter:
         package_5_called: bool,
         package_2_called: bool,
     ) -> None:
-        requirement = copy_mapping(task.confirmed_requirement)
+        requirement = normalize_task_requirement(
+            copy_mapping(task.confirmed_requirement)
+        )
         fragment_refs = [] if retrieval is None else [
             str(row["fragment_id"])
             for row in retrieval["scoped_retrieval_fragments"]

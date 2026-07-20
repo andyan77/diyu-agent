@@ -265,7 +265,7 @@ Operation = Literal[
     "确认制作",
     "选择候选",
     "局部修改",
-    "审核",
+    "查看上一版",
     "导出",
     "查看来源",
     "提交反馈",
@@ -278,10 +278,18 @@ PortalOperation = Literal[
     "把已有内容改好",
     "继续一个系列",
     "选择候选",
-    "审核",
+    "查看上一版",
     "导出",
     "查看来源",
     "提交反馈",
+]
+
+SeriesMode = Literal["SINGLE", "SERIES"]
+ExtensibleAccountFamily = Literal[
+    "HEADQUARTERS_PROFESSIONAL_PERSONA",
+    "PROVINCIAL_AGENT",
+    "HEADQUARTERS_DIRECT_STORE",
+    "FRANCHISE_STORE",
 ]
 
 NarrativeArchitecture = Literal[
@@ -355,6 +363,31 @@ class LoginRequest(StrictModel):
     password: str = Field(min_length=12, max_length=256)
 
 
+class AdminAccountCreateRequest(StrictModel):
+    organization_id: str = Field(min_length=1, max_length=128)
+    account_family: ExtensibleAccountFamily
+    persona_type: str = Field(min_length=1, max_length=80)
+    outward_account_name: str = Field(min_length=1, max_length=200)
+    principal_id: str = Field(min_length=1, max_length=128)
+
+    @field_validator(
+        "organization_id",
+        "persona_type",
+        "outward_account_name",
+        "principal_id",
+    )
+    @classmethod
+    def normalize_admin_text(cls, value: str) -> str:
+        normalized = value.strip()
+        if not normalized:
+            raise ValueError("admin account values must not be blank")
+        return normalized
+
+
+class AdminAccountDisableRequest(StrictModel):
+    account_id: str = Field(min_length=1, max_length=160)
+
+
 class PreciseFactRequest(StrictModel):
     fact_kind: PreciseFactKind
     selectors: dict[str, Any] = Field(default_factory=dict)
@@ -393,6 +426,8 @@ class BridgePrepareRequest(StrictModel):
     duration_label: DurationLabel = "由系统建议"
     expression_feeling: ExpressionFeeling = "由系统建议"
     content_format: ContentFormat = "短视频"
+    series_mode: SeriesMode = "SINGLE"
+    episode_index: int = Field(default=1, ge=1, le=3)
     organization_level: Literal["品牌总部", "区域组织", "门店"] | None = None
     content_identity: (
         Literal[
@@ -483,8 +518,10 @@ class BridgePrepareRequest(StrictModel):
 
     @model_validator(mode="after")
     def require_operation_inputs(self) -> BridgePrepareRequest:
-        if self.operation in {"选择候选", "局部修改"} and self.candidate_number is None:
+        if self.operation == "选择候选" and self.candidate_number is None:
             raise ValueError("candidate_number is required for candidate operations")
+        if self.series_mode == "SINGLE" and self.episode_index != 1:
+            raise ValueError("single content must use episode_index 1")
         return self
 
 
@@ -506,6 +543,8 @@ class PortalTaskRequest(StrictModel):
     duration_label: DurationLabel = "由系统建议"
     expression_feeling: ExpressionFeeling = "由系统建议"
     content_format: ContentFormat = "短视频"
+    series_mode: SeriesMode = "SINGLE"
+    episode_index: int = Field(default=1, ge=1, le=3)
     organization_level: Literal["品牌总部", "区域组织", "门店"] | None = None
     content_identity: (
         Literal[
@@ -590,6 +629,14 @@ class PortalTaskRequest(StrictModel):
         if len(normalized) != len(set(normalized)):
             raise ValueError("material descriptions must not repeat")
         return normalized
+
+    @model_validator(mode="after")
+    def validate_series_position(self) -> PortalTaskRequest:
+        if self.series_mode == "SINGLE" and self.episode_index != 1:
+            raise ValueError("single content must use episode_index 1")
+        if self.operation == "继续一个系列" and self.series_mode != "SERIES":
+            raise ValueError("series continuation requires SERIES mode")
+        return self
 
 
 class BridgeFinalizeRequest(StrictModel):

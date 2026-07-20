@@ -8,6 +8,7 @@ import copy
 import hashlib
 import json
 import os
+import subprocess
 import tempfile
 import threading
 import unittest
@@ -24,6 +25,7 @@ from bridge_app import create_app, selected_account_database_scope
 from contracts import BridgePrepareRequest
 from dify_chat import DifyChatClient, DifyChatError
 from persistence import (
+    PROFESSIONAL_PERSONA_DIRECTIONS,
     RuntimeRepository,
     SqlAlchemyPlanStore,
     TrustedDatabaseScope,
@@ -35,6 +37,7 @@ from persistence import (
     trusted_database_scope,
 )
 from provision_dify import _content_sha256, _dify_import_text
+from runtime_models import RuntimeFeedback
 from runtime_retrieval import RuntimeBrandFactRetrievalService
 from runtime_service import (
     Package7Runtime,
@@ -248,6 +251,22 @@ class FakeDifyChatClient:
             if "candidate_schema" in contract:
                 content_format = str(prompt["task_brief"]["content_format"])
                 answer = candidate_envelope(content_format)
+            elif "方向1｜短标题" in str(prompt.get("system", "")):
+                subject = str(prompt.get("user_message", "本次内容")).splitlines()[0]
+                lines = [
+                    f"方向1｜先讲发生了什么｜围绕“{subject}”交代起因和过程。",
+                    f"方向2｜解释专业判断｜说清“{subject}”背后的比较与取舍。",
+                    f"方向3｜回答常见问题｜把“{subject}”变成普通人会关心的问题。",
+                ]
+                if "第1集｜短标题" in str(prompt.get("system", "")):
+                    lines.extend(
+                        [
+                            f"第1集｜事情的起点｜先讲“{subject}”从哪里开始。",
+                            f"第2集｜关键的过程｜继续讲“{subject}”中间怎样推进。",
+                            f"第3集｜最后的变化｜用“{subject}”带来的结果收束。",
+                        ]
+                    )
+                answer = {"reply": "\n".join(lines)}
             else:
                 answer = {"reply": "已从Dify内部编排返回。"}
         return {
@@ -406,8 +425,65 @@ class Package7RecoveryTests(unittest.TestCase):
             trusted_scope=self.runtime_scope(run.browser_session_id),
         )
 
-    def test_seed_and_single_runtime_foundation_remain_complete(self) -> None:
+    def test_seed_has_seven_account_families_and_twelve_isolated_principals(
+        self,
+    ) -> None:
+        admin_id = "SIM-LOGIN-DIYU-ADMIN-001"
+        authority = self.repository.identity_authority("TENANT-DIYU-SIM-001")
+        principals = authority["login_principals"]
+        accounts = authority["content_accounts"]
+        matrix = self.repository.account_management_matrix(admin_id)
+
+        self.assertEqual(self.seed["principal_count"], 12)
         self.assertEqual(self.seed["content_account_count"], 11)
+        self.assertEqual(len(principals), 12)
+        self.assertEqual(len(accounts), 11)
+        self.assertEqual(len(matrix["account_families"]), 7)
+        self.assertEqual(len(matrix["creatable_account_families"]), 4)
+        self.assertEqual(
+            {row["account_family"] for row in accounts},
+            {
+                "HEADQUARTERS_BRAND",
+                "FOUNDER",
+                "HEADQUARTERS_PROFESSIONAL_PERSONA",
+                "PROVINCIAL_AGENT",
+                "HEADQUARTERS_DIRECT_STORE",
+                "FRANCHISE_STORE",
+            },
+        )
+
+        all_account_ids = {str(row["account_id"]) for row in accounts}
+        usernames = set()
+        assigned_accounts: set[str] = set()
+        for principal_payload in principals:
+            principal_id = str(principal_payload["principal_id"])
+            principal = self.repository.principal_by_id(principal_id)
+            self.assertIsNotNone(principal)
+            if principal is None:
+                continue
+            usernames.add(principal.username)
+            allowed = list(principal_payload["allowed_content_account_ids"])
+            expected_count = 0 if principal_id == admin_id else 1
+            self.assertEqual(len(allowed), expected_count, principal_id)
+            if not allowed:
+                continue
+            own_account_id = str(allowed[0])
+            assigned_accounts.add(own_account_id)
+            _, own_account = self.repository.require_active_scope(
+                principal_id,
+                own_account_id,
+            )
+            self.assertEqual(own_account.account_id, own_account_id)
+            foreign_account_id = next(
+                account_id
+                for account_id in all_account_ids
+                if account_id != own_account_id
+            )
+            with self.assertRaises(ValueError):
+                self.repository.require_active_scope(principal_id, foreign_account_id)
+
+        self.assertEqual(len(usernames), 12)
+        self.assertEqual(assigned_accounts, all_account_ids)
         self.assertEqual(self.seed["narrative_fragment_count"], 29)
         self.assertEqual(self.seed["precise_fact_count"], 16)
         self.assertEqual(self.seed["import_preflight_state"], "CAN_IMPORT")
@@ -418,6 +494,270 @@ class Package7RecoveryTests(unittest.TestCase):
             password="package7-test-password",
         )
         self.assertEqual(second["created_or_updated"], 0)
+
+    def test_six_creator_families_have_distinct_directions_and_open_topics(
+        self,
+    ) -> None:
+        family_principals = {
+            "HEADQUARTERS_BRAND": "SIM-LOGIN-DIYU-ACCEPTANCE-001",
+            "FOUNDER": "SIM-LOGIN-DIYU-FOUNDER-001",
+            "HEADQUARTERS_PROFESSIONAL_PERSONA": "SIM-LOGIN-DIYU-PRODUCT-001",
+            "PROVINCIAL_AGENT": "SIM-LOGIN-DIYU-JS-OFFICIAL-001",
+            "HEADQUARTERS_DIRECT_STORE": "SIM-LOGIN-DIYU-HZ-BINJIANG-001",
+            "FRANCHISE_STORE": "SIM-LOGIN-DIYU-SZ-PARK-001",
+        }
+        directions_by_family: dict[str, tuple[str, ...]] = {}
+        professional_account: JsonObject | None = None
+        for family, principal_id in family_principals.items():
+            options = self.runtime.portal_options(principal_id)
+            self.assertEqual(options["workspace_kind"], "CONTENT_CREATOR")
+            self.assertEqual(len(options["accounts"]), 1)
+            account = options["accounts"][0]
+            self.assertEqual(account["account_family"], family)
+            directions = tuple(map(str, account["directions"]))
+            self.assertGreaterEqual(len(directions), 3)
+            self.assertLessEqual(len(directions), 5)
+            directions_by_family[family] = directions
+            if family == "HEADQUARTERS_PROFESSIONAL_PERSONA":
+                professional_account = account
+
+        self.assertEqual(len(set(directions_by_family.values())), 6)
+        self.assertIsNotNone(professional_account)
+        if professional_account is None:
+            return
+        self.assertNotIn("allowed_topics", professional_account)
+        self.assertNotIn("priority_topic", professional_account)
+
+        required_professional_personas = {
+            "商品人设",
+            "设计师人设",
+            "终端运营人设",
+            "品控人设",
+            "陈列搭配人设",
+            "供应链人设",
+        }
+        self.assertTrue(
+            required_professional_personas.issubset(PROFESSIONAL_PERSONA_DIRECTIONS)
+        )
+        for persona_type in required_professional_personas:
+            self.assertGreaterEqual(
+                len(PROFESSIONAL_PERSONA_DIRECTIONS[persona_type]), 3
+            )
+            self.assertLessEqual(len(PROFESSIONAL_PERSONA_DIRECTIONS[persona_type]), 5)
+
+        professional_principals = {
+            "商品人设": "SIM-LOGIN-DIYU-PRODUCT-001",
+            "终端运营人设": "SIM-LOGIN-DIYU-RETAIL-001",
+        }
+        professional_directions: dict[str, tuple[str, ...]] = {}
+        topic_label = "城市、区域与本地生活"
+        product_id = str(
+            self.runtime.classification_options(topic_label)[0]["content_product_id"]
+        )
+        for persona_type, principal_id in professional_principals.items():
+            options = self.runtime.portal_options(principal_id)
+            persona_account = options["accounts"][0]
+            self.assertEqual(persona_account["persona_type"], persona_type)
+            professional_directions[persona_type] = tuple(
+                map(str, persona_account["directions"])
+            )
+            principal = self.repository.principal_by_id(principal_id)
+            self.assertIsNotNone(principal)
+            if principal is None:
+                return
+            account_id = principal.allowed_account_ids[0]
+            _, account = self.repository.require_active_scope(principal_id, account_id)
+            scope = selected_account_database_scope(
+                trusted_tenant_id="TENANT-DIYU-SIM-001",
+                principal_id=principal_id,
+                browser_session_id=f"BRS-PROFESSIONAL-OPEN-TOPIC-{persona_type}",
+                account=account,
+            )
+            prepared = self.runtime.prepare(
+                self.request(
+                    account_display_name=account.display_name,
+                    topic_label=topic_label,
+                    selected_content_product_id=product_id,
+                    message=f"从{persona_type}的观察讲一次城市门店里的真实选择。",
+                ),
+                principal_id,
+                trusted_scope=scope,
+            )
+            self.assertEqual(prepared["response_kind"], "MODEL_REQUIRED")
+            self.assertEqual(
+                prepared["author_prompt"]["task_brief"]["public_topic"],
+                topic_label,
+            )
+        self.assertNotEqual(
+            professional_directions["商品人设"],
+            professional_directions["终端运营人设"],
+        )
+        self.assertIn("面料与版型判断", professional_directions["商品人设"])
+        self.assertIn("门店经营复盘", professional_directions["终端运营人设"])
+
+    def test_admin_matrix_creates_uses_and_disables_four_extensible_families(
+        self,
+    ) -> None:
+        fake_chat = FakeDifyChatClient()
+        app = create_app(self.runtime, self.repository, fake_chat)
+        app.testing = True
+        admin_client = app.test_client()
+        headers = {"X-Diyu-Portal": "same-origin-v1"}
+        self.assertEqual(
+            admin_client.post(
+                "/login",
+                json={
+                    "username": "package7-test-owner-admin",
+                    "password": "package7-test-password",
+                },
+            ).status_code,
+            200,
+        )
+        matrix_response = admin_client.get("/v1/admin/accounts", headers=headers)
+        self.assertEqual(matrix_response.status_code, 200)
+        matrix = matrix_response.get_json()
+        self.assertEqual(len(matrix["account_families"]), 7)
+        self.assertEqual(len(matrix["creatable_account_families"]), 4)
+
+        fixed_family = admin_client.post(
+            "/v1/admin/accounts",
+            json={
+                "organization_id": "ORG-DIYU-HQ",
+                "account_family": "HEADQUARTERS_BRAND",
+                "persona_type": "品牌官方人设",
+                "outward_account_name": "不可新增的固定品牌账号",
+                "principal_id": "SIM-LOGIN-DIYU-PRODUCT-001",
+            },
+            headers=headers,
+        )
+        self.assertEqual(fixed_family.status_code, 400)
+        wrong_organization = admin_client.post(
+            "/v1/admin/accounts",
+            json={
+                "organization_id": "ORG-DIYU-JS-AGENT",
+                "account_family": "HEADQUARTERS_PROFESSIONAL_PERSONA",
+                "persona_type": "设计师人设",
+                "outward_account_name": "组织类型不匹配",
+                "principal_id": "SIM-LOGIN-DIYU-JS-OFFICIAL-001",
+            },
+            headers=headers,
+        )
+        self.assertEqual(wrong_organization.status_code, 400)
+        wrong_principal_scope = admin_client.post(
+            "/v1/admin/accounts",
+            json={
+                "organization_id": "ORG-DIYU-HQ",
+                "account_family": "HEADQUARTERS_PROFESSIONAL_PERSONA",
+                "persona_type": "设计师人设",
+                "outward_account_name": "主体范围不匹配",
+                "principal_id": "SIM-LOGIN-DIYU-JS-OFFICIAL-001",
+            },
+            headers=headers,
+        )
+        self.assertEqual(wrong_principal_scope.status_code, 400)
+
+        specifications = (
+            (
+                "HEADQUARTERS_PROFESSIONAL_PERSONA",
+                "ORG-DIYU-HQ",
+                "设计师人设",
+                "SIM-LOGIN-DIYU-PRODUCT-001",
+                "动态设计师账号",
+            ),
+            (
+                "PROVINCIAL_AGENT",
+                "ORG-DIYU-JS-AGENT",
+                "区域官方人设",
+                "SIM-LOGIN-DIYU-JS-OFFICIAL-001",
+                "动态江苏区域账号",
+            ),
+            (
+                "HEADQUARTERS_DIRECT_STORE",
+                "ORG-DIYU-HZ-BINJIANG",
+                "门店员工人设",
+                "SIM-LOGIN-DIYU-HZ-BINJIANG-001",
+                "动态滨江直营账号",
+            ),
+            (
+                "FRANCHISE_STORE",
+                "ORG-DIYU-SZ-PARK",
+                "店主人设",
+                "SIM-LOGIN-DIYU-SZ-PARK-001",
+                "动态苏州加盟账号",
+            ),
+        )
+        created_accounts: list[JsonObject] = []
+        for (
+            family,
+            organization_id,
+            persona,
+            principal_id,
+            outward_name,
+        ) in specifications:
+            response = admin_client.post(
+                "/v1/admin/accounts",
+                json={
+                    "organization_id": organization_id,
+                    "account_family": family,
+                    "persona_type": persona,
+                    "outward_account_name": outward_name,
+                    "principal_id": principal_id,
+                },
+                headers=headers,
+            )
+            self.assertEqual(response.status_code, 201, response.get_json())
+            created = response.get_json()["account"]
+            self.assertEqual(created["account_family"], family)
+            self.assertEqual(created["bound_principal_ids"], [principal_id])
+            if family == "HEADQUARTERS_PROFESSIONAL_PERSONA":
+                self.assertEqual(
+                    created["directions"],
+                    list(PROFESSIONAL_PERSONA_DIRECTIONS[persona]),
+                )
+            created_accounts.append(created)
+
+        creator_client = app.test_client()
+        login = creator_client.post(
+            "/login",
+            json={
+                "username": "package7-test-owner-product",
+                "password": "package7-test-password",
+            },
+        )
+        self.assertEqual(login.status_code, 200)
+        dynamic_name = str(created_accounts[0]["outward_account_name"])
+        self.assertIn(dynamic_name, login.get_json()["options"]["content_accounts"])
+        generated = creator_client.post(
+            "/v1/portal/chat",
+            json={
+                "account_display_name": dynamic_name,
+                "operation": "直接做内容",
+                "topic_label": "用户问题与理性选择",
+                "message": "从设计师岗位讲清一次真实取舍。",
+                "primary_audience": "关注设计过程的家长",
+                "content_format": "短视频",
+            },
+            headers=headers,
+        )
+        self.assertEqual(generated.status_code, 200, generated.get_json())
+        generated_payload = generated.get_json()
+        self.assertIn("candidates", generated_payload, generated_payload)
+        self.assertGreaterEqual(len(generated_payload["candidates"]), 1)
+
+        for created in created_accounts:
+            response = admin_client.post(
+                f"/v1/admin/accounts/{created['account_id']}/disable",
+                headers=headers,
+            )
+            self.assertEqual(response.status_code, 200, response.get_json())
+            self.assertEqual(response.get_json()["account"]["status"], "INACTIVE")
+        refreshed = creator_client.get("/v1/portal/options").get_json()
+        self.assertNotIn(dynamic_name, refreshed["content_accounts"])
+        with self.assertRaises(ValueError):
+            self.repository.require_active_scope(
+                "SIM-LOGIN-DIYU-PRODUCT-001",
+                str(created_accounts[0]["account_id"]),
+            )
 
     def test_brand_import_contract_still_fails_closed(self) -> None:
         bundle = load_simulation_bundle()
@@ -543,7 +883,9 @@ class Package7RecoveryTests(unittest.TestCase):
         self.assertIn("不授予任何登录或数据访问权限", serialized)
         self.assertNotIn("逐句绑定", serialized)
         self.assertNotIn("required_candidate_count", serialized)
-        self.assertEqual(contract["root_fields"]["candidates"], "1至3份；每份按candidate_schema填写")
+        self.assertEqual(
+            contract["root_fields"]["candidates"], "1至3份；每份按candidate_schema填写"
+        )
 
     def test_public_capability_mapping_exposes_ten_topics_and_seven_formats(
         self,
@@ -551,9 +893,31 @@ class Package7RecoveryTests(unittest.TestCase):
         options = self.runtime.portal_options(self.principal_id)
         self.assertEqual(options["content_formats"], list(CONTENT_FORMATS))
         portal_javascript = (PACKAGE_ROOT / "portal.js").read_text(encoding="utf-8")
+        portal_html = (PACKAGE_ROOT / "portal.html").read_text(encoding="utf-8")
         self.assertNotIn("temporarilyUnavailable", portal_javascript)
         self.assertNotIn("（暂未开放）", portal_javascript)
         self.assertNotIn("option.disabled", portal_javascript)
+        self.assertNotIn("审核", portal_javascript)
+        self.assertNotIn("审核", portal_html)
+        self.assertNotIn("候选编号", portal_html)
+        self.assertNotIn("candidate_number", portal_html)
+        self.assertNotRegex(
+            portal_html,
+            r"<(?:input|select)[^>]+(?:candidate|ordinal)",
+        )
+        self.assertIn("function renderFormatSpecific", portal_javascript)
+        for content_format in CONTENT_FORMATS:
+            self.assertIn(f'"{content_format}"', portal_javascript)
+        for structured_section in (
+            "逐镜分镜",
+            "图文页序",
+            "直播流程",
+            "沟通内容",
+            "版面或摆放建议",
+            "情境问答",
+            "陈列关系",
+        ):
+            self.assertIn(structured_section, portal_javascript)
         self.assertTrue(
             {
                 "品牌和企业故事",
@@ -637,6 +1001,8 @@ class Package7RecoveryTests(unittest.TestCase):
             headers={"X-Diyu-Portal": "same-origin-v1"},
         )
         self.assertEqual(response.status_code, 200)
+        response_payload = response.get_json()
+        self.assertGreaterEqual(len(response_payload["candidates"]), 1)
         classifier_call = next(
             call
             for call in fake_chat.calls
@@ -651,8 +1017,65 @@ class Package7RecoveryTests(unittest.TestCase):
             "表达方式：演示",
         ):
             self.assertIn(confirmed_value, classifier_request)
+        author_call = next(
+            call
+            for call in fake_chat.calls
+            if call["inputs"]["execution_phase"] == "AUTHOR"
+        )
+        author_prompt = json.loads(author_call["inputs"]["author_prompt"])
+        self.assertTrue(author_prompt["task_brief"]["primary_audience"])
 
-    def test_all_seven_formats_finalize_select_review_export_and_reference(
+        inspiration = client.post(
+            "/v1/portal/chat",
+            json={
+                "account_display_name": "笛语童装",
+                "operation": "找点灵感",
+                "message": "面料改版反复打样，想讲清为什么值得。",
+            },
+            headers={"X-Diyu-Portal": "same-origin-v1"},
+        )
+        self.assertEqual(inspiration.status_code, 200)
+        inspiration_payload = inspiration.get_json()
+        self.assertEqual(len(inspiration_payload["angles"]), 3)
+        self.assertTrue(
+            all(
+                "面料改版反复打样" in angle["description"]
+                for angle in inspiration_payload["angles"]
+            )
+        )
+
+        other_inspiration = client.post(
+            "/v1/portal/chat",
+            json={
+                "account_display_name": "笛语童装",
+                "operation": "找点灵感",
+                "message": "公司为什么坚持做童装，想从创始人的选择讲起。",
+            },
+            headers={"X-Diyu-Portal": "same-origin-v1"},
+        )
+        self.assertEqual(other_inspiration.status_code, 200)
+        self.assertNotEqual(
+            inspiration_payload["angles"],
+            other_inspiration.get_json()["angles"],
+        )
+
+        series_inspiration = client.post(
+            "/v1/portal/chat",
+            json={
+                "account_display_name": "笛语童装",
+                "operation": "找点灵感",
+                "message": "面料改版反复打样，做成三集连续内容。",
+                "series_mode": "SERIES",
+                "episode_index": 1,
+            },
+            headers={"X-Diyu-Portal": "same-origin-v1"},
+        )
+        self.assertEqual(series_inspiration.status_code, 200)
+        outline = series_inspiration.get_json()["series"]["outline"]
+        self.assertEqual([row["episode_index"] for row in outline], [1, 2, 3])
+        self.assertEqual(len({row["title"] for row in outline}), 3)
+
+    def test_all_seven_formats_render_select_revise_export_and_reference(
         self,
     ) -> None:
         complete_format_phrases = {
@@ -715,6 +1138,20 @@ class Package7RecoveryTests(unittest.TestCase):
                 prepared = self.prepare(content_format)
                 result = self.finalize(prepared, content_format)
                 self.assertEqual(result["result_class"], "SUCCESS")
+                self.assertEqual(result["ui_state"], "result")
+                self.assertEqual(len(result["candidates"]), 2)
+                for workbench_candidate in result["candidates"]:
+                    self.assertEqual(
+                        workbench_candidate["content_format"],
+                        content_format,
+                    )
+                    surfaces = workbench_candidate["candidate_user_visible_surfaces"]
+                    self.assertTrue(str(surfaces["title"]).strip())
+                    self.assertTrue(str(surfaces["body"]).strip())
+                    self.assertEqual(
+                        surfaces["execution_payload"]["production_format"],
+                        content_format,
+                    )
                 visible_text = result["user_visible_text"]
                 for phrase in complete_format_phrases[content_format]:
                     self.assertIn(phrase, visible_text)
@@ -773,18 +1210,185 @@ class Package7RecoveryTests(unittest.TestCase):
                     self.request(operation="选择候选", candidate_number=1),
                 )
                 self.assertIn("已选择", reselected["user_visible_text"])
-                for operation in ("审核", "导出", "查看来源"):
+                for operation in ("导出", "查看来源"):
                     response = self.scoped_prepare(
                         self.request(operation=operation),
                     )
                     self.assertEqual(response["response_kind"], "DIRECT")
                     self.assertNotIn("PKG5-FRAGMENT", response["user_visible_text"])
-                    if operation == "审核":
-                        self.assertIn("当前登录用户已确认", response["user_visible_text"])
-                        self.assertIn("现在可以导出", response["user_visible_text"])
-                        self.assertIn("内部测试稿，不可直接发布", response["user_visible_text"])
-                        self.assertNotIn("精确事实", response["user_visible_text"])
-                        self.assertNotIn("机器逐句", response["user_visible_text"])
+
+    def test_generation_select_revision_export_and_feedback_need_no_approval_fields(
+        self,
+    ) -> None:
+        approval_fields = {
+            "acting_role_id",
+            "approval_state",
+            "confirmation_evidence",
+            "confirmer_role_ids",
+            "subject_confirmation_ref",
+        }
+        self.assertTrue(approval_fields.isdisjoint(BridgePrepareRequest.model_fields))
+
+        prepared = self.prepare("短视频")
+        run = self.repository.model_run(str(prepared["run_id"]))
+        self.assertIsNotNone(run)
+        if run is None or run.plan_ref is None:
+            return
+        plan_record = self.runtime.adapter.expression_service.store.get(run.plan_ref)
+        self.assertIsNotNone(plan_record)
+        if plan_record is None:
+            return
+        self.assertTrue(approval_fields.isdisjoint(plan_record.source_request))
+
+        generated = self.finalize(prepared, "短视频")
+        self.assertEqual(generated["result_class"], "SUCCESS")
+        selected = self.scoped_prepare(
+            self.request(operation="选择候选", candidate_number=1),
+        )
+        self.assertIn("已选择", selected["user_visible_text"])
+        revision = self.scoped_prepare(
+            self.request(
+                operation="局部修改",
+                candidate_number=None,
+                message="开头更像真实工作对话，保留第二个镜头。",
+            ),
+        )
+        self.assertEqual(revision["response_kind"], "MODEL_REQUIRED")
+        revised = self.finalize(revision, "短视频")
+        self.assertEqual(revised["result_class"], "SUCCESS")
+        self.scoped_prepare(
+            self.request(operation="选择候选", candidate_number=1),
+        )
+        exported = self.scoped_prepare(self.request(operation="导出"))
+        self.assertEqual(exported["response_kind"], "DIRECT")
+        self.assertIn("制作安排", exported["export_text"])
+
+        feedback = self.scoped_prepare(
+            self.request(operation="提交反馈", message="开头已经自然，可以继续使用。"),
+        )
+        feedback_id = str(feedback["internal_feedback_ref"])
+        with self.sessions() as session:
+            saved_feedback = session.get(RuntimeFeedback, feedback_id)
+            self.assertIsNotNone(saved_feedback)
+            if saved_feedback is not None:
+                self.assertEqual(saved_feedback.review_state, "RECORDED")
+
+    def test_series_returns_three_episode_outline_and_creates_a_continuation(
+        self,
+    ) -> None:
+        browser_session_id = "BRS-SERIES-JOURNEY"
+        first = self.prepare(
+            "短视频",
+            browser_session_id=browser_session_id,
+            series_mode="SERIES",
+            episode_index=1,
+            content_direction="真实组织与幕后",
+            message="做一个三集系列，讲一次跨岗位协作怎样完成。",
+        )
+        first_result = self.finalize(first, "短视频")
+        self.assertEqual(first_result["series"]["mode"], "SERIES")
+        self.assertEqual(first_result["series"]["current_episode"], 1)
+        self.assertEqual(first_result["series"]["next_episode"], 2)
+        outline = first_result["series"]["outline"]
+        self.assertEqual([row["episode_index"] for row in outline], [1, 2, 3])
+        self.assertTrue(all(str(row["title"]).strip() for row in outline))
+
+        with (
+            trusted_database_scope(self.runtime_scope(browser_session_id)),
+            runtime_browser_session(browser_session_id),
+        ):
+            first_candidates = self.repository.latest_candidates(
+                self.principal_id,
+                "ACCOUNT-DIYU-HQ-OFFICIAL",
+            )
+        self.assertGreaterEqual(len(first_candidates), 1)
+        previous_content_ref = first_candidates[0].candidate_id
+        continuation = self.prepare(
+            "短视频",
+            browser_session_id=browser_session_id,
+            series_mode="SERIES",
+            episode_index=2,
+            previous_content_ref=previous_content_ref,
+            content_direction="真实组织与幕后",
+            message="继续第二集，聚焦具体选择与交接过程。",
+        )
+        continuation_brief = continuation["author_prompt"]["task_brief"]
+        self.assertEqual(continuation_brief["episode_index"], 2)
+        self.assertIsNotNone(continuation_brief["previous_content_context"])
+        self.assertEqual(continuation_brief["series_outline"], outline)
+        continuation_result = self.finalize(continuation, "短视频")
+        self.assertEqual(continuation_result["series"]["current_episode"], 2)
+        self.assertEqual(continuation_result["series"]["next_episode"], 3)
+        self.assertEqual(
+            [row["episode_index"] for row in continuation_result["series"]["outline"]],
+            [1, 2, 3],
+        )
+
+    def test_series_generation_waits_for_delayed_outline_before_first_request(
+        self,
+    ) -> None:
+        node_script = r"""
+const assert = require("node:assert/strict");
+const {
+  createSeriesOutlineGate,
+  formatSeriesOutline,
+  runGenerationAfterOutline
+} = require("./portal.js");
+
+let releaseOutline;
+let outlineRequestCount = 0;
+const gate = createSeriesOutlineGate(() => {
+  outlineRequestCount += 1;
+  return new Promise((resolve) => { releaseOutline = resolve; });
+});
+const outlineFromSelection = gate.ensure([]);
+const generationRequests = [];
+const generation = runGenerationAfterOutline({
+  seriesMode: "SERIES",
+  currentOutline: [],
+  ensureOutline: (outline) => gate.ensure(outline),
+  buildPayload: (outline) => ({message: formatSeriesOutline(outline)}),
+  sendGeneration: async (payload) => {
+    generationRequests.push(payload);
+    return {result: "generated"};
+  }
+});
+
+setImmediate(async () => {
+  try {
+    assert.equal(outlineRequestCount, 1);
+    assert.equal(generationRequests.length, 0);
+    releaseOutline([
+      {index: 1, title: "第一集标题", description: "第一集重点"},
+      {index: 2, title: "第二集标题", description: "第二集重点"},
+      {index: 3, title: "第三集标题", description: "第三集重点"}
+    ]);
+    await Promise.all([outlineFromSelection, generation]);
+    assert.equal(generationRequests.length, 1);
+    for (const expected of [
+      "第一集标题", "第一集重点",
+      "第二集标题", "第二集重点",
+      "第三集标题", "第三集重点"
+    ]) assert.match(generationRequests[0].message, new RegExp(expected));
+    console.log(JSON.stringify({outlineRequestCount, generationRequestCount: 1}));
+  } catch (error) {
+    console.error(error);
+    process.exitCode = 1;
+  }
+});
+"""
+        process = subprocess.run(
+            ["node", "-e", node_script],
+            cwd=PACKAGE_ROOT,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(process.returncode, 0, process.stderr)
+        self.assertEqual(
+            json.loads(process.stdout),
+            {"outlineRequestCount": 1, "generationRequestCount": 1},
+        )
 
     def test_server_records_reference_scope_without_author_self_reporting(self) -> None:
         prepared = self.prepare()
@@ -895,7 +1499,7 @@ class Package7RecoveryTests(unittest.TestCase):
             "MODEL_OUTPUT_CONTRACT_ERROR",
         )
 
-    def test_creative_claims_enter_human_review_without_evidence_binding(
+    def test_creative_claims_remain_editable_without_evidence_binding(
         self,
     ) -> None:
         claims = (
@@ -935,9 +1539,8 @@ class Package7RecoveryTests(unittest.TestCase):
             self.request(operation="选择候选", candidate_number=1),
         )
         self.assertIn("已选择", selected["user_visible_text"])
-        for operation in ("审核", "导出"):
-            response = self.scoped_prepare(self.request(operation=operation))
-            self.assertEqual(response["response_kind"], "DIRECT")
+        response = self.scoped_prepare(self.request(operation="导出"))
+        self.assertEqual(response["response_kind"], "DIRECT")
 
         mismatched = self.prepare("短视频", duration_label="30秒左右")
         mismatched_envelope = candidate_envelope("短视频")
@@ -1077,9 +1680,7 @@ class Package7RecoveryTests(unittest.TestCase):
         fragmented_prepared = self.prepare("短视频")
         fragmented_candidates = candidate_envelope("短视频")["candidates"]
         for candidate in fragmented_candidates:
-            candidate["editing_notes"] = candidate["deliverable"].pop(
-                "editing_notes"
-            )
+            candidate["editing_notes"] = candidate["deliverable"].pop("editing_notes")
         candidate_fragments = [
             json.dumps(candidate, ensure_ascii=False, separators=(",", ":"))
             for candidate in fragmented_candidates
@@ -1096,9 +1697,7 @@ class Package7RecoveryTests(unittest.TestCase):
             base64.b64encode(fragmented_raw.encode()).decode("ascii"),
         )
         self.assertEqual(fragmented_result["result_class"], "SUCCESS")
-        fragmented_run = self.repository.model_run(
-            str(fragmented_prepared["run_id"])
-        )
+        fragmented_run = self.repository.model_run(str(fragmented_prepared["run_id"]))
         self.assertIn(
             "REBUILT_FRAGMENTED_CANDIDATE_ENVELOPE:2",
             fragmented_run.payload["model_wrapper_normalization"],
@@ -1244,7 +1843,7 @@ class Package7RecoveryTests(unittest.TestCase):
         result = self.finalize(prepared, "短视频", envelope=envelope)
         self.assertEqual(result["result_class"], "SUCCESS")
 
-    def test_similarity_is_a_review_hint_not_a_runtime_rejection(self) -> None:
+    def test_similarity_diagnostic_does_not_reject_candidates(self) -> None:
         prepared = self.prepare()
         envelope = candidate_envelope("短视频")
         envelope["candidates"][1] = copy.deepcopy(envelope["candidates"][0])
@@ -1256,10 +1855,8 @@ class Package7RecoveryTests(unittest.TestCase):
                 self.principal_id,
                 "ACCOUNT-DIYU-HQ-OFFICIAL",
             )
-        hints = candidates[0].candidate_payload["evidence_panel"][
-            "similarity_review_hints"
-        ]
-        self.assertTrue(hints[0]["review_required"])
+        hints = candidates[0].candidate_payload["evidence_panel"]["similarity_notes"]
+        self.assertTrue(hints[0]["worth_comparing"])
         self.assertFalse(hints[0]["runtime_rejection"])
 
     def test_first_output_is_preserved_and_reroll_is_forbidden(self) -> None:
@@ -1704,7 +2301,7 @@ class Package7RecoveryTests(unittest.TestCase):
             browser_session_id="BRS-A",
         )
         self.assertIn("已选择", selected["user_visible_text"])
-        for operation in ("选择候选", "局部修改", "审核", "导出", "查看来源"):
+        for operation in ("选择候选", "局部修改", "导出", "查看来源"):
             updates: JsonObject = {"operation": operation}
             if operation in {"选择候选", "局部修改"}:
                 updates["candidate_number"] = 1
@@ -1718,7 +2315,7 @@ class Package7RecoveryTests(unittest.TestCase):
                 operation,
             )
 
-    def test_same_session_selection_review_export_and_reference_leave_activity(
+    def test_same_session_selection_export_and_reference_leave_activity(
         self,
     ) -> None:
         prepared = self.prepare(browser_session_id="BRS-ACTIVITY")
@@ -1727,7 +2324,7 @@ class Package7RecoveryTests(unittest.TestCase):
             self.request(operation="选择候选", candidate_number=1),
             browser_session_id="BRS-ACTIVITY",
         )
-        for operation in ("审核", "导出", "查看来源"):
+        for operation in ("导出", "查看来源"):
             self.scoped_prepare(
                 self.request(operation=operation),
                 browser_session_id="BRS-ACTIVITY",
@@ -1744,7 +2341,7 @@ class Package7RecoveryTests(unittest.TestCase):
         activities = selected.candidate_payload["runtime_activity"]
         self.assertEqual(
             [row["operation"] for row in activities],
-            ["SELECT", "REVIEW", "EXPORT", "REFERENCE_LOOKUP"],
+            ["SELECT", "EXPORT", "REFERENCE_LOOKUP"],
         )
 
     def test_portal_two_clients_receive_distinct_sessions_and_do_not_cross(
@@ -1883,13 +2480,14 @@ class Package7RecoveryTests(unittest.TestCase):
         self.assertEqual(saved.state, "FIRST_OUTPUT_ACCEPTED")
         self.assertNotIn("provider_response_staging", saved.payload)
 
-    def test_portal_unauthorized_account_is_not_reported_as_system_failure(
+    def test_portal_unauthenticated_and_cross_account_requests_are_isolated(
         self,
     ) -> None:
         fake_chat = FakeDifyChatClient()
         app = create_app(self.runtime, self.repository, fake_chat)
         app.testing = True
         client = app.test_client()
+        self.assertEqual(client.get("/v1/portal/options").status_code, 401)
         credentials = {
             "username": "package7-test-owner",
             "password": "package7-test-password",
@@ -1898,10 +2496,10 @@ class Package7RecoveryTests(unittest.TestCase):
         response = client.post(
             "/v1/portal/chat",
             json={
-                "account_display_name": "未授权账号",
+                "account_display_name": "林知远｜笛语",
                 "operation": "直接做内容",
                 "topic_label": "商品为什么这样设计",
-                "message": "尝试访问未授权账号。",
+                "message": "尝试访问另一个真实存在但未授权的账号。",
             },
             headers={"X-Diyu-Portal": "same-origin-v1"},
         )

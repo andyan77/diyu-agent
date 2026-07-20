@@ -114,7 +114,7 @@ public_foundation_contract:
     cross_organization_access: FORBIDDEN_UNLESS_EXPLICITLY_GRANTED
     cross_store_access: FORBIDDEN_UNLESS_EXPLICITLY_GRANTED
     cross_content_account_access: FORBIDDEN_UNLESS_EXPLICITLY_GRANTED
-    server_confirmed_acting_role_required: true
+    server_trusted_login_principal_required: true
     principal_account_role_grant_required: true
     identity_contract_ref: ../identity/simulation_tenant.v1.yaml
     real_identity_policy:
@@ -139,8 +139,8 @@ public_foundation_contract:
       creates_composition_plan: false
       writes_brand_fact: false
       returns_action_card: true
-    - intent_id: AWAITING_CONFIRMATION
-      user_label: 等待确认
+    - intent_id: AWAITING_TASK_ALIGNMENT
+      user_label: 核对本次需求
       creates_composition_plan: false
       writes_brand_fact: false
       requirement_status: DRAFT_SUMMARY
@@ -163,14 +163,12 @@ public_foundation_contract:
       - content_account_id
       - topic_category_id
       - target_platform
-      - confirmed_by_principal_id
-      - confirmed_at
       allowed_statuses:
       - DRAFT_SUMMARY
       - CONFIRMED
       - SUPERSEDED
-      prepare_requires_status: CONFIRMED
-      unconfirmed_requirement_may_enter_prepare: false
+      prepare_requires_user_task_alignment: true
+      cross_role_content_approval_required: false
 
   brand_fact_contract:
     channels:
@@ -451,8 +449,6 @@ public_foundation_contract:
     trusted_upstream_only_fields:
     - trusted_scope_ref
     - trusted_scope
-    - acting_role_id
-    - confirmation_evidence
     - scoped_retrieval_fragments
     - verified_precise_facts
     - server_expression_profile
@@ -462,14 +458,15 @@ public_foundation_contract:
     - client_soft_preferences
     - output_requirements
     client_trust_or_verified_labels_are_authoritative: false
+    legacy_ignored_optional_fields:
+    - acting_role_id
+    - confirmation_evidence
     request_required_fields:
     - api_version
     - request_id
     - trusted_scope_ref
     - trusted_scope
-    - acting_role_id
     - confirmed_requirement
-    - confirmation_evidence
     - scoped_retrieval_fragments
     - verified_precise_facts
     - server_expression_profile
@@ -494,7 +491,6 @@ public_foundation_contract:
         store_id: null
         login_principal_id: SIM-LOGIN-DIYU-ACCEPTANCE-001
         content_account_id: ACCOUNT-DIYU-HQ-OFFICIAL
-      acting_role_id: ROLE-HQ-CONTENT-TEAM
       confirmed_requirement:
         requirement_id: REQ-DIYU-SIM-001
         requirement_version: 1
@@ -504,14 +500,6 @@ public_foundation_contract:
         content_account_id: ACCOUNT-DIYU-HQ-OFFICIAL
         topic_category_id: TOPIC-02
         target_platform: SIMULATED_CHANNEL
-        confirmed_by_principal_id: SIM-LOGIN-DIYU-ACCEPTANCE-001
-        confirmed_at: '2026-07-14T00:00:00Z'
-      confirmation_evidence:
-        confirmed_by_principal_id: SIM-LOGIN-DIYU-ACCEPTANCE-001
-        confirmed_by_role_ids: [ROLE-XU-WENCHUAN]
-        confirmation_scope: product_content
-        authorization_refs: [AUTH-SIM-CONFIRM-001]
-        subject_confirmation_ref: null
       scoped_retrieval_fragments:
       - fragment_id: FRAGMENT-SIM-001
         tenant_id: TENANT-DIYU-SIM-001
@@ -676,7 +664,7 @@ public_foundation_contract:
     - composition_plan_ref
     - hard_issues
     - soft_evaluation_tasks
-    - semantic_fact_review_status
+    - usage_check_status
     - actually_used_fact_refs
     - actually_used_material_refs
     - plain_language_reason
@@ -692,7 +680,7 @@ public_foundation_contract:
     - plan_consistency
     - internal_identifier_leak
     hard_checks_do_not_prove_candidate_semantics: true
-    semantic_fact_review_required_before_publish: true
+    user_self_check_advisory_not_persisted: true
     request_example:
       api_version: v1
       request_id: REQ-SIM-VALIDATE-001
@@ -735,10 +723,10 @@ public_foundation_contract:
         - task_id: candidate_difference
           status: PENDING_EXTERNAL_EVALUATION
           score: null
-        semantic_fact_review_status: PENDING_EXTERNAL_REVIEW
+        usage_check_status: USER_SELF_CHECK
         actually_used_fact_refs: [FACT-SIM-001]
         actually_used_material_refs: [FRAGMENT-SIM-001]
-        plain_language_reason: 结构化硬检查通过，正文语义事实复核和表达质量评价仍待完成。
+        plain_language_reason: 结构化硬检查通过，候选交由账号使用人自行检查后使用。
       revise:
         object_type: VALIDATION_DECISION
         decision: REVISE
@@ -749,10 +737,10 @@ public_foundation_contract:
         - task_id: task_fit
           status: PENDING_EXTERNAL_EVALUATION
           score: null
-        semantic_fact_review_status: PENDING_EXTERNAL_REVIEW
+        usage_check_status: USER_SELF_CHECK
         actually_used_fact_refs: [FACT-SIM-001]
         actually_used_material_refs: [FRAGMENT-SIM-001]
-        plain_language_reason: 有一处结构化引用不完整，请按计划允许的资料修改，正文语义仍需复核。
+        plain_language_reason: 有一处结构化引用不完整，请按计划允许的资料修改。
       block:
         object_type: VALIDATION_DECISION
         decision: BLOCK
@@ -763,7 +751,7 @@ public_foundation_contract:
         - task_id: task_fit
           status: PENDING_EXTERNAL_EVALUATION
           score: null
-        semantic_fact_review_status: NOT_REACHED
+        usage_check_status: NOT_REACHED
         actually_used_fact_refs: [FACT-SIM-001]
         actually_used_material_refs: [FRAGMENT-SIM-001]
         plain_language_reason: 资料范围或授权与当前账号不一致，暂不能继续。
@@ -847,7 +835,7 @@ public_foundation_contract:
       - normal_chat
       - inspiration
       - requirement_clarification
-      - requirement_confirmation_ui
+      - task_alignment_ui
       - candidate_authoring_model_call
       - result_display
       - user_requested_revision
