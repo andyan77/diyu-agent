@@ -17,6 +17,18 @@ execution_review_request:
   review_paths:
     - 17_dify_runtime/dify_end_to_end_001/review/final_logo_visual_new_user_review.v1.json
     - 17_dify_runtime/dify_end_to_end_001/review/final_logo_runtime_security_rollback_review.v1.json
+  targeted_runtime_rereview:
+    reviewed_commit: 5bf4bed8d85fd2ecb52b0e71413ad9c21fbdca3a
+    reviewed_tree: 9ffa1f5b3e3fab1a14c8a4fe4a1ad34d6d35c5ab
+    reviewer_identity: codex-independent-runtime-security-rollback-reviewer-20260721
+    reviewer_run_id: logo-runtime-security-rollback-targeted-rereview-5bf4bed8-20260721T084547Z
+    score: 96
+    verdict: PASS
+    hard_blockers: []
+    product_checker_sha256: 07abb6a21778cbcdea00ab53f695e2ccb5129406b2554d66e11ee7b5fff74502
+    gate1_result: PASS_EXIT_0
+    business_and_logo_runtime_paths_unchanged: true
+    visual_rereview_performed: false
   canonical_sources:
     01/08: 3493ab9102fb1e98b1c7f94c08a6d614ea4062673754d6483e18547949d300a0
     02/08: 3deaa70857fffc2d2dac531fe2679f3966abb0311f61f051cc5cd646f2fe5688

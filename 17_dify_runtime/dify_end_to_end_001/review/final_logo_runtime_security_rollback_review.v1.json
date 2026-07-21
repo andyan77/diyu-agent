@@ -172,5 +172,29 @@
       "summary": "Protected merge, remote checks, exact deployment, remote Dify icon write, and online rollback verification remain correctly deferred until the two review records and exact Founder approval are present."
     }
   ],
-  "conclusion": "PASS: the frozen candidate satisfies the runtime, security, isolation, idempotency, checker-compatibility, and rollback design requirements for the pre-merge review stage. Current online non-deployment is the required authorization gate and is not a candidate blocker."
+  "targeted_rereview": {
+    "kind": "TARGETED_GATE_DIGEST_AND_ZERO_BUSINESS_DELTA",
+    "original_candidate_commit": "9fa5e49c07968097e44483b6e19032282d73da57",
+    "reviewed_commit": "5bf4bed8d85fd2ecb52b0e71413ad9c21fbdca3a",
+    "reviewed_tree": "9ffa1f5b3e3fab1a14c8a4fe4a1ad34d6d35c5ab",
+    "reviewer_identity": "codex-independent-runtime-security-rollback-reviewer-20260721",
+    "reviewer_session_id": "codex-secure-credential-handoff-session-20260721",
+    "reviewer_run_id": "logo-runtime-security-rollback-targeted-rereview-5bf4bed8-20260721T084547Z",
+    "reviewed_at": "2026-07-21T08:45:47Z",
+    "scope_checks": {
+      "diff_scope": "PASS",
+      "business_and_logo_runtime_paths_unchanged": true,
+      "product_checker_sha256": "07abb6a21778cbcdea00ab53f695e2ccb5129406b2554d66e11ee7b5fff74502",
+      "gate_constant_matches": true,
+      "workflow_pin_matches": true,
+      "gate1_single_entry": "PASS"
+    },
+    "gate_command": "PYTHONDONTWRITEBYTECODE=1 python3 ci/checkers/check_gate1_v1_1_current.py",
+    "gate_result": "PASS_EXIT_0",
+    "score": 96,
+    "verdict": "PASS",
+    "hard_blockers": [],
+    "worktree_clean_after_review": true
+  },
+  "conclusion": "PASS: the frozen candidate and the targeted 5bf4bed evidence commit satisfy the runtime, security, isolation, idempotency, checker-compatibility, and rollback design requirements for the pre-merge review stage. Current online non-deployment is the required authorization gate and is not a candidate blocker."
 }
