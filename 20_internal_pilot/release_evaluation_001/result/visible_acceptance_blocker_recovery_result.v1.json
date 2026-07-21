@@ -126,10 +126,18 @@
     }
   },
   "pull_request": {
-    "status": "TO_BE_CREATED_FROM_FINAL_STAGE_A_HEAD",
-    "url": null,
-    "checker_compatibility": "NOT_RUN",
-    "secret_scan": "NOT_RUN"
+    "status": "DRAFT",
+    "number": 35,
+    "url": "https://github.com/andyan77/diyu-agent/pull/35",
+    "initial_head_commit": "2f564cd9b8871270c047df6d13975ee37496a503",
+    "initial_run_id": 29797866559,
+    "initial_checker_compatibility": "FAIL_AUTHORIZED_RESULT_AND_REVIEW_PATHS_REJECTED",
+    "initial_secret_scan": "SUCCESS",
+    "consolidated_fix": "EXACT_PATH_COMPATIBILITY_IN_EXISTING_CENTRAL_CHECKERS",
+    "checks_required_after_consolidated_fix": [
+      "checker-compatibility",
+      "secret-scan"
+    ]
   },
   "stage_b_fail_closed_obligations": [
     "DO_NOT_RECONCILE_DATABASE_IDENTITIES_BECAUSE_IDENTITY_DRIFT_IS_FALSE",
