@@ -212,6 +212,60 @@ ACCOUNT_PERSONA_REVIEW_TYPES = {
     "ACCOUNT_PRODUCT_STRUCTURE_AND_NOVICE_EXPERIENCE",
     "ISOLATION_CONTRACT_COMPATIBILITY_AND_NO_APPROVAL",
 }
+FINAL_LOGO_TASK_ID = "DIYU_FINAL_LOGO_PRODUCT_INTEGRATION_001"
+FINAL_LOGO_BASELINE_COMMIT = "6b642a541489440f3af1fb9dbfb458953bea743d"
+FINAL_LOGO_TERMINAL_STATE = "READY_FOR_LOGO_MERGE_AND_DEPLOY_APPROVAL"
+FINAL_LOGO_REQUIRED_APPROVAL = "APPROVE_FINAL_LOGO_MERGE_AND_DEPLOY"
+FINAL_LOGO_ASSET_ROOT = Path("brand_assets/diyu/v1")
+FINAL_LOGO_MANIFEST_PATH = FINAL_LOGO_ASSET_ROOT / "asset-manifest.v1.json"
+FINAL_LOGO_ASSET_PATHS = frozenset(
+    {
+        FINAL_LOGO_MANIFEST_PATH,
+        FINAL_LOGO_ASSET_ROOT / "diyu-primary-full.svg",
+        FINAL_LOGO_ASSET_ROOT / "diyu-primary-monochrome-black.svg",
+        FINAL_LOGO_ASSET_ROOT / "diyu-primary-reverse.svg",
+        FINAL_LOGO_ASSET_ROOT / "diyu-primary-grayscale.svg",
+        FINAL_LOGO_ASSET_ROOT / "diyu-horizontal-full.svg",
+        FINAL_LOGO_ASSET_ROOT / "diyu-horizontal-reverse.svg",
+        FINAL_LOGO_ASSET_ROOT / "diyu-symbol-full.svg",
+        FINAL_LOGO_ASSET_ROOT / "diyu-app-icon.svg",
+        FINAL_LOGO_ASSET_ROOT / "diyu-app-icon-180.png",
+        FINAL_LOGO_ASSET_ROOT / "diyu-app-icon-512.png",
+        FINAL_LOGO_ASSET_ROOT / "diyu-favicon.svg",
+        FINAL_LOGO_ASSET_ROOT / "diyu-favicon.ico",
+    }
+)
+FINAL_LOGO_SCREENSHOT_PATHS = (
+    Path("result/final_logo_product_integration_screenshots/desktop-login.png"),
+    Path(
+        "result/final_logo_product_integration_screenshots/"
+        "logged-in-desktop-header.png"
+    ),
+    Path("result/final_logo_product_integration_screenshots/mobile-narrow.png"),
+    Path(
+        "result/final_logo_product_integration_screenshots/"
+        "dify-app-card-canvas-local.png"
+    ),
+)
+FINAL_LOGO_RESULT_PATH = Path("result/final_logo_product_integration_result.v1.json")
+FINAL_LOGO_DELIVERY_PATH = Path(
+    "delivery/final_logo_product_integration_execution_review_request.v1.yaml"
+)
+FINAL_LOGO_REVIEW_PATHS = (
+    Path("review/final_logo_visual_new_user_review.v1.json"),
+    Path("review/final_logo_runtime_security_rollback_review.v1.json"),
+)
+FINAL_LOGO_REVIEW_TYPES = {
+    "FINAL_LOGO_VISUAL_AND_NEW_USER_EXPERIENCE",
+    "FINAL_LOGO_RUNTIME_SECURITY_AND_ROLLBACK",
+}
+FINAL_LOGO_EXPECTED_PACKAGE_FILES = ACCOUNT_PERSONA_EXPECTED_PACKAGE_FILES | {
+    *FINAL_LOGO_ASSET_PATHS,
+    *FINAL_LOGO_SCREENSHOT_PATHS,
+    FINAL_LOGO_RESULT_PATH,
+    FINAL_LOGO_DELIVERY_PATH,
+    *FINAL_LOGO_REVIEW_PATHS,
+}
 RECOVERY_HISTORICAL_FROZEN_FILES = frozenset(
     {
         MANIFEST_PATH,
@@ -3700,6 +3754,317 @@ def run_account_persona_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
     }
 
 
+def final_logo_task_active(root: Path = PACKAGE_ROOT) -> bool:
+    """The versioned LOGO manifest is the task switch and wins all old routes."""
+    return (root / FINAL_LOGO_MANIFEST_PATH).is_file()
+
+
+def validate_final_logo_file_set(
+    root: Path, *, implementation_only: bool
+) -> None:
+    actual = package_file_set(root)
+    require(not list(root.rglob("*.pyc")), "E_FINAL_LOGO_BYTECODE_PRESENT")
+    require(not list(root.rglob("__pycache__")), "E_FINAL_LOGO_PYCACHE_PRESENT")
+    if implementation_only:
+        required = ACCOUNT_PERSONA_EXPECTED_PACKAGE_FILES | {
+            *FINAL_LOGO_ASSET_PATHS,
+            *FINAL_LOGO_SCREENSHOT_PATHS,
+        }
+        require(required <= actual, "E_FINAL_LOGO_IMPLEMENTATION_FILE_MISSING")
+        require(
+            actual <= FINAL_LOGO_EXPECTED_PACKAGE_FILES,
+            "E_FINAL_LOGO_FILE_SET_EXTRA:"
+            f"{sorted(map(str, actual - FINAL_LOGO_EXPECTED_PACKAGE_FILES))}",
+        )
+        return
+    require(
+        actual == FINAL_LOGO_EXPECTED_PACKAGE_FILES,
+        "E_FINAL_LOGO_FILE_SET:"
+        f"{sorted(map(str, actual ^ FINAL_LOGO_EXPECTED_PACKAGE_FILES))}",
+    )
+
+
+def validate_final_logo_asset_hashes(
+    manifest: Mapping[str, Any], root: Path
+) -> None:
+    assets = manifest.get("assets")
+    require(isinstance(assets, list), "E_FINAL_LOGO_MANIFEST_ASSETS")
+    expected_names = {
+        path.name for path in FINAL_LOGO_ASSET_PATHS if path != FINAL_LOGO_MANIFEST_PATH
+    }
+    rows = {
+        str(row.get("filename")): row
+        for row in assets
+        if isinstance(row, dict)
+    }
+    require(set(rows) == expected_names, "E_FINAL_LOGO_MANIFEST_ASSET_SET")
+    for filename, row in rows.items():
+        require(
+            row.get("sha256")
+            == sha256_file(root / FINAL_LOGO_ASSET_ROOT / filename),
+            f"E_FINAL_LOGO_ASSET_HASH:{filename}",
+        )
+
+
+def validate_final_logo_unchanged_boundaries(root: Path) -> None:
+    status = load_yaml_root(
+        REPOSITORY_ROOT / "project-infra/current_product_status.v1.yaml",
+        "current_product_status",
+    )
+    require(
+        status.get("quality_baseline")
+        and cast(Mapping[str, Any], status["quality_baseline"]).get(
+            "target_case_count"
+        )
+        == 300
+        and cast(Mapping[str, Any], status["quality_baseline"]).get(
+            "frozen_reference_inventory_count"
+        )
+        == 120
+        and cast(Mapping[str, Any], status["quality_baseline"]).get(
+            "historical_component_inventory_count"
+        )
+        == 86
+        and cast(Mapping[str, Any], status["quality_baseline"]).get(
+            "changed_or_harmed_by_this_task"
+        )
+        is False,
+        "E_FINAL_LOGO_CORE_NUMBERS",
+    )
+    readiness = status.get("readiness")
+    require(
+        isinstance(readiness, dict)
+        and set(readiness) == REQUIRED_FALSE_FLAGS
+        and all(readiness.get(flag) is False for flag in REQUIRED_FALSE_FLAGS),
+        "E_FINAL_LOGO_READINESS",
+    )
+    previous = load_json(root / ACCOUNT_PERSONA_RESULT_PATH)
+    require(
+        previous.get("core_numbers")
+        == {"300": 300, "120": 120, "86": 86, "changed": False},
+        "E_FINAL_LOGO_PRIOR_CORE_NUMBERS",
+    )
+
+
+def validate_final_logo_implementation(
+    root: Path, *, implementation_only: bool
+) -> JsonObject:
+    validate_final_logo_file_set(root, implementation_only=implementation_only)
+    validate_recovery_historical_bytes(root)
+    validate_final_logo_asset_hashes(
+        load_json(root / FINAL_LOGO_MANIFEST_PATH), root
+    )
+    validate_final_logo_unchanged_boundaries(root)
+    unit_test_count = run_account_persona_unit_tests(root)
+    return {
+        "task_id": FINAL_LOGO_TASK_ID,
+        "status": "PASS",
+        "formal_asset_count": len(FINAL_LOGO_ASSET_PATHS),
+        "visible_evidence_count": len(FINAL_LOGO_SCREENSHOT_PATHS),
+        "unit_test_count": unit_test_count,
+        "model_call_count": 0,
+        "core_numbers_changed": False,
+    }
+
+
+def validate_final_logo_reviews(
+    reviews: object, *, candidate_commit: str, candidate_tree_digest: str
+) -> None:
+    require(
+        isinstance(reviews, list) and len(reviews) == 2,
+        "E_FINAL_LOGO_REVIEW_COUNT",
+    )
+    typed_reviews = [
+        cast(Mapping[str, Any], review)
+        for review in reviews
+        if isinstance(review, dict)
+    ]
+    require(
+        len(typed_reviews) == 2
+        and {str(review.get("review_type")) for review in typed_reviews}
+        == FINAL_LOGO_REVIEW_TYPES,
+        "E_FINAL_LOGO_REVIEW_TYPES",
+    )
+    for review in typed_reviews:
+        require(
+            review.get("task_id") == FINAL_LOGO_TASK_ID
+            and review.get("candidate_commit") == candidate_commit
+            and review.get("candidate_tree") == candidate_tree_digest
+            and review.get("verdict") == "PASS"
+            and isinstance(review.get("score"), int)
+            and int(review["score"]) >= 90
+            and review.get("hard_blockers") == []
+            and isinstance(review.get("acceptance_ids"), list)
+            and bool(review["acceptance_ids"]),
+            "E_FINAL_LOGO_REVIEW_RESULT",
+        )
+        for key in (
+            "review_id",
+            "reviewer_identity",
+            "reviewer_session_id",
+            "reviewer_run_id",
+        ):
+            require(
+                isinstance(review.get(key), str) and bool(review[key]),
+                f"E_FINAL_LOGO_REVIEW_BINDING:{key}",
+            )
+    for key in ("reviewer_identity", "reviewer_session_id", "reviewer_run_id"):
+        require(
+            len({str(review.get(key)) for review in typed_reviews}) == 2,
+            f"E_FINAL_LOGO_REVIEW_INDEPENDENCE:{key}",
+        )
+
+
+def validate_final_logo_all(root: Path = PACKAGE_ROOT) -> JsonObject:
+    implementation = validate_final_logo_implementation(
+        root, implementation_only=False
+    )
+    result = load_json(root / FINAL_LOGO_RESULT_PATH)
+    delivery = load_yaml_root(root / FINAL_LOGO_DELIVERY_PATH, "execution_review_request")
+    reviews = [load_json(root / path) for path in FINAL_LOGO_REVIEW_PATHS]
+    require(
+        result.get("schema")
+        == "diyu.package7.final_logo_product_integration.result.v1"
+        and result.get("task_id") == FINAL_LOGO_TASK_ID
+        and result.get("baseline_commit") == FINAL_LOGO_BASELINE_COMMIT,
+        "E_FINAL_LOGO_RESULT_IDENTITY",
+    )
+    candidate_commit = str(result.get("candidate_commit", ""))
+    candidate_tree_digest = str(result.get("candidate_tree", ""))
+    require(
+        bool(re.fullmatch(r"[0-9a-f]{40}", candidate_commit))
+        and candidate_tree(candidate_commit) == candidate_tree_digest
+        and subprocess.run(
+            ["git", "merge-base", "--is-ancestor", candidate_commit, "HEAD"],
+            cwd=REPOSITORY_ROOT,
+            check=False,
+        ).returncode
+        == 0,
+        "E_FINAL_LOGO_CANDIDATE_BINDING",
+    )
+    acceptance = result.get("acceptance")
+    expected_acceptance = {f"A{number:02d}" for number in range(1, 13)}
+    require(
+        isinstance(acceptance, dict)
+        and set(acceptance) == expected_acceptance
+        and all(acceptance.get(key) is True for key in expected_acceptance),
+        "E_FINAL_LOGO_ACCEPTANCE",
+    )
+    validate_final_logo_reviews(
+        reviews,
+        candidate_commit=candidate_commit,
+        candidate_tree_digest=candidate_tree_digest,
+    )
+    screenshot_rows = result.get("screenshots")
+    require(
+        isinstance(screenshot_rows, list)
+        and {
+            str(row.get("path"))
+            for row in screenshot_rows
+            if isinstance(row, dict)
+        }
+        == {
+            (PACKAGE_RELATIVE_ROOT / path).as_posix()
+            for path in FINAL_LOGO_SCREENSHOT_PATHS
+        },
+        "E_FINAL_LOGO_RESULT_SCREENSHOTS",
+    )
+    for value in cast(list[Any], screenshot_rows):
+        require(isinstance(value, dict), "E_FINAL_LOGO_RESULT_SCREENSHOT_OBJECT")
+        row = cast(Mapping[str, Any], value)
+        path = Path(str(row.get("path", "")))
+        require(
+            row.get("sha256") == sha256_file(REPOSITORY_ROOT / path),
+            f"E_FINAL_LOGO_RESULT_SCREENSHOT_HASH:{path}",
+        )
+    require(
+        result.get("terminal_state") == FINAL_LOGO_TERMINAL_STATE
+        and result.get("model_calls") == 0
+        and result.get("paid_model_calls") == 0
+        and result.get("merge_performed") is False
+        and result.get("deployment_performed") is False
+        and result.get("remote_dify_icon_update_performed") is False
+        and result.get("remote_write_performed") is False
+        and result.get("core_numbers")
+        == {"300": 300, "120": 120, "86": 86, "changed": False}
+        and result.get("readiness") == {flag: False for flag in REQUIRED_FALSE_FLAGS},
+        "E_FINAL_LOGO_RESULT_BOUNDARIES",
+    )
+    require(
+        delivery.get("task_id") == FINAL_LOGO_TASK_ID
+        and delivery.get("candidate_commit") == candidate_commit
+        and delivery.get("candidate_tree") == candidate_tree_digest
+        and delivery.get("result_path")
+        == (PACKAGE_RELATIVE_ROOT / FINAL_LOGO_RESULT_PATH).as_posix()
+        and delivery.get("review_paths")
+        == [
+            (PACKAGE_RELATIVE_ROOT / path).as_posix()
+            for path in FINAL_LOGO_REVIEW_PATHS
+        ]
+        and delivery.get("terminal_state") == FINAL_LOGO_TERMINAL_STATE
+        and delivery.get("required_founder_approval")
+        == FINAL_LOGO_REQUIRED_APPROVAL
+        and delivery.get("merge_authorized") is False
+        and delivery.get("deployment_authorized") is False
+        and delivery.get("remote_dify_icon_update_authorized") is False
+        and delivery.get("draft_pull_request_url")
+        == result.get("draft_pull_request_url"),
+        "E_FINAL_LOGO_DELIVERY",
+    )
+    return {
+        **implementation,
+        "terminal_state": FINAL_LOGO_TERMINAL_STATE,
+        "review_count": 2,
+        "acceptance_pass": True,
+        "draft_pull_request_url": result.get("draft_pull_request_url"),
+    }
+
+
+def run_final_logo_selftest(root: Path = PACKAGE_ROOT) -> JsonObject:
+    manifest = load_json(root / FINAL_LOGO_MANIFEST_PATH)
+    changed_manifest = copy.deepcopy(manifest)
+    changed_manifest["assets"][0]["sha256"] = "0" * 64
+    expect_failure(
+        lambda: validate_final_logo_asset_hashes(changed_manifest, root),
+        "E_FINAL_LOGO_ASSET_HASH",
+    )
+    candidate_commit = "1" * 40
+    candidate_tree_digest = "2" * 40
+    reviews: list[JsonObject] = []
+    for index, review_type in enumerate(sorted(FINAL_LOGO_REVIEW_TYPES), start=1):
+        reviews.append(
+            {
+                "task_id": FINAL_LOGO_TASK_ID,
+                "review_id": f"review-{index}",
+                "review_type": review_type,
+                "reviewer_identity": f"reviewer-{index}",
+                "reviewer_session_id": f"session-{index}",
+                "reviewer_run_id": f"run-{index}",
+                "candidate_commit": candidate_commit,
+                "candidate_tree": candidate_tree_digest,
+                "score": 95,
+                "verdict": "PASS",
+                "hard_blockers": [],
+                "acceptance_ids": [f"A{index:02d}"],
+            }
+        )
+    reviews[0]["score"] = 89
+    expect_failure(
+        lambda: validate_final_logo_reviews(
+            reviews,
+            candidate_commit=candidate_commit,
+            candidate_tree_digest=candidate_tree_digest,
+        ),
+        "E_FINAL_LOGO_REVIEW_RESULT",
+    )
+    return {
+        "task_id": FINAL_LOGO_TASK_ID,
+        "selftest": "PASS",
+        "negative_cases": 2,
+        "optimized_mode_fail_closed": True,
+    }
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--selftest", action="store_true")
@@ -3712,9 +4077,19 @@ def main() -> int:
     try:
         if args.selftest and args.implementation:
             raise CheckFailure("E_ARGUMENT_MODE_CONFLICT")
+        logo_task_active = final_logo_task_active()
         current_task_active = account_persona_task_active()
         recovery_active = (PACKAGE_ROOT / RECOVERY_REPLAY_PATH).is_file()
-        if current_task_active and args.selftest:
+        if logo_task_active and args.selftest:
+            result = run_final_logo_selftest()
+        elif logo_task_active and args.implementation:
+            result = validate_final_logo_implementation(
+                PACKAGE_ROOT,
+                implementation_only=True,
+            )
+        elif logo_task_active:
+            result = validate_final_logo_all()
+        elif current_task_active and args.selftest:
             result = run_account_persona_selftest()
         elif current_task_active and args.implementation:
             result = validate_account_persona_implementation(

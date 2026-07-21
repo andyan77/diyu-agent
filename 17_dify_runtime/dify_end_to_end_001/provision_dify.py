@@ -18,6 +18,22 @@ from sqlalchemy import select
 
 APP_NAME = "DIYU Package 7 End-to-End (non-production)"
 DATASET_NAME = "DIYU Package 7 Narrative Truth (non-production)"
+TARGET_DIFY_APPLICATION_ID = "98eb36f1-50b7-42ca-8184-976512fbef9d"
+EXPECTED_DIFY_WORKSPACE_APPLICATION_COUNT = 3
+APP_ICON_PATH = (
+    Path(__file__).resolve().parent
+    / "brand_assets"
+    / "diyu"
+    / "v1"
+    / "diyu-app-icon-512.png"
+)
+APP_ICON_SHA256 = "752c8676c03638bc1242c5d6382be1b51abcef270223514b0680fe6683f71a38"
+APP_ICON_BACKGROUND = "#F8F7F3"
+APP_ICON_FILENAME = "diyu-app-icon-512.png"
+APP_ICON_MIMETYPE = "image/png"
+APP_ICON_MUTABLE_COLUMNS = frozenset(
+    {"icon", "icon_type", "icon_background", "updated_at", "updated_by"}
+)
 METADATA_FIELDS = {
     "fragment_id": "string",
     "tenant_id": "string",
@@ -163,6 +179,70 @@ def _canonical_json(value: object) -> str:
     )
 
 
+def locked_workspace_application_ids(apps: list[Any]) -> frozenset[str]:
+    """Fail closed unless the known three-app workspace and target are exact."""
+    app_ids = [str(app.id) for app in apps]
+    if (
+        len(app_ids) != EXPECTED_DIFY_WORKSPACE_APPLICATION_COUNT
+        or len(set(app_ids)) != len(app_ids)
+        or TARGET_DIFY_APPLICATION_ID not in app_ids
+    ):
+        raise RuntimeError("The approved three-app Dify workspace drifted")
+    return frozenset(app_ids)
+
+
+def select_reusable_app_icon_upload(
+    uploads: list[Any],
+    desired_content: bytes,
+    load_content: Any,
+) -> Any | None:
+    """Reuse a hash-filtered upload only when its stored bytes are identical."""
+    for upload in uploads:
+        stored_content = load_content(upload.key)
+        if not isinstance(stored_content, bytes) or stored_content != desired_content:
+            raise RuntimeError("A matching Dify icon upload has inconsistent storage")
+        return upload
+    return None
+
+
+def import_target_dify_app_with_icon(
+    *,
+    dsl_service: Any,
+    session: Any,
+    account: Any,
+    dsl: str,
+    existing_app: Any,
+    upload_id: str,
+) -> Any:
+    """Import through Dify's service layer and roll back any failed mutation."""
+    if str(existing_app.id) != TARGET_DIFY_APPLICATION_ID:
+        raise RuntimeError("The Dify icon write target is not approved")
+    imported = dsl_service.import_app(
+        account=account,
+        import_mode="yaml-content",
+        yaml_content=dsl,
+        icon_type="image",
+        icon=upload_id,
+        icon_background=APP_ICON_BACKGROUND,
+        app_id=existing_app.id,
+    )
+    if imported.status.value != "completed" or imported.app_id is None:
+        session.rollback()
+        raise RuntimeError(f"Dify app import failed: {imported.error}")
+    return imported
+
+
+def _app_column_snapshot(
+    app: Any,
+    excluded_columns: frozenset[str] = frozenset(),
+) -> tuple[tuple[str, object], ...]:
+    return tuple(
+        (column.name, getattr(app, column.name))
+        for column in app.__table__.columns
+        if column.name not in excluded_columns
+    )
+
+
 def resolve_materialized_fragments(manifest_path: Path) -> tuple[Path, dict[str, Any]]:
     """Validate one Package 8 runtime projection before Dify consumes it."""
 
@@ -241,9 +321,10 @@ def main() -> int:
     with app.app_context(), app.test_request_context("/package7-provision"):
         from extensions.ext_database import db
         from extensions.ext_storage import storage
+        from libs.datetime_utils import naive_utc_now
         from models import Account, App
         from models.dataset import Dataset, DatasetMetadata, Document, DocumentSegment
-        from models.enums import ApiTokenType
+        from models.enums import ApiTokenType, CreatorUserRole
         from models.model import ApiToken, UploadFile
         from services.app_dsl_service import AppDslService
         from services.dataset_service import DatasetService, DocumentService
@@ -270,6 +351,8 @@ def main() -> int:
                 raise RuntimeError("The Package 7 Dify state is invalid")
             locked_state = parsed_state
         locked_app_id = locked_state.get("app_id")
+        if locked_app_id != TARGET_DIFY_APPLICATION_ID:
+            raise RuntimeError("The locked Dify application is not the approved target")
         existing_app = (
             db.session.get(App, locked_app_id)
             if isinstance(locked_app_id, str)
@@ -321,26 +404,105 @@ def main() -> int:
                     "The approved Package 7 Dify owner does not own the existing app"
                 )
             owner_binding_source = "EXPLICIT_OPERATOR_APPROVAL"
+        if existing_app is None:
+            raise RuntimeError("The approved target Dify application is unavailable")
+        if existing_app.enable_site is not False or existing_app.enable_api is not True:
+            raise RuntimeError("The target Dify application access scope drifted")
         account = db.session.get(Account, owner_account_id)
         if account is None:
             raise RuntimeError("The approved Package 7 Dify owner is unavailable")
         account.set_tenant_id(tenant_id)
         login_user(account)
 
-        dsl = dsl_path.read_text(encoding="utf-8")
-        imported = AppDslService(db.session()).import_app(
-            account=account,
-            import_mode="yaml-content",
-            yaml_content=dsl,
-            app_id=None if existing_app is None else existing_app.id,
+        workspace_apps_before = list(
+            db.session.scalars(
+                select(App).where(App.tenant_id == tenant_id).order_by(App.id)
+            ).all()
         )
-        if imported.status.value != "completed" or imported.app_id is None:
-            raise RuntimeError(f"Dify app import failed: {imported.error}")
+        workspace_app_ids_before = locked_workspace_application_ids(
+            workspace_apps_before
+        )
+        target_app_before = next(
+            candidate
+            for candidate in workspace_apps_before
+            if str(candidate.id) == TARGET_DIFY_APPLICATION_ID
+        )
+        target_protected_columns_before = _app_column_snapshot(
+            target_app_before,
+            APP_ICON_MUTABLE_COLUMNS,
+        )
+        non_target_apps_before = {
+            str(candidate.id): _app_column_snapshot(candidate)
+            for candidate in workspace_apps_before
+            if str(candidate.id) != TARGET_DIFY_APPLICATION_ID
+        }
+
+        app_icon_content = APP_ICON_PATH.read_bytes()
+        if hashlib.sha256(app_icon_content).hexdigest() != APP_ICON_SHA256:
+            raise RuntimeError("The approved Dify application icon asset drifted")
+        app_icon_storage_hash = hashlib.sha3_256(app_icon_content).hexdigest()
+        reusable_uploads = list(
+            db.session.scalars(
+                select(UploadFile)
+                .where(
+                    UploadFile.tenant_id == tenant_id,
+                    UploadFile.created_by == account.id,
+                    UploadFile.created_by_role == CreatorUserRole.ACCOUNT,
+                    UploadFile.extension == "png",
+                    UploadFile.mime_type == APP_ICON_MIMETYPE,
+                    UploadFile.hash == app_icon_storage_hash,
+                )
+                .order_by(UploadFile.created_at, UploadFile.id)
+            ).all()
+        )
+        app_icon_upload = select_reusable_app_icon_upload(
+            reusable_uploads,
+            app_icon_content,
+            storage.load,
+        )
+        if app_icon_upload is None:
+            uploaded = FileService(db.engine).upload_file(
+                filename=APP_ICON_FILENAME,
+                content=app_icon_content,
+                mimetype=APP_ICON_MIMETYPE,
+                user=account,
+            )
+            app_icon_upload = db.session.get(UploadFile, uploaded.id)
+        if app_icon_upload is None:
+            raise RuntimeError("The Dify application icon upload is unavailable")
+        stored_icon_content = storage.load(app_icon_upload.key)
+        if (
+            str(app_icon_upload.tenant_id) != str(tenant_id)
+            or str(app_icon_upload.created_by) != str(account.id)
+            or app_icon_upload.hash != app_icon_storage_hash
+            or not isinstance(stored_icon_content, bytes)
+            or stored_icon_content != app_icon_content
+        ):
+            raise RuntimeError("The Dify application icon upload failed validation")
+        app_icon_upload.used = True
+        app_icon_upload.used_by = account.id
+        app_icon_upload.used_at = naive_utc_now()
+
+        dsl = dsl_path.read_text(encoding="utf-8")
+        imported = import_target_dify_app_with_icon(
+            dsl_service=AppDslService(db.session()),
+            session=db.session,
+            account=account,
+            dsl=dsl,
+            existing_app=existing_app,
+            upload_id=str(app_icon_upload.id),
+        )
         app_model = db.session.get(App, imported.app_id)
         if app_model is None:
             raise RuntimeError("Imported Dify app is missing")
         if locked_app_id is not None and str(app_model.id) != locked_app_id:
             raise RuntimeError("The Package 7 Dify application identity changed")
+        if (
+            getattr(app_model.icon_type, "value", str(app_model.icon_type)) != "image"
+            or str(app_model.icon) != str(app_icon_upload.id)
+            or app_model.icon_background != APP_ICON_BACKGROUND
+        ):
+            raise RuntimeError("The target Dify application image icon was not bound")
         app_name_matches = list(
             db.session.scalars(
                 select(App).where(App.tenant_id == tenant_id, App.name == APP_NAME)
@@ -766,6 +928,35 @@ def main() -> int:
             db.session.add(dataset_token)
             db.session.commit()
 
+        db.session.expire_all()
+        workspace_apps_after = list(
+            db.session.scalars(
+                select(App).where(App.tenant_id == tenant_id).order_by(App.id)
+            ).all()
+        )
+        workspace_app_ids_after = locked_workspace_application_ids(
+            workspace_apps_after
+        )
+        if workspace_app_ids_after != workspace_app_ids_before:
+            raise RuntimeError("The Dify workspace application identities changed")
+        target_app_after = next(
+            candidate
+            for candidate in workspace_apps_after
+            if str(candidate.id) == TARGET_DIFY_APPLICATION_ID
+        )
+        if _app_column_snapshot(
+            target_app_after,
+            APP_ICON_MUTABLE_COLUMNS,
+        ) != target_protected_columns_before:
+            raise RuntimeError("A protected target Dify application field changed")
+        non_target_apps_after = {
+            str(candidate.id): _app_column_snapshot(candidate)
+            for candidate in workspace_apps_after
+            if str(candidate.id) != TARGET_DIFY_APPLICATION_ID
+        }
+        if non_target_apps_after != non_target_apps_before:
+            raise RuntimeError("A non-target Dify application changed")
+
         state = {
             "tenant_id": tenant_id,
             "owner_account_id": str(owner_account_id),
@@ -780,6 +971,10 @@ def main() -> int:
                 _canonical_json(mapping).encode("utf-8")
             ).hexdigest(),
             "app_name": APP_NAME,
+            "app_icon_asset_sha256": APP_ICON_SHA256,
+            "app_icon_upload_id": str(app_icon_upload.id),
+            "app_icon_type": "image",
+            "workspace_app_ids": sorted(workspace_app_ids_after),
             "dataset_name": DATASET_NAME,
             "materialization_digest": materialization_manifest[
                 "materialization_digest"

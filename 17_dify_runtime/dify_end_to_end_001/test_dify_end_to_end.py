@@ -8,12 +8,14 @@ import copy
 import hashlib
 import json
 import os
+import struct
 import subprocess
 import tempfile
 import threading
 import unittest
 from dataclasses import replace
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any
 from unittest.mock import patch
 
@@ -36,7 +38,15 @@ from persistence import (
     runtime_browser_session,
     trusted_database_scope,
 )
-from provision_dify import _content_sha256, _dify_import_text
+from provision_dify import (
+    APP_ICON_BACKGROUND,
+    TARGET_DIFY_APPLICATION_ID,
+    _content_sha256,
+    _dify_import_text,
+    import_target_dify_app_with_icon,
+    locked_workspace_application_ids,
+    select_reusable_app_icon_upload,
+)
 from runtime_models import RuntimeFeedback
 from runtime_retrieval import RuntimeBrandFactRetrievalService
 from runtime_service import (
@@ -290,6 +300,240 @@ class DifyMaterializationCompatibilityTests(unittest.TestCase):
         )
 
 
+class LogoProductIntegrationTests(unittest.TestCase):
+    def test_formal_brand_assets_match_the_final_source_contract(self) -> None:
+        brand_root = PACKAGE_ROOT / "brand_assets" / "diyu" / "v1"
+        expected_files = {
+            "asset-manifest.v1.json",
+            "diyu-primary-full.svg",
+            "diyu-primary-monochrome-black.svg",
+            "diyu-primary-reverse.svg",
+            "diyu-primary-grayscale.svg",
+            "diyu-horizontal-full.svg",
+            "diyu-horizontal-reverse.svg",
+            "diyu-symbol-full.svg",
+            "diyu-app-icon.svg",
+            "diyu-app-icon-180.png",
+            "diyu-app-icon-512.png",
+            "diyu-favicon.svg",
+            "diyu-favicon.ico",
+        }
+        self.assertEqual(
+            {path.name for path in brand_root.iterdir() if path.is_file()},
+            expected_files,
+        )
+        manifest = json.loads(
+            (brand_root / "asset-manifest.v1.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            [(row["page"], row["filename"], row["sha256"]) for row in manifest["canonical_sources"]],
+            [
+                (
+                    "01/08",
+                    "ChatGPT Image 2026年7月20日 17_07_04 (1).png",
+                    "3493ab9102fb1e98b1c7f94c08a6d614ea4062673754d6483e18547949d300a0",
+                ),
+                (
+                    "02/08",
+                    "ChatGPT Image 2026年7月20日 17_07_05 (2).png",
+                    "3deaa70857fffc2d2dac531fe2679f3966abb0311f61f051cc5cd646f2fe5688",
+                ),
+                (
+                    "03/08",
+                    "ChatGPT Image 2026年7月20日 17_07_06 (4).png",
+                    "892d5df007bf801b645974984b9fb071ce0ee4a3adfd5584e794e7dfa98ac122",
+                ),
+                (
+                    "04/08",
+                    "ChatGPT Image 2026年7月20日 17_07_06 (3).png",
+                    "fc85e1186bcea9c3d0b3186287c62624359c042fec9b8ec4684d7f10dcac04f0",
+                ),
+            ],
+        )
+        self.assertEqual(
+            manifest["colors"],
+            {
+                "breathing_white": "#F8F7F3",
+                "ink_black": "#171614",
+                "pure_white": "#FFFFFF",
+                "stone_gray": "#8A887E",
+                "vermilion": "#B7462F",
+            },
+        )
+        self.assertEqual(
+            {row["filename"] for row in manifest["assets"]},
+            expected_files - {"asset-manifest.v1.json"},
+        )
+        for row in manifest["assets"]:
+            payload = (brand_root / row["filename"]).read_bytes()
+            self.assertEqual(hashlib.sha256(payload).hexdigest(), row["sha256"])
+            self.assertEqual(len(payload), row["byte_size"])
+
+        forbidden_svg_tokens = (
+            "<text",
+            "<script",
+            "foreignobject",
+            "onload=",
+            "onclick=",
+            "href=",
+            "<image",
+            "url(",
+            "lineargradient",
+            "radialgradient",
+            "filter=",
+        )
+        old_colors = ("#1f1d1a", "#a43a22", "#f7f3ec", "#595147")
+        for path in sorted(brand_root.glob("*.svg")):
+            source = path.read_text(encoding="utf-8")
+            lowered = source.lower()
+            self.assertIn("<title", lowered)
+            for token in forbidden_svg_tokens + old_colors:
+                self.assertNotIn(token, lowered, f"{path.name} contains {token}")
+            if path.name != "diyu-app-icon.svg":
+                self.assertNotIn("<rect", lowered)
+
+        symbol = (brand_root / "diyu-symbol-full.svg").read_text(encoding="utf-8")
+        self.assertIn('viewBox="0 0 300 320"', symbol)
+        self.assertIn('d="M90 90.077A120 120 0 1 0 210 90.077"', symbol)
+        self.assertIn('stroke-width="12"', symbol)
+        self.assertIn('stroke-linecap="round"', symbol)
+        self.assertIn('d="M150 0L175 60H125Z"', symbol)
+        for y in (140, 200, 260):
+            self.assertIn(f'cx="150" cy="{y}" r="12"', symbol)
+        self.assertEqual(symbol.count("<circle"), 3)
+        self.assertGreaterEqual(12 / 300 * 16, 0.6)
+        self.assertEqual(
+            manifest["construction"]["minimum_render_sizes"],
+            {"app_icon_px": 24, "horizontal_width_px": 120, "symbol_px": 16},
+        )
+
+        for filename, size in (
+            ("diyu-app-icon-180.png", (180, 180)),
+            ("diyu-app-icon-512.png", (512, 512)),
+        ):
+            png = (brand_root / filename).read_bytes()
+            self.assertEqual(png[:8], b"\x89PNG\r\n\x1a\n")
+            width, height, bit_depth, color_type = struct.unpack(
+                ">IIBB", png[16:26]
+            )
+            self.assertEqual((width, height), size)
+            self.assertEqual((bit_depth, color_type), (8, 6))
+
+        ico = (brand_root / "diyu-favicon.ico").read_bytes()
+        reserved, icon_type, count = struct.unpack("<HHH", ico[:6])
+        self.assertEqual((reserved, icon_type, count), (0, 1, 3))
+        ico_sizes = []
+        for index in range(count):
+            width, height = struct.unpack_from("BB", ico, 6 + index * 16)
+            ico_sizes.append((256 if width == 0 else width, 256 if height == 0 else height))
+        self.assertEqual(ico_sizes, [(16, 16), (32, 32), (48, 48)])
+
+    def test_dify_icon_write_is_exact_id_idempotent_and_rollback_safe(self) -> None:
+        apps = [
+            SimpleNamespace(id=TARGET_DIFY_APPLICATION_ID),
+            SimpleNamespace(id="non-target-a"),
+            SimpleNamespace(id="non-target-b"),
+        ]
+        self.assertEqual(
+            locked_workspace_application_ids(apps),
+            frozenset(
+                {TARGET_DIFY_APPLICATION_ID, "non-target-a", "non-target-b"}
+            ),
+        )
+        with self.assertRaisesRegex(RuntimeError, "three-app Dify workspace"):
+            locked_workspace_application_ids(apps[:2])
+
+        content = b"approved-icon-content"
+        existing_upload = SimpleNamespace(id="upload-existing", key="stored-icon")
+        self.assertIs(
+            select_reusable_app_icon_upload(
+                [existing_upload], content, lambda _key: content
+            ),
+            existing_upload,
+        )
+        self.assertIsNone(
+            select_reusable_app_icon_upload([], content, lambda _key: content)
+        )
+        with self.assertRaisesRegex(RuntimeError, "inconsistent storage"):
+            select_reusable_app_icon_upload(
+                [existing_upload], content, lambda _key: b"different"
+            )
+
+        class FakeSession:
+            def __init__(self) -> None:
+                self.rollback_count = 0
+
+            def rollback(self) -> None:
+                self.rollback_count += 1
+
+        class FakeDslService:
+            def __init__(self, result: Any) -> None:
+                self.result = result
+                self.calls: list[JsonObject] = []
+
+            def import_app(self, **kwargs: Any) -> Any:
+                self.calls.append(kwargs)
+                return self.result
+
+        completed = SimpleNamespace(
+            status=SimpleNamespace(value="completed"),
+            app_id=TARGET_DIFY_APPLICATION_ID,
+            error=None,
+        )
+        session = FakeSession()
+        service = FakeDslService(completed)
+        imported = import_target_dify_app_with_icon(
+            dsl_service=service,
+            session=session,
+            account=SimpleNamespace(id="owner"),
+            dsl="app: {}",
+            existing_app=SimpleNamespace(id=TARGET_DIFY_APPLICATION_ID),
+            upload_id="upload-existing",
+        )
+        self.assertIs(imported, completed)
+        self.assertEqual(session.rollback_count, 0)
+        self.assertEqual(
+            {
+                "app_id": service.calls[0]["app_id"],
+                "icon": service.calls[0]["icon"],
+                "icon_type": service.calls[0]["icon_type"],
+                "icon_background": service.calls[0]["icon_background"],
+            },
+            {
+                "app_id": TARGET_DIFY_APPLICATION_ID,
+                "icon": "upload-existing",
+                "icon_type": "image",
+                "icon_background": APP_ICON_BACKGROUND,
+            },
+        )
+
+        failed = SimpleNamespace(
+            status=SimpleNamespace(value="failed"),
+            app_id=None,
+            error="simulated failure",
+        )
+        failed_session = FakeSession()
+        with self.assertRaisesRegex(RuntimeError, "simulated failure"):
+            import_target_dify_app_with_icon(
+                dsl_service=FakeDslService(failed),
+                session=failed_session,
+                account=SimpleNamespace(id="owner"),
+                dsl="app: {}",
+                existing_app=SimpleNamespace(id=TARGET_DIFY_APPLICATION_ID),
+                upload_id="upload-existing",
+            )
+        self.assertEqual(failed_session.rollback_count, 1)
+        with self.assertRaisesRegex(RuntimeError, "write target is not approved"):
+            import_target_dify_app_with_icon(
+                dsl_service=service,
+                session=session,
+                account=SimpleNamespace(id="owner"),
+                dsl="app: {}",
+                existing_app=SimpleNamespace(id="non-target-a"),
+                upload_id="upload-existing",
+            )
+
+
 class Package7RecoveryTests(unittest.TestCase):
     def setUp(self) -> None:
         os.environ["DIYU_SESSION_SIGNING_KEY"] = "s" * 32
@@ -339,6 +583,70 @@ class Package7RecoveryTests(unittest.TestCase):
     def tearDown(self) -> None:
         self.engine.dispose()
         self.tempdir.cleanup()
+
+    def test_brand_assets_are_fixed_versioned_and_consumed_without_placeholders(
+        self,
+    ) -> None:
+        app = create_app(self.runtime, self.repository, FakeDifyChatClient())
+        app.testing = True
+        client = app.test_client()
+        expected_mimetypes = {
+            "diyu-primary-full.svg": "image/svg+xml",
+            "diyu-horizontal-full.svg": "image/svg+xml",
+            "diyu-symbol-full.svg": "image/svg+xml",
+            "diyu-app-icon-180.png": "image/png",
+            "diyu-app-icon-512.png": "image/png",
+            "diyu-favicon.svg": "image/svg+xml",
+            "diyu-favicon.ico": "image/x-icon",
+        }
+        for filename, mimetype in expected_mimetypes.items():
+            response = client.get(f"/brand-assets/diyu/v1/{filename}")
+            self.assertEqual(response.status_code, 200, filename)
+            self.assertEqual(response.mimetype, mimetype)
+            self.assertEqual(
+                response.headers["Cache-Control"],
+                "public, max-age=31536000, immutable",
+            )
+            response.close()
+        for path in (
+            "/brand-assets/diyu/v1/not-a-logo.svg",
+            "/brand-assets/diyu/v1/.env",
+            "/brand-assets/diyu/v1/asset-manifest.v1.json",
+            "/brand-assets/diyu/v1/%2e%2e%2fportal.html",
+            "/brand-assets/diyu/v1/%2e%2e%2f%2e%2e%2fAGENTS.md",
+        ):
+            self.assertEqual(client.get(path).status_code, 404, path)
+
+        portal_html = (PACKAGE_ROOT / "portal.html").read_text(encoding="utf-8")
+        portal_css = (PACKAGE_ROOT / "portal.css").read_text(encoding="utf-8")
+        self.assertNotIn("brand-seal", portal_html + portal_css)
+        self.assertIn(
+            'src="brand-assets/diyu/v1/diyu-primary-full.svg"', portal_html
+        )
+        self.assertIn(
+            'src="brand-assets/diyu/v1/diyu-horizontal-full.svg"', portal_html
+        )
+        self.assertIn(
+            'src="brand-assets/diyu/v1/diyu-symbol-full.svg"', portal_html
+        )
+        self.assertIn(
+            'href="brand-assets/diyu/v1/diyu-favicon.svg"', portal_html
+        )
+        self.assertIn(
+            'href="brand-assets/diyu/v1/diyu-favicon.ico"', portal_html
+        )
+        self.assertIn(
+            'href="brand-assets/diyu/v1/diyu-app-icon-180.png"', portal_html
+        )
+        self.assertNotIn('src="/brand-assets/', portal_html)
+        self.assertNotIn('href="/brand-assets/', portal_html)
+        dsl = yaml.safe_load(
+            (PACKAGE_ROOT / "dify_app.v1.yaml").read_text(encoding="utf-8")
+        )
+        self.assertEqual(dsl["app"]["icon_type"], "image")
+        self.assertEqual(dsl["app"]["icon"], "")
+        self.assertFalse(dsl["app"]["use_icon_as_answer_icon"])
+        self.assertNotIn("🪶", json.dumps(dsl, ensure_ascii=False))
 
     @staticmethod
     def request(**updates: Any) -> BridgePrepareRequest:

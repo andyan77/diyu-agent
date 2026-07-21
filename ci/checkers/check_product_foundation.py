@@ -284,6 +284,55 @@ REFERENCE_SAFE_SUCCESSOR_ADDITIONAL_PATHS = {
                     "mobile-result.png",
                 )
             },
+            Path(
+                "17_dify_runtime/dify_end_to_end_001/delivery/"
+                "final_logo_product_integration_execution_review_request.v1.yaml"
+            ),
+            Path(
+                "17_dify_runtime/dify_end_to_end_001/result/"
+                "final_logo_product_integration_result.v1.json"
+            ),
+            Path(
+                "17_dify_runtime/dify_end_to_end_001/review/"
+                "final_logo_visual_new_user_review.v1.json"
+            ),
+            Path(
+                "17_dify_runtime/dify_end_to_end_001/review/"
+                "final_logo_runtime_security_rollback_review.v1.json"
+            ),
+            *{
+                Path(
+                    "17_dify_runtime/dify_end_to_end_001/brand_assets/diyu/v1/"
+                    f"{filename}"
+                )
+                for filename in (
+                    "asset-manifest.v1.json",
+                    "diyu-app-icon-180.png",
+                    "diyu-app-icon-512.png",
+                    "diyu-app-icon.svg",
+                    "diyu-favicon.ico",
+                    "diyu-favicon.svg",
+                    "diyu-horizontal-full.svg",
+                    "diyu-horizontal-reverse.svg",
+                    "diyu-primary-full.svg",
+                    "diyu-primary-grayscale.svg",
+                    "diyu-primary-monochrome-black.svg",
+                    "diyu-primary-reverse.svg",
+                    "diyu-symbol-full.svg",
+                )
+            },
+            *{
+                Path(
+                    "17_dify_runtime/dify_end_to_end_001/result/"
+                    f"final_logo_product_integration_screenshots/{filename}"
+                )
+                for filename in (
+                    "desktop-login.png",
+                    "dify-app-card-canvas-local.png",
+                    "logged-in-desktop-header.png",
+                    "mobile-narrow.png",
+                )
+            },
         }
         if checker
         == Path("17_dify_runtime/dify_end_to_end_001/check_dify_end_to_end.py")
