@@ -1,0 +1,96 @@
+execution_review_request:
+  task_id: DIYU_FINAL_LOGO_PRODUCT_INTEGRATION_001
+  status: READY_FOR_LOGO_MERGE_AND_DEPLOY_APPROVAL
+  baseline_branch: origin/master
+  baseline_commit: 6b642a541489440f3af1fb9dbfb458953bea743d
+  candidate_branch: agent/diyu-final-logo-product-integration-001
+  candidate_commit: 9fa5e49c07968097e44483b6e19032282d73da57
+  candidate_tree: 5f4f4c5a71a694385d5f3ba078558ea543248d79
+  candidate_worktree_status_at_freeze: CLEAN
+  terminal_state: READY_FOR_LOGO_MERGE_AND_DEPLOY_APPROVAL
+  required_founder_approval: APPROVE_FINAL_LOGO_MERGE_AND_DEPLOY
+  merge_authorized: false
+  deployment_authorized: false
+  remote_dify_icon_update_authorized: false
+  draft_pull_request_url: https://github.com/andyan77/diyu-agent/pull/36
+  result_path: 17_dify_runtime/dify_end_to_end_001/result/final_logo_product_integration_result.v1.json
+  review_paths:
+    - 17_dify_runtime/dify_end_to_end_001/review/final_logo_visual_new_user_review.v1.json
+    - 17_dify_runtime/dify_end_to_end_001/review/final_logo_runtime_security_rollback_review.v1.json
+  targeted_runtime_rereview:
+    reviewed_commit: 5bf4bed8d85fd2ecb52b0e71413ad9c21fbdca3a
+    reviewed_tree: 9ffa1f5b3e3fab1a14c8a4fe4a1ad34d6d35c5ab
+    reviewer_identity: codex-independent-runtime-security-rollback-reviewer-20260721
+    reviewer_run_id: logo-runtime-security-rollback-targeted-rereview-5bf4bed8-20260721T084547Z
+    score: 96
+    verdict: PASS
+    hard_blockers: []
+    product_checker_sha256: 07abb6a21778cbcdea00ab53f695e2ccb5129406b2554d66e11ee7b5fff74502
+    gate1_result: PASS_EXIT_0
+    business_and_logo_runtime_paths_unchanged: true
+    visual_rereview_performed: false
+  canonical_sources:
+    01/08: 3493ab9102fb1e98b1c7f94c08a6d614ea4062673754d6483e18547949d300a0
+    02/08: 3deaa70857fffc2d2dac531fe2679f3966abb0311f61f051cc5cd646f2fe5688
+    03/08: 892d5df007bf801b645974984b9fb071ce0ee4a3adfd5584e794e7dfa98ac122
+    04/08: fc85e1186bcea9c3d0b3186287c62624359c042fec9b8ec4684d7f10dcac04f0
+  asset_package:
+    path: 17_dify_runtime/dify_end_to_end_001/brand_assets/diyu/v1
+    manifest_sha256: ed24b0b667ca29dd5d26b5a1b019c53c2ee39c4f264a03b213a246a035226c80
+    formal_file_count: 13
+    canonical_logo_forms: 4
+    primary_full_sha256: c0704d7389861876ae0e87848e28792688427f3114ecd9e297bce7df8d14bb6f
+    horizontal_full_sha256: e47e76e7a5dc08691ec683ee361db799c61b760d67a56e0aba23d7060e7bf7a7
+    symbol_full_sha256: 5db9889a9383ea3be861a341ec7b6f45507de952818d1ffdafa890f931e376d4
+    app_icon_512_sha256: 752c8676c03638bc1242c5d6382be1b51abcef270223514b0680fe6683f71a38
+    favicon_ico_sha256: a3ef806b51eef57b526a6af3f32cfdf467afa51184af30473a637d82069a829b
+  modified_surfaces:
+    - versioned_brand_assets_and_manifest
+    - portal_login_header_and_browser_icons
+    - fixed_read_only_brand_asset_route
+    - exact_existing_dify_app_image_icon_binding
+    - targeted_tests_and_existing_checker_compatibility
+  dify_scope:
+    target_application_id: 98eb36f1-50b7-42ca-8184-976512fbef9d
+    expected_workspace_application_count: 3
+    non_target_application_count: 2
+    exact_id_required: true
+    new_application_created: false
+    remote_icon_write_performed: false
+  verification:
+    passed:
+      - package_implementation_checker_with_52_existing_unittests
+      - three_logo_targeted_runtime_review_tests
+      - package_checker_selftest_with_two_negative_cases
+      - package_checker_optimized_mode_rejection
+      - public_product_foundation_checker
+      - public_product_foundation_checker_selftest
+      - current_gate_checker
+      - current_gate_checker_selftest
+      - local_gitleaks_scan_no_leaks
+      - two_independent_reviews_at_96_with_no_hard_blockers
+    failed: []
+    not_run:
+      - protected_merge
+      - main_branch_remote_checks
+      - exact_commit_deployment
+      - remote_dify_icon_write
+      - online_visual_acceptance
+      - model_or_image_generation_calls
+    pull_request_checks_required:
+      - checker-compatibility
+      - secret-scan
+  scope_statement:
+    model_calls: 0
+    paid_model_calls: 0
+    core_numbers_300_120_86_changed: false
+    all_readiness_flags_remain_false: true
+    content_products_accounts_permissions_and_models_changed: false
+    merge_performed: false
+    deployment_performed: false
+  boundary:
+    keep_pull_request_draft: true
+    no_merge_before_exact_approval: true
+    no_deployment_before_exact_approval: true
+    no_remote_dify_icon_write_before_exact_approval: true
+    wait_for_exact_founder_approval: true

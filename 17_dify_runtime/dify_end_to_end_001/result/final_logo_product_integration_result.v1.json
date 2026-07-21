@@ -1,0 +1,141 @@
+{
+  "schema": "diyu.package7.final_logo_product_integration.result.v1",
+  "task_id": "DIYU_FINAL_LOGO_PRODUCT_INTEGRATION_001",
+  "terminal_state": "READY_FOR_LOGO_MERGE_AND_DEPLOY_APPROVAL",
+  "baseline_commit": "6b642a541489440f3af1fb9dbfb458953bea743d",
+  "candidate_commit": "9fa5e49c07968097e44483b6e19032282d73da57",
+  "candidate_tree": "5f4f4c5a71a694385d5f3ba078558ea543248d79",
+  "branch": "agent/diyu-final-logo-product-integration-001",
+  "canonical_sources": {
+    "01/08": "3493ab9102fb1e98b1c7f94c08a6d614ea4062673754d6483e18547949d300a0",
+    "02/08": "3deaa70857fffc2d2dac531fe2679f3966abb0311f61f051cc5cd646f2fe5688",
+    "03/08": "892d5df007bf801b645974984b9fb071ce0ee4a3adfd5584e794e7dfa98ac122",
+    "04/08": "fc85e1186bcea9c3d0b3186287c62624359c042fec9b8ec4684d7f10dcac04f0"
+  },
+  "asset_package": {
+    "path": "17_dify_runtime/dify_end_to_end_001/brand_assets/diyu/v1",
+    "manifest_sha256": "ed24b0b667ca29dd5d26b5a1b019c53c2ee39c4f264a03b213a246a035226c80",
+    "formal_file_count": 13,
+    "canonical_logo_forms_completed": 4,
+    "runtime_font_dependency": false
+  },
+  "product_consumption": {
+    "portal_login_and_header_implemented": true,
+    "browser_and_mobile_icons_implemented": true,
+    "target_dify_application_icon_update_implemented": true,
+    "target_dify_application_id": "98eb36f1-50b7-42ca-8184-976512fbef9d",
+    "workspace_application_count_guard": 3,
+    "non_target_applications_guarded_unchanged": 2,
+    "old_css_placeholder_remaining": 0,
+    "old_feather_emoji_remaining": 0,
+    "online_visibility": "NOT_RUN_NOT_AUTHORIZED"
+  },
+  "acceptance": {
+    "A01": true,
+    "A02": true,
+    "A03": true,
+    "A04": true,
+    "A05": true,
+    "A06": true,
+    "A07": true,
+    "A08": true,
+    "A09": true,
+    "A10": true,
+    "A11": true,
+    "A12": true
+  },
+  "independent_reviews": [
+    {
+      "path": "17_dify_runtime/dify_end_to_end_001/review/final_logo_visual_new_user_review.v1.json",
+      "sha256": "6019de738097d7b8f525a56386b4d64de7110eb36826f2d5db6e0a9f6e77f8ca",
+      "score": 96,
+      "verdict": "PASS",
+      "hard_blockers": []
+    },
+    {
+      "path": "17_dify_runtime/dify_end_to_end_001/review/final_logo_runtime_security_rollback_review.v1.json",
+      "sha256": "ac808d1f0801c58f2cbc3904261eabf4b3118560fff23432d53a1f7e942d215a",
+      "score": 96,
+      "verdict": "PASS",
+      "hard_blockers": []
+    }
+  ],
+  "targeted_runtime_rereview": {
+    "reviewed_commit": "5bf4bed8d85fd2ecb52b0e71413ad9c21fbdca3a",
+    "reviewed_tree": "9ffa1f5b3e3fab1a14c8a4fe4a1ad34d6d35c5ab",
+    "reviewer_identity": "codex-independent-runtime-security-rollback-reviewer-20260721",
+    "reviewer_run_id": "logo-runtime-security-rollback-targeted-rereview-5bf4bed8-20260721T084547Z",
+    "score": 96,
+    "verdict": "PASS",
+    "hard_blockers": [],
+    "product_checker_sha256": "07abb6a21778cbcdea00ab53f695e2ccb5129406b2554d66e11ee7b5fff74502",
+    "gate1_result": "PASS_EXIT_0",
+    "business_and_logo_runtime_paths_unchanged": true,
+    "visual_rereview_performed": false
+  },
+  "screenshots": [
+    {
+      "path": "17_dify_runtime/dify_end_to_end_001/result/final_logo_product_integration_screenshots/desktop-login.png",
+      "sha256": "9e904d165756911a78588f5f7d4e257b8694aee0a5f3995a299a66de3543b110"
+    },
+    {
+      "path": "17_dify_runtime/dify_end_to_end_001/result/final_logo_product_integration_screenshots/logged-in-desktop-header.png",
+      "sha256": "10767bbd24f1d0e4af3e7ade3f09242bae12040406e03467b6613ae4af54d354"
+    },
+    {
+      "path": "17_dify_runtime/dify_end_to_end_001/result/final_logo_product_integration_screenshots/mobile-narrow.png",
+      "sha256": "d9841d8647b8569342196a108ee27aabc2e86258e3ece89eef58c2a49aa7601c"
+    },
+    {
+      "path": "17_dify_runtime/dify_end_to_end_001/result/final_logo_product_integration_screenshots/dify-app-card-canvas-local.png",
+      "sha256": "c61a7568cd9671f6b40b1c1da1048730ee8744f378e204bec022a1afe611a12a"
+    }
+  ],
+  "verification": {
+    "package_implementation_checker": "PASS_52_UNIT_TESTS",
+    "logo_targeted_runtime_review_tests": "PASS_3_OF_3",
+    "package_checker_selftest": "PASS_2_NEGATIVE_CASES",
+    "package_checker_optimized_mode": "REJECTS_AS_REQUIRED",
+    "public_product_foundation_checker": "PASS",
+    "public_product_foundation_checker_selftest": "PASS",
+    "current_gate_checker": "PASS",
+    "current_gate_checker_selftest": "PASS",
+    "local_gitleaks_scan": "PASS_NO_LEAKS",
+    "failed_checks": [],
+    "remote_checks_are_reported_against_the_final_pull_request_head": true
+  },
+  "controls": {
+    "automatic_publish": false,
+    "public_self_registration": false,
+    "real_customer_data_imported": false,
+    "human_review_required": true,
+    "secrets_read_or_disclosed": false
+  },
+  "model_calls": 0,
+  "paid_model_calls": 0,
+  "merge_performed": false,
+  "deployment_performed": false,
+  "remote_dify_icon_update_performed": false,
+  "remote_write_performed": false,
+  "core_numbers": {
+    "300": 300,
+    "120": 120,
+    "86": 86,
+    "changed": false
+  },
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "generator_qualified": false,
+    "retrieval_ready": false,
+    "runtime_ready": false,
+    "release_ready": false,
+    "production_ready": false
+  },
+  "draft_pull_request_url": "https://github.com/andyan77/diyu-agent/pull/36"
+}

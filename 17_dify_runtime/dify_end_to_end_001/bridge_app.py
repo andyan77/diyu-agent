@@ -52,6 +52,21 @@ from seed_runtime import seed_database
 
 JsonObject = dict[str, Any]
 PACKAGE_ROOT = Path(__file__).resolve().parent
+BRAND_ASSET_ROOT = PACKAGE_ROOT / "brand_assets" / "diyu" / "v1"
+BRAND_PUBLIC_ASSETS = {
+    "diyu-primary-full.svg": "image/svg+xml",
+    "diyu-primary-monochrome-black.svg": "image/svg+xml",
+    "diyu-primary-reverse.svg": "image/svg+xml",
+    "diyu-primary-grayscale.svg": "image/svg+xml",
+    "diyu-horizontal-full.svg": "image/svg+xml",
+    "diyu-horizontal-reverse.svg": "image/svg+xml",
+    "diyu-symbol-full.svg": "image/svg+xml",
+    "diyu-app-icon.svg": "image/svg+xml",
+    "diyu-app-icon-180.png": "image/png",
+    "diyu-app-icon-512.png": "image/png",
+    "diyu-favicon.svg": "image/svg+xml",
+    "diyu-favicon.ico": "image/x-icon",
+}
 SESSION_COOKIE = "diyu_pkg7_session"
 PORTAL_HEADER = "same-origin-v1"
 PORTAL_OPERATION_MAP = {
@@ -506,7 +521,13 @@ def create_app(
 
     @app.before_request
     def keep_portal_on_trusted_networks() -> Any:
-        portal_paths = ("/portal", "/login", "/logout", "/v1/portal")
+        portal_paths = (
+            "/portal",
+            "/login",
+            "/logout",
+            "/v1/portal",
+            "/brand-assets/diyu/v1/",
+        )
         if not request.path.startswith(portal_paths):
             return None
         try:
@@ -519,7 +540,15 @@ def create_app(
 
     @app.after_request
     def security_headers(response: Any) -> Any:
-        response.headers["Cache-Control"] = "no-store"
+        if (
+            response.status_code == 200
+            and request.path.startswith("/brand-assets/diyu/v1/")
+        ):
+            response.headers["Cache-Control"] = (
+                "public, max-age=31536000, immutable"
+            )
+        else:
+            response.headers["Cache-Control"] = "no-store"
         response.headers["Content-Security-Policy"] = (
             "default-src 'self'; script-src 'self'; style-src 'self'; "
             "img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'"
@@ -554,6 +583,13 @@ def create_app(
     @app.get("/portal.css")
     def portal_stylesheet() -> Any:
         return send_from_directory(PACKAGE_ROOT, "portal.css", mimetype="text/css")
+
+    @app.get("/brand-assets/diyu/v1/<filename>")
+    def brand_asset(filename: str) -> Any:
+        mimetype = BRAND_PUBLIC_ASSETS.get(filename)
+        if mimetype is None:
+            return _plain_error("当前资源不存在。"), 404
+        return send_from_directory(BRAND_ASSET_ROOT, filename, mimetype=mimetype)
 
     @app.post("/login")
     def login() -> Any:
