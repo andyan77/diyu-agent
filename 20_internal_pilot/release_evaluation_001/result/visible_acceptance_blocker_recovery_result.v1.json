@@ -1,7 +1,7 @@
 {
   "schema": "diyu.visible_acceptance_blocker_recovery.result.v1",
   "task_id": "DIYU_VISIBLE_ACCEPTANCE_BLOCKER_RECOVERY_001",
-  "state": "STAGE_A_CANDIDATE_PENDING_INDEPENDENT_REVIEW",
+  "state": "READY_FOR_STAGE_A_DRAFT_PR_AND_REMOTE_CHECKS",
   "baseline_commit": "8ea1671405f7d6276e5f585e6a237573d926053e",
   "live_diagnostic": {
     "replacement_pass_authorization": "APPROVE_ONE_REPLACEMENT_REMOTE_READ_ONLY_DIAGNOSTIC_PASS",
@@ -109,16 +109,35 @@
     "UIREC-A12": "GUIDE_UPDATED_FINAL_LIVE_ENTRY_PENDING_STAGE_B"
   },
   "independent_reviews": {
-    "status": "PENDING",
-    "reviewed_candidate_commit": null,
-    "reviewed_candidate_tree": null
+    "status": "PASS",
+    "reviewed_candidate_commit": "162378262e11b083b7c3c9f16892ba563f237002",
+    "reviewed_candidate_tree": "b398c1a9bc19f8091d3648b6ec3aed4d8c86a270",
+    "novice_series": {
+      "score": 95,
+      "verdict": "PASS",
+      "hard_blockers": 0,
+      "path": "20_internal_pilot/release_evaluation_001/review/visible_acceptance_novice_series_review.v1.json"
+    },
+    "identity_operations": {
+      "score": 94,
+      "verdict": "PASS",
+      "hard_blockers": 0,
+      "path": "20_internal_pilot/release_evaluation_001/review/visible_acceptance_identity_operations_review.v1.json"
+    }
   },
   "pull_request": {
-    "status": "NOT_CREATED",
+    "status": "TO_BE_CREATED_FROM_FINAL_STAGE_A_HEAD",
     "url": null,
     "checker_compatibility": "NOT_RUN",
     "secret_scan": "NOT_RUN"
   },
+  "stage_b_fail_closed_obligations": [
+    "DO_NOT_RECONCILE_DATABASE_IDENTITIES_BECAUSE_IDENTITY_DRIFT_IS_FALSE",
+    "ROTATE_ONLY_THE_EXISTING_DIFY_TECHNICAL_ADMIN_AND_ATOMICALLY_REPLACE_THE_EXISTING_DPAPI_BUNDLE",
+    "CLASSIFY_ALL_THREE_WORKSPACE_APP_ROWS_AND_STOP_ON_A_SECOND_TARGET_APP_OR_UNAUTHORIZED_VISIBILITY",
+    "SET_AND_VERIFY_THE_EFFECTIVE_CUMULATIVE_MODEL_CALL_CAP_AS_EXACTLY_1000_BEFORE_THE_FIRST_CONTENT_REQUEST",
+    "DEPLOY_ONLY_THE_EXACT_PROTECTED_MERGE_COMMIT_WITH_MATCHING_BACKUP_AND_ROLLBACK_ENTRY"
+  ],
   "controls": {
     "automatic_publish": false,
     "public_self_registration": false,
