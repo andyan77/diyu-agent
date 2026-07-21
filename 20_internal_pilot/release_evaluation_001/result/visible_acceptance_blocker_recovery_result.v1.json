@@ -1,0 +1,172 @@
+{
+  "schema": "diyu.visible_acceptance_blocker_recovery.result.v1",
+  "task_id": "DIYU_VISIBLE_ACCEPTANCE_BLOCKER_RECOVERY_001",
+  "state": "READY_FOR_STAGE_A_DRAFT_PR_AND_REMOTE_CHECKS",
+  "baseline_commit": "8ea1671405f7d6276e5f585e6a237573d926053e",
+  "live_diagnostic": {
+    "replacement_pass_authorization": "APPROVE_ONE_REPLACEMENT_REMOTE_READ_ONLY_DIAGNOSTIC_PASS",
+    "production_writes": 0,
+    "model_calls": 0,
+    "running_commit": "0ee66680e77907a83692e6c68aeee89896e92618",
+    "running_commit_evidence_consistent": true,
+    "bridge_running": true,
+    "dify_version": "1.15.0"
+  },
+  "simulation_identity": {
+    "expected_principals": 12,
+    "present_active_username_and_password_match": 12,
+    "representative_wrong_password_rejected": true,
+    "expected_content_accounts": 11,
+    "active_and_bound_content_accounts": 11,
+    "enterprise_admin_has_content_account": false,
+    "non_truth_acceptance_account_inactive": 1,
+    "identity_drift": false,
+    "stage_b_database_reconciliation_needed": false
+  },
+  "dify_identity": {
+    "tenant_count": 1,
+    "target_member_active": true,
+    "target_member_is_workspace_owner": true,
+    "target_app_exact_name_count": 1,
+    "target_app_mode": "advanced-chat",
+    "target_app_owner_workspace_and_lock_match": true,
+    "workspace_app_total": 3,
+    "other_app_names_modes_and_ui_visibility": "UNKNOWN",
+    "fresh_cookie_login": "FAIL_401_AUTHENTICATION_FAILED",
+    "apps_detail_and_canvas": "NOT_REACHED",
+    "credential_drift": true,
+    "stage_b_action": "ROTATE_EXISTING_TECHNICAL_ADMIN_CREDENTIAL_AND_ATOMICALLY_REPLACE_EXISTING_DPAPI_BUNDLE"
+  },
+  "founder_episode_2_failure": {
+    "stored_run": "NOT_FOUND",
+    "matching_log_signature": "NOT_FOUND",
+    "run_id": "NOT_CREATED_OR_NOT_FOUND",
+    "stored_failure_stage": "UNAVAILABLE",
+    "stored_error_type": "UNRECORDED",
+    "evidence_bounded_inference": "FAILURE_OCCURRED_BEFORE_RUNTIME_MODEL_RUN_PERSISTENCE_OR_REQUEST_WAS_NOT_PROJECTED_AS_SERIES_EPISODE_2",
+    "exact_production_exception_claimed": false
+  },
+  "confirmed_code_defects": [
+    "SWITCHING_FROM_SINGLE_TO_SERIES_DID_NOT_CLEAR_PRIOR_OUTPUT_VERSION_AND_REVISION_STATE",
+    "CONTINUATION_INFERRED_AN_AMBIGUOUS_LATEST_CANDIDATE_BEFORE_FULL_ACCOUNT_SCOPE",
+    "ACTIVE_LOGOUT_RELOADED_THE_PAGE_AND_ERASED_USER_FEEDBACK"
+  ],
+  "implementation": {
+    "new_creation_boundary_clears_prior_task_output": true,
+    "episode_version_and_revision_histories_are_independent": true,
+    "complete_outline_precedes_episode_1": true,
+    "server_returned_previous_content_reference_required": true,
+    "predecessor_scope_checks": [
+      "tenant",
+      "principal",
+      "browser_session",
+      "content_account",
+      "series",
+      "immediate_previous_episode"
+    ],
+    "active_logout_message": "已安全退出，请重新登录。",
+    "expired_session_message": "登录已失效，请重新登录。",
+    "database_schema_change": false,
+    "identity_migration_change": false,
+    "model_prompt_or_quality_standard_change": false
+  },
+  "checks": {
+    "affected_and_runtime_unit_tests": "PASS_49",
+    "ruff_changed_python": "PASS",
+    "portal_javascript_syntax": "PASS",
+    "python_compile": "PASS",
+    "git_diff_check": "PASS",
+    "candidate_secret_scan": "PASS",
+    "existing_package_checker_normal": "PASS",
+    "existing_package_checker_selftest": "PASS",
+    "existing_package_checker_optimized_mode": "REJECTED_AS_REQUIRED"
+  },
+  "model_budget": {
+    "runtime_invocation_count": 733,
+    "model_call_upper_bound_used": 737,
+    "founder_limit": 1000,
+    "remaining_to_founder_limit": 263,
+    "failed_or_unknown_billable_count": 13,
+    "known_cumulative_cost_rmb": 3.042336,
+    "this_stage_new_model_calls": 0,
+    "this_stage_new_cost_rmb": 0,
+    "stage_b_request_limit": 13,
+    "stage_b_model_node_call_limit": 28,
+    "stage_b_new_cost_limit_rmb": 2
+  },
+  "stage_a_acceptance": {
+    "UIREC-A01": "PASS",
+    "UIREC-A02": "LIVE_IDENTITY_STATE_PASS_BROWSER_JOURNEY_PENDING_STAGE_B",
+    "UIREC-A03": "CREDENTIAL_FAILURE_CONFIRMED_RECOVERY_AND_UI_VISIBILITY_PENDING_STAGE_B",
+    "UIREC-A04": "PASS_LOCAL",
+    "UIREC-A05": "PASS_LOCAL_LIVE_JOURNEY_PENDING_STAGE_B",
+    "UIREC-A06": "PASS_LOCAL_LIVE_CONFIRMATION_PENDING_STAGE_B",
+    "UIREC-A07": "PENDING_STAGE_B",
+    "UIREC-A08": "PENDING_STAGE_B",
+    "UIREC-A09": "PASS_CAPACITY_AVAILABLE",
+    "UIREC-A10": "PASS_LOCAL_LIVE_CONFIRMATION_PENDING_STAGE_B",
+    "UIREC-A11": "PASS_LOCAL_REMOTE_CHECKS_PENDING",
+    "UIREC-A12": "GUIDE_UPDATED_FINAL_LIVE_ENTRY_PENDING_STAGE_B"
+  },
+  "independent_reviews": {
+    "status": "PASS",
+    "reviewed_candidate_commit": "162378262e11b083b7c3c9f16892ba563f237002",
+    "reviewed_candidate_tree": "b398c1a9bc19f8091d3648b6ec3aed4d8c86a270",
+    "novice_series": {
+      "score": 95,
+      "verdict": "PASS",
+      "hard_blockers": 0,
+      "path": "20_internal_pilot/release_evaluation_001/review/visible_acceptance_novice_series_review.v1.json"
+    },
+    "identity_operations": {
+      "score": 94,
+      "verdict": "PASS",
+      "hard_blockers": 0,
+      "path": "20_internal_pilot/release_evaluation_001/review/visible_acceptance_identity_operations_review.v1.json"
+    }
+  },
+  "pull_request": {
+    "status": "DRAFT",
+    "number": 35,
+    "url": "https://github.com/andyan77/diyu-agent/pull/35",
+    "initial_head_commit": "2f564cd9b8871270c047df6d13975ee37496a503",
+    "initial_run_id": 29797866559,
+    "initial_checker_compatibility": "FAIL_AUTHORIZED_RESULT_AND_REVIEW_PATHS_REJECTED",
+    "initial_secret_scan": "SUCCESS",
+    "consolidated_fix": "EXACT_PATH_COMPATIBILITY_IN_EXISTING_CENTRAL_CHECKERS",
+    "checks_required_after_consolidated_fix": [
+      "checker-compatibility",
+      "secret-scan"
+    ]
+  },
+  "stage_b_fail_closed_obligations": [
+    "DO_NOT_RECONCILE_DATABASE_IDENTITIES_BECAUSE_IDENTITY_DRIFT_IS_FALSE",
+    "ROTATE_ONLY_THE_EXISTING_DIFY_TECHNICAL_ADMIN_AND_ATOMICALLY_REPLACE_THE_EXISTING_DPAPI_BUNDLE",
+    "CLASSIFY_ALL_THREE_WORKSPACE_APP_ROWS_AND_STOP_ON_A_SECOND_TARGET_APP_OR_UNAUTHORIZED_VISIBILITY",
+    "SET_AND_VERIFY_THE_EFFECTIVE_CUMULATIVE_MODEL_CALL_CAP_AS_EXACTLY_1000_BEFORE_THE_FIRST_CONTENT_REQUEST",
+    "DEPLOY_ONLY_THE_EXACT_PROTECTED_MERGE_COMMIT_WITH_MATCHING_BACKUP_AND_ROLLBACK_ENTRY"
+  ],
+  "controls": {
+    "automatic_publish": false,
+    "public_self_registration": false,
+    "real_customer_data_imported": false,
+    "new_auth_or_account_system": false,
+    "new_dify_app_tenant_or_admin": false
+  },
+  "core_numbers": {
+    "300": "UNCHANGED",
+    "120": "UNCHANGED",
+    "86": "UNCHANGED"
+  },
+  "readiness": {
+    "candidatepack_ready": false,
+    "KE_ready": false,
+    "RAG_ready": false,
+    "DIFY_ready": false,
+    "production_servable": false,
+    "generation_eligible": false,
+    "generation_allowed": false,
+    "release_ready": false,
+    "production_ready": false
+  }
+}

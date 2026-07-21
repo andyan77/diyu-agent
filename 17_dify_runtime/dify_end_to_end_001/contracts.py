@@ -358,6 +358,17 @@ class StrictModel(BaseModel):
     )
 
 
+class SeriesOutlineEpisode(StrictModel):
+    episode_index: int = Field(ge=1, le=3)
+    title: str = Field(min_length=1, max_length=160)
+    summary: str = Field(default="", max_length=500)
+
+    @field_validator("title", "summary")
+    @classmethod
+    def normalize_series_text(cls, value: str) -> str:
+        return value.strip()
+
+
 class LoginRequest(StrictModel):
     username: str = Field(min_length=1, max_length=128)
     password: str = Field(min_length=12, max_length=256)
@@ -428,6 +439,10 @@ class BridgePrepareRequest(StrictModel):
     content_format: ContentFormat = "短视频"
     series_mode: SeriesMode = "SINGLE"
     episode_index: int = Field(default=1, ge=1, le=3)
+    series_outline: list[SeriesOutlineEpisode] = Field(
+        default_factory=list,
+        max_length=3,
+    )
     organization_level: Literal["品牌总部", "区域组织", "门店"] | None = None
     content_identity: (
         Literal[
@@ -522,6 +537,10 @@ class BridgePrepareRequest(StrictModel):
             raise ValueError("candidate_number is required for candidate operations")
         if self.series_mode == "SINGLE" and self.episode_index != 1:
             raise ValueError("single content must use episode_index 1")
+        if self.series_outline and [
+            row.episode_index for row in self.series_outline
+        ] != [1, 2, 3]:
+            raise ValueError("series outline must contain episodes 1, 2 and 3")
         return self
 
 
@@ -539,12 +558,17 @@ class PortalTaskRequest(StrictModel):
     storyline_name: str | None = Field(default=None, max_length=200)
     column_name: str | None = Field(default=None, max_length=200)
     continue_previous: bool = False
+    previous_content_ref: str | None = Field(default=None, max_length=240)
     localization_allowed: bool = False
     duration_label: DurationLabel = "由系统建议"
     expression_feeling: ExpressionFeeling = "由系统建议"
     content_format: ContentFormat = "短视频"
     series_mode: SeriesMode = "SINGLE"
     episode_index: int = Field(default=1, ge=1, le=3)
+    series_outline: list[SeriesOutlineEpisode] = Field(
+        default_factory=list,
+        max_length=3,
+    )
     organization_level: Literal["品牌总部", "区域组织", "门店"] | None = None
     content_identity: (
         Literal[
@@ -612,6 +636,7 @@ class PortalTaskRequest(StrictModel):
         "speaker_role_name",
         "storyline_name",
         "column_name",
+        "previous_content_ref",
     )
     @classmethod
     def normalize_optional_portal_text(cls, value: str | None) -> str | None:
@@ -636,6 +661,22 @@ class PortalTaskRequest(StrictModel):
             raise ValueError("single content must use episode_index 1")
         if self.operation == "继续一个系列" and self.series_mode != "SERIES":
             raise ValueError("series continuation requires SERIES mode")
+        if self.previous_content_ref is not None and not (
+            self.series_mode == "SERIES" and self.episode_index > 1
+        ):
+            raise ValueError(
+                "previous content reference is only valid for a continuation"
+            )
+        if self.series_outline and [
+            row.episode_index for row in self.series_outline
+        ] != [1, 2, 3]:
+            raise ValueError("series outline must contain episodes 1, 2 and 3")
+        if (
+            self.series_mode == "SERIES"
+            and self.operation in {"直接做内容", "继续一个系列"}
+            and len(self.series_outline) != 3
+        ):
+            raise ValueError("series creation requires the complete outline")
         return self
 
 

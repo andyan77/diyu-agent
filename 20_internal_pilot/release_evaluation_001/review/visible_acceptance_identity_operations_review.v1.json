@@ -1,0 +1,195 @@
+{
+  "schema": "diyu.visible_acceptance.identity_operations_review.v1",
+  "task_id": "DIYU_VISIBLE_ACCEPTANCE_BLOCKER_RECOVERY_001",
+  "reviewed_at": "2026-07-21T03:05:20Z",
+  "reviewer": {
+    "identity": "/root/identity_operations_review",
+    "role": "independent_identity_isolation_credentials_operations_reviewer",
+    "independent_from_implementation_author": true,
+    "independent_session_and_signature": true,
+    "remote_connections": 0,
+    "model_calls": 0,
+    "content_quality_reruns": 0,
+    "full_test_reruns": 0,
+    "production_writes": 0,
+    "business_code_changes": 0
+  },
+  "review_scope": {
+    "primary_scene": "completion_audit",
+    "secondary_scenes": [
+      "release_gate",
+      "security_special",
+      "code_change_review"
+    ],
+    "acceptance_ids": [
+      "UIREC-A02",
+      "UIREC-A03",
+      "UIREC-A05",
+      "UIREC-A09",
+      "UIREC-A10"
+    ],
+    "decision_scope": "STAGE_A_DEPLOYABILITY_ONLY",
+    "stage_b_live_acceptance_claimed": false
+  },
+  "frozen_candidate": {
+    "baseline_commit": "8ea1671405f7d6276e5f585e6a237573d926053e",
+    "commit": "162378262e11b083b7c3c9f16892ba563f237002",
+    "tree": "b398c1a9bc19f8091d3648b6ec3aed4d8c86a270",
+    "head_and_tree_verified": true,
+    "candidate_tree_drift": false,
+    "candidate_worktree_business_changes": false,
+    "review_artifacts_from_two_authorized_reviewers_may_be_untracked": true
+  },
+  "evidence_protocol": {
+    "live_read_only_evidence": "The authorized replacement diagnostic in the single minimal result is treated as current live evidence; no reviewer reconnection was performed.",
+    "repository_static_evidence": "The frozen diff, runtime scope implementation, focused tests, existing deployment path and existing rollback design were inspected read-only.",
+    "recorded_test_evidence": "The minimal result records 49 affected/runtime tests, the existing package checker in normal and self-test modes, optimized-mode rejection, Ruff, JavaScript syntax, Python compile, diff and candidate secret scan as passing. This reviewer did not rerun the full suite.",
+    "known_live_gaps": [
+      "Dify fresh-cookie login currently returns HTTP 401, so app detail and canvas were not reached.",
+      "The workspace contains three application rows; the names, modes and UI visibility of the other two are unknown.",
+      "No stored Founder episode-2 run or matching log signature exists, so its exact failure_stage and error_type cannot be proved."
+    ]
+  },
+  "acceptance_reviews": {
+    "UIREC-A02": {
+      "score": 20,
+      "verdict": "PASS_FOR_STAGE_A_DEPLOYABILITY",
+      "live_evidence": [
+        "20_internal_pilot/release_evaluation_001/result/visible_acceptance_blocker_recovery_result.v1.json:15-24 records 12 expected principals, 12 active username/password matches, representative wrong-password rejection, 11 active bound content accounts, no enterprise-admin content account and identity_drift=false."
+      ],
+      "repository_evidence": [
+        "11_product_foundation/public_foundation_001/identity/simulation_tenant.v1.yaml:70-127 defines the simulation-only 12/11 credential and admin boundary; lines 812-828 preserve the 12 principals, 11 accounts, no approval grant and no repository credential material.",
+        "The frozen candidate contains no identity migration, schema change or seed reconciliation change."
+      ],
+      "real_user_impact": "The live database already matches the current simulation identity truth, so database reconciliation would create needless identity and credential risk; Stage B should verify browser journeys without modifying these rows.",
+      "live_completion_deferred_to_stage_b": true
+    },
+    "UIREC-A03": {
+      "score": 17,
+      "verdict": "PASS_FOR_STAGE_A_DEPLOYABILITY_WITH_FAIL_CLOSED_STAGE_B_VERIFICATION",
+      "live_evidence": [
+        "20_internal_pilot/release_evaluation_001/result/visible_acceptance_blocker_recovery_result.v1.json:26-38 records one tenant, the existing active workspace owner, exactly one target-name advanced-chat app with matching owner/workspace lock, workspace_app_total=3, other app visibility UNKNOWN, and fresh-cookie login failing with HTTP 401.",
+        "The result requires rotation of only the existing technical administrator and atomic replacement of the existing DPAPI bundle; it does not authorize or propose a second member, tenant, workspace or app."
+      ],
+      "repository_evidence": [
+        "19_cloud_cutover/ecs_migration_001/RUNBOOK.md:3-4 and 25-35 require adoption of the existing runtime, preservation of unrelated applications, root-restricted secrets and non-bypass isolation.",
+        "20_internal_pilot/release_evaluation_001/delivery/internal_production_entry.v1.yaml:22-31 identifies the existing root entry, DPAPI handoff path, 12 simulation logins, 11 content accounts and one Dify administrator member."
+      ],
+      "real_user_impact": "The technical administrator cannot currently reach the existing target app canvas. Credential rotation is therefore necessary after the exact Stage B approval, while creating replacement identities or applications would introduce duplicate ownership and access risk.",
+      "workspace_app_total_assessment": "Three workspace application rows are not a Stage A deployment blocker because the evidence proves exactly one target-name Diyu app and the existing runbook requires unrelated applications to be preserved. Stage B must classify the other two before claiming UIREC-A03; a second target Diyu app, second tenant/admin, task-created duplicate, or unauthorized visibility is a fail-closed stop.",
+      "live_completion_deferred_to_stage_b": true
+    },
+    "UIREC-A05": {
+      "score": 20,
+      "verdict": "PASS_FOR_STAGE_A_DEPLOYABILITY",
+      "live_evidence": [
+        "20_internal_pilot/release_evaluation_001/result/visible_acceptance_blocker_recovery_result.v1.json:40-47 truthfully records no stored Founder episode-2 run, no matching log signature, no provable run_id/failure_stage/error_type and makes no exact production-exception claim."
+      ],
+      "repository_evidence": [
+        "17_dify_runtime/dify_end_to_end_001/bridge_app.py:717-791 validates the authenticated account scope before accepting an explicit predecessor and returns PREVIOUS_CONTEXT_INVALID before model invocation when the reference is absent or invalid.",
+        "17_dify_runtime/dify_end_to_end_001/persistence.py:2619-2717 verifies tenant, principal, content account, browser session, current candidate/run, series mode, nonempty server series id and immediate prior episode.",
+        "17_dify_runtime/dify_end_to_end_001/runtime_service.py:1159-1172 repeats the continuation check in the runtime boundary; the frozen implementation carries the server series context through revisions and returns a server-owned opaque continuation reference.",
+        "17_dify_runtime/dify_end_to_end_001/test_dify_end_to_end.py:1469-1570 covers portal episode 1 to 2 to 3 and rejects the same reference in another browser without another model call; lines 1762-1897 cover revision lineage, same-series preservation and wrong immediate predecessor rejection; lines 2076-2104 cover exact reference and outline projection."
+      ],
+      "real_user_impact": "The user can continue the displayed series rather than an ambiguous latest candidate, while another browser, principal or account cannot reuse that server reference. The original production exception remains unproved and is not rewritten as a known root cause.",
+      "live_completion_deferred_to_stage_b": true
+    },
+    "UIREC-A09": {
+      "score": 17,
+      "verdict": "PASS_FOR_STAGE_A_DEPLOYABILITY_WITH_EXPLICIT_RUNTIME_CAP",
+      "live_evidence": [
+        "20_internal_pilot/release_evaluation_001/result/visible_acceptance_blocker_recovery_result.v1.json:84-95 records 737 model-call upper-bound units used against the immutable Founder limit of 1000, leaving 263; Stage A used zero calls and zero cost; Stage B is bounded to 13 requests, 28 model-node calls and RMB 2."
+      ],
+      "repository_evidence": [
+        "The execution contract plans 11 normal requests plus no more than two technical retries and requires refresh after every request.",
+        "17_dify_runtime/dify_end_to_end_001/deploy_remote.sh:289-304 accepts PACKAGE7_MAX_MODEL_CALLS but otherwise defaults to 1096, so Stage B must explicitly set and verify 1000 rather than relying on that default."
+      ],
+      "real_user_impact": "The remaining capacity is more than the maximum 28 Stage B model-node calls, but an omitted deployment override could weaken the Founder cap; the deployment must fail before the first content request unless the effective cap is exactly 1000 and current usage is re-read.",
+      "capacity_math": {
+        "used_upper_bound": 737,
+        "founder_limit": 1000,
+        "remaining": 263,
+        "stage_b_maximum_new_model_node_calls": 28,
+        "remaining_after_maximum": 235
+      }
+    },
+    "UIREC-A10": {
+      "score": 20,
+      "verdict": "PASS_FOR_STAGE_A_DEPLOYABILITY",
+      "live_evidence": [
+        "20_internal_pilot/release_evaluation_001/result/visible_acceptance_blocker_recovery_result.v1.json:122-143 records automatic_publish=false, public_self_registration=false, real_customer_data_imported=false, no new auth/Dify objects, 300/120/86 unchanged and every readiness flag false."
+      ],
+      "repository_evidence": [
+        "17_dify_runtime/dify_end_to_end_001/persistence.py:232-263 installs tenant, organization, store, account, principal and browser-session scope as transaction-local database settings; lines 2619-2717 apply the same scope to continuation lookup.",
+        "17_dify_runtime/dify_end_to_end_001/deploy_remote.sh:121-199 retains forced restrictive browser-session RLS; lines 318-336 retain the unprivileged read-only container, dropped capabilities, no-new-privileges, loopback bind and read-only mounts.",
+        "17_dify_runtime/dify_end_to_end_001/test_dify_end_to_end.py:2926-2937 checks atomic migration rollback and restrictive browser RLS; lines 3000-3063 and 3094-3135 cover browser isolation; lines 3230-3255 cover unauthenticated and cross-account denial.",
+        "Diff-scoped direct scanning found no high-confidence secret, LLM SDK import, dynamic SQL/exec, unsafe browser sink, local/session storage or cookie scripting added; no Port or cross-layer import contract changed."
+      ],
+      "real_user_impact": "The continuation fix strengthens rather than relaxes tenant, principal, account and browser isolation, exposes no secret, and does not enable registration, real-customer import, automatic publication or readiness."
+    }
+  },
+  "code_and_security_review": {
+    "existing_code_review_script": "PASS_5_OF_5_WITH_PATH_LIMITATION",
+    "existing_security_review_script": "PASS_4_OF_5_RLS_SCRIPT_PATH_NOT_APPLICABLE",
+    "path_limitation": "The generic scripts recognize src/ and frontend/ while this package lives under 17_dify_runtime; their empty-path PASS was not used alone.",
+    "diff_scoped_security_guard": "PASS",
+    "layer_guard": "NOT_APPLICABLE_NO_NEW_CROSS_LAYER_IMPORTS",
+    "port_contract_guard": "NOT_APPLICABLE_NO_PORT_CHANGES",
+    "sql_injection_review": "PASS_NO_NEW_RAW_OR_STRING_COMPOSED_SQL",
+    "llm_gateway_review": "PASS_NO_NEW_DIRECT_LLM_SDK_IMPORT_OR_MODEL_PATH_CHANGE",
+    "secret_handling_review": "PASS_NO_SECRET_VALUE_IN_DIFF_OR_REVIEW; DPAPI rotation remains Stage B external handoff only",
+    "runtime_consumer_closure": "PASS_FRONTEND_REF_TO_BRIDGE_CONTRACT_TO_RUNTIME_AND_REPOSITORY_VALIDATION_TO_CANDIDATE_RESPONSE_IS_CONNECTED",
+    "hard_findings": []
+  },
+  "deployment_and_rollback_review": {
+    "verdict": "PASS_FOR_STAGE_A_DEPLOYABILITY",
+    "deployment_basis": "The existing path reuses the current Dify app, managed database and bridge; the frozen candidate adds no database schema or identity migration.",
+    "rollback_basis": "19_cloud_cutover/ecs_migration_001/RUNBOOK.md:37-43 defines restoration of the prior bridge release/environment and restricted-admin database-security rollback using a matching encrypted backup; internal_production_entry.v1.yaml:74-77 records the currently validated release and backup.",
+    "stage_b_requirement": "Create one new matching backup, deploy only the exact ordinary protected merge commit, keep the prior validated rollback entry, and stop on commit/tree or artifact mismatch."
+  },
+  "necessary_stage_b_obligations": [
+    {
+      "id": "STAGEB-IDENTITY-NO-WRITE",
+      "requirement": "Because identity_drift=false, do not run database identity reconciliation. Verify 12/12 fresh-browser logins, one wrong-password rejection, enterprise-admin five sections/no content account, and server-authorized account visibility only."
+    },
+    {
+      "id": "STAGEB-DIFY-EXISTING-MEMBER-ONLY",
+      "requirement": "Using the installed Dify 1.15 supported recovery path, rotate only the existing active technical administrator after exact approval; do not create a member, tenant, workspace or app and do not directly bypass service protections to edit raw identity rows."
+    },
+    {
+      "id": "STAGEB-DPAPI-ATOMIC",
+      "requirement": "After fresh-cookie login succeeds, atomically replace the existing Windows Administrator DPAPI bundle, verify that user can decrypt it, and keep secret values out of Git, terminal output, logs, screenshots and receipts."
+    },
+    {
+      "id": "STAGEB-DIFY-APP-FAIL-CLOSED",
+      "requirement": "Classify all three workspace app rows without deleting unrelated apps. Prove exactly one target Diyu app and open its detail and canvas; stop on a second target app, second tenant/admin, task-created duplicate or unauthorized visibility."
+    },
+    {
+      "id": "STAGEB-BUDGET-1000",
+      "requirement": "Set and verify the effective cumulative runtime cap as exactly 1000 before deployment/model use, re-read usage before the first request, then enforce no more than 13 requests, 28 model-node calls and RMB 2 with refresh after each request."
+    },
+    {
+      "id": "STAGEB-SERIES-LIVE",
+      "requirement": "Run the one bounded real episode 1 to 2 to 3 journey with the same outline and verify another browser, account and enterprise cannot continue it. If it fails, preserve and report the actual run/failure_stage/error_type; do not retroactively claim an exact cause for the earlier unrecorded failure."
+    },
+    {
+      "id": "STAGEB-EXACT-DEPLOY-ROLLBACK",
+      "requirement": "After ordinary protected merge and required main-branch checks, back up and deploy only the exact merge commit, verify the predeclared live items, retain the matching rollback release/backup, and keep automatic_publish/public_self_registration/real_customer_data_imported false and all readiness flags unchanged."
+    }
+  ],
+  "score": {
+    "maximum": 100,
+    "threshold": 90,
+    "actual": 94,
+    "hard_blocker_count": 0,
+    "verdict": "PASS",
+    "decision": "READY_TO_PROCEED_WITH_STAGE_A_DRAFT_PR_AND_REMOTE_CHECKS; STAGE_B_REMAINS_FORBIDDEN_UNTIL_THE_EXACT_FOUNDER_TOKEN"
+  },
+  "hard_blockers": [],
+  "non_blocking_truths_preserved": [
+    "Dify fresh-cookie login is currently a real 401 failure, not a pass.",
+    "The other two workspace application rows remain unclassified and are not represented as invisible or safe.",
+    "The Founder episode-2 stored run, exact failure_stage and exact error_type are unavailable and are not invented.",
+    "UIREC-A02, A03 and A05 still require the explicitly deferred Stage B browser/live confirmation before final acceptance."
+  ]
+}

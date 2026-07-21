@@ -2390,6 +2390,28 @@ class RuntimeRepository:
                 row for row in rows if self._candidate_is_current(session, row)
             )
 
+    def candidates_for_run(
+        self,
+        run_id: str,
+        principal_id: str,
+        account_id: str,
+    ) -> tuple[RuntimeCandidate, ...]:
+        browser_session_id = current_browser_session_id()
+        with self.sessions() as session:
+            rows = session.scalars(
+                select(RuntimeCandidate)
+                .where(
+                    RuntimeCandidate.run_id == run_id,
+                    RuntimeCandidate.principal_id == principal_id,
+                    RuntimeCandidate.account_id == account_id,
+                    RuntimeCandidate.browser_session_id == browser_session_id,
+                )
+                .order_by(RuntimeCandidate.ordinal)
+            ).all()
+            return tuple(
+                row for row in rows if self._candidate_is_current(session, row)
+            )
+
     def previous_candidates(
         self,
         principal_id: str,
@@ -2602,10 +2624,14 @@ class RuntimeRepository:
     ) -> JsonObject:
         """Return a minimal continuity projection, never a new fact source."""
 
+        scope = current_trusted_database_scope()
         with self.sessions() as session:
             row = session.get(RuntimeCandidate, candidate_id)
+            account = session.get(RuntimeAccount, account_id)
             if (
                 row is None
+                or account is None
+                or account.tenant_id != scope.tenant_id
                 or row.principal_id != principal_id
                 or row.account_id != account_id
                 or row.browser_session_id != current_browser_session_id()
@@ -2620,9 +2646,21 @@ class RuntimeRepository:
                 else {}
             )
             run = session.get(RuntimeModelRun, row.run_id)
+            if (
+                run is None
+                or run.principal_id != principal_id
+                or run.account_id != account_id
+                or run.browser_session_id != current_browser_session_id()
+            ):
+                raise ValueError("Previous candidate run is outside the current scope")
             task_brief = (
                 run.payload.get("task_brief", {})
-                if run is not None and isinstance(run.payload, dict)
+                if isinstance(run.payload, dict)
+                else {}
+            )
+            series_context = (
+                run.payload.get("series_context", {})
+                if isinstance(run.payload, dict)
                 else {}
             )
             series_outline = (
@@ -2652,8 +2690,31 @@ class RuntimeRepository:
                     if isinstance(series_outline, list)
                     else []
                 ),
+                "series_id": (
+                    str(series_context.get("series_id", ""))
+                    if isinstance(series_context, dict)
+                    else ""
+                ),
+                "series_mode": str(task_brief.get("series_mode", "SINGLE")),
+                "episode_index": int(task_brief.get("episode_index", 1)),
                 "continuity_only_not_a_fact_source": True,
             }
+
+    def require_series_predecessor(
+        self,
+        candidate_id: str,
+        principal_id: str,
+        account_id: str,
+        episode_index: int,
+    ) -> JsonObject:
+        context = self.candidate_context(candidate_id, principal_id, account_id)
+        if (
+            context.get("series_mode") != "SERIES"
+            or context.get("episode_index") != episode_index - 1
+            or not context.get("series_id")
+        ):
+            raise ValueError("Previous candidate is not the preceding series episode")
+        return context
 
     def latest_candidate(
         self,

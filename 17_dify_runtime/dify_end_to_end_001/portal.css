@@ -278,6 +278,9 @@ textarea { resize: vertical; line-height: 1.7; }
 .result-heading h1 { margin: 8px 0 0; font-size: 38px; font-weight: 540; letter-spacing: -.04em; }
 .result-meta { display: flex; flex-wrap: wrap; gap: 7px; }
 .result-meta span { padding: 6px 9px; border: 1px solid var(--line); color: var(--ink-soft); background: white; font-size: 10px; }
+.episode-history { margin-bottom: 10px; display: flex; gap: 7px; }
+.episode-history button { padding: 7px 11px; border: 1px solid var(--line); background: white; color: var(--ink-soft); font-size: 11px; }
+.episode-history button.selected { border-color: var(--moss); color: var(--moss-dark); }
 .candidate-list { margin-bottom: 12px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 .candidate-card { min-height: 92px; padding: 13px; }
 .candidate-card strong { display: block; margin: 8px 0 4px; font-size: 12px; line-height: 1.5; }

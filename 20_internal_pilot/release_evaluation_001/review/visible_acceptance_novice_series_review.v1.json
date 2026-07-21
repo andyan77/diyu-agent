@@ -1,0 +1,166 @@
+{
+  "schema": "diyu.visible_acceptance.novice_series_review.v1",
+  "task_id": "DIYU_VISIBLE_ACCEPTANCE_BLOCKER_RECOVERY_001",
+  "review_scene": {
+    "primary": "completion_audit",
+    "secondary": [
+      "release_gate",
+      "code_change_review",
+      "frontend_review"
+    ],
+    "scope": [
+      "UIREC-A04",
+      "UIREC-A05",
+      "UIREC-A06",
+      "UIREC-A07",
+      "UIREC-A08"
+    ],
+    "ruling_boundary": "STAGE_A_DEPLOYABILITY_ONLY_NOT_STAGE_B_LIVE_ACCEPTANCE"
+  },
+  "reviewer": {
+    "reviewer_id": "codex-subagent:/root/novice_series_review",
+    "role": "新手可用性与系列连续性独立审查者",
+    "independent_from_implementer": true,
+    "authored_business_code": false,
+    "remote_connection_used": false,
+    "model_call_used": false
+  },
+  "frozen_candidate": {
+    "commit": "162378262e11b083b7c3c9f16892ba563f237002",
+    "tree": "b398c1a9bc19f8091d3648b6ec3aed4d8c86a270",
+    "head_matched_before_review": true,
+    "worktree_clean_before_review": true
+  },
+  "verdict": "PASS",
+  "score": 95,
+  "minimum_passing_score": 90,
+  "hard_blockers": [],
+  "deployment_readiness": {
+    "ready_for_stage_a_draft_pr_and_remote_checks": true,
+    "stage_b_live_acceptance_claimed": false,
+    "reason": "A04至A08的受影响代码路径、候选渲染和自动化旅程形成了可部署闭环；公网真实生成、浏览器可见行为和导出隔离仍须在阶段B按原合同定向证实。"
+  },
+  "acceptance_results": {
+    "UIREC-A04": {
+      "verdict": "PASS_DEPLOYABLE",
+      "score": 20,
+      "evidence_classification": [
+        "已实测",
+        "基于静态仓库判断"
+      ],
+      "repository_evidence": [
+        "17_dify_runtime/dify_end_to_end_001/portal.js:98-115 将候选、选择、版本、修改消息、提纲、上集引用承载状态和旧分类一次清空，同时保留账号、平台、成品与新任务输入。",
+        "17_dify_runtime/dify_end_to_end_001/portal.js:590-611 将该边界接入模式切换，并通过每集快照实现已完成集数回看。",
+        "17_dify_runtime/dify_end_to_end_001/portal.js:948-977 与 1018-1032 使新一集从自己的第一版开始并保留前一集独立历史。",
+        "17_dify_runtime/dify_end_to_end_001/test_dify_end_to_end.py:1965-2068 回放旧单篇候选、旧引用、两版和局部修改被清除，并验证三集各自版本与修改历史。"
+      ],
+      "user_impact": "用户从已修改单篇切到三集后，不再把旧候选、旧修改文字或旧版号误认为新系列内容；每集修改不会覆盖其他集。",
+      "stage_b_status": "待部署后用真实浏览器复现固定序列并确认可见结果。"
+    },
+    "UIREC-A05": {
+      "verdict": "PASS_DEPLOYABLE",
+      "score": 19,
+      "evidence_classification": [
+        "已实测",
+        "基于静态仓库判断",
+        "待补证"
+      ],
+      "repository_evidence": [
+        "17_dify_runtime/dify_end_to_end_001/portal.js:781-790、903-932、980-1037 复用同一提纲请求，提纲完整前不发送第1集，并逐集携带服务端返回的 continuation_ref。",
+        "17_dify_runtime/dify_end_to_end_001/bridge_app.py:751-792 在安装完整账号作用域后、模型调用前拒绝缺失或越界的上集引用，返回可行动的 PREVIOUS_CONTEXT_INVALID。",
+        "17_dify_runtime/dify_end_to_end_001/persistence.py:2619-2717 校验租户、登录主体、内容账号、浏览器会话、系列和紧邻上一集。",
+        "17_dify_runtime/dify_end_to_end_001/runtime_service.py:1159-1172、1346-1449 保存服务端系列标识、沿用原三集提纲，并将内部系列标识排除出作者提示。",
+        "17_dify_runtime/dify_end_to_end_001/test_dify_end_to_end.py:1469-1562、1762-1897、1899-1963 回放 1到2到3、提纲保持、局部修改后续接、错误跨浏览器和跳集拒绝、延迟提纲完成前零生成请求。"
+      ],
+      "user_impact": "用户点击继续第2集或第3集时，系统只接续当前账号、当前浏览器和当前系列的紧邻上一集；上下文失效时得到可重试提示，不会静默接上旧单篇或别的会话。",
+      "stage_b_status": "待部署后真实完成三集并核对内容连续且不只是换标题，同时定向证实跨账号、跨浏览器和跨企业拒绝。"
+    },
+    "UIREC-A06": {
+      "verdict": "PASS_DEPLOYABLE",
+      "score": 19,
+      "evidence_classification": [
+        "已实测",
+        "基于静态仓库判断",
+        "待补证"
+      ],
+      "repository_evidence": [
+        "17_dify_runtime/dify_end_to_end_001/portal.js:365-379、483-500 将 SESSION_EXPIRED 转回登录页并显示失效文案，不把普通401之外的错误误分类。",
+        "17_dify_runtime/dify_end_to_end_001/portal.js:1736-1744 主动退出不再刷新页面，直接显示一次性安全退出文案。",
+        "17_dify_runtime/dify_end_to_end_001/bridge_app.py:618-642 复用既有会话撤销和 Cookie 删除并返回无敏感信息提示。",
+        "17_dify_runtime/dify_end_to_end_001/test_dify_end_to_end.py:1965-2074、3257-3285 验证无 location reload、无本地存储、会话撤销、Cookie 过期以及主动退出与失效文案区分。"
+      ],
+      "user_impact": "用户主动退出后立即知道已经安全退出；自然过期时知道需要重新登录，不会因空白反馈反复点击或误以为系统故障。",
+      "stage_b_status": "待部署后在全新浏览器确认两类提示真实可见、刷新后主动退出提示不重复。"
+    },
+    "UIREC-A07": {
+      "verdict": "PASS_DEPLOYABLE",
+      "score": 19,
+      "evidence_classification": [
+        "已实测",
+        "基于静态仓库判断",
+        "待补证"
+      ],
+      "repository_evidence": [
+        "17_dify_runtime/dify_end_to_end_001/persistence.py:143-167 为总部专业人设提供各自3至5个专业推荐，函数说明明确推荐顺序不是题材授权。",
+        "17_dify_runtime/dify_end_to_end_001/runtime_service.py:821-892 将服务端账号、人设和推荐方向投影到现有统一首页。",
+        "17_dify_runtime/dify_end_to_end_001/portal.js:531-535、613-629 消费服务端推荐并渲染首页卡片，没有复制页面或创作权限分支。",
+        "17_dify_runtime/dify_end_to_end_001/test_dify_end_to_end.py:498-597 验证六类首页方向不同、两个总部专业人设方向不同且都可使用同一非优先题材；762-813 验证企业管理员五个真实栏目及创作者不可进入。"
+      ],
+      "user_impact": "不同岗位的新手进入系统就能看到符合工作语境的切入点，同时仍可创作同一非优先题材；企业管理员进入的是五栏管理空间而不是误入创作或内容审批。",
+      "stage_b_status": "待部署后分别登录六类代表账号点击确认首页差异，并打开企业管理员五个栏目。"
+    },
+    "UIREC-A08": {
+      "verdict": "PASS_DEPLOYABLE",
+      "score": 18,
+      "evidence_classification": [
+        "已实测",
+        "基于静态仓库判断",
+        "待补证"
+      ],
+      "repository_evidence": [
+        "17_dify_runtime/dify_end_to_end_001/portal.js:1134-1296 按七种成品消费并渲染各自结构，使用 textContent 与 DOM 节点构造，不直接注入模型HTML。",
+        "17_dify_runtime/dify_end_to_end_001/portal.js:1303-1406 覆盖候选选择、自然语言修改、复制和服务端导出结果，未选候选先给普通语言提示。",
+        "17_dify_runtime/dify_end_to_end_001/test_dify_end_to_end.py:1564-1704 回放七种成品结构、选择、修改、导出和来源链；1706-1727 验证不存在审批字段。",
+        "17_dify_runtime/dify_end_to_end_001/test_dify_end_to_end.py:3041-3063 验证另一浏览器不能选择、修改、导出或查看同账号候选。"
+      ],
+      "user_impact": "新手能在一个工作台获得适合用途的成品结构并完成选择、修改和导出；其他浏览器不能接管当前候选，且流程没有送审、批准或自动发布门禁。",
+      "stage_b_status": "待部署后复用短视频证据，其余六种各生成一次，实际导出一个候选并由另一账号或浏览器验证不可查看、修改或导出。"
+    }
+  },
+  "targeted_replay": {
+    "command_scope": "九个A04至A08直接相关 unittest 方法；未运行49项全量、内容质量评测或远程旅程",
+    "exit_code": 0,
+    "tests_run": 9,
+    "tests_passed": 9,
+    "tests_failed": 0,
+    "elapsed_seconds": 19.825,
+    "covered_capabilities": [
+      "六类首页和专业人设开放题材",
+      "企业管理员五个栏目",
+      "三集显式引用1到2到3与跨浏览器拒绝",
+      "延迟提纲竞态",
+      "旧单篇清空与逐集历史",
+      "七种成品渲染选择修改导出",
+      "候选跨浏览器隔离",
+      "主动退出撤销和会话失效"
+    ]
+  },
+  "engineering_coverage": {
+    "security_and_isolation": "新增引用是服务端生成的不透明值；数据库查询经现有 ORM，续集与候选操作受租户、主体、账号和浏览器范围限制；差异中未新增秘密、LLM SDK直调、原始SQL或浏览器持久化身份。",
+    "state_and_data_correctness": "新任务清空与逐集快照分别控制任务级和集级生命周期；续集只接受紧邻上一集，并从服务端保存记录恢复同一提纲与系列。",
+    "failure_handling": "提纲失败可重试或切回单篇；缺失或越界上集引用在模型前失败关闭；主动退出和会话失效给出不同且不含内部编号的提示。",
+    "compatibility_and_change_impact": "未增加数据库字段、页面体系、权限体系或成品类型；单篇请求保持 episode_index=1，新增系列字段由严格请求模型校验，前后端调用方已同步。",
+    "runtime_consumers": "本次新增前端函数、请求字段、仓储查询和系列上下文均由现有 portal到bridge到runtime链真实调用，无悬空组件。",
+    "not_covered": "根据阶段门禁未连接公网、未调用内容模型、未做真实导出文件或视觉浏览器验收；身份、凭据、部署和回滚由另一名指定审查者覆盖。"
+  },
+  "stage_b_obligations": [
+    "部署精确提交后，以固定序列执行单篇生成、选择、局部修改、切换三集，确认旧输出退出当前界面且三集各自从第一版开始。",
+    "在同一账号同一浏览器真实完成第1、2、3集，核对原提纲保持且内容不是只换标题；再定向验证其他浏览器、账号和企业不能续接。",
+    "在真实浏览器分别确认主动退出一次性提示与会话失效提示，刷新不得重复主动退出提示。",
+    "登录六类代表账号确认首页推荐差异，打开企业管理员五个栏目且不出现创作或内容审核队列。",
+    "复用已通过的短视频证据，其余六种成品各生成一次；实际导出一个候选，并确认另一账号或浏览器不能查看、修改或导出。"
+  ],
+  "non_blocking_notes": [],
+  "readiness_flags_changed": false,
+  "review_completed_at": "2026-07-20T20:01:30-07:00"
+}

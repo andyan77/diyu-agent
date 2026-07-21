@@ -211,6 +211,7 @@ def _portal_result(
             "MATERIAL_GAP": "MORE_CONTEXT_NEEDED",
             "CANDIDATE_NOT_SELECTED": "CANDIDATE_NOT_SELECTED",
             "AUTHORIZATION_OR_SCOPE_BLOCK": "ACCOUNT_SCOPE_DENIED",
+            "CONTINUATION_CONTEXT_ERROR": "PREVIOUS_CONTEXT_INVALID",
             "MODEL_OUTPUT_CONTRACT_ERROR": "SYSTEM_TEMPORARY",
             "HARD_FACT_REFERENCE_ERROR": "SYSTEM_TEMPORARY",
             "SYSTEM_OR_PROVIDER_ERROR": "SYSTEM_TEMPORARY",
@@ -629,7 +630,12 @@ def create_app(
             )
         except ValueError:
             pass
-        response = jsonify({"logged_out": True})
+        response = jsonify(
+            {
+                "logged_out": True,
+                "user_visible_text": "已安全退出，请重新登录。",
+            }
+        )
         response.delete_cookie(SESSION_COOKIE, path="/")
         return response
 
@@ -728,7 +734,7 @@ def create_app(
             principal_id = str(session["principal_id"])
             browser_session_id = str(session["browser_session_id"])
             failure_stage = "PORTAL_INPUT_PROJECTION"
-            runtime_request = _portal_inputs(payload, principal_id, active_repository)
+            runtime_request = _portal_inputs(payload)
             classification_projection: JsonObject | None = None
             failure_stage = "ACCOUNT_SCOPE"
             try:
@@ -758,6 +764,31 @@ def create_app(
                 browser_session_id,
                 account,
             )
+            if (
+                runtime_request["operation"] == "确认制作"
+                and payload.series_mode == "SERIES"
+                and payload.episode_index > 1
+            ):
+                failure_stage = "SERIES_CONTEXT"
+                try:
+                    if payload.previous_content_ref is None:
+                        raise ValueError("Missing previous content reference")
+                    active_repository.require_series_predecessor(
+                        payload.previous_content_ref,
+                        principal_id,
+                        account.account_id,
+                        payload.episode_index,
+                    )
+                except ValueError:
+                    app.logger.warning(
+                        "portal_chat_failed stage=%s error_type=%s",
+                        failure_stage,
+                        "PreviousContextInvalid",
+                    )
+                    return _plain_error(
+                        "上一集上下文已失效，请返回当前系列上一集后重试。",
+                        error_type="PREVIOUS_CONTEXT_INVALID",
+                    ), 409
             active_repository.record_account_activity(
                 principal_id=principal_id,
                 account_id=account.account_id,
@@ -1137,26 +1168,12 @@ def _portal_session(
 
 def _portal_inputs(
     payload: PortalTaskRequest,
-    principal_id: str,
-    repository: RuntimeRepository,
 ) -> JsonObject:
-    previous_ref = None
-    if payload.continue_previous or payload.operation == "继续一个系列":
-        try:
-            _, account = repository.require_active_scope_by_display_name(
-                principal_id,
-                payload.account_display_name,
-            )
-        except ValueError as exc:
-            raise RuntimeContractError(
-                "Portal account is outside the current scope"
-            ) from exc
-        previous = repository.latest_candidate(principal_id, account.account_id)
-        if previous is None:
-            raise RuntimeContractError(
-                "No previous content is available for this account"
-            )
-        previous_ref = previous.candidate_id
+    previous_ref = (
+        payload.previous_content_ref
+        if payload.continue_previous or payload.operation == "继续一个系列"
+        else None
+    )
     operation = PORTAL_OPERATION_MAP[payload.operation]
     candidate_number = payload.candidate_number
     return {
@@ -1181,6 +1198,7 @@ def _portal_inputs(
         "content_format": payload.content_format,
         "series_mode": payload.series_mode,
         "episode_index": payload.episode_index,
+        "series_outline": [row.model_dump() for row in payload.series_outline],
         "organization_level": payload.organization_level,
         "content_identity": payload.content_identity,
         "long_term_storyline": payload.long_term_storyline,
@@ -1227,7 +1245,13 @@ def _plain_error(
             "confirmation_card": {},
             "candidate_cards": [],
             "legal_next_actions": (
-                ["重新登录"] if error_type == "SESSION_EXPIRED" else ["重试"]
+                ["重新登录"]
+                if error_type == "SESSION_EXPIRED"
+                else (
+                    ["返回上一集", "重试"]
+                    if error_type == "PREVIOUS_CONTEXT_INVALID"
+                    else ["重试"]
+                )
             ),
             "error_type": error_type,
         }

@@ -24,6 +24,25 @@ current_product_status:
     founder_acceptance_pending: true
     result_path: 20_internal_pilot/release_evaluation_001/result/ui_full_decision_live_delivery_result.v1.json
     acceptance_guide_path: 20_internal_pilot/release_evaluation_001/delivery/founder_point_by_point_ui_acceptance_guide.v1.md
+  visible_acceptance_blocker_recovery:
+    task_id: DIYU_VISIBLE_ACCEPTANCE_BLOCKER_RECOVERY_001
+    state: STAGE_A_REVIEWS_PASS_DRAFT_PR_AND_REMOTE_CHECKS_PENDING
+    baseline_commit: 8ea1671405f7d6276e5f585e6a237573d926053e
+    reviewed_candidate_commit: 162378262e11b083b7c3c9f16892ba563f237002
+    reviewed_candidate_tree: b398c1a9bc19f8091d3648b6ec3aed4d8c86a270
+    novice_series_review:
+      score: 95
+      verdict: PASS
+      hard_blockers: 0
+    identity_operations_review:
+      score: 94
+      verdict: PASS
+      hard_blockers: 0
+    live_identity_drift: false
+    dify_credential_reconciliation_required_after_exact_approval: true
+    production_merge_deploy_or_credential_write_authorized: false
+    result_path: 20_internal_pilot/release_evaluation_001/result/visible_acceptance_blocker_recovery_result.v1.json
+    stage_b_exact_approval_token: APPROVE_UI_BLOCKER_RECOVERY_MERGE_DEPLOY_AND_CREDENTIAL_RECONCILIATION
   active_product_semantics:
     task_id: DIYU_ACCOUNT_PERSONA_UI_AND_NO_APPROVAL_FLOW_001
     delivery_task_id: DIYU_UI_FULL_DECISION_LIVE_DELIVERY_001

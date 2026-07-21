@@ -65,6 +65,18 @@ AUTHORIZED_CURRENT_LIVE_PATHS = frozenset(
             "20_internal_pilot/release_evaluation_001/"
             "delivery/founder_point_by_point_ui_acceptance_guide.v1.md"
         ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "result/visible_acceptance_blocker_recovery_result.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "review/visible_acceptance_novice_series_review.v1.json"
+        ),
+        Path(
+            "20_internal_pilot/release_evaluation_001/"
+            "review/visible_acceptance_identity_operations_review.v1.json"
+        ),
     }
 )
 PACKAGE10_FINAL_CLOSEOUT_PATHS = frozenset(

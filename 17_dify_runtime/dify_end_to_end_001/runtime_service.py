@@ -1156,15 +1156,20 @@ class Package7Runtime:
             request.column_name,
             str(storyline["storyline_id"]),
         )
-        if (
-            request.previous_content_ref is not None
-            and not self.repository.candidate_belongs_to_account(
-                request.previous_content_ref,
-                principal_id,
-                str(account["account_id"]),
-            )
-        ):
-            return self._plain_action("BLOCK")
+        if request.series_mode == "SERIES" and request.episode_index > 1:
+            if request.previous_content_ref is None:
+                return self._failure_result("CONTINUATION_CONTEXT_ERROR", None)
+            try:
+                self.repository.require_series_predecessor(
+                    request.previous_content_ref,
+                    principal_id,
+                    str(account["account_id"]),
+                    request.episode_index,
+                )
+            except ValueError:
+                return self._failure_result("CONTINUATION_CONTEXT_ERROR", None)
+        elif request.previous_content_ref is not None:
+            return self._failure_result("CONTINUATION_CONTEXT_ERROR", None)
         now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
         requirement_id = f"REQ-{digest_object([principal_id, account['account_id'], request.message, now])[:20].upper()}"
         precise_queries = self._precise_fact_queries(request, account)
@@ -1289,6 +1294,11 @@ class Package7Runtime:
             if original_run is None
             else copy.deepcopy(original_run.payload.get("task_brief", {}))
         )
+        series_context = (
+            {}
+            if original_run is None
+            else copy.deepcopy(original_run.payload.get("series_context", {}))
+        )
         prompt = self._author_prompt(
             plan_record.plan,
             materials,
@@ -1310,6 +1320,7 @@ class Package7Runtime:
                 "prompt": prompt,
                 "source_candidate_id": selected.candidate_id,
                 "task_brief": task_brief,
+                "series_context": series_context,
             },
         )
         return {
@@ -1362,10 +1373,30 @@ class Package7Runtime:
             series_outline: list[JsonObject] = []
         elif isinstance(previous_outline, list) and len(previous_outline) == 3:
             series_outline = copy.deepcopy(previous_outline)
+        elif len(request.series_outline) == 3:
+            series_outline = [row.model_dump() for row in request.series_outline]
         else:
             series_outline = self._series_outline(
                 request.message, request.content_direction
             )
+        run_id = self._new_run_id(
+            principal_id, account_id, request.operation, request.message
+        )
+        series_id = None
+        if request.series_mode == "SERIES":
+            prior_series_id = (
+                previous_context.get("series_id")
+                if isinstance(previous_context, dict)
+                else None
+            )
+            series_id = str(
+                prior_series_id
+                or f"SERIES-{digest_object([run_id])[:20].upper()}"
+            )
+        author_previous_context = copy.deepcopy(previous_context)
+        if isinstance(author_previous_context, dict):
+            for internal_key in ("series_id", "series_mode", "episode_index"):
+                author_previous_context.pop(internal_key, None)
         task_brief = {
             "confirmed_user_request": request.message,
             "public_topic": str(request.topic_label),
@@ -1377,7 +1408,7 @@ class Package7Runtime:
             "storyline_purpose": storyline["purpose"],
             "column": column["display_name"],
             "previous_content_ref_present": request.previous_content_ref is not None,
-            "previous_content_context": previous_context,
+            "previous_content_context": author_previous_context,
             "localization_allowed": request.localization_allowed,
             "target_platform": request.target_platform,
             "duration_label": request.duration_label,
@@ -1400,9 +1431,6 @@ class Package7Runtime:
             "brand_guidance": self._public_brand_guidance(profile),
         }
         prompt = self._author_prompt(plan, materials, task_brief=task_brief)
-        run_id = self._new_run_id(
-            principal_id, account_id, request.operation, request.message
-        )
         self.repository.start_model_run(
             run_id=run_id,
             principal_id=principal_id,
@@ -1414,6 +1442,14 @@ class Package7Runtime:
                 "prompt": prompt,
                 "requirement_summary": request.message,
                 "task_brief": task_brief,
+                "series_context": (
+                    {
+                        "series_id": series_id,
+                        "episode_index": request.episode_index,
+                    }
+                    if series_id is not None
+                    else {}
+                ),
             },
         )
         return {
@@ -2229,7 +2265,11 @@ class Package7Runtime:
             ),
             "ui_state": "result",
             "candidates": self._candidate_workbench(
-                self.repository.latest_candidates(run.principal_id, run.account_id)
+                self.repository.candidates_for_run(
+                    run.run_id,
+                    run.principal_id,
+                    run.account_id,
+                )
             ),
             "series": self._series_projection(task_brief),
         }
@@ -2954,7 +2994,11 @@ class Package7Runtime:
             "user_visible_text": self._render_candidates(candidates),
             "ui_state": "result",
             "candidates": self._candidate_workbench(
-                self.repository.latest_candidates(run.principal_id, run.account_id)
+                self.repository.candidates_for_run(
+                    run.run_id,
+                    run.principal_id,
+                    run.account_id,
+                )
             ),
             "series": self._series_projection(task_brief),
         }
@@ -2979,6 +3023,7 @@ class Package7Runtime:
                         "推荐候选" if candidate.ordinal == 1 else f"备选{candidate.ordinal - 1}"
                     ),
                     "selected": candidate.selected,
+                    "continuation_ref": candidate.candidate_id,
                     "creative_difference": str(
                         candidate.candidate_payload.get("creative_difference", "")
                     ),
@@ -3253,6 +3298,7 @@ class Package7Runtime:
         messages = {
             "MATERIAL_GAP": "现有资料还不足以完成这项内容，请按补料提示补充后再继续。",
             "AUTHORIZATION_OR_SCOPE_BLOCK": "当前账号、使用范围或授权条件不成立，已停止本次操作。",
+            "CONTINUATION_CONTEXT_ERROR": "上一集上下文已失效，请返回当前系列上一集后重试。",
             "MODEL_OUTPUT_CONTRACT_ERROR": "内容模型已经返回，但系统未能稳定接收其格式；无需补资料，请由系统处理。",
             "HARD_FACT_REFERENCE_ERROR": "候选中出现当前资料无法支持的明确事实、内部编号或真实敏感信息，已停止使用。",
             "SYSTEM_OR_PROVIDER_ERROR": "当前系统或模型服务未完成处理，请稍后重试或由系统维护人员处理。",
