@@ -42,6 +42,14 @@ function formatSeriesOutline(outline) {
   }).join("；")}`;
 }
 
+function serializeSeriesOutline(outline) {
+  return Array.isArray(outline) ? outline.map((episode, index) => ({
+    episode_index: Number(episode.episode_index || episode.index || index + 1),
+    title: String(episode.title || "").trim(),
+    summary: String(episode.summary || episode.description || "").trim()
+  })) : [];
+}
+
 function buildPortalTaskPayload(input) {
   return {
     account_display_name: String(input.accountDisplayName || ""),
@@ -57,6 +65,7 @@ function buildPortalTaskPayload(input) {
     storyline_name: null,
     column_name: null,
     continue_previous: Boolean(input.continuePrevious),
+    previous_content_ref: input.previousContentRef || null,
     localization_allowed: false,
     duration_label: input.durationLabel || "由系统建议",
     expression_feeling: input.expressionFeeling || "由系统建议",
@@ -69,8 +78,61 @@ function buildPortalTaskPayload(input) {
     expression_method: null,
     existing_material_kinds: Array.isArray(input.existingMaterialKinds) ? input.existingMaterialKinds : [],
     series_mode: input.seriesMode || "SINGLE",
-    episode_index: Number(input.episodeIndex || 1)
+    episode_index: Number(input.episodeIndex || 1),
+    series_outline: serializeSeriesOutline(input.seriesOutline)
   };
+}
+
+function cloneJson(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function resetEpisodeOutputState(target, episodeIndex = 1) {
+  target.episodeIndex = episodeIndex;
+  target.candidates = [];
+  target.legacyAnswer = "";
+  target.selectedOrdinal = 1;
+  target.selectionConfirmed = false;
+  target.confirmedOrdinal = 0;
+  target.versions = [];
+  target.versionIndex = -1;
+  target.revisionMessages = [];
+  return target;
+}
+
+function clearTaskOutputState(target) {
+  resetEpisodeOutputState(target, 1);
+  target.seriesOutline = [];
+  target.seriesNote = "";
+  target.episodeWorkspaces = {};
+  target.latestEpisodeIndex = 1;
+  target.resolvedClassification = null;
+  target.currentStage = "confirm";
+  target.legalNextActions = [];
+  target.creationEpoch = Number(target.creationEpoch || 0) + 1;
+  target.maxStep = Math.min(Number(target.maxStep || 0), 2);
+  return target;
+}
+
+function snapshotEpisodeOutput(target) {
+  return cloneJson({
+    contentFormat: target.contentFormat,
+    episodeIndex: target.episodeIndex,
+    candidates: target.candidates,
+    legacyAnswer: target.legacyAnswer,
+    selectedOrdinal: target.selectedOrdinal,
+    selectionConfirmed: target.selectionConfirmed,
+    confirmedOrdinal: target.confirmedOrdinal,
+    versions: target.versions,
+    versionIndex: target.versionIndex,
+    revisionMessages: target.revisionMessages
+  });
+}
+
+function restoreEpisodeOutput(target, snapshot) {
+  const restored = cloneJson(snapshot);
+  Object.assign(target, restored);
+  return target;
 }
 
 async function runGenerationAfterOutline({
@@ -90,9 +152,14 @@ async function runGenerationAfterOutline({
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     buildPortalTaskPayload,
+    clearTaskOutputState,
     createSeriesOutlineGate,
     formatSeriesOutline,
-    runGenerationAfterOutline
+    resetEpisodeOutputState,
+    restoreEpisodeOutput,
+    runGenerationAfterOutline,
+    serializeSeriesOutline,
+    snapshotEpisodeOutput
   };
 }
 
@@ -205,6 +272,9 @@ const state = {
   seriesOutline: [],
   seriesNote: "",
   episodeIndex: 1,
+  episodeWorkspaces: {},
+  latestEpisodeIndex: 1,
+  creationEpoch: 0,
   candidates: [],
   legacyAnswer: "",
   selectedOrdinal: 1,
@@ -298,9 +368,13 @@ async function requestJson(path, init = {}, fallbackMessage = "系统暂时无�
   }
   if (!response.ok) {
     const message = pick(value, ["user_visible_text", "message", "error"], fallbackMessage);
+    const errorType = String(pick(value, ["error_type"], response.status === 401 ? "SESSION_EXPIRED" : "SYSTEM_TEMPORARY"));
+    if (path !== "/login" && errorType === "SESSION_EXPIRED") {
+      enterLoginState("登录已失效，请重新登录。");
+    }
     const error = new Error(String(message));
     error.status = response.status;
-    error.errorType = String(pick(value, ["error_type"], response.status === 401 ? "SESSION_EXPIRED" : "SYSTEM_TEMPORARY"));
+    error.errorType = errorType;
     error.response = value;
     throw error;
   }
@@ -406,6 +480,25 @@ function activateWorkspace(payload) {
   }
 }
 
+function enterLoginState(message) {
+  seriesOutlineGate.reset();
+  clearTaskOutputState(state);
+  state.step = "home";
+  state.maxStep = 0;
+  state.principal = {};
+  state.accounts = [];
+  state.currentAccount = null;
+  state.isAdmin = false;
+  ui.loginForm.reset();
+  ui.loginFeedback.textContent = message;
+  ui.sessionUser.textContent = "";
+  setHidden(ui.sessionSummary, true);
+  setHidden(ui.workspace, true);
+  setHidden(ui.adminWorkspace, true);
+  setHidden(ui.creativeWorkspace, true);
+  setHidden(ui.loginSection, false);
+}
+
 function renderIdentity() {
   const account = state.currentAccount;
   const principal = state.principal;
@@ -444,6 +537,7 @@ function accountDirections() {
 
 function resetCreation() {
   seriesOutlineGate.reset();
+  clearTaskOutputState(state);
   state.step = "home";
   state.maxStep = 0;
   state.startMode = "inspire";
@@ -454,17 +548,6 @@ function resetCreation() {
   state.angleMessage = "";
   state.detail = "";
   state.seriesMode = "SINGLE";
-  state.seriesOutline = [];
-  state.seriesNote = "";
-  state.episodeIndex = 1;
-  state.candidates = [];
-  state.legacyAnswer = "";
-  state.selectedOrdinal = 1;
-  state.selectionConfirmed = false;
-  state.confirmedOrdinal = 0;
-  state.versions = [];
-  state.versionIndex = -1;
-  state.revisionMessages = [];
   state.contentFormat = state.currentAccount?.recommendedFormat || state.contentFormats[0] || "短视频";
   state.platform = state.currentAccount?.recommendedPlatform || asArray(state.options.platforms)[0] || "其他";
   state.duration = state.currentAccount?.recommendedDuration || (asArray(state.options.durations).includes("由系统建议") ? "由系统建议" : asArray(state.options.durations)[0]) || "由系统建议";
@@ -488,6 +571,43 @@ function resetCreation() {
   renderHome();
   renderIdentity();
   setStep("home");
+}
+
+function hasTaskOutput() {
+  return state.candidates.length > 0 || state.versions.length > 0 || Object.keys(state.episodeWorkspaces).length > 0;
+}
+
+function clearTaskOutputUi() {
+  ui.revisionInput.value = "";
+  ui.candidates.replaceChildren();
+  ui.artifact.replaceChildren();
+  ui.revisionThread.replaceChildren();
+  document.querySelector("#version-label").textContent = "";
+  document.querySelector("#result-episode").textContent = "";
+  document.querySelector("#episode-history").replaceChildren();
+}
+
+function beginNewCreationTask(seriesMode) {
+  seriesOutlineGate.reset();
+  clearTaskOutputState(state);
+  state.seriesMode = seriesMode;
+  clearTaskOutputUi();
+  setStep("confirm");
+}
+
+function saveCurrentEpisodeWorkspace() {
+  if (state.seriesMode !== "SERIES" || !state.candidates.length) return;
+  state.episodeWorkspaces[String(state.episodeIndex)] = snapshotEpisodeOutput(state);
+}
+
+function showEpisode(episodeIndex) {
+  if (episodeIndex === state.episodeIndex) return;
+  const workspace = state.episodeWorkspaces[String(episodeIndex)];
+  if (!workspace) return;
+  saveCurrentEpisodeWorkspace();
+  restoreEpisodeOutput(state, workspace);
+  ui.revisionInput.value = "";
+  setStep("result");
 }
 
 function renderHome() {
@@ -586,6 +706,7 @@ function taskPayload(operation, overrides = {}) {
     keyTakeaway: state.detail,
     speakerRoleName: state.speakerRoleName || account?.speakerRole,
     continuePrevious: overrides.continue_previous,
+    previousContentRef: overrides.previous_content_ref,
     durationLabel: state.duration,
     expressionFeeling: state.expressionFeeling,
     contentFormat: overrides.content_format || state.contentFormat,
@@ -595,7 +716,8 @@ function taskPayload(operation, overrides = {}) {
       ? state.materialKinds
       : (state.startMode === "improve" ? ["一段故事或概要"] : []),
     seriesMode: overrides.series_mode || state.seriesMode,
-    episodeIndex: overrides.episode_index || state.episodeIndex
+    episodeIndex: overrides.episode_index || state.episodeIndex,
+    seriesOutline: overrides.series_outline || state.seriesOutline
   });
 }
 
@@ -779,6 +901,7 @@ function renderSeriesPlan() {
 }
 
 async function chooseSeriesMode(mode) {
+  if (mode !== state.seriesMode) beginNewCreationTask(mode);
   state.seriesMode = mode;
   state.episodeIndex = 1;
   if (mode !== "SERIES") {
@@ -791,21 +914,22 @@ async function chooseSeriesMode(mode) {
     renderConfirm();
     return;
   }
+  const creationEpoch = state.creationEpoch;
   state.seriesNote = "正在规划三集提纲…";
   renderConfirm();
   try {
     const outline = await seriesOutlineGate.ensure(state.seriesOutline);
-    if (state.seriesMode === "SERIES") {
+    if (state.seriesMode === "SERIES" && state.creationEpoch === creationEpoch) {
       state.seriesOutline = outline;
       state.seriesNote = "先生成第1集，完成后再继续下一集。";
     }
   } catch (_error) {
-    if (state.seriesMode === "SERIES") {
+    if (state.seriesMode === "SERIES" && state.creationEpoch === creationEpoch) {
       state.seriesNote = "三集提纲暂时没有完成，请重试，或切回单篇。";
       setStatus(state.seriesNote, "error");
     }
   }
-  if (state.seriesMode === "SERIES") renderSeriesPlan();
+  if (state.seriesMode === "SERIES" && state.creationEpoch === creationEpoch) renderSeriesPlan();
 }
 
 function creationMessage(episodeIndex) {
@@ -854,8 +978,16 @@ function loadVersion(index) {
 }
 
 async function generateContent({nextEpisode = false} = {}) {
+  if (!nextEpisode && hasTaskOutput()) beginNewCreationTask(state.seriesMode);
   const episode = nextEpisode ? Math.min(3, state.episodeIndex + 1) : 1;
   const operation = nextEpisode ? "继续一个系列" : "直接做内容";
+  const previousContentRef = nextEpisode
+    ? String(pick(selectedCandidateRecord(), ["continuation_ref"], ""))
+    : "";
+  if (nextEpisode && !previousContentRef) {
+    setStatus("上一集上下文已失效，请返回当前系列上一集后重试。", "error");
+    return;
+  }
   try {
     const generationStatus = nextEpisode ? `正在生成第${episode}集…` : "正在生成第一版…";
     const waitingForOutline = state.seriesMode === "SERIES" && !completeSeriesOutline(state.seriesOutline);
@@ -874,14 +1006,22 @@ async function generateContent({nextEpisode = false} = {}) {
         return {
           message: creationMessage(episode),
           continue_previous: nextEpisode,
+          previous_content_ref: previousContentRef || null,
           series_mode: state.seriesMode,
           episode_index: episode,
-          content_format: state.contentFormat
+          content_format: state.contentFormat,
+          series_outline: outline
         };
       },
       sendGeneration: (payload) => sendTask(operation, payload)
     });
+    if (nextEpisode) {
+      saveCurrentEpisodeWorkspace();
+      resetEpisodeOutputState(state, episode);
+      ui.revisionInput.value = "";
+    }
     state.episodeIndex = episode;
+    state.latestEpisodeIndex = Math.max(state.latestEpisodeIndex, episode);
     const outline = extractSeries(value);
     if (outline.length) state.seriesOutline = outline;
     const candidates = extractCandidates(value);
@@ -924,12 +1064,35 @@ function renderResult() {
   document.querySelector("#result-episode").textContent = state.seriesMode === "SERIES" ? `3集系列 · 第${state.episodeIndex}集` : "单篇";
   document.querySelector("#version-label").textContent = `第 ${state.versionIndex + 1} 版`;
   document.querySelector("#previous-version").disabled = state.busy || state.versionIndex <= 0;
+  renderEpisodeHistory();
+  const historicalEpisode = state.seriesMode === "SERIES" && state.episodeIndex < state.latestEpisodeIndex;
+  ui.revisionInput.disabled = historicalEpisode;
+  document.querySelector("#apply-revision").disabled = state.busy || historicalEpisode;
+  document.querySelector("#export-result").disabled = state.busy || historicalEpisode;
   const next = document.querySelector("#next-episode");
   setHidden(next, state.seriesMode !== "SERIES" || state.episodeIndex >= 3);
-  if (state.seriesMode === "SERIES" && state.episodeIndex < 3) next.textContent = `继续第${state.episodeIndex + 1}集`;
+  if (state.seriesMode === "SERIES" && state.episodeIndex < 3) {
+    const nextEpisodeSaved = Boolean(state.episodeWorkspaces[String(state.episodeIndex + 1)]);
+    next.textContent = `${nextEpisodeSaved ? "查看" : "继续"}第${state.episodeIndex + 1}集`;
+  }
   renderCandidateCards();
   renderArtifact();
   renderRevisionThread();
+}
+
+function renderEpisodeHistory() {
+  const wrap = document.querySelector("#episode-history");
+  wrap.replaceChildren();
+  if (state.seriesMode !== "SERIES") return;
+  const available = new Set(Object.keys(state.episodeWorkspaces).map(Number));
+  if (state.candidates.length) available.add(state.episodeIndex);
+  [...available].sort().forEach((episodeIndex) => {
+    const button = createElement("button", episodeIndex === state.episodeIndex ? "selected" : "", `第${episodeIndex}集`);
+    button.type = "button";
+    button.dataset.episodeIndex = String(episodeIndex);
+    button.disabled = episodeIndex === state.episodeIndex;
+    wrap.append(button);
+  });
 }
 
 function renderCandidateCards() {
@@ -941,6 +1104,7 @@ function renderCandidateCards() {
     const button = createElement("button", `candidate-card${selected ? " selected" : ""}`);
     button.type = "button";
     button.dataset.candidateOrdinal = String(ordinal);
+    button.disabled = state.seriesMode === "SERIES" && state.episodeIndex < state.latestEpisodeIndex;
     button.setAttribute("aria-pressed", String(selected));
     button.append(
       createElement("span", "candidate-label", state.candidates.length === 1 ? "当前方案" : `方案 ${index + 1}`),
@@ -1571,7 +1735,12 @@ ui.loginForm.addEventListener("submit", async (event) => {
 });
 
 document.querySelector("#logout").addEventListener("click", async () => {
-  try { await requestJson("/logout", {method: "POST"}); } finally { window.location.reload(); }
+  try {
+    const value = await requestJson("/logout", {method: "POST"});
+    enterLoginState(responseAnswer(value) || "已安全退出，请重新登录。");
+  } catch (error) {
+    if (error.errorType !== "SESSION_EXPIRED") setStatus(error.message, "error");
+  }
 });
 
 document.querySelector("#account-switcher").addEventListener("change", (event) => {
@@ -1688,7 +1857,15 @@ document.querySelector("#previous-version").addEventListener("click", () => {
 });
 document.querySelector("#change-angle").addEventListener("click", () => setStep("angles"));
 document.querySelector("#change-format").addEventListener("click", () => setStep("confirm"));
-document.querySelector("#next-episode").addEventListener("click", () => generateContent({nextEpisode: true}));
+document.querySelector("#next-episode").addEventListener("click", () => {
+  const nextEpisode = state.episodeIndex + 1;
+  if (state.episodeWorkspaces[String(nextEpisode)]) showEpisode(nextEpisode);
+  else generateContent({nextEpisode: true});
+});
+document.querySelector("#episode-history").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-episode-index]");
+  if (button) showEpisode(Number(button.dataset.episodeIndex));
+});
 document.querySelector("#copy-result").addEventListener("click", copyResult);
 document.querySelector("#export-result").addEventListener("click", exportResult);
 

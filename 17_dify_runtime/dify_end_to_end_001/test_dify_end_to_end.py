@@ -21,8 +21,8 @@ import yaml
 
 from author_contract import AUTHOR_CONTRACT_VERSION, CANDIDATE_MODELS
 from brand_import import load_simulation_bundle, preflight_brand_bundle
-from bridge_app import create_app, selected_account_database_scope
-from contracts import BridgePrepareRequest
+from bridge_app import _portal_inputs, create_app, selected_account_database_scope
+from contracts import BridgePrepareRequest, PortalTaskRequest
 from dify_chat import DifyChatClient, DifyChatError
 from persistence import (
     PROFESSIONAL_PERSONA_DIRECTIONS,
@@ -987,9 +987,10 @@ process.stdout.write(JSON.stringify(payload));
             portal_css,
         )
 
-    def test_portal_state_contract_keeps_four_error_types_distinct(self) -> None:
+    def test_portal_state_contract_keeps_actionable_error_types_distinct(self) -> None:
         headers = {"X-Diyu-Portal": "same-origin-v1"}
-        app = create_app(self.runtime, self.repository, FakeDifyChatClient())
+        fake_chat = FakeDifyChatClient()
+        app = create_app(self.runtime, self.repository, fake_chat)
         app.testing = True
         anonymous = app.test_client()
         expired = anonymous.get("/v1/portal/options")
@@ -1014,6 +1015,32 @@ process.stdout.write(JSON.stringify(payload));
             "primary_audience": "正在挑选童装的家长",
             "content_format": "短视频",
         }
+        continuation_without_context = client.post(
+            "/v1/portal/chat",
+            json={
+                **common_payload,
+                "operation": "继续一个系列",
+                "series_mode": "SERIES",
+                "episode_index": 2,
+                "series_outline": [
+                    {"episode_index": 1, "title": "第一集", "summary": "起因"},
+                    {"episode_index": 2, "title": "第二集", "summary": "过程"},
+                    {"episode_index": 3, "title": "第三集", "summary": "结果"},
+                ],
+            },
+            headers=headers,
+        )
+        self.assertEqual(continuation_without_context.status_code, 409)
+        self.assertEqual(
+            continuation_without_context.get_json()["error_type"],
+            "PREVIOUS_CONTEXT_INVALID",
+        )
+        self.assertEqual(
+            continuation_without_context.get_json()["user_visible_text"],
+            "上一集上下文已失效，请返回当前系列上一集后重试。",
+        )
+        self.assertEqual(continuation_without_context.get_json()["legal_next_actions"], ["返回上一集", "重试"])
+        self.assertEqual(fake_chat.calls, [])
         unselected = client.post(
             "/v1/portal/chat",
             json={**common_payload, "operation": "导出"},
@@ -1439,6 +1466,101 @@ process.stdout.write(JSON.stringify(payload));
         self.assertEqual([row["episode_index"] for row in outline], [1, 2, 3])
         self.assertEqual(len({row["title"] for row in outline}), 3)
 
+    def test_portal_series_uses_explicit_refs_across_three_episodes(self) -> None:
+        fake_chat = FakeDifyChatClient()
+        app = create_app(self.runtime, self.repository, fake_chat)
+        app.testing = True
+        client = app.test_client()
+        credentials = {
+            "username": "package7-test-owner",
+            "password": "package7-test-password",
+        }
+        self.assertEqual(client.post("/login", json=credentials).status_code, 200)
+        headers = {"X-Diyu-Portal": "same-origin-v1"}
+        outline = [
+            {"episode_index": 1, "title": "第一集", "summary": "事情起点"},
+            {"episode_index": 2, "title": "第二集", "summary": "关键过程"},
+            {"episode_index": 3, "title": "第三集", "summary": "结果收束"},
+        ]
+        common = {
+            "account_display_name": "笛语童装",
+            "topic_label": "用户问题与理性选择",
+            "primary_audience": "希望看懂工作过程的人",
+            "content_format": "短视频",
+            "series_mode": "SERIES",
+            "series_outline": outline,
+        }
+        first = client.post(
+            "/v1/portal/chat",
+            json={
+                **common,
+                "operation": "直接做内容",
+                "message": "第一集先讲事情怎样开始。",
+                "episode_index": 1,
+            },
+            headers=headers,
+        )
+        self.assertEqual(first.status_code, 200, first.get_json())
+        first_payload = first.get_json()
+        first_ref = str(first_payload["candidates"][0]["continuation_ref"])
+        self.assertEqual(first_payload["series"]["outline"], outline)
+
+        second = client.post(
+            "/v1/portal/chat",
+            json={
+                **common,
+                "operation": "继续一个系列",
+                "message": "第二集继续讲关键过程。",
+                "continue_previous": True,
+                "previous_content_ref": first_ref,
+                "episode_index": 2,
+            },
+            headers=headers,
+        )
+        self.assertEqual(second.status_code, 200, second.get_json())
+        second_payload = second.get_json()
+        second_ref = str(second_payload["candidates"][0]["continuation_ref"])
+        self.assertEqual(second_payload["series"]["outline"], outline)
+
+        other_browser = app.test_client()
+        self.assertEqual(
+            other_browser.post("/login", json=credentials).status_code,
+            200,
+        )
+        calls_before_rejection = len(fake_chat.calls)
+        rejected = other_browser.post(
+            "/v1/portal/chat",
+            json={
+                **common,
+                "operation": "继续一个系列",
+                "message": "另一浏览器尝试继续第三集。",
+                "continue_previous": True,
+                "previous_content_ref": second_ref,
+                "episode_index": 3,
+            },
+            headers=headers,
+        )
+        self.assertEqual(rejected.status_code, 409)
+        self.assertEqual(rejected.get_json()["error_type"], "PREVIOUS_CONTEXT_INVALID")
+        self.assertEqual(len(fake_chat.calls), calls_before_rejection)
+
+        third = client.post(
+            "/v1/portal/chat",
+            json={
+                **common,
+                "operation": "继续一个系列",
+                "message": "第三集收束结果和下一步。",
+                "continue_previous": True,
+                "previous_content_ref": second_ref,
+                "episode_index": 3,
+            },
+            headers=headers,
+        )
+        self.assertEqual(third.status_code, 200, third.get_json())
+        third_payload = third.get_json()
+        self.assertEqual(third_payload["series"]["current_episode"], 3)
+        self.assertEqual(third_payload["series"]["outline"], outline)
+
     def test_all_seven_formats_render_select_revise_export_and_reference(
         self,
     ) -> None:
@@ -1641,38 +1763,80 @@ process.stdout.write(JSON.stringify(payload));
         self,
     ) -> None:
         browser_session_id = "BRS-SERIES-JOURNEY"
+        requested_outline = [
+            {
+                "episode_index": 1,
+                "title": "先看问题怎样出现",
+                "summary": "交代现场和共同目标。",
+            },
+            {
+                "episode_index": 2,
+                "title": "再看岗位怎样交接",
+                "summary": "聚焦选择和交接过程。",
+            },
+            {
+                "episode_index": 3,
+                "title": "最后看协作怎样收束",
+                "summary": "说明结果和下一步。",
+            },
+        ]
         first = self.prepare(
             "短视频",
             browser_session_id=browser_session_id,
             series_mode="SERIES",
             episode_index=1,
+            series_outline=requested_outline,
             content_direction="真实组织与幕后",
             message="做一个三集系列，讲一次跨岗位协作怎样完成。",
         )
+        first_run = self.repository.model_run(str(first["run_id"]))
+        self.assertIsNotNone(first_run)
+        if first_run is None:
+            return
+        series_id = str(first_run.payload["series_context"]["series_id"])
+        self.assertNotIn(series_id, json.dumps(first["author_prompt"], ensure_ascii=False))
         first_result = self.finalize(first, "短视频")
         self.assertEqual(first_result["series"]["mode"], "SERIES")
         self.assertEqual(first_result["series"]["current_episode"], 1)
         self.assertEqual(first_result["series"]["next_episode"], 2)
         outline = first_result["series"]["outline"]
         self.assertEqual([row["episode_index"] for row in outline], [1, 2, 3])
-        self.assertTrue(all(str(row["title"]).strip() for row in outline))
+        self.assertEqual(outline, requested_outline)
+        first_revision = self.prepare(
+            "短视频",
+            browser_session_id=browser_session_id,
+            operation="局部修改",
+            candidate_number=1,
+            message="第1集开头更直接，保留原提纲。",
+        )
+        revision_run = self.repository.model_run(str(first_revision["run_id"]))
+        self.assertIsNotNone(revision_run)
+        if revision_run is None:
+            return
+        self.assertEqual(revision_run.payload["series_context"]["series_id"], series_id)
+        revised_first_result = self.finalize(first_revision, "短视频")
+        previous_content_ref = str(
+            revised_first_result["candidates"][0]["continuation_ref"]
+        )
 
-        with (
-            trusted_database_scope(self.runtime_scope(browser_session_id)),
-            runtime_browser_session(browser_session_id),
-        ):
-            first_candidates = self.repository.latest_candidates(
-                self.principal_id,
-                "ACCOUNT-DIYU-HQ-OFFICIAL",
-            )
-        self.assertGreaterEqual(len(first_candidates), 2)
-        previous_content_ref = first_candidates[0].candidate_id
+        cross_browser = self.scoped_prepare(
+            self.request(
+                series_mode="SERIES",
+                episode_index=2,
+                previous_content_ref=previous_content_ref,
+                series_outline=requested_outline,
+                message="另一浏览器尝试续接第二集。",
+            ),
+            browser_session_id="BRS-SERIES-OTHER-BROWSER",
+        )
+        self.assertEqual(cross_browser["result_class"], "CONTINUATION_CONTEXT_ERROR")
         continuation = self.prepare(
             "短视频",
             browser_session_id=browser_session_id,
             series_mode="SERIES",
             episode_index=2,
             previous_content_ref=previous_content_ref,
+            series_outline=requested_outline,
             content_direction="真实组织与幕后",
             message="继续第二集，聚焦具体选择与交接过程。",
         )
@@ -1680,6 +1844,14 @@ process.stdout.write(JSON.stringify(payload));
         self.assertEqual(continuation_brief["episode_index"], 2)
         self.assertIsNotNone(continuation_brief["previous_content_context"])
         self.assertEqual(continuation_brief["series_outline"], outline)
+        continuation_run = self.repository.model_run(str(continuation["run_id"]))
+        self.assertIsNotNone(continuation_run)
+        if continuation_run is None:
+            return
+        self.assertEqual(
+            continuation_run.payload["series_context"]["series_id"],
+            series_id,
+        )
         continuation_result = self.finalize(continuation, "短视频")
         self.assertEqual(continuation_result["series"]["current_episode"], 2)
         self.assertEqual(continuation_result["series"]["next_episode"], 3)
@@ -1687,6 +1859,42 @@ process.stdout.write(JSON.stringify(payload));
             [row["episode_index"] for row in continuation_result["series"]["outline"]],
             [1, 2, 3],
         )
+        second_content_ref = str(
+            continuation_result["candidates"][0]["continuation_ref"]
+        )
+        wrong_predecessor = self.scoped_prepare(
+            self.request(
+                series_mode="SERIES",
+                episode_index=3,
+                previous_content_ref=previous_content_ref,
+                series_outline=requested_outline,
+                message="错误地跳过第二集。",
+            ),
+            browser_session_id=browser_session_id,
+        )
+        self.assertEqual(
+            wrong_predecessor["result_class"],
+            "CONTINUATION_CONTEXT_ERROR",
+        )
+        third = self.prepare(
+            "短视频",
+            browser_session_id=browser_session_id,
+            series_mode="SERIES",
+            episode_index=3,
+            previous_content_ref=second_content_ref,
+            series_outline=requested_outline,
+            content_direction="真实组织与幕后",
+            message="继续第三集，收束协作结果和下一步。",
+        )
+        third_run = self.repository.model_run(str(third["run_id"]))
+        self.assertIsNotNone(third_run)
+        if third_run is None:
+            return
+        self.assertEqual(third_run.payload["series_context"]["series_id"], series_id)
+        third_result = self.finalize(third, "短视频")
+        self.assertEqual(third_result["series"]["current_episode"], 3)
+        self.assertIsNone(third_result["series"]["next_episode"])
+        self.assertEqual(third_result["series"]["outline"], requested_outline)
 
     def test_series_generation_waits_for_delayed_outline_before_first_request(
         self,
@@ -1753,6 +1961,147 @@ setImmediate(async () => {
             json.loads(process.stdout),
             {"outlineRequestCount": 1, "generationRequestCount": 1},
         )
+
+    def test_new_series_clears_single_task_and_isolates_episode_histories(
+        self,
+    ) -> None:
+        node_script = r"""
+const assert = require("node:assert/strict");
+const {
+  buildPortalTaskPayload,
+  clearTaskOutputState,
+  resetEpisodeOutputState,
+  restoreEpisodeOutput,
+  snapshotEpisodeOutput
+} = require("./portal.js");
+
+const state = {
+  currentAccount: {id: "ACCOUNT-KEEP"},
+  platform: "视频号",
+  contentFormat: "图文",
+  idea: "这是新系列真正要保留的输入",
+  maxStep: 3,
+  creationEpoch: 4,
+  episodeIndex: 1,
+  seriesOutline: [{index: 1, title: "旧提纲"}],
+  seriesNote: "旧提示",
+  candidates: [{continuation_ref: "OLD-SINGLE-REF"}],
+  legacyAnswer: "旧单篇",
+  selectedOrdinal: 2,
+  selectionConfirmed: true,
+  confirmedOrdinal: 2,
+  versions: [{episodeIndex: 1}, {episodeIndex: 1}],
+  versionIndex: 1,
+  revisionMessages: [{kind: "user", text: "旧局部修改"}],
+  episodeWorkspaces: {1: {candidates: [{continuation_ref: "OLD-REF"}]}},
+  latestEpisodeIndex: 1,
+  resolvedClassification: {content_product: "旧分类"},
+  currentStage: "result",
+  legalNextActions: ["旧动作"]
+};
+clearTaskOutputState(state);
+assert.equal(state.currentAccount.id, "ACCOUNT-KEEP");
+assert.equal(state.platform, "视频号");
+assert.equal(state.contentFormat, "图文");
+assert.equal(state.idea, "这是新系列真正要保留的输入");
+assert.deepEqual(state.candidates, []);
+assert.deepEqual(state.versions, []);
+assert.deepEqual(state.revisionMessages, []);
+assert.deepEqual(state.episodeWorkspaces, {});
+assert.deepEqual(state.seriesOutline, []);
+assert.equal(state.versionIndex, -1);
+assert.equal(state.creationEpoch, 5);
+assert.equal(state.maxStep, 2);
+
+state.seriesMode = "SERIES";
+state.versions = [{name: "第1集初稿"}, {name: "第1集修改版"}];
+state.versionIndex = 1;
+state.revisionMessages = [{kind: "user", text: "只属于第1集"}];
+state.candidates = [{continuation_ref: "EPISODE-1-REF"}];
+const episode1 = snapshotEpisodeOutput(state);
+resetEpisodeOutputState(state, 2);
+state.versions = [{name: "第2集初稿"}];
+state.versionIndex = 0;
+state.revisionMessages = [{kind: "assistant", text: "只属于第2集"}];
+state.candidates = [{continuation_ref: "EPISODE-2-REF"}];
+const episode2 = snapshotEpisodeOutput(state);
+resetEpisodeOutputState(state, 3);
+state.versions = [{name: "第3集初稿"}];
+state.versionIndex = 0;
+assert.equal(state.versions.length, 1);
+restoreEpisodeOutput(state, episode1);
+assert.equal(state.versions.length, 2);
+assert.equal(state.revisionMessages[0].text, "只属于第1集");
+restoreEpisodeOutput(state, episode2);
+assert.equal(state.versions.length, 1);
+assert.equal(state.revisionMessages[0].text, "只属于第2集");
+
+const payload = buildPortalTaskPayload({
+  accountDisplayName: "笛语童装",
+  operation: "继续一个系列",
+  message: "继续第二集",
+  continuePrevious: true,
+  previousContentRef: "EPISODE-1-REF",
+  seriesMode: "SERIES",
+  episodeIndex: 2,
+  seriesOutline: [
+    {index: 1, title: "第一集", description: "先讲现场"},
+    {index: 2, title: "第二集", description: "再讲判断"},
+    {index: 3, title: "第三集", description: "最后收束"}
+  ]
+});
+assert.equal(payload.previous_content_ref, "EPISODE-1-REF");
+assert.deepEqual(payload.series_outline.map((row) => row.episode_index), [1, 2, 3]);
+console.log(JSON.stringify({cleared: true, episodeVersions: [2, 1, 1]}));
+"""
+        process = subprocess.run(
+            ["node", "-e", node_script],
+            cwd=PACKAGE_ROOT,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(process.returncode, 0, process.stderr)
+        self.assertEqual(
+            json.loads(process.stdout),
+            {"cleared": True, "episodeVersions": [2, 1, 1]},
+        )
+        portal_js = (PACKAGE_ROOT / "portal.js").read_text(encoding="utf-8")
+        self.assertNotIn("window.location.reload()", portal_js)
+        self.assertNotIn("sessionStorage", portal_js)
+        self.assertNotIn("localStorage", portal_js)
+        self.assertIn("已安全退出，请重新登录。", portal_js)
+        self.assertIn("登录已失效，请重新登录。", portal_js)
+
+    def test_portal_continuation_projects_the_explicit_server_reference(
+        self,
+    ) -> None:
+        outline = [
+            {"episode_index": 1, "title": "第一集", "summary": "起因"},
+            {"episode_index": 2, "title": "第二集", "summary": "过程"},
+            {"episode_index": 3, "title": "第三集", "summary": "结果"},
+        ]
+        request = PortalTaskRequest.model_validate(
+            {
+                "account_display_name": "笛语童装",
+                "operation": "继续一个系列",
+                "topic_label": "用户问题与理性选择",
+                "message": "继续第二集。",
+                "continue_previous": True,
+                "previous_content_ref": "SERVER-RETURNED-CANDIDATE-REF",
+                "series_mode": "SERIES",
+                "episode_index": 2,
+                "series_outline": outline,
+            }
+        )
+        app = create_app(self.runtime, self.repository, FakeDifyChatClient())
+        with app.test_request_context("/v1/portal/chat"):
+            projected = _portal_inputs(request)
+        self.assertEqual(
+            projected["previous_content_ref"],
+            "SERVER-RETURNED-CANDIDATE-REF",
+        )
+        self.assertEqual(projected["series_outline"], outline)
 
     def test_server_records_reference_scope_without_author_self_reporting(self) -> None:
         prepared = self.prepare()
@@ -2921,7 +3270,19 @@ setImmediate(async () => {
             headers={"X-Diyu-Portal": "same-origin-v1"},
         )
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.get_json()["user_visible_text"],
+            "已安全退出，请重新登录。",
+        )
+        self.assertIn("Max-Age=0", response.headers.get("Set-Cookie", ""))
         self.assertEqual(self.repository.active_browser_sessions(self.principal_id), ())
+        expired = client.get("/v1/portal/options")
+        self.assertEqual(expired.status_code, 401)
+        self.assertEqual(expired.get_json()["error_type"], "SESSION_EXPIRED")
+        self.assertEqual(
+            expired.get_json()["user_visible_text"],
+            "登录已失效，请重新登录。",
+        )
 
     def test_numeric_range_normalization_is_narrow(self) -> None:
         corpus = "尺码范围为100厘米至150厘米。"
