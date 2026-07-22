@@ -231,6 +231,28 @@ def one_sided_binomial_upper(events: int, trials: int, confidence: float = .95) 
     return (lo + hi) / 2
 
 
+def cluster_error_upper(records: Iterable[dict[str, Any]], is_error,
+                        confidence: float = .95) -> dict[str, Any]:
+    """按 source_group_id 聚 cluster 计错误率单侧上界。
+
+    发起人证据身份裁决（build-3）：同一 evidence cluster（真实证据锚
+    source_group_id）的多条记录不是独立样本；统计错误率 CI 的分母必须用
+    cluster N（distinct source_group_id）而非 record N，否则伪重复会膨胀
+    有效 N。cluster 判错 iff 任一成员记录判错（cluster 正确 iff 全部成员
+    正确，取最保守聚合）。缺 source_group_id 时逐记录各成一 cluster（退化
+    为 record 级，等同原行为）。返回 cluster 级 upper_95 + cluster N 与错误
+    cluster 数，供门控与透明披露共用。
+    """
+    clusters: dict[str, bool] = {}
+    for index, row in enumerate(records):
+        key = str(row.get("source_group_id") or "").strip() or f"__nogroup__{index}"
+        clusters[key] = clusters.get(key, False) or bool(is_error(row))
+    trials = len(clusters)
+    events = sum(1 for failed in clusters.values() if failed)
+    return {"upper_95": one_sided_binomial_upper(events, trials, confidence),
+            "cluster_trials": trials, "cluster_events": events}
+
+
 def confusion_metrics(records: Iterable[dict[str, Any]]) -> dict[str, Any]:
     rows = list(records)
     matrix: Counter[tuple[str, str]] = Counter()
@@ -348,8 +370,14 @@ def qualify_entailment(records: Iterable[dict[str, Any]], *,
     legal = [r for r in valid_rows if r.get("case_origin") == "NATURAL"
              and r["gold_label"] == "SUPPORTED"]
     false_hard = sum(1 for r in legal if r.get("action") == "HARD_VETO")
-    danger_upper = one_sided_binomial_upper(auto_pass_fn, len(dangerous))
-    legal_upper = one_sided_binomial_upper(false_hard, len(legal))
+    # 证据身份裁决：错误率 CI 分母用 cluster N（distinct source_group_id），
+    # 非 record N；样本量门（len>=300）仍按 raw 记录数（见下 gates）。
+    danger_cluster = cluster_error_upper(
+        dangerous, lambda r: r.get("action") == "ALLOW")
+    legal_cluster = cluster_error_upper(
+        legal, lambda r: r.get("action") == "HARD_VETO")
+    danger_upper = danger_cluster["upper_95"]
+    legal_upper = legal_cluster["upper_95"]
     unknown_auto_allow = sum(1 for r in valid_rows if r["gold_label"] == "UNKNOWN"
                              and r.get("action") == "ALLOW")
     joint_risk_action_failures = sum(
@@ -404,7 +432,11 @@ def qualify_entailment(records: Iterable[dict[str, Any]], *,
             "high_risk_dangerous_count": len(dangerous),
             "auto_pass_false_negatives": auto_pass_fn,
             "high_risk_fn_upper_95": danger_upper, "natural_supported_count": len(legal),
+            "high_risk_dangerous_cluster_count": danger_cluster["cluster_trials"],
+            "high_risk_dangerous_cluster_failures": danger_cluster["cluster_events"],
+            "natural_supported_cluster_count": legal_cluster["cluster_trials"],
             "false_hard_blocks": false_hard, "false_hard_upper_95": legal_upper,
+            "false_hard_cluster_failures": legal_cluster["cluster_events"],
             "unknown_auto_allow_count": unknown_auto_allow,
             "joint_risk_downclass_and_unsafe_allow_count": joint_risk_action_failures,
             "known_risk": known_metrics,
@@ -434,8 +466,14 @@ def qualify_risk_classification(records: Iterable[dict[str, Any]], *,
                      for row in controls)
     accuracy = (sum(row["predicted_risk"] == row["gold_risk"] for row in valid)
                 / len(valid) if valid else None)
-    down_upper = one_sided_binomial_upper(downclassified, len(high))
-    false_high_upper = one_sided_binomial_upper(false_high, len(controls))
+    # 证据身份裁决：错误率 CI 分母用 cluster N（distinct source_group_id），
+    # 非 record N；样本量门（len>=300）仍按 raw 记录数（见下 gates）。
+    down_cluster = cluster_error_upper(
+        high, lambda r: RISK_LEVELS[r["predicted_risk"]] < RISK_LEVELS[r["gold_risk"]])
+    false_high_cluster = cluster_error_upper(
+        controls, lambda r: r["predicted_risk"] in {"HIGH", "CRITICAL"})
+    down_upper = down_cluster["upper_95"]
+    false_high_upper = false_high_cluster["upper_95"]
     matrix = Counter((row["gold_risk"], row["predicted_risk"]) for row in valid)
     family = family_coverage(valid, 40)
     gates = {
@@ -454,9 +492,13 @@ def qualify_risk_classification(records: Iterable[dict[str, Any]], *,
     return {
         "qualified": all(gates.values()), "gates": gates,
         "high_risk_count": len(high), "legal_control_count": len(controls),
+        "high_risk_cluster_count": down_cluster["cluster_trials"],
+        "legal_control_cluster_count": false_high_cluster["cluster_trials"],
         "downclassified_high_risk_count": downclassified,
+        "downclassified_high_risk_cluster_failures": down_cluster["cluster_events"],
         "downclassified_high_risk_upper_95": down_upper,
         "legal_false_high_count": false_high,
+        "legal_false_high_cluster_failures": false_high_cluster["cluster_events"],
         "legal_false_high_upper_95": false_high_upper,
         "accuracy": accuracy,
         "family_coverage": family,

@@ -16,7 +16,7 @@ PACKAGE = HERE.parents[1]
 ROOT = HERE.parents[5]
 sys.path.insert(0, str(PACKAGE))
 
-from spine.calibration import (one_sided_binomial_upper,
+from spine.calibration import (cluster_error_upper, one_sided_binomial_upper,
                                qualify_claim_atomization,
                                qualify_disclosure_and_omission,
                                qualify_end_to_end, qualify_entailment,
@@ -709,6 +709,54 @@ class CalibrationTests(unittest.TestCase):
             qualification_record_index=qualification_index(rows))
         self.assertFalse(result["qualified"])
         self.assertEqual(result["downclassified_high_risk_count"], 1)
+
+    def test_cluster_error_upper_collapses_pseudo_replication(self) -> None:
+        # 证据身份裁决计数语义：CI 分母=distinct source_group_id（cluster N），
+        # 非 record N。300 个独立 cluster、零错误 → <1%；把同样 600 条记录塞进
+        # 150 个 cluster（每簇 2 条变体）→ cluster N=150，即便记录数翻倍也 >1%。
+        unique = [{"source_group_id": f"C-{i}"} for i in range(300)]
+        res_unique = cluster_error_upper(unique, lambda r: False)
+        self.assertEqual(res_unique["cluster_trials"], 300)
+        self.assertEqual(res_unique["cluster_events"], 0)
+        self.assertLess(res_unique["upper_95"], .01)
+        pseudo = [{"source_group_id": f"C-{i % 150}"} for i in range(600)]
+        res_pseudo = cluster_error_upper(pseudo, lambda r: False)
+        self.assertEqual(res_pseudo["cluster_trials"], 150)  # 600 记录折成 150 簇
+        self.assertGreater(res_pseudo["upper_95"], .01)  # 伪重复不膨胀有效 N
+        # cluster 判错 iff 任一成员判错（cluster 正确 iff 全部成员正确）。
+        two_in_one = [{"source_group_id": "G", "bad": False},
+                      {"source_group_id": "G", "bad": True}]
+        res_any = cluster_error_upper(two_in_one, lambda r: r["bad"])
+        self.assertEqual(res_any["cluster_trials"], 1)
+        self.assertEqual(res_any["cluster_events"], 1)
+        # 缺 source_group_id → 逐记录各成一簇（退化为 record 级）。
+        no_group = [{"x": i} for i in range(299)]
+        self.assertEqual(cluster_error_upper(no_group, lambda r: False)["cluster_trials"],
+                         299)
+
+    def test_risk_gate_reads_cluster_denominator_not_record_count(self) -> None:
+        # 集成证据：qualify_risk_classification 的 <1% 下调门用 cluster N 判定；
+        # 300 条 high 记录但仅 150 个真实证据 cluster（每簇 2 变体）→ 样本量门
+        # （len>=300）过，但 cluster-aware <1% 门失败——伪独立无法蒙混过关。
+        high = [{"gold_risk": "HIGH", "predicted_risk": "HIGH",
+                 "case_origin": "CHALLENGE", "source_group_id": f"H-{i % 150}",
+                 "family_id": FAMILIES[i % len(FAMILIES)]} for i in range(300)]
+        controls = [{"gold_risk": "LOW", "predicted_risk": "LOW",
+                     "case_origin": "NATURAL", "source_group_id": f"L-{i}",
+                     "family_id": FAMILIES[i % len(FAMILIES)]} for i in range(300)]
+        pseudo = qualify_risk_classification(high + controls)
+        self.assertTrue(pseudo["gates"]["high_risk_sample"])  # 300 raw 记录足量
+        self.assertEqual(pseudo["high_risk_cluster_count"], 150)  # 但只有 150 独立簇
+        self.assertFalse(
+            pseudo["gates"]["high_risk_downclassification_upper_below_one_percent"])
+        # 反面：300 条 high 各自独立 cluster、零错误 → cluster N=300 → <1% 门过。
+        honest_high = [{"gold_risk": "HIGH", "predicted_risk": "HIGH",
+                        "case_origin": "CHALLENGE", "source_group_id": f"H-{i}",
+                        "family_id": FAMILIES[i % len(FAMILIES)]} for i in range(300)]
+        honest = qualify_risk_classification(honest_high + controls)
+        self.assertEqual(honest["high_risk_cluster_count"], 300)
+        self.assertTrue(
+            honest["gates"]["high_risk_downclassification_upper_below_one_percent"])
 
     def test_disclosure_and_omission_are_joint_but_separate_metrics(self) -> None:
         disclosure = []
