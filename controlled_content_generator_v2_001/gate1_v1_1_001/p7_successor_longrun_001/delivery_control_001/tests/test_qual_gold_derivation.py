@@ -48,17 +48,24 @@ ATTRS = {"polarity": "AFFIRMATIVE", "modality": "ASSERTED",
          "time_scope": "PRESENT", "preconditions": None}
 
 
-def _sp(adjudicated=False):
-    def f(cid):
-        sp = [{"tag": "A", "reviewer_identity": "SEAT_A::codex-gpt", "reviewer_kind": "AI",
-               "model_revision": "gpt-5.6-sol", "prompt_digest": digest_json({"p": "A"})},
-              {"tag": "B", "reviewer_identity": "SEAT_B::opus-4-8", "reviewer_kind": "AI",
-               "model_revision": "claude-opus-4-8", "prompt_digest": digest_json({"p": "B"})}]
-        if adjudicated and cid.split("::")[0].endswith("ADJ"):
-            sp.append({"tag": "ADJ", "reviewer_identity": "ADJ::opus-iso", "reviewer_kind": "AI",
-                       "model_revision": "claude-opus-4-8", "prompt_digest": digest_json({"p": "ADJ"})})
-        return sp
-    return f
+BASE_SP = [{"tag": "A", "reviewer_identity": "SEAT_A::codex-gpt", "reviewer_kind": "AI",
+            "model_revision": "gpt-5.6-sol", "prompt_digest": digest_json({"p": "A"})},
+           {"tag": "B", "reviewer_identity": "SEAT_B::opus-4-8", "reviewer_kind": "AI",
+            "model_revision": "claude-opus-4-8", "prompt_digest": digest_json({"p": "B"})}]
+ADJ_SP = {"tag": "ADJ", "reviewer_identity": "ADJ::opus-iso", "reviewer_kind": "AI",
+          "model_revision": "claude-opus-4-8", "prompt_digest": digest_json({"p": "ADJ"})}
+
+
+def _resolutions(labels, adj_fields_map=None):
+    """{cid: rich_label} → {cid: {label, adjudicated_fields}}（默认全 CROSS_MODEL_AGREED）。"""
+    afm = adj_fields_map or {}
+    return {cid: {"label": lab, "adjudicated_fields": frozenset(afm.get(cid, ()))}
+            for cid, lab in labels.items()}
+
+
+def _sp():
+    """review/formulaic 单元席位溯源（恒 A/B 两席；不做字段级仲裁）。"""
+    return lambda cid: [dict(s) for s in BASE_SP]
 
 
 def _rich(risk="HIGH", ent="CONTRADICTED", ref_present=True, atom_present=True,
@@ -117,10 +124,10 @@ class TestRichLabelValidation(unittest.TestCase):
 
 
 class TestPerClaimDerivation(unittest.TestCase):
-    def _derive(self, faces, labels, adjudicated=False):
+    def _derive(self, faces, labels, adj_fields_map=None):
         return GD.derive_perclaim_records(
-            faces, labels, dataset_manifest_digest=DMD,
-            seat_provenance_for=_sp(adjudicated))
+            faces, _resolutions(labels, adj_fields_map), dataset_manifest_digest=DMD,
+            base_seat_provenance=BASE_SP, adj_seat_provenance=ADJ_SP)
 
     def test_derived_records_pass_real_validator(self):
         faces = [_face("C0", "sg0"), _face("C1", "sg1", kind="NATURAL")]
@@ -185,6 +192,95 @@ class TestPerClaimDerivation(unittest.TestCase):
             recs, set_id="A", active_generation_id="QUAL_A_GEN_T",
             dataset_manifest_digest=DMD, faces_sha256="f" * 64, gold_sha256="0" * 64)
         self.assertEqual(pc["counts"]["risk_classification_high_risk_cases"], 4)
+
+
+class TestFieldLevelAgreement(unittest.TestCase):
+    """§四.1：逐模块/逐字段一致。结构顺序差异不触发仲裁；某字段分歧只污染消费该字段的模块。"""
+
+    ADJ_ID = "ADJ::opus-iso"
+
+    def _mod(self, recs, cid, mod):
+        return next(r for r in recs if r["case_id"] == f"{cid}::{mod}")
+
+    def _identities(self, rec):
+        return {rv["reviewer_identity"] for rv in rec["gold_review_provenance"]}
+
+    def _derive_face(self, label, adjf):
+        return GD.derive_records_for_face(
+            _face("C", "sgC"), label, dataset_manifest_digest=DMD,
+            base_seat_provenance=BASE_SP, adj_seat_provenance=ADJ_SP,
+            adjudicated_fields=adjf)
+
+    def test_full_agreement_no_adjudication(self):
+        a, b = _rich(risk="HIGH"), _rich(risk="HIGH")
+        resolved, adjf = GD.resolve_label_fields(a, b, None, where="C")
+        self.assertEqual(adjf, frozenset())
+
+    def test_structural_reorder_not_a_dispute(self):
+        # same partition/attrs but reordered groups + within-group + object keys -> NOT a dispute
+        a = _rich()
+        a["atom_partition"] = [["a1", "a2"], ["a3"]]
+        a["reference_attributes"] = {"polarity": "AFFIRMATIVE", "modality": "ASSERTED",
+                                     "time_scope": "PRESENT", "preconditions": None}
+        b = _rich()
+        b["atom_partition"] = [["a3"], ["a2", "a1"]]
+        b["reference_attributes"] = {"time_scope": "PRESENT", "preconditions": None,
+                                     "modality": "ASSERTED", "polarity": "AFFIRMATIVE"}
+        self.assertEqual(GD.field_disputes(a, b), [])
+        resolved, adjf = GD.resolve_label_fields(a, b, None, where="C")  # no adjudication needed
+        self.assertEqual(adjf, frozenset())
+
+    def test_atom_partition_dispute_isolated_to_atomization(self):
+        a = _rich(risk="HIGH", ent="CONTRADICTED")
+        a["atom_partition"] = [["a1", "a2"]]
+        b = _rich(risk="HIGH", ent="CONTRADICTED")
+        b["atom_partition"] = [["a1"], ["a2"]]  # genuinely different grouping
+        adj = _rich(risk="HIGH", ent="CONTRADICTED")
+        adj["atom_partition"] = [["a1"], ["a2"]]
+        resolved, adjf = GD.resolve_label_fields(a, b, adj, where="C")
+        self.assertEqual(adjf, frozenset({"atom_partition"}))
+        recs = self._derive_face(resolved, adjf)
+        atom = self._mod(recs, "C", "claim_atomization")
+        self.assertEqual(atom["agreement_status"], "FIELD_ADJUDICATED")
+        self.assertIn(self.ADJ_ID, self._identities(atom))
+        self.assertEqual(len(atom["gold_review_provenance"]), 3)
+        # risk & entailment agreed -> stay CROSS_MODEL_AGREED (rule 5)
+        for m in ("risk_classification", "entailment"):
+            r = self._mod(recs, "C", m)
+            self.assertEqual(r["agreement_status"], "CROSS_MODEL_AGREED", m)
+            self.assertNotIn(self.ADJ_ID, self._identities(r))
+            self.assertEqual(len(r["gold_review_provenance"]), 2)
+
+    def test_risk_dispute_taints_only_risk_consuming_modules(self):
+        a = _rich(risk="HIGH", ent="CONTRADICTED", obl="SYNTHETIC_IDENTITY_DISCLOSURE", violation=True)
+        b = _rich(risk="CRITICAL", ent="CONTRADICTED", obl="SYNTHETIC_IDENTITY_DISCLOSURE", violation=True)
+        adj = _rich(risk="HIGH", ent="CONTRADICTED", obl="SYNTHETIC_IDENTITY_DISCLOSURE", violation=True)
+        resolved, adjf = GD.resolve_label_fields(a, b, adj, where="C")
+        self.assertEqual(adjf, frozenset({"risk"}))
+        recs = self._derive_face(resolved, adjf)
+        by_mod = {r["case_id"].split("::")[1]: r for r in recs}
+        for m in ("reference_extraction", "claim_atomization", "risk_classification",
+                  "entailment", "fact_chain", "omission"):
+            self.assertEqual(by_mod[m]["agreement_status"], "FIELD_ADJUDICATED", m)
+            self.assertIn("risk", by_mod[m]["adjudicated_fields"], m)
+            self.assertIn(self.ADJ_ID, self._identities(by_mod[m]), m)
+        # disclosure does NOT consume risk -> agreed
+        self.assertEqual(by_mod["disclosure"]["agreement_status"], "CROSS_MODEL_AGREED")
+        self.assertNotIn(self.ADJ_ID, self._identities(by_mod["disclosure"]))
+
+    def test_unresolved_field_raises(self):
+        a, b = _rich(risk="HIGH"), _rich(risk="LOW")
+        with self.assertRaises(GD.DerivationError):
+            GD.resolve_label_fields(a, b, None, where="C")  # risk disputed, no adj
+        with self.assertRaises(GD.DerivationError):
+            GD.resolve_label_fields(a, b, {"entailment": "SUPPORTED"}, where="C")  # adj lacks risk
+
+    def test_field_to_modules_mapping_consistent(self):
+        # every rich-label field maps to >=1 consuming module; risk is multi-module
+        for f in GD.RICH_LABEL_FIELDS:
+            self.assertTrue(GD.FIELD_TO_MODULES[f], f)
+        self.assertGreaterEqual(len(GD.FIELD_TO_MODULES["risk"]), 5)
+        self.assertEqual(GD.FIELD_TO_MODULES["entailment"], ("entailment",))
 
 
 class TestReviewDerivation(unittest.TestCase):
@@ -277,8 +373,9 @@ class TestFullModuleCoverageAndReadiness(unittest.TestCase):
             labels[f"V{i}"] = _rich(risk="HIGH", ent="CONTRADICTED",
                                     obl="EXPLICIT_AUTHORIZATION_BOUNDARY", violation=True,
                                     mislead=True)
-        recs = GD.derive_perclaim_records(faces, labels, dataset_manifest_digest=DMD,
-                                          seat_provenance_for=_sp())["records"]
+        recs = GD.derive_perclaim_records(
+            faces, _resolutions(labels), dataset_manifest_digest=DMD,
+            base_seat_provenance=BASE_SP, adj_seat_provenance=ADJ_SP)["records"]
         review = GD.derive_review_records(
             [{"item_id": "I0", "family_id": FAMS[0], "source_group_id": "rev-I0",
               "author_identity": "AX",
@@ -398,6 +495,16 @@ class TestGoldfreezeIntegration(unittest.TestCase):
             self.assertIsNotNone(res["manifest"])
             self.assertEqual(res["manifest"]["generation_id"], receipt["generation_id"])
             self.assertEqual(res["manifest"]["record_count"], len(recs))
+
+    def test_goldfreeze_blocks_when_dispute_unadjudicated(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as td:
+            tmp = Path(td)
+            qr, sdir, qopen = self._setup_sealed(tmp)
+            # remove the adjudication → the risk dispute on the variant is now unresolved
+            (sdir / "adjudication" / "adj_000.labels.json").unlink()
+            with self.assertRaises(SystemExit):
+                qr.cmd_goldfreeze("A")
 
 
 if __name__ == "__main__":

@@ -84,6 +84,76 @@ def validate_rich_label(label: dict[str, Any], *, where: str) -> None:
         raise DerivationError(f"{where}: bad disclosure_obligation {obl!r}")
 
 
+# ------------------------------------------------------------- §四.1 逐字段/逐模块一致
+# 模块 → 该模块记录实际消费的富标签字段（gold_fields 真取自这些字段；多模块含 gold_risk=risk）。
+# 用途：(a) 逐模块 ADJ provenance——仅当模块消费的某字段被仲裁时该模块记录才挂 ADJ 席；
+#       (b) 保证 atom_partition 分歧不污染 risk/entailment（§四.1 规则5）。
+# 真源=derive_records_for_face 每模块的 gold_fields 实际取用字段，逐字对齐。
+MODULE_CONSUMED_FIELDS: dict[str, frozenset[str]] = {
+    "reference_extraction": frozenset({"reference_present", "reference_attributes", "risk"}),
+    "claim_atomization": frozenset({"atom_present", "atom_partition", "risk"}),
+    "risk_classification": frozenset({"risk"}),
+    "entailment": frozenset({"entailment", "risk"}),
+    "fact_chain": frozenset({"safe_to_clear", "risk"}),
+    "omission": frozenset({"misleading", "risk"}),
+    "disclosure": frozenset({"disclosure_obligation", "disclosure_violation"}),
+}
+
+# 字段 → 消费该字段的模块（§四.1 字段→模块映射的机读逆表；含 risk 被多模块消费的真相）。
+FIELD_TO_MODULES: dict[str, tuple[str, ...]] = {
+    f: tuple(sorted(m for m, fs in MODULE_CONSUMED_FIELDS.items() if f in fs))
+    for f in RICH_LABEL_FIELDS}
+
+
+def _norm_field(field: str, value: Any) -> Any:
+    """结构字段确定性规范化（§四.1 规则1）：把「无语义顺序」的结构排成规范形，
+    真正影响原子分组的差异保留（不同分组规范化后仍互异）。标量/布尔原样返回。"""
+    if field == "atom_partition":
+        # 原子分组=集合的集合：组内排序 + 组间排序 → 规范形；分组不同者规范化后仍不同。
+        if isinstance(value, list):
+            return sorted([sorted(g) if isinstance(g, list) else g for g in value])
+        return value
+    if field == "reference_attributes":
+        # 对象 key 顺序无语义 → 按 key 排序（值不变）。
+        if isinstance(value, dict):
+            return {k: value[k] for k in sorted(value)}
+        return value
+    return value
+
+
+def _field_equal(field: str, va: Any, vb: Any) -> bool:
+    """规范化后逐字段相等：结构顺序不同但语义相同 → 相等（不触发仲裁，§四.1 规则1）。"""
+    return digest_json(_norm_field(field, va)) == digest_json(_norm_field(field, vb))
+
+
+def field_disputes(label_a: dict[str, Any], label_b: dict[str, Any]) -> list[str]:
+    """双席两富标签规范化后仍不一致的字段列表（用于 labelfreeze/adjudicate 逐字段统计）。"""
+    return [f for f in RICH_LABEL_FIELDS if not _field_equal(f, label_a.get(f), label_b.get(f))]
+
+
+def resolve_label_fields(label_a: dict[str, Any], label_b: dict[str, Any],
+                         adj_label: dict[str, Any] | None, *, where: str
+                         ) -> tuple[dict[str, Any], frozenset[str]]:
+    """逐字段解析双席富标签（§四.1 规则2/3）：
+      - 规范化后一致 → 采一致值（CROSS_MODEL_AGREED）；一致字段绝不因其它字段分歧被改写；
+      - 不一致 → 只采**该字段**的仲裁值（FIELD_ADJUDICATED）；缺该字段仲裁 → DerivationError（未决）。
+    返回 (resolved_label, adjudicated_fields)。仅分歧字段进仲裁、仅采分歧字段的仲裁结果。"""
+    validate_rich_label(label_a, where=f"{where}[A]")
+    validate_rich_label(label_b, where=f"{where}[B]")
+    resolved: dict[str, Any] = {}
+    adjudicated: set[str] = set()
+    for f in RICH_LABEL_FIELDS:
+        if _field_equal(f, label_a[f], label_b[f]):
+            resolved[f] = label_a[f]
+        else:
+            if not isinstance(adj_label, dict) or f not in adj_label:
+                raise DerivationError(f"{where}: field {f!r} disputed but no adjudication")
+            resolved[f] = adj_label[f]
+            adjudicated.add(f)
+    validate_rich_label(resolved, where=f"{where}[resolved]")
+    return resolved, frozenset(adjudicated)
+
+
 def _seat_reviews(record_case_id: str, source_group_id: str,
                   seat_provenance: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """由 face 的席位溯源为**本条记录**派生 >=2 条互异身份 review_meta（review_id 逐记录唯一）。
@@ -126,7 +196,9 @@ def _assemble(case_id: str, source_group_id: str, module: str, record_role: str,
 
 def derive_records_for_face(face: dict[str, Any], label: dict[str, Any], *,
                             dataset_manifest_digest: str,
-                            seat_provenance: list[dict[str, Any]]
+                            base_seat_provenance: list[dict[str, Any]],
+                            adj_seat_provenance: dict[str, Any] | None = None,
+                            adjudicated_fields: Any = frozenset()
                             ) -> list[dict[str, Any]]:
     """单个富标签 face → 逐模块验证器合规记录（七模块；disclosure 视 obligation 条件产出）。
 
@@ -134,6 +206,11 @@ def derive_records_for_face(face: dict[str, Any], label: dict[str, Any], *,
     label 为该 face 的**已解析**富标签（validate_rich_label 已过）。
     每模块记录 case_id = f"{face_case_id}::MOD"，source_group_id = face 的 claim 级 source_group
     （同源变体继承 base；不增有效 N）。
+
+    §四.1 逐模块 ADJ provenance：base_seat_provenance=[A,B] 恒挂；adj_seat_provenance=ADJ 席，
+    仅当**本模块消费的字段**落在 adjudicated_fields（该 face 被仲裁的富标签字段）时才追加。
+    每模块记录带 payload.agreement_status(CROSS_MODEL_AGREED|FIELD_ADJUDICATED)，
+    FIELD_ADJUDICATED 者带 adjudicated_fields（本模块实际消费的被裁字段）。
     """
     cid = str(face["case_id"])
     sg = str(face["source_group_id"])
@@ -142,10 +219,18 @@ def derive_records_for_face(face: dict[str, Any], label: dict[str, Any], *,
     validate_rich_label(label, where=cid)
     risk = label["risk"]
     attrs = {k: label["reference_attributes"][k] for k in _ATTR_KEYS}
+    adjf = frozenset(adjudicated_fields)
 
     def mk(mod, role, gold, extra):
+        mod_adj = sorted(MODULE_CONSUMED_FIELDS.get(mod, frozenset()) & adjf)
+        used_adj = bool(mod_adj) and adj_seat_provenance is not None
+        sp = list(base_seat_provenance) + ([adj_seat_provenance] if used_adj else [])
+        agree: dict[str, Any] = {
+            "agreement_status": "FIELD_ADJUDICATED" if used_adj else "CROSS_MODEL_AGREED"}
+        if used_adj:
+            agree["adjudicated_fields"] = mod_adj
         return _assemble(f"{cid}::{mod}", sg, _MODULE_ALIAS.get(mod, mod), role,
-                         fam, origin, gold, extra, seat_provenance,
+                         fam, origin, gold, {**extra, **agree}, sp,
                          dataset_manifest_digest)
 
     records = [
@@ -185,30 +270,34 @@ PERCLAIM_MODULES = ("reference_extraction", "claim_atomization", "risk_classific
 
 
 def derive_perclaim_records(faces: list[dict[str, Any]],
-                            labels: dict[str, dict[str, Any]], *,
+                            resolutions: dict[str, dict[str, Any]], *,
                             dataset_manifest_digest: str,
-                            seat_provenance_for: Any) -> dict[str, Any]:
+                            base_seat_provenance: list[dict[str, Any]],
+                            adj_seat_provenance: dict[str, Any] | None) -> dict[str, Any]:
     """一批富标签 face → (records, cross_module_reuse)。
 
-    labels: {face_case_id: rich_label}（已解析：一致或裁决后）。
-    seat_provenance_for(face_case_id) -> list[seat_provenance]（该 face 的实际席位溯源；
-      裁决过的 face 追加 ADJ 席，>=2 条互异身份）。
+    resolutions: {face_case_id: {"label": 已解析富标签, "adjudicated_fields": iterable[str]}}
+      （逐字段解析产物：resolve_label_fields 的输出；一致字段 CROSS_MODEL_AGREED，分歧字段裁决）。
+    base_seat_provenance: [A,B] 恒挂两独立评审席。
+    adj_seat_provenance: ADJ 隔离仲裁席，仅被消费仲裁字段的模块记录追加（逐模块，非整 face）。
     cross_module_reuse: {source_group_id: sorted[modules]}——同一 source_group 服务哪些模块。
     """
     records: list[dict[str, Any]] = []
     reuse: dict[str, set[str]] = {}
     for face in faces:
         cid = str(face["case_id"])
-        if cid not in labels:
+        if cid not in resolutions:
             raise DerivationError(f"face {cid} has no resolved rich label")
-        sp = seat_provenance_for(cid)
+        r = resolutions[cid]
         recs = derive_records_for_face(
-            face, labels[cid], dataset_manifest_digest=dataset_manifest_digest,
-            seat_provenance=sp)
+            face, r["label"], dataset_manifest_digest=dataset_manifest_digest,
+            base_seat_provenance=base_seat_provenance,
+            adj_seat_provenance=adj_seat_provenance,
+            adjudicated_fields=frozenset(r.get("adjudicated_fields") or ()))
         records.extend(recs)
         sg = str(face["source_group_id"])
-        for r in recs:
-            reuse.setdefault(sg, set()).add(r["module"])
+        for rec in recs:
+            reuse.setdefault(sg, set()).add(rec["module"])
     return {"records": records,
             "cross_module_reuse": {sg: sorted(mods) for sg, mods in sorted(reuse.items())}}
 

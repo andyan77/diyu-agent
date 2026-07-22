@@ -165,9 +165,10 @@ def _adjudicate(faces: dict[str, dict], a: dict, b: dict) -> dict[str, dict]:
         return adj
     disputes = []
     for cid in sorted(set(a) & set(b)):
-        if QR._rich_key(a[cid]) != QR._rich_key(b[cid]):
+        df = GD.field_disputes(a[cid], b[cid])
+        if df:
             c = faces[cid]
-            disputes.append({"case_id": cid,
+            disputes.append({"case_id": cid, "disputed_fields": df,
                              **{k: c.get(k) for k in ("claim_text", "claim_boundary",
                                                       "authorization_scope", "slot_facts",
                                                       "source_summary_a", "source_summary_b")},
@@ -258,25 +259,27 @@ def run_pilot() -> int:
     a = _label_seat(faces, "A")
     b = _label_seat(faces, "B")
     face_by_id = {f["case_id"]: f for f in faces}
-    disputes_before = sum(1 for cid in set(a) & set(b) if QR._rich_key(a[cid]) != QR._rich_key(b[cid]))
+    disputes_before = sum(1 for cid in set(a) & set(b) if GD.field_disputes(a[cid], b[cid]))
     adj = _adjudicate(face_by_id, a, b)
     print(f"[pilot] labeled both seats: {len(set(a) & set(b))}; disputes: {disputes_before}; "
           f"adjudicated: {len(adj)}")
 
-    # resolve
-    resolved, adjudicated_ids, unresolved = {}, set(), []
+    # resolve —— §四.1 逐字段：结构规范化后一致采一致值，分歧字段只采该字段仲裁值。
+    resolutions, unresolved, adjudicated_faces = {}, [], 0
     for f in faces:
         cid = f["case_id"]
         ra, rb = a.get(cid), b.get(cid)
         if not ra or not rb:
             unresolved.append(cid)
-        elif QR._rich_key(ra) == QR._rich_key(rb):
-            resolved[cid] = ra
-        elif cid in adj:
-            resolved[cid] = adj[cid]
-            adjudicated_ids.add(cid)
-        else:
+            continue
+        try:
+            rlabel, adj_fields = GD.resolve_label_fields(ra, rb, adj.get(cid), where=cid)
+        except GD.DerivationError:
             unresolved.append(cid)
+            continue
+        resolutions[cid] = {"label": rlabel, "adjudicated_fields": adj_fields}
+        if adj_fields:
+            adjudicated_faces += 1
     if unresolved:
         raise SystemExit(f"pilot 未决 {len(unresolved)} 条")
 
@@ -286,19 +289,20 @@ def run_pilot() -> int:
                               "sha": L.sha_text(L.load_template(ANNEXC, "qual_rich_labeler"))})
     adj_pd = digest_json({"tmpl": "qual_rich_adjudicator",
                           "sha": L.sha_text(L.load_template(ANNEXC, "qual_rich_adjudicator"))})
+    base_sp = QR._base_seat_provenance(labeler_pd)
+    adj_sp = QR._adj_seat_provenance(adj_pd)
 
-    def sp_for(rec_cid):
-        fc = rec_cid.split("::")[0]
-        return QR._seat_provenance(fc, fc in adjudicated_ids, labeler_pd, adj_pd)
+    def sp_units(_rec_cid):
+        return QR._base_seat_provenance(labeler_pd)
 
-    der = GD.derive_perclaim_records(faces, resolved, dataset_manifest_digest=dmd,
-                                     seat_provenance_for=sp_for)
+    der = GD.derive_perclaim_records(faces, resolutions, dataset_manifest_digest=dmd,
+                                     base_seat_provenance=base_sp, adj_seat_provenance=adj_sp)
     records = list(der["records"])
     review_units, formulaic_units = _coverage_units()
     records += GD.derive_review_records(review_units, dataset_manifest_digest=dmd,
-                                        seat_provenance_for=sp_for)
+                                        seat_provenance_for=sp_units)
     formu = GD.derive_formulaic_records(formulaic_units, dataset_manifest_digest=dmd,
-                                        seat_provenance_for=sp_for, batch_id="PILOT")
+                                        seat_provenance_for=sp_units, batch_id="PILOT")
     for k in ("judgments", "adjudications", "candidate_audit"):
         records += formu[k]
     (PILOT_SEAL / "gold_records.json").write_text(

@@ -471,17 +471,28 @@ def cmd_labelfreeze(set_id: str) -> int:
     both = len(set(a) & set(b))
     if both < total:
         raise SystemExit(f"labelfreeze 拒绝：双席完成 {both}/{total}")
-    # §四.1 富标签双盲：任一九模块金标字段不一致即分歧（走裁决）。
-    disputes = sum(1 for cid in set(a) & set(b)
-                   if _rich_key(a[cid]) != _rich_key(b[cid]))
+    # §四.1 富标签双盲逐字段一致（结构字段先规范化，顺序差异不算分歧）：
+    #   per_field_dispute_counts[field] = 该字段跨席规范化后仍不一致的 face 数；
+    #   face_any_field_dispute_count = 至少一个字段分歧的 face 数（这些 face 才进裁决）。
+    per_field = {f: 0 for f in GD.RICH_LABEL_FIELDS}
+    face_any = 0
+    for cid in set(a) & set(b):
+        d = GD.field_disputes(a[cid], b[cid])
+        if d:
+            face_any += 1
+        for f in d:
+            per_field[f] += 1
     receipt = {
         "schema_version": "p7-m3-qual-doubleblind-receipt-v1",
         "set": f"QUAL_{set_id}", "at": now(),
         "faces_total": total, "labeled_both_seats": both,
         "seats": "A=Codex-GPT(gpt-5.6-sol) / B=Opus-4.8（跨模型双盲；载体裁决 seq41）",
         "label_schema": "rich_nine_module (qual_rich_labeler)",
-        "dispute_count": disputes,
-        "dispute_rate": round(disputes / max(1, both), 4),
+        "agreement_granularity": "PER_FIELD (结构字段规范化后比较；§四.1)",
+        "dispute_count": face_any,
+        "dispute_rate": round(face_any / max(1, both), 4),
+        "face_any_field_dispute_count": face_any,
+        "per_field_dispute_counts": per_field,
         "labels_A_sha256": digest_json(sorted(
             (k, _rich_key(v)) for k, v in a.items())),
         "labels_B_sha256": digest_json(sorted(
@@ -493,7 +504,8 @@ def cmd_labelfreeze(set_id: str) -> int:
                      encoding="utf-8")
     ev = append_event(f"{set_id}2_DOUBLE_BLIND_LABELED",
                       f"m3_data_supply_001/gold/qual/{rpath.name}")
-    print(json.dumps({"labeled": both, "disputes": disputes,
+    print(json.dumps({"labeled": both, "faces_with_dispute": face_any,
+                      "per_field_dispute_counts": per_field,
                       "event": ev["code"], "seq": ev["seq"]}, ensure_ascii=False))
     return 0
 
@@ -509,11 +521,14 @@ def cmd_adjudicate(set_id: str, max_batches: int) -> int:
     faces = {c["case_id"]: c for c in json.loads(
         (sdir / "faces_frozen.json").read_text(encoding="utf-8"))}
     a, b = _seal_collect(set_id, "labels_A"), _seal_collect(set_id, "labels_B")
+    # §四.1：仅把「规范化后仍分歧的字段」送裁；一致字段绝不进裁（不因它字段分歧被改写）。
     disputes = []
     for cid in sorted(set(a) & set(b)):
-        if _rich_key(a[cid]) != _rich_key(b[cid]):
+        df = GD.field_disputes(a[cid], b[cid])
+        if df:
             c = faces[cid]
             disputes.append({"case_id": cid,
+                             "disputed_fields": df,
                              **{k: c[k] for k in ("claim_text", "claim_boundary",
                                                   "authorization_scope", "slot_facts",
                                                   "source_summary_a", "source_summary_b")},
@@ -556,21 +571,28 @@ def cmd_adjudicate(set_id: str, max_batches: int) -> int:
     return 0
 
 
+def _base_seat_provenance(labeler_pd: str) -> list[dict]:
+    """两独立评审席 A=Codex-GPT / B=Opus-4.8（恒挂）。AI 席须 model_revision + prompt_digest
+    （labeler 模板 sha 摘要，绑定实际标注 prompt），满足 validate 的双独立评审门。"""
+    return [{"tag": "A", "reviewer_identity": "SEAT_A::codex-gpt", "reviewer_kind": "AI",
+             "model_revision": "gpt-5.6-sol", "prompt_digest": labeler_pd},
+            {"tag": "B", "reviewer_identity": "SEAT_B::opus-4-8", "reviewer_kind": "AI",
+             "model_revision": "claude-opus-4-8", "prompt_digest": labeler_pd}]
+
+
+def _adj_seat_provenance(adj_pd: str) -> dict:
+    """隔离仲裁席 ADJ（§四.1：仅被消费仲裁字段的模块记录追加此席）。"""
+    return {"tag": "ADJ", "reviewer_identity": "ADJ::opus-4-8-isolated",
+            "reviewer_kind": "AI", "model_revision": "claude-opus-4-8",
+            "prompt_digest": adj_pd}
+
+
 def _seat_provenance(cid: str, adjudicated: bool, labeler_pd: str,
                      adj_pd: str) -> list[dict]:
-    """本 face（或单元）的席位溯源：A=Codex-GPT / B=Opus-4.8（+ ADJ 隔离仲裁席，若裁决）。
-
-    >=2 条互异身份满足 validate_qualification_records 的双独立评审门；AI 席须 model_revision +
-    prompt_digest（labeler/adjudicator 模板 sha 摘要，绑定实际标注/裁决 prompt）。
-    """
-    sp = [{"tag": "A", "reviewer_identity": "SEAT_A::codex-gpt", "reviewer_kind": "AI",
-           "model_revision": "gpt-5.6-sol", "prompt_digest": labeler_pd},
-          {"tag": "B", "reviewer_identity": "SEAT_B::opus-4-8", "reviewer_kind": "AI",
-           "model_revision": "claude-opus-4-8", "prompt_digest": labeler_pd}]
+    """兼容旧签名（review/formulaic 单元用；这些单元不做字段级仲裁，恒 A/B 两席）。"""
+    sp = _base_seat_provenance(labeler_pd)
     if adjudicated:
-        sp.append({"tag": "ADJ", "reviewer_identity": "ADJ::opus-4-8-isolated",
-                   "reviewer_kind": "AI", "model_revision": "claude-opus-4-8",
-                   "prompt_digest": adj_pd})
+        sp.append(_adj_seat_provenance(adj_pd))
     return sp
 
 
@@ -584,9 +606,9 @@ def cmd_goldfreeze(set_id: str) -> int:
     a, b = _seal_collect(set_id, "labels_A"), _seal_collect(set_id, "labels_B")
     adj = _seal_collect(set_id, "adjudication")
 
-    # 1) 逐 face 解析富标签（一致→A席，分歧→裁决席；缺席位或缺裁决→未决 fail-closed）。
-    resolved: dict[str, dict] = {}
-    adjudicated_ids: set[str] = set()
+    # 1) 逐 face **逐字段**解析富标签（§四.1）：结构字段规范化后一致→采一致值(CROSS_MODEL_AGREED)；
+    #    分歧字段→只采该字段仲裁值(FIELD_ADJUDICATED)；缺席位或某分歧字段缺裁决→未决 fail-closed。
+    resolutions: dict[str, dict] = {}
     unresolved: list[str] = []
     for c in faces:
         cid = c["case_id"]
@@ -594,15 +616,15 @@ def cmd_goldfreeze(set_id: str) -> int:
         if not ra or not rb:
             unresolved.append(cid)
             continue
-        if _rich_key(ra) == _rich_key(rb):
-            resolved[cid] = ra
-        elif cid in adj:
-            resolved[cid] = adj[cid]
-            adjudicated_ids.add(cid)
-        else:
+        try:
+            rlabel, adj_fields = GD.resolve_label_fields(ra, rb, adj.get(cid), where=cid)
+        except GD.DerivationError:
             unresolved.append(cid)
+            continue
+        resolutions[cid] = {"label": rlabel, "adjudicated_fields": adj_fields}
     if unresolved:
-        raise SystemExit(f"goldfreeze 拒绝：未决 {len(unresolved)} 条（缺席位标签或缺裁决）")
+        raise SystemExit(f"goldfreeze 拒绝：未决 {len(unresolved)} 条（缺席位标签或某分歧字段缺裁决）")
+    adjudicated_faces = sum(1 for r in resolutions.values() if r["adjudicated_fields"])
 
     # 2) dataset_manifest_digest + generation_id（确定性绑 faces 内容）。
     faces_sha = sha_file(sdir / "faces_frozen.json")
@@ -613,16 +635,16 @@ def cmd_goldfreeze(set_id: str) -> int:
                               "sha": L.sha_text(L.load_template(ANNEXC, "qual_rich_labeler"))})
     adj_pd = digest_json({"tmpl": "qual_rich_adjudicator",
                           "sha": L.sha_text(L.load_template(ANNEXC, "qual_rich_adjudicator"))})
+    base_sp = _base_seat_provenance(labeler_pd)
+    adj_sp = _adj_seat_provenance(adj_pd)
 
-    def sp_for(record_cid: str) -> list[dict]:
-        face_cid = record_cid.split("::")[0] if "::" in record_cid else record_cid
-        # review::item::rv 与 form-*::pair::rv 的 face_cid 头段不是 per-claim face；
-        # 其席位溯源统一为 A/B（review/formulaic 单元自带内部 reviewer_id，另与席位正交）。
-        return _seat_provenance(face_cid, face_cid in adjudicated_ids, labeler_pd, adj_pd)
+    def sp_for_units(_record_cid: str) -> list[dict]:
+        # review/formulaic 单元恒 A/B 两席（不做字段级仲裁；单元自带内部 reviewer_id，与席位正交）。
+        return _base_seat_provenance(labeler_pd)
 
-    # 3) 逐 claim 七模块派生 + cross-module reuse 登记。
-    der = GD.derive_perclaim_records(faces, resolved, dataset_manifest_digest=dmd,
-                                     seat_provenance_for=sp_for)
+    # 3) 逐 claim 七模块派生（逐模块 ADJ provenance）+ cross-module reuse 登记。
+    der = GD.derive_perclaim_records(faces, resolutions, dataset_manifest_digest=dmd,
+                                     base_seat_provenance=base_sp, adj_seat_provenance=adj_sp)
     records = list(der["records"])
     cross_module_reuse = der["cross_module_reuse"]
 
@@ -633,13 +655,13 @@ def cmd_goldfreeze(set_id: str) -> int:
     if review_units_path.is_file():
         ru = json.loads(review_units_path.read_text(encoding="utf-8"))
         rrecs = GD.derive_review_records(ru, dataset_manifest_digest=dmd,
-                                         seat_provenance_for=sp_for)
+                                         seat_provenance_for=sp_for_units)
         records.extend(rrecs)
         review_count = len(rrecs)
     if formulaic_units_path.is_file():
         fu = json.loads(formulaic_units_path.read_text(encoding="utf-8"))
         frecs = GD.derive_formulaic_records(fu, dataset_manifest_digest=dmd,
-                                            seat_provenance_for=sp_for,
+                                            seat_provenance_for=sp_for_units,
                                             batch_id=f"QUAL_{set_id}_R3")
         for k in ("judgments", "adjudications", "candidate_audit"):
             records.extend(frecs[k])
@@ -678,8 +700,9 @@ def cmd_goldfreeze(set_id: str) -> int:
         "set": f"QUAL_{set_id}", "at": now(),
         "generation_id": generation_id,
         "gold_record_count": len(records),
-        "resolved_faces": len(resolved),
-        "adjudicated_faces": len(adjudicated_ids),
+        "resolved_faces": len(resolutions),
+        "adjudicated_faces": adjudicated_faces,
+        "agreement_granularity": "PER_FIELD (§四.1；逐模块 ADJ provenance)",
         "review_records": review_count, "formulaic_records": formulaic_count,
         "class_counts_recomputed": pc["counts"],
         "module_gold_field_coverage": pc["module_gold_field_coverage"],
