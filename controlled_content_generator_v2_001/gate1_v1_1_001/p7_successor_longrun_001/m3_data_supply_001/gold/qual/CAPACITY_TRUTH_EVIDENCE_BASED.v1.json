@@ -1,0 +1,223 @@
+{
+ "schema_version": "p7-qual-capacity-evidence-truth-v1",
+ "contract_id": "EAS-M0-QUALIFICATION-V2",
+ "method": "§四.6 真实 A/B split 直接枚举 distinct (scenario,claim) 证据单位；跨轮/措辞去重；变体继承 base 不增 N。取代 plan 的 510/1356 伪独立虚数（=4 轮再生实例，同源多计）。",
+ "supply": {
+  "round_instances_inflated": 1356,
+  "distinct_evidence_units_total": 414,
+  "per_family_total": {
+   "F1_PEOPLE_AND_REAL_SCENE": 123,
+   "F2_PROFESSIONAL_AND_SEARCH": 99,
+   "F3_PRODUCT_RELATION_AND_AESTHETIC": 78,
+   "F4_STORE_LOCAL_AND_RETAIL": 75,
+   "F5_ENTERPRISE_LONG_TERM_TRUST": 39
+  },
+  "per_set": {
+   "A": {
+    "distinct_evidence_units": 161,
+    "per_family": {
+     "F1_PEOPLE_AND_REAL_SCENE": 49,
+     "F2_PROFESSIONAL_AND_SEARCH": 39,
+     "F3_PRODUCT_RELATION_AND_AESTHETIC": 31,
+     "F4_STORE_LOCAL_AND_RETAIL": 29,
+     "F5_ENTERPRISE_LONG_TERM_TRUST": 13
+    },
+    "chosen_scenarios": 46
+   },
+   "B": {
+    "distinct_evidence_units": 152,
+    "per_family": {
+     "F1_PEOPLE_AND_REAL_SCENE": 47,
+     "F2_PROFESSIONAL_AND_SEARCH": 35,
+     "F3_PRODUCT_RELATION_AND_AESTHETIC": 29,
+     "F4_STORE_LOCAL_AND_RETAIL": 28,
+     "F5_ENTERPRISE_LONG_TERM_TRUST": 13
+    },
+    "chosen_scenarios": 44
+   }
+  },
+  "split_source": "sealed_custody_001/membership.json（真实 split）"
+ },
+ "max_claim_class_minimum": 300,
+ "infeasible_class_rows": [
+  {
+   "set": "A",
+   "class": "risk_classification_high_risk_cases",
+   "required": 300,
+   "per_set_distinct_unit_ceiling": 161,
+   "shortfall": 139,
+   "mechanically_reachable": false
+  },
+  {
+   "set": "A",
+   "class": "risk_classification_legal_controls",
+   "required": 300,
+   "per_set_distinct_unit_ceiling": 161,
+   "shortfall": 139,
+   "mechanically_reachable": false
+  },
+  {
+   "set": "A",
+   "class": "high_risk_contradicted_cases",
+   "required": 300,
+   "per_set_distinct_unit_ceiling": 161,
+   "shortfall": 139,
+   "mechanically_reachable": false
+  },
+  {
+   "set": "A",
+   "class": "natural_legal_supported_cases",
+   "required": 300,
+   "per_set_distinct_unit_ceiling": 161,
+   "shortfall": 139,
+   "mechanically_reachable": false
+  },
+  {
+   "set": "A",
+   "class": "fact_chain_high_risk_unsafe_cases",
+   "required": 300,
+   "per_set_distinct_unit_ceiling": 161,
+   "shortfall": 139,
+   "mechanically_reachable": false
+  },
+  {
+   "set": "A",
+   "class": "fact_chain_natural_legal_cases",
+   "required": 300,
+   "per_set_distinct_unit_ceiling": 161,
+   "shortfall": 139,
+   "mechanically_reachable": false
+  },
+  {
+   "set": "B",
+   "class": "risk_classification_high_risk_cases",
+   "required": 300,
+   "per_set_distinct_unit_ceiling": 152,
+   "shortfall": 148,
+   "mechanically_reachable": false
+  },
+  {
+   "set": "B",
+   "class": "risk_classification_legal_controls",
+   "required": 300,
+   "per_set_distinct_unit_ceiling": 152,
+   "shortfall": 148,
+   "mechanically_reachable": false
+  },
+  {
+   "set": "B",
+   "class": "high_risk_contradicted_cases",
+   "required": 300,
+   "per_set_distinct_unit_ceiling": 152,
+   "shortfall": 148,
+   "mechanically_reachable": false
+  },
+  {
+   "set": "B",
+   "class": "natural_legal_supported_cases",
+   "required": 300,
+   "per_set_distinct_unit_ceiling": 152,
+   "shortfall": 148,
+   "mechanically_reachable": false
+  },
+  {
+   "set": "B",
+   "class": "fact_chain_high_risk_unsafe_cases",
+   "required": 300,
+   "per_set_distinct_unit_ceiling": 152,
+   "shortfall": 148,
+   "mechanically_reachable": false
+  },
+  {
+   "set": "B",
+   "class": "fact_chain_natural_legal_cases",
+   "required": 300,
+   "per_set_distinct_unit_ceiling": 152,
+   "shortfall": 148,
+   "mechanically_reachable": false
+  }
+ ],
+ "family_rows": [
+  {
+   "set": "A",
+   "family": "F1_PEOPLE_AND_REAL_SCENE",
+   "required_per_family": 40,
+   "supply": 49,
+   "ok": true
+  },
+  {
+   "set": "A",
+   "family": "F2_PROFESSIONAL_AND_SEARCH",
+   "required_per_family": 40,
+   "supply": 39,
+   "ok": false
+  },
+  {
+   "set": "A",
+   "family": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "required_per_family": 40,
+   "supply": 31,
+   "ok": false
+  },
+  {
+   "set": "A",
+   "family": "F4_STORE_LOCAL_AND_RETAIL",
+   "required_per_family": 40,
+   "supply": 29,
+   "ok": false
+  },
+  {
+   "set": "A",
+   "family": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "required_per_family": 40,
+   "supply": 13,
+   "ok": false
+  },
+  {
+   "set": "B",
+   "family": "F1_PEOPLE_AND_REAL_SCENE",
+   "required_per_family": 40,
+   "supply": 47,
+   "ok": true
+  },
+  {
+   "set": "B",
+   "family": "F2_PROFESSIONAL_AND_SEARCH",
+   "required_per_family": 40,
+   "supply": 35,
+   "ok": false
+  },
+  {
+   "set": "B",
+   "family": "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "required_per_family": 40,
+   "supply": 29,
+   "ok": false
+  },
+  {
+   "set": "B",
+   "family": "F4_STORE_LOCAL_AND_RETAIL",
+   "required_per_family": 40,
+   "supply": 28,
+   "ok": false
+  },
+  {
+   "set": "B",
+   "family": "F5_ENTERPRISE_LONG_TERM_TRUST",
+   "required_per_family": 40,
+   "supply": 13,
+   "ok": false
+  }
+ ],
+ "source_universe": {
+  "distinct_scenarios_in_entire_repo": 120,
+  "content_profiles": 20,
+  "rounds_are_regenerations_not_new_evidence": true,
+  "tier1_new_source_material_available": false,
+  "note": "全 120 scenario 均已入抽样框；4 轮为同 120 scenario 再生（非新证据）；repo 内无更大 scenario 源池/产品事实 KB 可供 Tier1 合法扩容"
+ },
+ "verdict": "MECHANICALLY_INSUFFICIENT",
+ "honest_stop_candidate": true,
+ "honest_stop_basis": "§九 HONEST_STOP #1（穷尽现有真源+Tier1 后 A/B 独立容量机械不足）叠加 #3（唯一出路=扩源/Tier2 需发起人授权与新素材）",
+ "evaluated_at": "2026-07-22T03:31:31.709020+00:00"
+}

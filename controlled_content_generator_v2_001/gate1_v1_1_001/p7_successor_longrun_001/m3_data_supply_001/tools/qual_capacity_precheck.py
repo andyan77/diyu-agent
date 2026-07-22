@@ -147,11 +147,152 @@ def precheck() -> dict:
     }
 
 
+# ============================================================ §四.6 证据独立枚举（真实 split）
+# 收敛 Prompt §四.6：从**实际** QUAL-A/B split 直接枚举 distinct evidence unit，按真实证据聚类
+# 去重（同一 (scenario, claim) 的多轮表达/不同措辞属同一 cluster，不增有效 N）。取代上文
+# compute_supply 的 `claims//2` 粗估（那是把 4 轮再生实例当独立 → 伪独立虚数，同 plan 旧 510/1356）。
+
+def _round_files():
+    sys.path.insert(0, str(M3DS / "gold/tools"))
+    import qual_runner as QR  # noqa: E402 延迟导入避免循环
+    return QR.ROUND_FILES, QR.PK, QR.SEAL
+
+
+def all_evidence_units() -> dict:
+    """跨 4 轮枚举 distinct (scenario_id, claim_id) 证据单位（去重多轮再生）→ {(sid,cid): family_id}。
+
+    结构化只读（scenario_id/claim_id/family，无题面/无 claim_text）→ 编排会话零明文。
+    同一 (scenario, claim) 在 round1/2/3/5 的不同措辞 = 同一独立证据单位（§四.6，不增 N）。
+    """
+    ROUND_FILES, PK, _ = _round_files()
+    frame = json.loads((M3DS / "SAMPLING_FRAME.v1.json").read_text(encoding="utf-8"))
+    fam = {g["scenario_id"]: g["family_id"] for g in frame["groups"]}
+
+    def jl(p):
+        return [json.loads(line) for line in open(p, encoding="utf-8")]
+    units: dict = {}
+    round_instances = 0
+    for _rname, (req_rel, out_rel) in ROUND_FILES.items():
+        reqs = {r["request_id"]: r for r in jl(PK / req_rel)}
+        for o in jl(PK / out_rel):
+            sid = reqs[o["request_id"]]["scenario_id"]
+            for c in o.get("claims", []):
+                round_instances += 1
+                units[(sid, c["claim_id"])] = fam.get(sid, "?")
+    return {"units": units, "round_instances": round_instances,
+            "distinct_evidence_units": len(units)}
+
+
+def compute_evidence_supply() -> dict:
+    """按真实 A/B split（membership.json）枚举每套 distinct 证据单位供给（+ 每族）。
+
+    membership 缺失则以 90 组池均衡估算上界。供给 = distinct source_group（(scenario,claim)），
+    即**任一单类**分母的上确界（一类是全体单位的子集）。variants 不计（§六B 已作废）。
+    """
+    ev = all_evidence_units()
+    units = ev["units"]
+    ROUND_FILES, PK, SEAL = _round_files()
+    mem_path = SEAL / "membership.json"
+    per_set: dict = {}
+    if mem_path.is_file():
+        mem = json.loads(mem_path.read_text(encoding="utf-8"))
+        for s in ("A", "B"):
+            chosen = set(mem[f"QUAL_{s}"])
+            du = [fam for (sid, _cid), fam in units.items() if sid in chosen]
+            per_set[s] = {"distinct_evidence_units": len(du),
+                          "per_family": dict(sorted(Counter(du).items())),
+                          "chosen_scenarios": len(chosen)}
+        split_source = "sealed_custody_001/membership.json（真实 split）"
+    else:
+        half = ev["distinct_evidence_units"] // 2
+        fc = {f: c // 2 for f, c in Counter(units.values()).items()}
+        per_set = {s: {"distinct_evidence_units": half, "per_family": dict(sorted(fc.items())),
+                       "chosen_scenarios": 45} for s in ("A", "B")}
+        split_source = "membership 缺失 → 90 组池均衡上界估算"
+    return {"round_instances_inflated": ev["round_instances"],
+            "distinct_evidence_units_total": ev["distinct_evidence_units"],
+            "per_family_total": dict(sorted(Counter(units.values()).items())),
+            "per_set": per_set, "split_source": split_source}
+
+
+def precheck_evidence() -> dict:
+    """§四.6 真实证据独立容量门：每套 distinct 证据单位（任一类分母上确界）vs 各类下限。
+
+    某类下限 > 每套 distinct 证据单位供给 → 该类**机械不可达**（一类是全体单位子集，且变体不增 N、
+    同源多轮不增 N）。穷尽既有真源（全 120 scenario 均已入池）+ 无 Tier1 新源 → 机械不足。
+    """
+    mins = json.loads(CONTRACT.read_text(encoding="utf-8"))["qualification_set_minimums"]
+    sup = compute_evidence_supply()
+    max_class_min = max(mins[k] for k in CLAIM_CLASS_MIN_KEYS)
+    rows = []
+    feasible = True
+    for s in ("A", "B"):
+        du = sup["per_set"][s]["distinct_evidence_units"]
+        for key in CLAIM_CLASS_MIN_KEYS:
+            req = mins[key]
+            ok = du >= req  # 上确界：即便全体单位都属该类也需 >= 下限
+            feasible &= ok
+            if not ok:
+                rows.append({"set": s, "class": key, "required": req,
+                             "per_set_distinct_unit_ceiling": du, "shortfall": req - du,
+                             "mechanically_reachable": False})
+    # 每族下限
+    fam_rows = []
+    for s in ("A", "B"):
+        for fam in FAMILIES:
+            sup_f = sup["per_set"][s]["per_family"].get(fam, 0)
+            ok = sup_f >= PER_FAMILY_FLOOR
+            fam_rows.append({"set": s, "family": fam, "required_per_family": PER_FAMILY_FLOOR,
+                             "supply": sup_f, "ok": ok})
+    return {
+        "schema_version": "p7-qual-capacity-evidence-truth-v1",
+        "contract_id": "EAS-M0-QUALIFICATION-V2",
+        "method": "§四.6 真实 A/B split 直接枚举 distinct (scenario,claim) 证据单位；跨轮/措辞去重；"
+        "变体继承 base 不增 N。取代 plan 的 510/1356 伪独立虚数（=4 轮再生实例，同源多计）。",
+        "supply": sup,
+        "max_claim_class_minimum": max_class_min,
+        "infeasible_class_rows": rows,
+        "family_rows": fam_rows,
+        "source_universe": {
+            "distinct_scenarios_in_entire_repo": 120,
+            "content_profiles": 20,
+            "rounds_are_regenerations_not_new_evidence": True,
+            "tier1_new_source_material_available": False,
+            "note": "全 120 scenario 均已入抽样框；4 轮为同 120 scenario 再生（非新证据）；"
+                    "repo 内无更大 scenario 源池/产品事实 KB 可供 Tier1 合法扩容",
+        },
+        "verdict": "FEASIBLE" if feasible else "MECHANICALLY_INSUFFICIENT",
+        "honest_stop_candidate": (not feasible),
+        "honest_stop_basis": ("§九 HONEST_STOP #1（穷尽现有真源+Tier1 后 A/B 独立容量机械不足）"
+                              "叠加 #3（唯一出路=扩源/Tier2 需发起人授权与新素材）" if not feasible
+                              else "n/a"),
+        "evaluated_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", help="预检回执输出路径")
+    ap.add_argument("--evidence", action="store_true",
+                    help="§四.6 真实证据独立枚举（取代 claims//2 粗估）")
     ap.add_argument("--quiet", action="store_true")
     args = ap.parse_args()
+    if args.evidence:
+        result = precheck_evidence()
+        if args.out:
+            Path(args.out).write_text(json.dumps(result, ensure_ascii=False, indent=1) + "\n",
+                                      encoding="utf-8")
+        if not args.quiet:
+            print(json.dumps({
+                "verdict": result["verdict"],
+                "distinct_evidence_units_total": result["supply"]["distinct_evidence_units_total"],
+                "per_set_distinct_units": {s: result["supply"]["per_set"][s]["distinct_evidence_units"]
+                                          for s in ("A", "B")},
+                "max_claim_class_minimum": result["max_claim_class_minimum"],
+                "infeasible_class_count": len(result["infeasible_class_rows"]),
+                "honest_stop_candidate": result["honest_stop_candidate"],
+            }, ensure_ascii=False, indent=1))
+        return 0 if result["verdict"] == "FEASIBLE" else 2
     result = precheck()
     if args.out:
         Path(args.out).write_text(json.dumps(result, ensure_ascii=False, indent=1),
