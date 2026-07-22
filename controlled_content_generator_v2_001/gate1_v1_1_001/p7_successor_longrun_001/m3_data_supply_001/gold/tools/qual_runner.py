@@ -42,8 +42,12 @@ ANNEXC = ANN / "annotation_protocol_annexC_qual.v1.json"
 
 sys.path.insert(0, str(HERE.parent))
 sys.path.insert(0, str(SPINE))
+sys.path.insert(0, str(M3DS / "tools"))
 import labeling_lib as L                  # noqa: E402
 from spine.canonical import digest_json   # noqa: E402
+import qual_gold_derivation as GD         # noqa: E402  §四.2 逐模块合规派生
+import qual_generation as GEN             # noqa: E402  §四.4 真 generation 链
+import qual_custody_recompute as CUS      # noqa: E402  §5.1 密封复算（class_counts 复用）
 
 BATCH = 10
 # R3-build §四.1：6 种 challenge kind（真源 = CAPACITY_AND_CONSTRUCTION_PLAN.variant_construction.kinds
@@ -197,6 +201,9 @@ def _cases_for_set(set_id: str) -> list[dict]:
                 cases.append({
                     "case_id": f"Q{set_id}-{rname}-{c['claim_id']}",
                     "case_kind": "NATURAL",
+                    # §四.2 统计独立单位：source_group = claim 级（此自然 claim 自身）；
+                    # 其挑战变体继承本 source_group（cmd_faces），同源变体不增有效 N（§六B）。
+                    "source_group_id": f"Q{set_id}-{rname}-{c['claim_id']}",
                     "scenario_id": sid, "family_id": fam[sid], "round": rname,
                     "item_title": o.get("title", ""),
                     "claim_text": c["claim_text"],
@@ -321,6 +328,8 @@ def cmd_faces(set_id: str, max_batches: int) -> int:
                 # §四.1：把 challenge kind 钉在题面（经 normalize_kind 对齐 6-kind 家族），
                 # 供 pilot/审计核「六种 kind 各至少运行一次」（真源仍在 variant_intents_goldside）。
                 "challenge_kind": normalize_kind(r.get("variant_kind", t["variant_kind"])),
+                # §四.2 统计独立单位：变体继承 base claim 的 source_group（同源变体不增有效 N，§六B）。
+                "source_group_id": t["base_case_id"],
                 "scenario_id": t["base_case_id"], "family_id": t["family_id"],
                 "item_title": "", "claim_text": r["variant_claim_text"],
                 "claim_boundary": t["claim_boundary"],
@@ -370,10 +379,25 @@ def cmd_faces(set_id: str, max_batches: int) -> int:
     return 0
 
 
+def _rich_rows_ok(rows: list, expected: set) -> bool:
+    """富标签批合格判据：覆盖全部 case_id 且每条经 GD.validate_rich_label（九模块字段齐全合法）。"""
+    if not isinstance(rows, list):
+        return False
+    if {r.get("case_id") for r in rows if isinstance(r, dict)} != expected:
+        return False
+    for r in rows:
+        try:
+            GD.validate_rich_label(r, where=str(r.get("case_id")))
+        except GD.DerivationError:
+            return False
+    return True
+
+
 def cmd_label(set_id: str, seat: str, max_batches: int) -> int:
     assert_sealed_ignored()
     carrier = "codex" if seat == "A" else "claude"
-    tmpl = L.load_template(ANN / "annotation_protocol.v1.json", "labeler")
+    # §四.1：富标签路径——九模块金标字段（旧二字段 labeler 保留供已冻结 G2，不在新 generation 用）。
+    tmpl = L.load_template(ANNEXC, "qual_rich_labeler")
     sdir = SEAL / f"qual_{set_id}"
     out_dir = sdir / f"labels_{seat}"
     done = 0
@@ -392,10 +416,7 @@ def cmd_label(set_id: str, seat: str, max_batches: int) -> int:
         expected = {c["case_id"] for c in cases}
 
         def ok(rows: list) -> bool:
-            return ({r.get("case_id") for r in rows if isinstance(r, dict)} == expected
-                    and all(r.get("risk") in ("LOW", "MEDIUM", "HIGH", "CRITICAL")
-                            and r.get("entailment") in ("SUPPORTED", "CONTRADICTED", "UNKNOWN")
-                            for r in rows))
+            return _rich_rows_ok(rows, expected)
 
         seat_label = "A(Codex-GPT)" if seat == "A" else seat
         prompt = tmpl.replace("{seat}", seat_label).replace(
@@ -431,6 +452,17 @@ def _seal_collect(set_id: str, sub: str) -> dict[str, dict]:
     return out
 
 
+def _rich_key(label: dict) -> tuple:
+    """富标签的可比较键（全九模块字段）——用于双盲一致/分歧判定与摘要。"""
+    return (
+        label.get("risk"), label.get("entailment"),
+        label.get("reference_present"),
+        digest_json(label.get("reference_attributes")),
+        label.get("atom_present"), digest_json(label.get("atom_partition")),
+        label.get("safe_to_clear"), label.get("disclosure_obligation"),
+        label.get("disclosure_violation"), label.get("misleading"))
+
+
 def cmd_labelfreeze(set_id: str) -> int:
     sdir = SEAL / f"qual_{set_id}"
     faces = json.loads((sdir / "faces_frozen.json").read_text(encoding="utf-8"))
@@ -439,20 +471,21 @@ def cmd_labelfreeze(set_id: str) -> int:
     both = len(set(a) & set(b))
     if both < total:
         raise SystemExit(f"labelfreeze 拒绝：双席完成 {both}/{total}")
+    # §四.1 富标签双盲：任一九模块金标字段不一致即分歧（走裁决）。
     disputes = sum(1 for cid in set(a) & set(b)
-                   if a[cid]["risk"] != b[cid]["risk"]
-                   or a[cid]["entailment"] != b[cid]["entailment"])
+                   if _rich_key(a[cid]) != _rich_key(b[cid]))
     receipt = {
         "schema_version": "p7-m3-qual-doubleblind-receipt-v1",
         "set": f"QUAL_{set_id}", "at": now(),
         "faces_total": total, "labeled_both_seats": both,
         "seats": "A=Codex-GPT(gpt-5.6-sol) / B=Opus-4.8（跨模型双盲；载体裁决 seq41）",
+        "label_schema": "rich_nine_module (qual_rich_labeler)",
         "dispute_count": disputes,
         "dispute_rate": round(disputes / max(1, both), 4),
         "labels_A_sha256": digest_json(sorted(
-            (k, v["risk"], v["entailment"]) for k, v in a.items())),
+            (k, _rich_key(v)) for k, v in a.items())),
         "labels_B_sha256": digest_json(sorted(
-            (k, v["risk"], v["entailment"]) for k, v in b.items())),
+            (k, _rich_key(v)) for k, v in b.items())),
         "location": f"sealed_custody_001/qual_{set_id}/labels_*（保全区）",
     }
     rpath = QOPEN / f"QUAL_{set_id}_DOUBLE_BLIND_RECEIPT.v1.json"
@@ -465,23 +498,27 @@ def cmd_labelfreeze(set_id: str) -> int:
     return 0
 
 
+_RICH_FIELDS = GD.RICH_LABEL_FIELDS + ("rationale",)
+
+
 def cmd_adjudicate(set_id: str, max_batches: int) -> int:
     assert_sealed_ignored()
-    tmpl = L.load_template(ANN / "annotation_protocol.v1.json", "adjudicator")
+    # §四.1 富标签裁决：隔离仲裁席对九模块字段分歧裁断（旧二字段 adjudicator 保留供 G2）。
+    tmpl = L.load_template(ANNEXC, "qual_rich_adjudicator")
     sdir = SEAL / f"qual_{set_id}"
     faces = {c["case_id"]: c for c in json.loads(
         (sdir / "faces_frozen.json").read_text(encoding="utf-8"))}
     a, b = _seal_collect(set_id, "labels_A"), _seal_collect(set_id, "labels_B")
     disputes = []
     for cid in sorted(set(a) & set(b)):
-        if a[cid]["risk"] != b[cid]["risk"] or a[cid]["entailment"] != b[cid]["entailment"]:
+        if _rich_key(a[cid]) != _rich_key(b[cid]):
             c = faces[cid]
             disputes.append({"case_id": cid,
                              **{k: c[k] for k in ("claim_text", "claim_boundary",
                                                   "authorization_scope", "slot_facts",
                                                   "source_summary_a", "source_summary_b")},
-                             "label_jia": {k: a[cid].get(k) for k in ("risk", "entailment", "rationale")},
-                             "label_yi": {k: b[cid].get(k) for k in ("risk", "entailment", "rationale")}})
+                             "label_jia": {k: a[cid].get(k) for k in _RICH_FIELDS},
+                             "label_yi": {k: b[cid].get(k) for k in _RICH_FIELDS}})
     adir = sdir / "adjudication"
     adir.mkdir(exist_ok=True)
     (adir / "disputes.json").write_text(
@@ -497,8 +534,7 @@ def cmd_adjudicate(set_id: str, max_batches: int) -> int:
         expected = {c["case_id"] for c in batch}
 
         def ok(rows: list) -> bool:
-            return ({r.get("case_id") for r in rows if isinstance(r, dict)} == expected
-                    and all(r.get("risk") and r.get("entailment") for r in rows))
+            return _rich_rows_ok(rows, expected)
 
         prompt = tmpl.replace("{batch_json}",
                               json.dumps(batch, ensure_ascii=False, indent=1))
@@ -520,39 +556,110 @@ def cmd_adjudicate(set_id: str, max_batches: int) -> int:
     return 0
 
 
+def _seat_provenance(cid: str, adjudicated: bool, labeler_pd: str,
+                     adj_pd: str) -> list[dict]:
+    """本 face（或单元）的席位溯源：A=Codex-GPT / B=Opus-4.8（+ ADJ 隔离仲裁席，若裁决）。
+
+    >=2 条互异身份满足 validate_qualification_records 的双独立评审门；AI 席须 model_revision +
+    prompt_digest（labeler/adjudicator 模板 sha 摘要，绑定实际标注/裁决 prompt）。
+    """
+    sp = [{"tag": "A", "reviewer_identity": "SEAT_A::codex-gpt", "reviewer_kind": "AI",
+           "model_revision": "gpt-5.6-sol", "prompt_digest": labeler_pd},
+          {"tag": "B", "reviewer_identity": "SEAT_B::opus-4-8", "reviewer_kind": "AI",
+           "model_revision": "claude-opus-4-8", "prompt_digest": labeler_pd}]
+    if adjudicated:
+        sp.append({"tag": "ADJ", "reviewer_identity": "ADJ::opus-4-8-isolated",
+                   "reviewer_kind": "AI", "model_revision": "claude-opus-4-8",
+                   "prompt_digest": adj_pd})
+    return sp
+
+
 def cmd_goldfreeze(set_id: str) -> int:
+    """§四.2：逐 case 经 assemble_gold_record 派生**逐模块验证器合规**金标记录（含 cross-module
+    reuse 登记 + 真 generation 链），取代旧简化非合规写入路径（risk+entailment 二字段、无摘要闭包）。
+    """
     assert_sealed_ignored()
     sdir = SEAL / f"qual_{set_id}"
     faces = json.loads((sdir / "faces_frozen.json").read_text(encoding="utf-8"))
     a, b = _seal_collect(set_id, "labels_A"), _seal_collect(set_id, "labels_B")
     adj = _seal_collect(set_id, "adjudication")
-    gold, unresolved = [], []
+
+    # 1) 逐 face 解析富标签（一致→A席，分歧→裁决席；缺席位或缺裁决→未决 fail-closed）。
+    resolved: dict[str, dict] = {}
+    adjudicated_ids: set[str] = set()
+    unresolved: list[str] = []
     for c in faces:
         cid = c["case_id"]
         ra, rb = a.get(cid), b.get(cid)
         if not ra or not rb:
             unresolved.append(cid)
             continue
-        if ra["risk"] == rb["risk"] and ra["entailment"] == rb["entailment"]:
-            gold.append({"case_id": cid, "case_kind": c["case_kind"],
-                         "family_id": c["family_id"],
-                         "risk": ra["risk"], "entailment": ra["entailment"],
-                         "source": "CROSS_MODEL_AGREED"})
+        if _rich_key(ra) == _rich_key(rb):
+            resolved[cid] = ra
         elif cid in adj:
-            gold.append({"case_id": cid, "case_kind": c["case_kind"],
-                         "family_id": c["family_id"],
-                         "risk": adj[cid]["risk"], "entailment": adj[cid]["entailment"],
-                         "source": "ADJUDICATED"})
+            resolved[cid] = adj[cid]
+            adjudicated_ids.add(cid)
         else:
             unresolved.append(cid)
     if unresolved:
         raise SystemExit(f"goldfreeze 拒绝：未决 {len(unresolved)} 条（缺席位标签或缺裁决）")
-    gold_path = sdir / "gold_frozen.json"
-    gold_path.write_text(json.dumps(gold, ensure_ascii=False, indent=1),
-                         encoding="utf-8")
-    gold_sha = sha_file(gold_path)
+
+    # 2) dataset_manifest_digest + generation_id（确定性绑 faces 内容）。
     faces_sha = sha_file(sdir / "faces_frozen.json")
-    # 密封摘要 denylist 登记（撞库扫描输入）
+    generation_id = f"QUAL_{set_id}_GEN_{faces_sha[:16]}"
+    dmd = digest_json({"set": set_id, "faces_sha256": faces_sha,
+                       "generation": generation_id})
+    labeler_pd = digest_json({"tmpl": "qual_rich_labeler",
+                              "sha": L.sha_text(L.load_template(ANNEXC, "qual_rich_labeler"))})
+    adj_pd = digest_json({"tmpl": "qual_rich_adjudicator",
+                          "sha": L.sha_text(L.load_template(ANNEXC, "qual_rich_adjudicator"))})
+
+    def sp_for(record_cid: str) -> list[dict]:
+        face_cid = record_cid.split("::")[0] if "::" in record_cid else record_cid
+        # review::item::rv 与 form-*::pair::rv 的 face_cid 头段不是 per-claim face；
+        # 其席位溯源统一为 A/B（review/formulaic 单元自带内部 reviewer_id，另与席位正交）。
+        return _seat_provenance(face_cid, face_cid in adjudicated_ids, labeler_pd, adj_pd)
+
+    # 3) 逐 claim 七模块派生 + cross-module reuse 登记。
+    der = GD.derive_perclaim_records(faces, resolved, dataset_manifest_digest=dmd,
+                                     seat_provenance_for=sp_for)
+    records = list(der["records"])
+    cross_module_reuse = der["cross_module_reuse"]
+
+    # 4) review_calibration / formulaic：读密封解析单元（若在场；由 review/formulaic 子管线产出）。
+    review_units_path = sdir / "review_units.json"
+    formulaic_units_path = sdir / "formulaic_units.json"
+    review_count = formulaic_count = 0
+    if review_units_path.is_file():
+        ru = json.loads(review_units_path.read_text(encoding="utf-8"))
+        rrecs = GD.derive_review_records(ru, dataset_manifest_digest=dmd,
+                                         seat_provenance_for=sp_for)
+        records.extend(rrecs)
+        review_count = len(rrecs)
+    if formulaic_units_path.is_file():
+        fu = json.loads(formulaic_units_path.read_text(encoding="utf-8"))
+        frecs = GD.derive_formulaic_records(fu, dataset_manifest_digest=dmd,
+                                            seat_provenance_for=sp_for,
+                                            batch_id=f"QUAL_{set_id}_R3")
+        for k in ("judgments", "adjudications", "candidate_audit"):
+            records.extend(frecs[k])
+            formulaic_count += len(frecs[k])
+        (sdir / "formulaic_registries.json").write_text(
+            json.dumps({k: frecs[k] for k in ("candidate_manifest", "rubric_manifest",
+                                              "necessary_grammar_exceptions")},
+                       ensure_ascii=False, indent=1), encoding="utf-8")
+
+    # 5) 密封合规金标记录落盘（永不入 Git；gitignore 已核）。
+    gold_path = sdir / "gold_records.json"
+    gold_path.write_text(json.dumps(records, ensure_ascii=False, indent=1), encoding="utf-8")
+    gold_sha = sha_file(gold_path)
+
+    # 6) 真 generation 链（pointer→manifest→index；index 仅 case_id+摘要，无明文答案）。
+    gen = GEN.build_generation(records, set_id=set_id, generation_id=generation_id,
+                               dataset_manifest_digest=dmd, faces_sha256=faces_sha,
+                               gold_sha256=gold_sha, qual_dir=QOPEN)
+
+    # 7) 密封摘要 denylist 登记（撞库扫描输入）。
     deny_path = DCC / "state/SEALED_PAYLOAD_DENYLIST.v1.json"
     deny = json.loads(deny_path.read_text(encoding="utf-8"))
     for sha, kind in ((faces_sha, f"QUAL_{set_id}_FACES"), (gold_sha, f"QUAL_{set_id}_GOLD")):
@@ -561,30 +668,46 @@ def cmd_goldfreeze(set_id: str) -> int:
                                     "note": f"M3 密封载荷（sealed_custody_001/qual_{set_id}）；登记于 goldfreeze"})
     deny_path.write_text(json.dumps(deny, ensure_ascii=False, indent=1) + "\n",
                          encoding="utf-8")
+
+    # 8) class_counts 由 custody 复算（与就绪门同口径，杜绝手算漂移）。
+    pc = CUS.recompute_public_counts(
+        records, set_id=set_id, active_generation_id=generation_id,
+        dataset_manifest_digest=dmd, faces_sha256=faces_sha, gold_sha256=gold_sha)
     receipt = {
-        "schema_version": "p7-m3-qual-gold-freeze-receipt-v1",
+        "schema_version": "p7-m3-qual-gold-freeze-receipt-v2",
         "set": f"QUAL_{set_id}", "at": now(),
-        "gold_count": len(gold),
-        "class_counts": {
-            "risk": dict(sorted(Counter(g["risk"] for g in gold).items())),
-            "entailment": dict(sorted(Counter(g["entailment"] for g in gold).items())),
-            "kind": dict(sorted(Counter(g["case_kind"] for g in gold).items())),
-            "per_family": dict(sorted(Counter(g["family_id"] for g in gold).items())),
-        },
+        "generation_id": generation_id,
+        "gold_record_count": len(records),
+        "resolved_faces": len(resolved),
+        "adjudicated_faces": len(adjudicated_ids),
+        "review_records": review_count, "formulaic_records": formulaic_count,
+        "class_counts_recomputed": pc["counts"],
+        "module_gold_field_coverage": pc["module_gold_field_coverage"],
+        "obligation_types_present": pc["deterministic_disclosure_obligation_types_present"],
+        "per_family": dict(sorted(Counter(
+            f for f in (r.get("family_id") for r in records) if f).items())),
+        "cross_module_reuse_source_groups": len(cross_module_reuse),
+        "cross_module_reuse_digest": digest_json(cross_module_reuse),
+        "core_validation_passed": pc["custody_binding"]["core_validation_passed"],
         "gold_sha256": gold_sha, "faces_sha256": faces_sha,
+        "dataset_manifest_digest": dmd,
+        "qualification_index_digest": pc["custody_binding"]["qualification_index_digest"],
         "sealed_denylist_registered": True,
-        "location": f"sealed_custody_001/qual_{set_id}/gold_frozen.json（保全区；永不入 Git）",
+        "location": f"sealed_custody_001/qual_{set_id}/gold_records.json（保全区；永不入 Git）",
         "custodian_view": "本回执仅数量/摘要；编排会话零接触明文（工具 stdout 纪律）",
     }
-    rpath = QOPEN / f"QUAL_{set_id}_GOLD_FROZEN_RECEIPT.v1.json"
+    (sdir / "cross_module_reuse.json").write_text(
+        json.dumps(cross_module_reuse, ensure_ascii=False, indent=1), encoding="utf-8")
+    rpath = QOPEN / f"QUAL_{set_id}_GOLD_FROZEN_RECEIPT.v2.json"
     rpath.write_text(json.dumps(receipt, ensure_ascii=False, indent=1) + "\n",
                      encoding="utf-8")
     ev = append_event(f"{set_id}3_GOLD_FROZEN",
                       f"m3_data_supply_001/gold/qual/{rpath.name}")
-    print(json.dumps({"gold": len(gold), "class_counts": receipt["class_counts"],
-                      "event": ev["code"], "seq": ev["seq"],
+    print(json.dumps({"gold_records": len(records), "generation_id": generation_id,
+                      "core_validation_passed": receipt["core_validation_passed"],
+                      "counts": pc["counts"], "event": ev["code"], "seq": ev["seq"],
                       "gold_sha256": gold_sha[:16]}, ensure_ascii=False, indent=1))
-    return 0
+    return 0 if receipt["core_validation_passed"] else 1
 
 
 def cmd_finalize() -> int:
