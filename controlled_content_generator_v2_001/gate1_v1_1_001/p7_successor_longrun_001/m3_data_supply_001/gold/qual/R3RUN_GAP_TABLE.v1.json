@@ -1,0 +1,226 @@
+{
+ "schema_version": "p7-m3-r3run-gap-table-v1",
+ "purpose": "§六 执行前最小批次缺口表（仅避免过量生成，非治理框架）",
+ "capacity_model": "发起人裁决：300/100 按 raw case N（不同机制变体计入覆盖）；统计独立由 distinct source-group cluster N + 冻结 cluster-aware 单侧95%CI 保障",
+ "current_formal_generation": "NONE（pilot 为独立小批，正式 R3-run 从 0 起）",
+ "per_set_cluster_supply": {
+  "A": 161,
+  "B": 152
+ },
+ "per_family_cluster_supply": {
+  "A": {
+   "F1_PEOPLE_AND_REAL_SCENE": 49,
+   "F2_PROFESSIONAL_AND_SEARCH": 39,
+   "F3_PRODUCT_RELATION_AND_AESTHETIC": 31,
+   "F4_STORE_LOCAL_AND_RETAIL": 29,
+   "F5_ENTERPRISE_LONG_TERM_TRUST": 13
+  },
+  "B": {
+   "F1_PEOPLE_AND_REAL_SCENE": 47,
+   "F2_PROFESSIONAL_AND_SEARCH": 35,
+   "F3_PRODUCT_RELATION_AND_AESTHETIC": 29,
+   "F4_STORE_LOCAL_AND_RETAIL": 28,
+   "F5_ENTERPRISE_LONG_TERM_TRUST": 13
+  }
+ },
+ "class_gap_rows": [
+  {
+   "class": "reference_extraction_positive_cases",
+   "module": "reference_extraction",
+   "contract_min_raw_case_N": 100,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 100,
+   "cluster_power_n_min": 59,
+   "face_driven": true
+  },
+  {
+   "class": "reference_extraction_negative_controls",
+   "module": "reference_extraction",
+   "contract_min_raw_case_N": 100,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 100,
+   "cluster_power_n_min": null,
+   "face_driven": true
+  },
+  {
+   "class": "claim_atomization_positive_cases",
+   "module": "claim_atomization",
+   "contract_min_raw_case_N": 100,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 100,
+   "cluster_power_n_min": 59,
+   "face_driven": true
+  },
+  {
+   "class": "claim_atomization_negative_controls",
+   "module": "claim_atomization",
+   "contract_min_raw_case_N": 100,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 100,
+   "cluster_power_n_min": null,
+   "face_driven": true
+  },
+  {
+   "class": "risk_classification_high_risk_cases",
+   "module": "risk_classification",
+   "contract_min_raw_case_N": 300,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 300,
+   "cluster_power_n_min": 59,
+   "face_driven": true
+  },
+  {
+   "class": "risk_classification_legal_controls",
+   "module": "risk_classification",
+   "contract_min_raw_case_N": 300,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 300,
+   "cluster_power_n_min": null,
+   "face_driven": true
+  },
+  {
+   "class": "high_risk_contradicted_cases",
+   "module": "entailment",
+   "contract_min_raw_case_N": 300,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 300,
+   "cluster_power_n_min": 59,
+   "face_driven": true
+  },
+  {
+   "class": "high_risk_unknown_cases",
+   "module": "entailment",
+   "contract_min_raw_case_N": 100,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 100,
+   "cluster_power_n_min": 29,
+   "face_driven": true
+  },
+  {
+   "class": "natural_legal_supported_cases",
+   "module": "entailment",
+   "contract_min_raw_case_N": 300,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 300,
+   "cluster_power_n_min": 29,
+   "face_driven": true
+  },
+  {
+   "class": "fact_chain_high_risk_unsafe_cases",
+   "module": "fact_chain",
+   "contract_min_raw_case_N": 300,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 300,
+   "cluster_power_n_min": null,
+   "face_driven": true
+  },
+  {
+   "class": "fact_chain_natural_legal_cases",
+   "module": "fact_chain",
+   "contract_min_raw_case_N": 300,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 300,
+   "cluster_power_n_min": null,
+   "face_driven": true
+  },
+  {
+   "class": "formulaic_double_reviewed_pairs_total",
+   "module": "formulaic",
+   "contract_min_raw_case_N": 300,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 300,
+   "cluster_power_n_min": 29,
+   "face_driven": false
+  },
+  {
+   "class": "formulaic_positive_pairs_minimum",
+   "module": "formulaic",
+   "contract_min_raw_case_N": 100,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 100,
+   "cluster_power_n_min": 14,
+   "face_driven": false
+  },
+  {
+   "class": "formulaic_negative_pairs_minimum",
+   "module": "formulaic",
+   "contract_min_raw_case_N": 100,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 100,
+   "cluster_power_n_min": 14,
+   "face_driven": false
+  },
+  {
+   "class": "formulaic_necessary_grammar_pairs_minimum",
+   "module": "formulaic",
+   "contract_min_raw_case_N": 20,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 20,
+   "cluster_power_n_min": null,
+   "face_driven": false
+  },
+  {
+   "class": "deterministic_disclosure_cases_total",
+   "module": "disclosure",
+   "contract_min_raw_case_N": 100,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 100,
+   "cluster_power_n_min": null,
+   "face_driven": true
+  },
+  {
+   "class": "omission_misleading_high_risk_cases",
+   "module": "omission",
+   "contract_min_raw_case_N": 100,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 100,
+   "cluster_power_n_min": 59,
+   "face_driven": true
+  },
+  {
+   "class": "omission_nonmisleading_controls",
+   "module": "omission",
+   "contract_min_raw_case_N": 100,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 100,
+   "cluster_power_n_min": null,
+   "face_driven": true
+  },
+  {
+   "class": "review_double_reviewed_items",
+   "module": "review_calibration",
+   "contract_min_raw_case_N": 40,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 40,
+   "cluster_power_n_min": 29,
+   "face_driven": false
+  },
+  {
+   "class": "review_judgment_records",
+   "module": "review_calibration",
+   "contract_min_raw_case_N": 80,
+   "current_formal_effective_N": 0,
+   "remaining_raw": 80,
+   "cluster_power_n_min": null,
+   "face_driven": false
+  }
+ ],
+ "cross_module_reuse": "一次富标注面同时产 reference/atomization/risk/entailment/fact_chain/disclosure/omission 七模块记录；formulaic/review 为独立子管线。故面数由 risk/entailment 互斥类下限驱动，非各类简单相加",
+ "feasibility": {
+  "raw_case_N_feasible": true,
+  "cluster_power_feasible": true,
+  "basis": "raw case N 靠 distinct-mechanism 变体达 300；cluster N 161/152 ≥ 各门 n_min≤59（POWER_CHECK PASS）"
+ },
+ "estimate": {
+  "faces_per_set_approx": 750,
+  "rich_label_calls_per_set": 376,
+  "formulaic_calls_per_set": 190,
+  "adjudication_calls_per_set": 188,
+  "review_calls_per_set": 4,
+  "total_paid_calls_both_sets_approx": 1516,
+  "est_usd_both_sets_approx": 655.0,
+  "cost_basis": "pilot B 11面全量 13 call = $5.61 → ~$0.43/call（Claude 计费/Codex 免费）",
+  "wall_clock_note": "当前 runner 逐批顺序；按 pilot ~30min/11面线性外推为多小时至多日；INTERRUPTED_RESUMABLE 可断点续跑"
+ },
+ "note": "该表仅供避免过量生成与成本预判；不建立新治理框架、不改验收门"
+}
