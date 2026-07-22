@@ -85,6 +85,22 @@ def _statistical_rate_gates(mg: dict) -> list[dict]:
         "formulaic_double_reviewed_pairs_total")
     add("review_calibration", "approval_decision_agreement",
         mg["review_calibration"]["approval_decision_agreement_minimum"], "review_double_reviewed_items")
+    # 发起人裁决：**补齐真实 calibration 错误率上界门**（`_upper_95_maximum` / `_maximum`）。
+    # 错误率上界 e 的功效等价「正确率下界门 θ=1-e」：n_min=ceil(ln0.05/ln(1-e))。
+    # <1%(e=.01)→299、≤3%(e=.03)→99、≤5%(e=.05)→59（旧 power check 漏 0.01/299 门 → 误判 161 可行）。
+    def add_errmax(module, name, e, denom_class):
+        g.append({"module": module, "gate": name, "threshold": round(1.0 - e, 6),
+                  "error_rate_upper_bound": e, "denominator_class": denom_class})
+    rc = mg["risk_classification"]
+    add_errmax("risk_classification", "high_or_critical_downclassification_upper_95",
+               rc["high_or_critical_downclassification_upper_95_maximum"],   # 0.01 → n_min 299（最严门）
+               "risk_classification_high_risk_cases")
+    add_errmax("risk_classification", "legal_false_high_upper_95",
+               rc["legal_false_high_upper_95_maximum"],                       # 0.05 → n_min 59
+               "risk_classification_legal_controls")
+    add_errmax("claim_atomization", "incorrect_merge_rate",
+               mg["claim_atomization"]["incorrect_merge_rate_maximum"],       # 0.05 → n_min 59
+               "claim_atomization_positive_cases")
     return g
 
 
@@ -95,12 +111,15 @@ def freeze_ci_method() -> dict:
         "schema_version": "p7-cluster-aware-ci-method-freeze-v1",
         "frozen_before_qualification_results": True,
         "cluster_unit": "source_group_id",
+        "cluster_unit_definition": "source_group_id = evidence_anchor_digest(scenario_id + source/fact/"
+        "authorization ids)（发起人证据身份裁决）——非 (scenario,claim)/round；raw 覆盖走机制/题面维度。",
         "confidence_level": 0.95,
         "sidedness": "ONE_SIDED_LOWER_BOUND",
-        "effective_n_rule": "每类 effective 独立试验数 = 该类 distinct source_group cluster 数"
-        "（保守：cluster 内相关性最大化，不以 record/变体 充 N）",
-        "cluster_aggregation": "一个 cluster 在某类记为 1 次试验；cluster 成功 iff 该 cluster 在该类"
-        "全部记录判对（对 recall 保守）",
+        "effective_n_rule": "每类 effective 独立试验数 = 该类 distinct evidence anchor（source_group_id）"
+        "cluster 数（保守：cluster 内相关性最大化，不以 record/变体/题面 充 N）",
+        "cluster_aggregation": "资格计算（M0 calibration）须先把记录按 source_group_id 聚为 cluster："
+        "一个 cluster 在某类记 1 次试验；cluster 成功 iff 该 cluster 在该类全部记录判对（对 recall 保守）。"
+        "即 CI 分母 = cluster N（非 record N）——cluster-aware 结果真接入资格计算，非仅 readiness 数量。",
         "lower_bound_method": "EXACT_CLOPPER_PEARSON_ONE_SIDED",
         "zero_error_lower_bound_formula": "0.05 ** (1/n)  （x=n 成功、0 失败）",
         "min_clusters_zero_error_formula": "ceil( ln(0.05) / ln(theta) )",
@@ -133,8 +152,11 @@ def power_check() -> dict:
             overall_feasible &= ok
             rows.append({"set": s, **g, "n_min_zero_error": nmin,
                          "available_cluster_ceiling": avail, "overall_power_feasible": ok})
-    # 每族功效（uncertainty_reporting 要 per-family 披露；F5 最薄）——诊断非硬门（合同率门为整体）
-    max_theta = max(g["threshold"] for g in gates)
+    # 每族功效（uncertainty_reporting 要 per-family 披露；F5 最薄）——诊断非硬门（合同率门为整体）。
+    # per-family bar 用 recall/precision 率门（排除 class 级错误率上界门如 downclass 0.99→299——那是
+    # 整类门非 per-family），取其最严 θ（0.95→59）。
+    family_gates = [g for g in gates if "error_rate_upper_bound" not in g]
+    max_theta = max(g["threshold"] for g in family_gates)
     nmin_strict = n_min_zero_error(max_theta)
     family_power = []
     for s in ("A", "B"):

@@ -225,6 +225,7 @@
   "effect": "本 receipt 的 distinct source-group N（A161/B152/total414）为真、保留披露（dual disclosure）；但『MECHANICALLY_INSUFFICIENT』verdict 系『300=distinct 单位』过严读法所得，已被发起人裁决取代——300/100 按 raw case N（不同机制变体计入覆盖）；独立性由 cluster N + 冻结 cluster-aware 单侧95%CI + 机械功效检查保障。",
   "power_check_ref": "m3_data_supply_001/gold/qual/POWER_CHECK.v1.json = POWER_FEASIBLE_PROCEED （每套161/152 cluster ≥ 各统计门零错误 n_min≤59 → 整体率门功效可行；无需 Tier2）",
   "ci_method_frozen": "m3_data_supply_001/gold/qual/CLUSTER_AWARE_CI_METHOD.v1.json（看资格结果前冻结）",
-  "effective_verdict": "PROCEED_UNDER_DUAL_COUNT_AND_CLUSTER_AWARE_CI（非 HONEST_STOP）"
+  "effective_verdict": "PROCEED_UNDER_DUAL_COUNT_AND_CLUSTER_AWARE_CI（非 HONEST_STOP）",
+  "evidence_key_fix_supersedes_161_152": "发起人后续证据身份裁决（build-3 evidence-key-fix）查明：本 receipt 的 161/152 系**错误证据身份口径**（旧 (scenario,claim_id) 把同 scenario 内引不同 source/fact/authorization 的不同证据折叠）。改用真实证据锚 digest(scenario_id+source/fact/authorization ids) 后，distinct 证据锚每套 = A301/B302（总 603），均 ≥ 最严 <1% 门 n_min=299。cluster N 真值以 QUAL_SPLIT_RECEIPT.v2.json + POWER_CHECK.v1.json（重生成，verdict=POWER_FEASIBLE_PROCEED）为准；本 161/152 数字仅保留为触发裁决的历史 finding，不再作容量真值。"
  }
 }

@@ -123,6 +123,125 @@ def _qual_pool_groups() -> list[dict]:
     return [by_id[s] for s in part["qual_pool_groups"]]
 
 
+def _membership_path() -> Path:
+    """发起人裁决：优先读证据锚均衡的 membership v2；缺则回退 v1（旧件保全不覆盖）。"""
+    v2 = SEAL / "membership_v2.json"
+    return v2 if v2.exists() else SEAL / "membership.json"
+
+
+def _anchors_by_scenario() -> dict:
+    """结构化只读：每 qual-pool scenario 的 {family, distinct evidence anchors}（跨轮）。
+    编排会话零明文——只出 scenario_id/family/anchor 摘要，不出题面。"""
+    part = json.loads((GOLD / "DEV_PARTITION.v1.json").read_text(encoding="utf-8"))
+    qual_pool = set(part["qual_pool_groups"])
+    frame = json.loads((M3DS / "SAMPLING_FRAME.v1.json").read_text(encoding="utf-8"))
+    fam = {g["scenario_id"]: g["family_id"] for g in frame["groups"]}
+    by_scen: dict[str, dict] = {}
+    for _rname, (req_rel, out_rel) in ROUND_FILES.items():
+        reqs = {r["request_id"]: r for r in jl(PK / req_rel)}
+        for o in jl(PK / out_rel):
+            sid = reqs[o["request_id"]]["scenario_id"]
+            if sid not in qual_pool:
+                continue
+            d = by_scen.setdefault(sid, {"family": fam.get(sid, "?"), "anchors": set()})
+            for c in o.get("claims", []):
+                d["anchors"].add(GD.evidence_anchor_digest(
+                    sid, c.get("source_ids"), c.get("fact_ids"), c.get("authorization_ids")))
+    return by_scen
+
+
+def cmd_split_v2() -> int:
+    """发起人裁决 membership/split v2：按**结构化证据锚 + 家族配额**盲切（未看正式资格答案），
+    使 A/B distinct 证据锚容量 ≈ 301/302（均 ≥299 → 满足 <1% 门 n_min=299）。scenario 级整切
+    （同锚只属一 scenario → 锚天然不跨集）；家族内均衡 + 总量 swap-opt。旧 membership v1 保全、
+    标 SUPERSEDED_BY_EVIDENCE_KEY_FIX，不覆盖。"""
+    assert_sealed_ignored()
+    frame_digest = json.loads((M3DS / "SAMPLING_FRAME.v1.json").read_text())["frame_digest"]
+    by_scen = _anchors_by_scenario()
+    na = {sid: len(d["anchors"]) for sid, d in by_scen.items()}
+    famof = {sid: d["family"] for sid, d in by_scen.items()}
+    fam_scens: dict[str, list] = {}
+    for sid, d in by_scen.items():
+        fam_scens.setdefault(d["family"], []).append(sid)
+    # 家族内贪心：按锚数降序、确定性哈希平局；分给该家族锚数较少侧（家族持平→总锚较少侧）。
+    A: list[str] = []
+    B: list[str] = []
+    fa: dict[str, int] = {}
+    fb: dict[str, int] = {}
+    tA = tB = 0
+    for famname in sorted(fam_scens):
+        for sid in sorted(fam_scens[famname],
+                          key=lambda s: (-na[s], L.sha_text(famname + s))):
+            if (fa.get(famname, 0), tA) <= (fb.get(famname, 0), tB):
+                A.append(sid); tA += na[sid]; fa[famname] = fa.get(famname, 0) + na[sid]
+            else:
+                B.append(sid); tB += na[sid]; fb[famname] = fb.get(famname, 0) + na[sid]
+    # 同家族跨集 swap，缩总量差（保家族均衡）；确定性（候选按 (新差,a,b) 排序）。
+    sA, sB = set(A), set(B)
+    for _ in range(500):
+        gap = tA - tB
+        if abs(gap) <= 1:
+            break
+        best = None
+        for a in sorted(sA):
+            for b in sorted(sB):
+                if famof[a] != famof[b]:
+                    continue
+                d = na[a] - na[b]
+                newgap = gap - 2 * d
+                if abs(newgap) < abs(gap):
+                    key = (abs(newgap), a, b)
+                    if best is None or key < best[0]:
+                        best = (key, a, b, d)
+        if best is None:
+            break
+        _, a, b, d = best
+        sA.discard(a); sA.add(b); sB.discard(b); sB.add(a); tA -= d; tB += d
+    setA = sorted(sA); setB = sorted(sB)
+
+    def anchors_of(scen_list):
+        s: set = set()
+        for sid in scen_list:
+            s |= by_scen[sid]["anchors"]
+        return s
+    aA, aB = anchors_of(setA), anchors_of(setB)
+    if aA & aB:
+        raise SystemExit("STOP: 证据锚跨集重叠（scenario 级整切不应发生）")
+    membership = {"QUAL_A": setA, "QUAL_B": setB}
+    QOPEN.mkdir(parents=True, exist_ok=True)
+    SEAL.mkdir(exist_ok=True)
+    (SEAL / "membership_v2.json").write_text(
+        json.dumps(membership, ensure_ascii=False, indent=1), encoding="utf-8")
+
+    def famcount(scen_list):
+        c: dict[str, int] = {}
+        for sid in scen_list:
+            c[famof[sid]] = c.get(famof[sid], 0) + na[sid]
+        return dict(sorted(c.items()))
+    receipt = {
+        "schema_version": "p7-m3-qual-split-v2-receipt-v1",
+        "supersedes": "QUAL_SPLIT_RECEIPT.v1.json",
+        "supersede_reason": "SUPERSEDED_BY_EVIDENCE_KEY_FIX：v1 按 (scenario,claim)/round 口径（161/152 伪独立）；"
+                            "v2 按结构化证据锚 digest(scenario_id+source/fact/auth ids) 均衡切分。",
+        "rule": "scenario 级整切（同锚只属一 scenario）；家族内均衡 + 总量 swap-opt；盲切（未看资格答案）。",
+        "at": now(),
+        "QUAL_A": {"scenarios": len(setA), "distinct_evidence_anchors": len(aA),
+                   "per_family_anchors": famcount(setA)},
+        "QUAL_B": {"scenarios": len(setB), "distinct_evidence_anchors": len(aB),
+                   "per_family_anchors": famcount(setB)},
+        "both_meet_strictest_gate_n_min_299": len(aA) >= 299 and len(aB) >= 299,
+        "anchors_disjoint": True,
+        "frame_digest": frame_digest,
+        "membership_sha256": sha_file(SEAL / "membership_v2.json"),
+        "membership_location": "sealed_custody_001/membership_v2.json（保全区；本回执只载数量/摘要）",
+    }
+    (QOPEN / "QUAL_SPLIT_RECEIPT.v2.json").write_text(
+        json.dumps(receipt, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    print(json.dumps({k: receipt[k] for k in ("QUAL_A", "QUAL_B",
+                     "both_meet_strictest_gate_n_min_299")}, ensure_ascii=False, indent=1))
+    return 0
+
+
 def cmd_split() -> int:
     frame_digest = json.loads((M3DS / "SAMPLING_FRAME.v1.json").read_text())["frame_digest"]
     pool = _qual_pool_groups()
@@ -185,7 +304,7 @@ def cmd_split() -> int:
 
 
 def _cases_for_set(set_id: str) -> list[dict]:
-    membership = json.loads((SEAL / "membership.json").read_text(encoding="utf-8"))
+    membership = json.loads(_membership_path().read_text(encoding="utf-8"))
     chosen = set(membership[f"QUAL_{set_id}"])
     scen = {s["scenario_id"]: s for s in jl(PK / "round5/inputs/scenarios.g3.v2.jsonl")}
     frame = json.loads((M3DS / "SAMPLING_FRAME.v1.json").read_text(encoding="utf-8"))
@@ -1112,6 +1231,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("split")
+    sub.add_parser("split_v2")  # 发起人裁决：证据锚均衡 membership v2
     for name in ("faces", "labelfreeze", "goldfreeze"):
         p = sub.add_parser(name)
         p.add_argument("--set", choices=["A", "B"], required=True)
@@ -1132,6 +1252,8 @@ def main() -> int:
     args = ap.parse_args()
     if args.cmd == "split":
         return cmd_split()
+    if args.cmd == "split_v2":
+        return cmd_split_v2()
     if args.cmd == "faces":
         return cmd_faces(args.set, args.max_batches)
     if args.cmd == "label":

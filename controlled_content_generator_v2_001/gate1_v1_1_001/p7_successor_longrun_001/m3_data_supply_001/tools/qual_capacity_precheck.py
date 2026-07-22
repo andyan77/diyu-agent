@@ -159,12 +159,16 @@ def _round_files():
 
 
 def all_evidence_units() -> dict:
-    """跨 4 轮枚举 distinct (scenario_id, claim_id) 证据单位（去重多轮再生）→ {(sid,cid): family_id}。
+    """跨 4 轮枚举 distinct evidence anchor（发起人证据身份裁决）→ {anchor: {family, scenario}}。
 
-    结构化只读（scenario_id/claim_id/family，无题面/无 claim_text）→ 编排会话零明文。
-    同一 (scenario, claim) 在 round1/2/3/5 的不同措辞 = 同一独立证据单位（§四.6，不增 N）。
+    anchor = digest(scenario_id + 排序 source/fact/authorization ids)。取代旧 (scenario_id, claim_id)
+    口径（把同 scenario 内不同证据的 claim 折叠成 161/152 伪独立虚数）。同 (scenario,claim) 跨轮再生
+    = 同锚（不增 N）；同 scenario 内引不同 source/fact/auth 的不同 claim = 真不同证据（各成独立锚）。
+    结构化只读（scenario/family/anchor 摘要，无题面）→ 编排会话零明文。
     """
     ROUND_FILES, PK, _ = _round_files()
+    sys.path.insert(0, str(M3DS / "tools"))
+    import qual_gold_derivation as GD  # noqa: E402 延迟导入避免循环
     frame = json.loads((M3DS / "SAMPLING_FRAME.v1.json").read_text(encoding="utf-8"))
     fam = {g["scenario_id"]: g["family_id"] for g in frame["groups"]}
 
@@ -178,40 +182,44 @@ def all_evidence_units() -> dict:
             sid = reqs[o["request_id"]]["scenario_id"]
             for c in o.get("claims", []):
                 round_instances += 1
-                units[(sid, c["claim_id"])] = fam.get(sid, "?")
+                a = GD.evidence_anchor_digest(
+                    sid, c.get("source_ids"), c.get("fact_ids"), c.get("authorization_ids"))
+                units[a] = {"family": fam.get(sid, "?"), "scenario": sid}
     return {"units": units, "round_instances": round_instances,
             "distinct_evidence_units": len(units)}
 
 
 def compute_evidence_supply() -> dict:
-    """按真实 A/B split（membership.json）枚举每套 distinct 证据单位供给（+ 每族）。
+    """按真实 A/B split（优先 membership_v2 证据锚均衡切分）枚举每套 distinct 证据锚供给（+ 每族）。
 
-    membership 缺失则以 90 组池均衡估算上界。供给 = distinct source_group（(scenario,claim)），
-    即**任一单类**分母的上确界（一类是全体单位的子集）。variants 不计（§六B 已作废）。
+    membership 缺失则以 90 组池均衡估算上界。供给 = distinct evidence anchor（cluster 独立单位），
+    驱动 cluster-aware CI / 功效（power）。raw 覆盖供给另由 precheck() 的 claim 实例口径给出（双计数）。
     """
     ev = all_evidence_units()
     units = ev["units"]
     ROUND_FILES, PK, SEAL = _round_files()
-    mem_path = SEAL / "membership.json"
+    mem_path = SEAL / "membership_v2.json"
+    if not mem_path.is_file():
+        mem_path = SEAL / "membership.json"
     per_set: dict = {}
     if mem_path.is_file():
         mem = json.loads(mem_path.read_text(encoding="utf-8"))
         for s in ("A", "B"):
             chosen = set(mem[f"QUAL_{s}"])
-            du = [fam for (sid, _cid), fam in units.items() if sid in chosen]
+            du = [u["family"] for u in units.values() if u["scenario"] in chosen]
             per_set[s] = {"distinct_evidence_units": len(du),
                           "per_family": dict(sorted(Counter(du).items())),
                           "chosen_scenarios": len(chosen)}
-        split_source = "sealed_custody_001/membership.json（真实 split）"
+        split_source = f"sealed_custody_001/{mem_path.name}（真实 split，证据锚口径）"
     else:
         half = ev["distinct_evidence_units"] // 2
-        fc = {f: c // 2 for f, c in Counter(units.values()).items()}
+        fc = {f: c // 2 for f, c in Counter(u["family"] for u in units.values()).items()}
         per_set = {s: {"distinct_evidence_units": half, "per_family": dict(sorted(fc.items())),
                        "chosen_scenarios": 45} for s in ("A", "B")}
         split_source = "membership 缺失 → 90 组池均衡上界估算"
     return {"round_instances_inflated": ev["round_instances"],
             "distinct_evidence_units_total": ev["distinct_evidence_units"],
-            "per_family_total": dict(sorted(Counter(units.values()).items())),
+            "per_family_total": dict(sorted(Counter(u["family"] for u in units.values()).items())),
             "per_set": per_set, "split_source": split_source}
 
 

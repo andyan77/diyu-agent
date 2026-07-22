@@ -1,0 +1,34 @@
+{
+ "schema_version": "p7-m3-qual-split-v2-receipt-v1",
+ "supersedes": "QUAL_SPLIT_RECEIPT.v1.json",
+ "supersede_reason": "SUPERSEDED_BY_EVIDENCE_KEY_FIX：v1 按 (scenario,claim)/round 口径（161/152 伪独立）；v2 按结构化证据锚 digest(scenario_id+source/fact/auth ids) 均衡切分。",
+ "rule": "scenario 级整切（同锚只属一 scenario）；家族内均衡 + 总量 swap-opt；盲切（未看资格答案）。",
+ "at": "2026-07-22T11:09:17.334401+00:00",
+ "QUAL_A": {
+  "scenarios": 44,
+  "distinct_evidence_anchors": 301,
+  "per_family_anchors": {
+   "F1_PEOPLE_AND_REAL_SCENE": 83,
+   "F2_PROFESSIONAL_AND_SEARCH": 73,
+   "F3_PRODUCT_RELATION_AND_AESTHETIC": 58,
+   "F4_STORE_LOCAL_AND_RETAIL": 59,
+   "F5_ENTERPRISE_LONG_TERM_TRUST": 28
+  }
+ },
+ "QUAL_B": {
+  "scenarios": 46,
+  "distinct_evidence_anchors": 302,
+  "per_family_anchors": {
+   "F1_PEOPLE_AND_REAL_SCENE": 83,
+   "F2_PROFESSIONAL_AND_SEARCH": 75,
+   "F3_PRODUCT_RELATION_AND_AESTHETIC": 58,
+   "F4_STORE_LOCAL_AND_RETAIL": 58,
+   "F5_ENTERPRISE_LONG_TERM_TRUST": 28
+  }
+ },
+ "both_meet_strictest_gate_n_min_299": true,
+ "anchors_disjoint": true,
+ "frame_digest": "b20a9ae3fe6d8f45bd7f13aa8b00aa92fdba9f61de0cdd72b93e5cf3829f77d8",
+ "membership_sha256": "56874a63a1a55d00193a3f31941f6ddddb6ad8c61fea9842e606ff13a46a000c",
+ "membership_location": "sealed_custody_001/membership_v2.json（保全区；本回执只载数量/摘要）"
+}
