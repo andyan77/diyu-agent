@@ -48,6 +48,7 @@ from spine.canonical import digest_json   # noqa: E402
 import qual_gold_derivation as GD         # noqa: E402  §四.2 逐模块合规派生
 import qual_generation as GEN             # noqa: E402  §四.4 真 generation 链
 import qual_custody_recompute as CUS      # noqa: E402  §5.1 密封复算（class_counts 复用）
+import qual_review_formulaic as RF        # noqa: E402  §六 review/formulaic 真子管线（全量生产）
 
 BATCH = 10
 # R3-build §四.1：6 种 challenge kind（真源 = CAPACITY_AND_CONSTRUCTION_PLAN.variant_construction.kinds
@@ -513,6 +514,239 @@ def cmd_labelfreeze(set_id: str) -> int:
 _RICH_FIELDS = GD.RICH_LABEL_FIELDS + ("rationale",)
 
 
+# ============================================================ §六 review 子管线（全量生产）
+# 全量 runner 缺 review 生产命令（cmd_goldfreeze 只消费 review_units.json）。本命令：
+# 从真源自然 claim 装配 ≥40 可评审内容单元 → 双席(A=Codex/B=Opus)独立 decision+hard_veto →
+# assemble → 写 sealed_custody_001/qual_{set}/review_units.json（cmd_goldfreeze 消费）。
+# 复用 RF 真子管线 + cmd_label 的 batched/resume/registry 纪律；主会话零明文。
+
+def _seat_call(carrier: str, cache_dir: Path, batch_stem: str, kind: str, count: int):
+    """RF 席位调用适配器：绑定真 L.attempt_call + 密封 REG；按 batch_stem 落缓存，重跑不重复付费。"""
+    cache_dir.mkdir(parents=True, exist_ok=True)
+
+    def call(prompt, ok, _rf_stem):
+        cache = cache_dir / f"{batch_stem}.rows.json"
+        if cache.is_file():
+            rows = json.loads(cache.read_text(encoding="utf-8"))
+            if ok(rows):
+                return rows
+        rows = L.attempt_call(prompt, ok, cache_dir, batch_stem, REG,
+                              {"kind": kind, "seat": batch_stem.rsplit("_", 1)[-1],
+                               "batch": batch_stem, "visible_material_count": count,
+                               "retention": "标签明文留存保全区；registry 零内容"}, carrier=carrier)
+        if rows is not None:
+            cache.write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
+        return rows
+    return call
+
+
+REVIEW_TARGET = 50   # 合同 review_double_reviewed_items=40；建 50 留裕度
+REVIEW_CHUNK = 10
+
+
+def _review_items_for_set(set_id: str, target: int = REVIEW_TARGET) -> list[dict]:
+    """从真源自然 claim 装配可评审内容单元（五家族均衡，确定性排序取前 target）。
+    author_identity ≠ 审核席身份（满足 role_collision_absent）。"""
+    cases = _cases_for_set(set_id)
+    by_fam: dict[str, list[dict]] = {}
+    for c in sorted(cases, key=lambda c: c["case_id"]):
+        by_fam.setdefault(c["family_id"], []).append(c)
+    fams = sorted(by_fam)
+    picked: list[dict] = []
+    idx = 0
+    # 轮转五家族取，均衡覆盖，直到 target
+    while len(picked) < target and any(idx < len(by_fam[f]) for f in fams):
+        for f in fams:
+            if idx < len(by_fam[f]) and len(picked) < target:
+                picked.append(by_fam[f][idx])
+        idx += 1
+    return [{"item_id": f"QUAL{set_id}-REV-{c['case_id']}", "family_id": c["family_id"],
+             "source_group_id": f"rev-{c['source_group_id']}",
+             "author_identity": f"GEN_AUTHOR::{c['case_id']}",
+             "content": c["claim_text"], "claim_boundary": c["claim_boundary"],
+             "authorization_scope": c["authorization_scope"],
+             "source_summary_a": c["source_summary_a"], "source_summary_b": c["source_summary_b"]}
+            for c in picked]
+
+
+def cmd_review(set_id: str, max_batches: int) -> int:
+    assert_sealed_ignored()
+    sdir = SEAL / f"qual_{set_id}"
+    sdir.mkdir(parents=True, exist_ok=True)
+    items = _review_items_for_set(set_id)
+    (sdir / "review_items.json").write_text(
+        json.dumps(items, ensure_ascii=False, indent=1), encoding="utf-8")
+    tmpl = L.load_template(ANNEXC, "qual_review_labeler")
+    pd = digest_json({"tmpl": "qual_review_labeler", "sha": L.sha_text(tmpl)})
+    batches = [items[i:i + REVIEW_CHUNK] for i in range(0, len(items), REVIEW_CHUNK)]
+    dec: dict[str, dict] = {"A": {}, "B": {}}
+    for seat, carrier in (("A", "codex"), ("B", "claude")):
+        done = 0  # per-seat：max_batches 不得让某席空缺（否则 assemble 失败）
+        for bi, batch in enumerate(batches):
+            if done >= max_batches:
+                break
+            call = _seat_call(carrier, sdir / f"review_{seat}", f"rb_{bi:03d}_{seat}",
+                              f"QUAL{set_id}_REVIEW", len(batch))
+            d = RF.label_review_seat(batch, seat, call=call, template=tmpl)
+            dec[seat].update(d)
+            done += 1
+    units = RF.assemble_review_units(items, dec["A"], dec["B"],
+                                     prompt_digest_a=pd, prompt_digest_b=pd)
+    (sdir / "review_units.json").write_text(
+        json.dumps(units, ensure_ascii=False, indent=1), encoding="utf-8")
+    disagree = sum(1 for u in units
+                   if u["judgments"][0]["decision"] != u["judgments"][1]["decision"])
+    print(json.dumps({"set": set_id, "review_items": len(items),
+                      "review_units": len(units), "judgment_records": len(units) * 2,
+                      "cross_seat_disagree": disagree,
+                      "written": "sealed_custody_001/qual_%s/review_units.json" % set_id},
+                     ensure_ascii=False))
+    return 0
+
+
+# ========================================================= §六 formulaic 子管线（全量生产）
+# 全量 runner 缺 formulaic 生产命令。本命令：从真源 generated content(body) 挖 pair（偏置三类
+# 候选 → 拉平分布）→ 双席逐 6 轴 → verdict 分歧仲裁 → assemble → 写 formulaic_units.json。
+# 分布靠偏置候选提高命中，真 verdict 仍由双席决定（绝不预置）；不足由 top-up 再跑补（剩余缺口）。
+# NG：候选设 necessary_grammar_exception_id="NG-1"（derive_formulaic_records 自动注册该 exception）；
+# 仅当双席真判 NECESSARY_GRAMMAR 轴时才落 NG verdict。
+
+FORMULAIC_CHUNK = 8
+# 语料结构：每 scenario = 4 个同 (profile,variant) 输出。故「同 scenario」即「同模板」。
+# 同 scenario 对 = pos+NG 双偏置（同模板→多判 FORMULAIC，少数结构必需→NECESSARY_GRAMMAR），
+# 全部设 exc=NG-1 使 NG verdict 合法；跨 profile 对 = neg 偏置（异构→NOT_FORMULAIC）。
+# over-generate 到 ~340（≥300）；真 verdict 仍由双席决定，分布不足由 top-up 再跑补。
+FORM_SAME_SCEN_CAP, FORM_CROSS_PROF_CAP = 180, 160
+
+
+def _set_outputs(set_id: str) -> list[dict]:
+    """本套 generated content 输出（保留 body 全文供 formulaic 结构比对）。"""
+    membership = json.loads((SEAL / "membership.json").read_text(encoding="utf-8"))
+    chosen = set(membership[f"QUAL_{set_id}"])
+    frame = json.loads((M3DS / "SAMPLING_FRAME.v1.json").read_text(encoding="utf-8"))
+    fam = {g["scenario_id"]: g["family_id"] for g in frame["groups"]}
+    outs = []
+    for rname, (req_rel, out_rel) in ROUND_FILES.items():
+        reqs = {r["request_id"]: r for r in jl(PK / req_rel)}
+        for o in jl(PK / out_rel):
+            sid = reqs[o["request_id"]]["scenario_id"]
+            if sid not in chosen:
+                continue
+            body = "\n".join(o.get("body", []))[:1200]
+            if not body.strip():
+                continue
+            outs.append({"oid": f"{rname}:{o['request_id']}", "scenario_id": sid,
+                         "profile_id": o.get("profile_id", ""),
+                         "assigned_variant": o.get("assigned_variant", ""),
+                         "family_id": fam.get(sid, "F1_PEOPLE_AND_REAL_SCENE"),
+                         "author_identity": o.get("author_identity", f"AUTHOR::{o['request_id']}"),
+                         "content": body})
+    return outs
+
+
+def _mk_form_pair(ref: str, lo: dict, ro: dict, exc: str | None) -> dict:
+    return {"pair_ref": ref, "left_id": lo["oid"], "right_id": ro["oid"],
+            "family_id": lo["family_id"], "source_group_id": f"fpair-{ref}",
+            "left_content": lo["content"], "right_content": ro["content"],
+            "left_author_identity": lo["author_identity"],
+            "right_author_identity": ro["author_identity"],
+            "necessary_grammar_exception_id": exc}
+
+
+def _formulaic_pairs_for_set(set_id: str) -> list[dict]:
+    """挖偏置 pair 候选（确定性排序）：
+      SS = 同 scenario（同模板）全 C(n,2)，exc=NG-1 → pos+NG 偏置；
+      CP = 跨 profile（异构）→ neg 偏置，exc=None。"""
+    outs = sorted(_set_outputs(set_id), key=lambda o: o["oid"])
+    by_prof: dict[str, list[dict]] = {}
+    by_scen: dict[str, list[dict]] = {}
+    for o in outs:
+        by_prof.setdefault(o["profile_id"], []).append(o)
+        by_scen.setdefault(o["scenario_id"], []).append(o)
+    pairs, seen, idx = [], set(), 0
+
+    def add(lo, ro, exc, tag):
+        nonlocal idx
+        key = tuple(sorted((lo["oid"], ro["oid"])))
+        if lo["oid"] == ro["oid"] or key in seen:
+            return False
+        seen.add(key)
+        pairs.append(_mk_form_pair(f"QUAL{set_id}-FP-{tag}-{idx:04d}", lo, ro, exc))
+        idx += 1
+        return True
+
+    # SS：同 scenario 内全对（同模板→pos；结构必需→NG），exc=NG-1 使 NG verdict 合法
+    n_ss = 0
+    for sid in sorted(by_scen):
+        g = sorted(by_scen[sid], key=lambda o: o["oid"])
+        for i in range(len(g)):
+            for j in range(i + 1, len(g)):
+                if n_ss >= FORM_SAME_SCEN_CAP:
+                    break
+                if add(g[i], g[j], "NG-1", "SS"):
+                    n_ss += 1
+    # CP：跨 profile（不同 scenario）配 → 异构偏 NOT_FORMULAIC
+    profs = sorted(by_prof)
+    n_cp = 0
+    for gap in range(1, len(profs)):
+        for i in range(len(profs) - gap):
+            if n_cp >= FORM_CROSS_PROF_CAP:
+                break
+            a, b = by_prof[profs[i]], by_prof[profs[i + gap]]
+            for k in range(min(len(a), len(b))):
+                if n_cp >= FORM_CROSS_PROF_CAP:
+                    break
+                if a[k]["scenario_id"] != b[k]["scenario_id"] and add(a[k], b[k], None, "CP"):
+                    n_cp += 1
+        if n_cp >= FORM_CROSS_PROF_CAP:
+            break
+    return pairs
+
+
+def cmd_formulaic(set_id: str, max_batches: int) -> int:
+    assert_sealed_ignored()
+    sdir = SEAL / f"qual_{set_id}"
+    sdir.mkdir(parents=True, exist_ok=True)
+    pairs = _formulaic_pairs_for_set(set_id)
+    (sdir / "formulaic_pairs.json").write_text(
+        json.dumps(pairs, ensure_ascii=False, indent=1), encoding="utf-8")
+    tmpl = L.load_template(ANNEXC, "qual_formulaic_axis_labeler")
+    adj_tmpl = L.load_template(ANNEXC, "qual_formulaic_axis_adjudicator")
+    pd = digest_json({"tmpl": "qual_formulaic_axis_labeler", "sha": L.sha_text(tmpl)})
+    batches = [pairs[i:i + FORMULAIC_CHUNK] for i in range(0, len(pairs), FORMULAIC_CHUNK)]
+    axes: dict[str, dict] = {"A": {}, "B": {}}
+    for seat, carrier in (("A", "codex"), ("B", "claude")):
+        done = 0
+        for bi, batch in enumerate(batches):
+            if done >= max_batches:
+                break
+            call = _seat_call(carrier, sdir / f"formaxis_{seat}", f"fb_{bi:03d}_{seat}",
+                              f"QUAL{set_id}_FORMAXIS", len(batch))
+            a = RF.label_formulaic_seat(batch, seat, call=call, template=tmpl)
+            axes[seat].update(a)
+            done += 1
+    need = RF.pairs_needing_adjudication(pairs, axes["A"], axes["B"])
+    adj_axes: dict[str, dict] = {}
+    adj_batches = [need[i:i + FORMULAIC_CHUNK] for i in range(0, len(need), FORMULAIC_CHUNK)]
+    for bi, batch in enumerate(adj_batches):
+        call = _seat_call("claude", sdir / "formaxis_adj", f"fadj_{bi:03d}",
+                          f"QUAL{set_id}_FORMADJ", len(batch))
+        adj_axes.update(RF.adjudicate_formulaic_axes(batch, axes["A"], axes["B"],
+                                                     call=call, template=adj_tmpl))
+    units = RF.assemble_formulaic_units(pairs, axes["A"], axes["B"], adj_axes,
+                                        prompt_digest_a=pd, prompt_digest_b=pd)
+    (sdir / "formulaic_units.json").write_text(
+        json.dumps(units, ensure_ascii=False, indent=1), encoding="utf-8")
+    dist: dict[str, int] = {}
+    for u in units:
+        dist[u["final_verdict"]] = dist.get(u["final_verdict"], 0) + 1
+    print(json.dumps({"set": set_id, "pairs": len(pairs), "adjudicated": len(need),
+                      "final_verdict_distribution": dict(sorted(dist.items())),
+                      "written": "sealed_custody_001/qual_%s/formulaic_units.json" % set_id},
+                     ensure_ascii=False))
+    return 0
+
+
 def cmd_adjudicate(set_id: str, max_batches: int) -> int:
     assert_sealed_ignored()
     # §四.1 富标签裁决：隔离仲裁席对九模块字段分歧裁断（旧二字段 adjudicator 保留供 G2）。
@@ -817,6 +1051,10 @@ def main() -> int:
     adp = sub.add_parser("adjudicate")
     adp.add_argument("--set", choices=["A", "B"], required=True)
     adp.add_argument("--max-batches", type=int, default=99)
+    for name in ("review", "formulaic"):  # §六 review/formulaic 真子管线（全量生产）
+        rp = sub.add_parser(name)
+        rp.add_argument("--set", choices=["A", "B"], required=True)
+        rp.add_argument("--max-batches", type=int, default=99)
     sub.add_parser("finalize")
     args = ap.parse_args()
     if args.cmd == "split":
@@ -829,6 +1067,10 @@ def main() -> int:
         return cmd_labelfreeze(args.set)
     if args.cmd == "adjudicate":
         return cmd_adjudicate(args.set, args.max_batches)
+    if args.cmd == "review":
+        return cmd_review(args.set, args.max_batches)
+    if args.cmd == "formulaic":
+        return cmd_formulaic(args.set, args.max_batches)
     if args.cmd == "goldfreeze":
         return cmd_goldfreeze(args.set)
     if args.cmd == "finalize":
