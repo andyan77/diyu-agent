@@ -1,0 +1,29 @@
+{
+ "schema_version": "p7-m3-qual-pilot-risk-diagnosis-v1",
+ "scope": "sealed pilot_A labels（aggregate-only；零明文：无 per-case risk/无 claim/无 rationale）",
+ "labeled_both_seats": 11,
+ "risk_disputes": 6,
+ "entailment_disputes": 0,
+ "risk_ladder_distance_histogram": {
+  "1": 6
+ },
+ "risk_disputes_crossing_HIGH_boundary": 0,
+ "risk_disputes_same_low_tier_diff_level": 6,
+ "risk_disputes_same_high_tier_diff_level": 0,
+ "risk_disputes_per_family": {
+  "F1_PEOPLE_AND_REAL_SCENE": 1,
+  "F2_PROFESSIONAL_AND_SEARCH": 2,
+  "F4_STORE_LOCAL_AND_RETAIL": 2,
+  "F5_ENTERPRISE_LONG_TERM_TRUST": 1
+ },
+ "diagnosis": "6 分歧全 ladder 距离1 且 0 跨 HIGH 边界、全为 LOW<->MEDIUM 同低层级差、entailment 0 分歧 → 定性为 LOW/MEDIUM 定义粒度歧义（非真实判断分歧/非证据不足/非标签解析差异）。材料 HIGH 门（high_risk_* 计数所依）双席全一致。",
+ "calibration": {
+  "target": "qual_rich_labeler LOW/MEDIUM 边界判据",
+  "kind": "single_minimal_calibration",
+  "old_labeler_sha256": "98a9eaf5f260629888ed911fb8aca267b1df3fb3989cf59d6340e36c42a62a45",
+  "new_labeler_sha256": "80fda3669a1d1fb21a4ab93c337a63fd4e79015293ed44bb496d0a2dcdcdeaa0",
+  "recheck": "校准后用现有 pilot faces 定向风险复核并入 §五 完整 pilot 重跑（复用未变模块标签，仅风险定向复标）",
+  "no_second_rubric": true,
+  "no_open_research": true
+ }
+}

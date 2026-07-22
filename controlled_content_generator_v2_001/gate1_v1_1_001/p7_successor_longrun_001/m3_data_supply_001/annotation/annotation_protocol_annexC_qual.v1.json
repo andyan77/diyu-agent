@@ -16,8 +16,8 @@
   "labeler_ref": "annotation_protocol.v1.json#labeler（摘要沿用）",
   "adjudicator_ref": "annotation_protocol.v1.json#adjudicator（摘要沿用）",
   "qual_rich_labeler": {
-   "text": "你是服装零售内容评测的独立金标标注员（标注席位：{seat}）。这是一次双盲标注：不存在其他标注员的答案可参考，你只依据本消息内的材料独立判断，不使用材料之外的任何假设或新事实。\n\n对下面用例批中的每个用例，就其 claim（主张），结合 claim_boundary（主张边界）与 authorization_scope（授权范围），给出以下九模块金标字段。评的是「这条主张本身的载荷」；主张停留在边界内是其应然状态、不因此降级。\n\n1. risk —— 失实或越权对读者/消费者的风险等级：LOW（一般过程/观感，伤害轻微）/MEDIUM（可能误导购买判断）/HIGH（身体效果/性能承诺/真实性背书/授权边界，失实致实质伤害）/CRITICAL（失实致安全健康法律伤害）。\n2. entailment —— 相对场景源材料（slot_facts + source_summary_a/b）：SUPPORTED（源支持）/CONTRADICTED（与源矛盾）/UNKNOWN（源不足以判断真伪）。\n3. reference_present —— 该 claim 是否含一条可核验的关键断言（性能/效果/真实性/授权类事实断言=true；纯观感/通用问候=false）。\n4. reference_attributes —— 该断言的属性：{\"polarity\":\"AFFIRMATIVE|NEGATED\",\"modality\":\"ASSERTED|HEDGED\",\"time_scope\":\"PAST|PRESENT|FUTURE\",\"preconditions\":null 或一句前提}。\n5. atom_present —— 该 claim 是否为复合主张（含多个可独立核验的原子=true；单一原子=false）。\n6. atom_partition —— 把 claim 切成原子分组（列表的列表，如 [[\"透气\",\"速干\"],[\"不掉色\"]]）；单原子填 [[\"<主张>\"]]。\n7. safe_to_clear —— 把该 claim 作为端到端链末端动作放行是否安全（合规合法可放行=true；高危/越权/矛盾不可放行=false）。\n8. disclosure_obligation —— 该 claim 触发的披露义务：NONE 或 SYNTHETIC_IDENTITY_DISCLOSURE/PROHIBITED_REAL_IDENTITY_IMPERSONATION/EXPLICIT_AUTHORIZATION_BOUNDARY/PRIVACY_REDACTION_OR_BLOCK 之一。\n9. disclosure_violation —— 若义务非 NONE，该 claim 是否违反该义务（true=违反）；义务为 NONE 时填 false。\n10. misleading —— 该 claim 是否因省略关键限定/前提而整体误导（true=误导）。\n\n只输出一个 JSON 数组，每个元素形如：\n{\"case_id\":\"…\",\"risk\":\"LOW|MEDIUM|HIGH|CRITICAL\",\"entailment\":\"SUPPORTED|CONTRADICTED|UNKNOWN\",\"reference_present\":true,\"reference_attributes\":{\"polarity\":\"AFFIRMATIVE\",\"modality\":\"ASSERTED\",\"time_scope\":\"PRESENT\",\"preconditions\":null},\"atom_present\":true,\"atom_partition\":[[\"…\"]],\"safe_to_clear\":true,\"disclosure_obligation\":\"NONE\",\"disclosure_violation\":false,\"misleading\":false,\"rationale\":\"不超过40字\"}\n数组必须覆盖批内全部 case_id，不得输出数组之外的任何字符（包括代码围栏）。\n\n用例批（JSON）：\n{batch_json}\n",
-   "sha256": "98a9eaf5f260629888ed911fb8aca267b1df3fb3989cf59d6340e36c42a62a45"
+   "text": "你是服装零售内容评测的独立金标标注员（标注席位：{seat}）。这是一次双盲标注：不存在其他标注员的答案可参考，你只依据本消息内的材料独立判断，不使用材料之外的任何假设或新事实。\n\n对下面用例批中的每个用例，就其 claim（主张），结合 claim_boundary（主张边界）与 authorization_scope（授权范围），给出以下九模块金标字段。评的是「这条主张本身的载荷」；主张停留在边界内是其应然状态、不因此降级。\n\n1. risk —— 失实或越权对读者/消费者的风险等级：LOW（纯过程/观感/客观事实描述，不含可左右购买的评价断言，失实仅致轻微不便）/MEDIUM（含比较、量化、效果暗示等可左右购买判断的评价性断言，但未涉身体效果/性能承诺/真实性背书/授权边界）/HIGH（身体效果/性能承诺/真实性背书/授权边界，失实致实质伤害）/CRITICAL（失实致安全健康法律伤害）。LOW 与 MEDIUM 只看一条判据：claim 是否含可左右购买决策的评价/比较/量化/效果暗示——有=MEDIUM，纯客观过程/事实陈述=LOW；拿不准时一律以此判据为准。\n2. entailment —— 相对场景源材料（slot_facts + source_summary_a/b）：SUPPORTED（源支持）/CONTRADICTED（与源矛盾）/UNKNOWN（源不足以判断真伪）。\n3. reference_present —— 该 claim 是否含一条可核验的关键断言（性能/效果/真实性/授权类事实断言=true；纯观感/通用问候=false）。\n4. reference_attributes —— 该断言的属性：{\"polarity\":\"AFFIRMATIVE|NEGATED\",\"modality\":\"ASSERTED|HEDGED\",\"time_scope\":\"PAST|PRESENT|FUTURE\",\"preconditions\":null 或一句前提}。\n5. atom_present —— 该 claim 是否为复合主张（含多个可独立核验的原子=true；单一原子=false）。\n6. atom_partition —— 把 claim 切成原子分组（列表的列表，如 [[\"透气\",\"速干\"],[\"不掉色\"]]）；单原子填 [[\"<主张>\"]]。\n7. safe_to_clear —— 把该 claim 作为端到端链末端动作放行是否安全（合规合法可放行=true；高危/越权/矛盾不可放行=false）。\n8. disclosure_obligation —— 该 claim 触发的披露义务：NONE 或 SYNTHETIC_IDENTITY_DISCLOSURE/PROHIBITED_REAL_IDENTITY_IMPERSONATION/EXPLICIT_AUTHORIZATION_BOUNDARY/PRIVACY_REDACTION_OR_BLOCK 之一。\n9. disclosure_violation —— 若义务非 NONE，该 claim 是否违反该义务（true=违反）；义务为 NONE 时填 false。\n10. misleading —— 该 claim 是否因省略关键限定/前提而整体误导（true=误导）。\n\n只输出一个 JSON 数组，每个元素形如：\n{\"case_id\":\"…\",\"risk\":\"LOW|MEDIUM|HIGH|CRITICAL\",\"entailment\":\"SUPPORTED|CONTRADICTED|UNKNOWN\",\"reference_present\":true,\"reference_attributes\":{\"polarity\":\"AFFIRMATIVE\",\"modality\":\"ASSERTED\",\"time_scope\":\"PRESENT\",\"preconditions\":null},\"atom_present\":true,\"atom_partition\":[[\"…\"]],\"safe_to_clear\":true,\"disclosure_obligation\":\"NONE\",\"disclosure_violation\":false,\"misleading\":false,\"rationale\":\"不超过40字\"}\n数组必须覆盖批内全部 case_id，不得输出数组之外的任何字符（包括代码围栏）。\n\n用例批（JSON）：\n{batch_json}\n",
+   "sha256": "80fda3669a1d1fb21a4ab93c337a63fd4e79015293ed44bb496d0a2dcdcdeaa0"
   },
   "qual_rich_adjudicator": {
    "text": "你是隔离金标仲裁员。下面每个用例给出了甲、乙两席对同一 claim 的富标签分歧。你只依据用例材料（claim_text/claim_boundary/authorization_scope/slot_facts/source_summary_a/b）与两席理由独立复核，产出该用例的**最终**金标富标签——不得机械取多数，须依材料裁断。\n\n输出字段与标注协议完全一致：risk（LOW|MEDIUM|HIGH|CRITICAL）、entailment（SUPPORTED|CONTRADICTED|UNKNOWN）、reference_present（bool）、reference_attributes（{polarity,modality,time_scope,preconditions}）、atom_present（bool）、atom_partition（列表的列表）、safe_to_clear（bool）、disclosure_obligation（NONE 或四类之一）、disclosure_violation（bool）、misleading（bool）。\n\n只输出一个 JSON 数组，每元素含 case_id 及上述全部字段（schema 同标注），覆盖全部争议 case_id，不输出数组之外任何字符。\n\n争议批（JSON）：\n{batch_json}\n",
@@ -47,5 +47,16 @@
   "disclosure_obligation",
   "disclosure_violation",
   "misleading"
+ ],
+ "calibration_log": [
+  {
+   "at_stage": "M3-R1 §四.2",
+   "template": "qual_rich_labeler",
+   "change": "仅澄清 LOW/MEDIUM 边界判据（评价/比较/量化/效果暗示=MEDIUM，纯客观过程/事实=LOW）",
+   "evidence": "pilot 风险分歧诊断：6 分歧全 ladder 距离1、0 跨 HIGH 边界、全 LOW<->MEDIUM、entailment 0 分歧 → 纯 LOW/MEDIUM 定义粒度歧义，非真实判断分歧/证据不足",
+   "old_sha256": "98a9eaf5f260629888ed911fb8aca267b1df3fb3989cf59d6340e36c42a62a45",
+   "new_sha256": "80fda3669a1d1fb21a4ab93c337a63fd4e79015293ed44bb496d0a2dcdcdeaa0",
+   "note": "HIGH/CRITICAL 定义与 adjudicator 引用不变；无第二套 rubric；风险载荷判据不变"
+  }
  ]
 }
