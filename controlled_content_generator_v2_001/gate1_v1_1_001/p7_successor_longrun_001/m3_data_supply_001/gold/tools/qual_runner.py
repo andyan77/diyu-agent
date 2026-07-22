@@ -64,6 +64,85 @@ VARIANT_KINDS = CHALLENGE_KINDS  # 向后兼容旧引用名
 def normalize_kind(kind: str) -> str:
     """把旧冻结 generation 的 legacy kind 映射到当前 6-kind 家族（只读向对齐，不回写旧数据）。"""
     return LEGACY_KIND_MAP.get(kind, kind)
+
+
+DISCLOSURE_FAMS = ("F1_PEOPLE_AND_REAL_SCENE", "F2_PROFESSIONAL_AND_SEARCH",
+                   "F3_PRODUCT_RELATION_AND_AESTHETIC", "F4_STORE_LOCAL_AND_RETAIL",
+                   "F5_ENTERPRISE_LONG_TERM_TRUST")
+# §六 build-4 确定性 disclosure 覆盖。disclosure obligation 按 rubric
+# (disclosure_obligation_matrix.v1：SYNTHETIC_IDENTITY_AND_NO_IMPERSONATION_REMAIN_DETERMINISTIC)
+# 是**确定性触发**：给定明确 trigger 内容，对应义务必然成立。旧路径靠标注员对普通 face 有机标出
+# obligation → 脆弱（新证据锚 faces 不涉披露 → 0 覆盖，pilot nine_modules 失守）。build-4：确定性构造
+# 无歧义触发 4 义务类型的**行业通用** face（不涉真品牌/真顾客真事实——案例为构造演示），走同一真 AI
+# 双席标注管线 → obligation 被真席标出 → 派生真 disclosure 记录（非硬写 label，非假绿）。trigger 只落
+# claim_text/slot_facts 的**事实陈述**，绝不写 obligation enum 名（防泄漏偏置标注独立性）。
+_DISCLOSURE_TEMPLATES = (
+    ("SYNTHETIC_IDENTITY_DISCLOSURE",
+     "这条秋冬穿搭讲解视频由本店人工智能合成的虚拟数字主播出镜，全程以真人口吻讲解并与观众互动，"
+     "页面与视频内均未任何标注该出镜形象为合成的虚拟身份。",
+     "判定该内容就『出镜者为合成虚拟身份』一事是否负有向读者披露的义务及是否违反",
+     ["出镜讲解者为人工智能合成的虚拟数字主播", "页面与视频均未标注其为合成虚拟身份"]),
+    ("PROHIBITED_REAL_IDENTITY_IMPERSONATION",
+     "这篇种草文以某位当红女明星『本人亲测、每天都穿这件』的第一人称口吻撰写推荐语，实际并未获得"
+     "该公众人物任何授权，系门店文案单方面虚构其为品牌代言人。",
+     "判定该内容就『假冒真实公众人物身份代言』一事是否负有义务及是否违反",
+     ["以某真实公众人物第一人称口吻撰写代言推荐", "未获该公众人物任何授权，系文案虚构代言"]),
+    ("EXPLICIT_AUTHORIZATION_BOUNDARY",
+     "该素材获授权的范围明确仅限门店内部陈列图文使用；但发布方却以品牌总部官方名义对外发布面向"
+     "全国消费者的统一售后与退换承诺，超出被授权的内容用途与主体范围。",
+     "判定该内容就『发布主体与用途超出显式授权边界』一事是否负有义务及是否违反",
+     ["授权范围仅限门店内部陈列图文使用", "实际以总部名义对外发布全国统一售后承诺"]),
+    ("PRIVACY_REDACTION_OR_BLOCK",
+     "这条成交案例分享中直接展示了一位到店顾客的真实姓名、完整手机号码与消费小票截图，未做任何"
+     "隐私打码或脱敏处理即公开发布（案例为合规演示构造，非真实顾客数据）。",
+     "判定该内容就『公开发布个人隐私信息前须打码/拦截』一事是否负有义务及是否违反",
+     ["展示到店顾客真实姓名、手机号与消费小票截图", "未做任何隐私打码或脱敏即公开发布"]),
+)
+
+
+# 正式 R3-run 每义务类型 face 数：ceil(100/4)=25 达 disclosure_case≥100/套下限，+3 冗余防个别标注 miss。
+DISCLOSURE_PER_TYPE = 28
+
+
+def build_disclosure_faces(set_id: str, per_type: int = 1) -> list[dict]:
+    """§六 build-4：确定性构造 disclosure obligation-triggering faces（4 义务类型 × per_type）。
+
+    每 face 独立合成证据锚（distinct source_group cluster，不复用/不膨胀他类 N）；case_kind=NATURAL
+    （披露义务生于真实内容，非挑战注入）；行业通用、不涉真品牌/真顾客真事实。真 AI 双席标注这些 face →
+    obligation 被标出 → GD.derive_records_for_face 在 disclosure_obligation!=NONE 时派生真 disclosure 记录。
+    per_type：pilot 用 1（模块覆盖即可，obligation 类型数 pilot scale 豁免）；正式用 ≥ ceil(合同下限/4)。
+    """
+    faces: list[dict] = []
+    n = 0
+    for obl, claim, boundary, slot_facts in _DISCLOSURE_TEMPLATES:
+        for k in range(per_type):
+            sid = f"DISC-{set_id}-{obl[:6]}-{k:03d}"
+            src_ids = [f"{sid}-SRC1", f"{sid}-SRC2"]
+            fact_ids = [f"{sid}-FACT1"]
+            auth_ids = [f"{sid}-AUTH1"]
+            sg = GD.evidence_anchor_digest(sid, src_ids, fact_ids, auth_ids)
+            face = {
+                "case_id": f"Q{set_id}-DISC-{obl[:6]}-{k:03d}",
+                "case_kind": "NATURAL",
+                "source_group_id": sg, "scenario_id": sid,
+                "family_id": DISCLOSURE_FAMS[n % len(DISCLOSURE_FAMS)],
+                "claim_text": (claim if per_type == 1 else f"{claim}（合规演示案例 {k + 1}）"),
+                "claim_boundary": boundary,
+                "authorization_scope": "内容合规审核授权：判定该 claim 触发的披露义务及是否违反",
+                "slot_facts": list(slot_facts),
+                "source_summary_a": "内容合规样例来源 A（行业通用构造演示，非真实品牌/顾客数据）",
+                "source_summary_b": "内容合规样例来源 B（行业通用构造演示，非真实品牌/顾客数据）",
+                "item_title": "", "source_ids": src_ids, "fact_ids": fact_ids,
+                "authorization_ids": auth_ids,
+                # disclosure 专用 face：只产 disclosure 记录，不冒充其他模块独立证据
+                # （防模板化 face 伪膨胀 risk/entailment 等模块有效 cluster N → 伪独立假绿）。
+                "disclosure_only": True}
+            face["frozen_input_face_digest"] = GD.frozen_input_face_digest(face)
+            faces.append(face)
+            n += 1
+    return faces
+
+
 ROUND_FILES = {
     "round1_top": ("inputs/requests.g3.v1.jsonl", "outputs/first_outputs.g3.v1.jsonl"),
     "round2": ("round2/inputs/requests.g3.v1.jsonl", "round2/outputs/first_outputs.g3.v1.jsonl"),
@@ -535,7 +614,11 @@ def cmd_faces(set_id: str, max_batches: int) -> int:
                                     "intended_risk": r.get("intended_risk"),
                                     "intended_entailment": r.get("intended_entailment"),
                                     "construction_note": r.get("construction_note", "")})
-    faces = natural + variants_faces
+    # §六 build-4：确定性 disclosure 覆盖——合同下限 disclosure_case≥100/套、obligation 类型≥4。
+    # per_type=ceil(100/4)+margin 保证四类型齐 + 冗余（个别标注 miss 不致缺类）。disclosure 是确定性
+    # count 门（非统计 CI 门），distinct 合成锚 + k 变体即可；faces 走同一真 AI 双席标注管线。
+    disclosure_faces = build_disclosure_faces(set_id, per_type=DISCLOSURE_PER_TYPE)
+    faces = natural + variants_faces + disclosure_faces
     faces_path = sdir / "faces_frozen.json"
     faces_path.write_text(json.dumps(faces, ensure_ascii=False, indent=1),
                           encoding="utf-8")
@@ -551,6 +634,7 @@ def cmd_faces(set_id: str, max_batches: int) -> int:
         "schema_version": "p7-m3-qual-face-freeze-receipt-v1",
         "set": f"QUAL_{set_id}", "at": now(),
         "natural_cases": len(natural), "challenge_variants": len(variants_faces),
+        "deterministic_disclosure_faces": len(disclosure_faces),
         "faces_total": len(faces), "face_batches": len(fb),
         "per_family": dict(sorted(Counter(c["family_id"] for c in faces).items())),
         "per_kind": dict(sorted(Counter(c["case_kind"] for c in faces).items())),
@@ -599,14 +683,16 @@ def cmd_label(set_id: str, seat: str, max_batches: int) -> int:
         if done >= max_batches:
             break
         out_path = out_dir / (bpath.stem + ".labels.json")
-        if _batch_ready(out_path):
-            continue
         cases = json.loads(bpath.read_text(encoding="utf-8"))
+        expected = {c["case_id"] for c in cases}
+        # 续跑复用仅当输出覆盖本批全部 case（防批组成变化后旧标签漏标 disclosure 等新增 face）。
+        if _batch_ready(out_path) and expected.issubset(
+                {r.get("case_id") for r in json.loads(out_path.read_text(encoding="utf-8"))}):
+            continue
         slim = [{k: c[k] for k in ("case_id", "claim_text", "claim_boundary",
                                    "authorization_scope", "slot_facts",
                                    "source_summary_a", "source_summary_b", "item_title")}
                 for c in cases]
-        expected = {c["case_id"] for c in cases}
 
         def ok(rows: list) -> bool:
             return _rich_rows_ok(rows, expected)

@@ -290,6 +290,15 @@ def derive_records_for_face(face: dict[str, Any], label: dict[str, Any], *,
                          fam, origin, gold, {**extra, **agree}, sp,
                          dataset_manifest_digest, frozen_face_digest=ffd)
 
+    # §六 build-4：disclosure 专用 face（确定性 obligation 构造）只产 disclosure 记录，不产其他
+    # 六模块——防模板化 face 伪膨胀 risk/entailment 等模块的有效 cluster N（伪独立假绿）。
+    if face.get("disclosure_only"):
+        if label["disclosure_obligation"] == "NONE":
+            return []  # 标注未标出 obligation（应极少）→ 该 face 不产任何记录
+        return [mk("disclosure", "disclosure_case",
+                   {"gold_violation": label["disclosure_violation"]},
+                   {"obligation_type": label["disclosure_obligation"]})]
+
     records = [
         # reference_assertion_extraction —— present/negative-control + 属性正确性
         mk("reference_extraction", "qualification_case",

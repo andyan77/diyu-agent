@@ -154,12 +154,14 @@ def _label_seat(faces: list[dict], seat: str) -> dict[str, dict]:
     for ci, batch in enumerate(chunks):
         stem = f"fb_{ci:03d}"
         part_path = out_dir / f"{stem}.labels.json"
-        if part_path.is_file():  # 逐块断点续跑
-            for r in json.loads(part_path.read_text(encoding="utf-8")):
-                labels[r["case_id"]] = r
-            print(f"[pilot] seat {seat} chunk {stem}: reused")
-            continue
         expected = {f["case_id"] for f in batch}
+        if part_path.is_file():  # 逐块断点续跑——仅当缓存覆盖本块全部 case 才复用（防块组成变化后漏标）
+            cached_rows = json.loads(part_path.read_text(encoding="utf-8"))
+            if expected.issubset({r.get("case_id") for r in cached_rows}):
+                for r in cached_rows:
+                    labels[r["case_id"]] = r
+                print(f"[pilot] seat {seat} chunk {stem}: reused")
+                continue
 
         def ok(rows):
             return QR._rich_rows_ok(rows, expected)
@@ -181,11 +183,6 @@ def _label_seat(faces: list[dict], seat: str) -> dict[str, dict]:
 
 
 def _adjudicate(faces: dict[str, dict], a: dict, b: dict) -> dict[str, dict]:
-    cached = PILOT_SEAL / "adjudication" / "adj.json"
-    if cached.is_file():
-        adj = json.loads(cached.read_text(encoding="utf-8"))
-        print(f"[pilot] adjudication: reused cached ({len(adj)})")
-        return adj
     disputes = []
     for cid in sorted(set(a) & set(b)):
         df = GD.field_disputes(a[cid], b[cid])
@@ -199,8 +196,15 @@ def _adjudicate(faces: dict[str, dict], a: dict, b: dict) -> dict[str, dict]:
                              "label_yi": {k: b[cid].get(k) for k in QR._RICH_FIELDS}})
     if not disputes:
         return {}
-    tmpl = L.load_template(ANNEXC, "qual_rich_adjudicator")
     expected = {d["case_id"] for d in disputes}
+    # 续跑复用仅当缓存覆盖当前全部 disputes（防 faces 变化后新 dispute 漏仲裁 → resolve 未决）。
+    cached = PILOT_SEAL / "adjudication" / "adj.json"
+    if cached.is_file():
+        adj = json.loads(cached.read_text(encoding="utf-8"))
+        if expected.issubset(set(adj)):
+            print(f"[pilot] adjudication: reused cached ({len(adj)})")
+            return adj
+    tmpl = L.load_template(ANNEXC, "qual_rich_adjudicator")
 
     def ok(rows):
         return QR._rich_rows_ok(rows, expected)
@@ -426,6 +430,17 @@ def run_pilot(set_id: str = "A") -> int:
                           "item_title": b.get("item_title", "")})
         faces += variants
         faces_path.write_text(json.dumps(faces, ensure_ascii=False, indent=1), encoding="utf-8")
+    # §六 build-4：确定性 disclosure 覆盖——始终以新构造 disclosure face（带 disclosure_only 标志）
+    # 替换题面中的 disclosure face（case_id 稳定 → 已缓存标签仍适用；幂等，含刷新旧无标志件）。
+    # 走同一真 AI 双席标注管线；case_kind=NATURAL、独立证据锚；补齐 nine_modules 中 disclosure 覆盖。
+    non_disc = [f for f in faces if "-DISC-" not in str(f.get("case_id", ""))]
+    disc = QR.build_disclosure_faces(set_id, per_type=1)
+    new_faces = non_disc + disc
+    if new_faces != faces:
+        faces = new_faces
+        faces_path.write_text(json.dumps(faces, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"[pilot] disclosure faces (build-4): {len(disc)} "
+              f"(obligations {sorted(f['case_id'].split('-DISC-')[1][:6] for f in disc)})")
     faces_sha = digest_json(faces)
     print(f"[pilot] faces total: {len(faces)} (natural {len(faces) - len(variants)} + variant {len(variants)})")
 

@@ -218,6 +218,31 @@ class VariantConstructionFix(unittest.TestCase):
         with self.assertRaises(SystemExit):
             self.qr._build_variant_tasks(self._synthetic_by_fam(), "fd", bad)
 
+    def test_disclosure_faces_cover_four_obligation_types(self) -> None:
+        # §六 build-4：确定性 disclosure 构造覆盖 4 义务类型；每 face 独立证据锚；
+        # slot_facts/claim_text 不泄漏 obligation enum 名（保标注独立性）；frozen digest 在场。
+        gd = _load(P7 / "m3_data_supply_001/tools/qual_gold_derivation.py",
+                   "qual_gold_derivation")
+        faces = self.qr.build_disclosure_faces("A", per_type=1)
+        self.assertEqual(len(faces), 4)
+        anchors = {f["source_group_id"] for f in faces}
+        self.assertEqual(len(anchors), 4)  # 4 个独立证据锚（不复用/不膨胀他类 N）
+        for f in faces:
+            self.assertEqual(f["case_kind"], "NATURAL")
+            # 锚 == evidence_anchor_digest（真锚，非 case-id 派生）
+            self.assertEqual(f["source_group_id"], gd.evidence_anchor_digest(
+                f["scenario_id"], f["source_ids"], f["fact_ids"], f["authorization_ids"]))
+            self.assertIn("frozen_input_face_digest", f)
+            blob = f["claim_text"] + "".join(f["slot_facts"]) + f["claim_boundary"]
+            for enum in gd.OBLIGATION_TYPES:  # 触发内容绝不含 enum 名
+                self.assertNotIn(enum, blob)
+
+    def test_disclosure_per_type_meets_formal_minimum(self) -> None:
+        # 正式 DISCLOSURE_PER_TYPE × 4 义务类型 ≥ 合同 disclosure_case 下限 100。
+        faces = self.qr.build_disclosure_faces("B", per_type=self.qr.DISCLOSURE_PER_TYPE)
+        self.assertGreaterEqual(len(faces), 100)
+        self.assertEqual(len({f["source_group_id"] for f in faces}), len(faces))  # 全独立锚
+
 
 class CapacityPrecheckMechanical(unittest.TestCase):
     """§五：从**真实**抽样框机械复算每套供给，逐类/逐族与合同下限比较（非只读 plan 静态数）。"""

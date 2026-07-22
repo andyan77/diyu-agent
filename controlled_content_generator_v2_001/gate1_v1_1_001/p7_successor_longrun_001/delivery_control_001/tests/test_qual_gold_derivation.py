@@ -160,6 +160,23 @@ class TestPerClaimDerivation(unittest.TestCase):
         recs = self._derive(faces, labels)["records"]
         self.assertNotIn("disclosure", {r["module"] for r in recs})
 
+    def test_disclosure_only_face_emits_only_disclosure_record(self):
+        # §六 build-4：disclosure 专用 face 只产 disclosure 记录，不冒充其他模块独立证据
+        # （防模板化 face 伪膨胀 risk/entailment 等模块有效 cluster N）。
+        face = _face("D0", "sg-disc", kind="NATURAL")
+        face["disclosure_only"] = True
+        labels = {"D0": _rich(obl="PRIVACY_REDACTION_OR_BLOCK", violation=True)}
+        recs = self._derive([face], labels)["records"]
+        self.assertEqual(sorted({r["module"] for r in recs}), ["disclosure"])
+        self.assertEqual(len(recs), 1)
+
+    def test_disclosure_only_face_with_none_obligation_emits_nothing(self):
+        # 专用 face 若标注未标出 obligation（应极少）→ 不产任何记录（不落半合规）。
+        face = _face("D1", "sg-disc1", kind="NATURAL")
+        face["disclosure_only"] = True
+        recs = self._derive([face], {"D1": _rich(obl="NONE")})["records"]
+        self.assertEqual(recs, [])
+
     def test_cross_module_reuse_registered(self):
         faces = [_face("C0", "sg0")]
         labels = {"C0": _rich()}
