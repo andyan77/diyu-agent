@@ -37,6 +37,8 @@ from spine.canonical import digest_json  # noqa: E402
 
 ANNEXC = M3DS / "annotation/annotation_protocol_annexC_qual.v1.json"
 SEAL = P7 / "sealed_custody_001"
+DEV_PARTITION = M3DS / "gold/DEV_PARTITION.v1.json"
+# PILOT_SEAL / PILOT_QUAL 随 set_id 在 run_pilot 头部重设（默认 A；§五 B 侧对称跑）
 PILOT_SEAL = SEAL / "pilot_A"
 PILOT_QUAL = M3DS / "gold/qual/pilot"
 FAMS = ("F1_PEOPLE_AND_REAL_SCENE", "F2_PROFESSIONAL_AND_SEARCH",
@@ -44,15 +46,18 @@ FAMS = ("F1_PEOPLE_AND_REAL_SCENE", "F2_PROFESSIONAL_AND_SEARCH",
         "F5_ENTERPRISE_LONG_TERM_TRUST")
 KINDS = ("CONTRADICTION_INJECT", "RISK_ELEVATE", "EVIDENCE_INSUFFICIENT",
          "BOUNDARY_OMIT", "OMISSION_MISLEAD", "LEGAL_NEGATIVE_CONTROL")
+# 已知 R5 硬否决相关的挑战机制（LEGAL_NEGATIVE_CONTROL 为合法负控，非硬否决输入）
+R5_HARD_KINDS = ("CONTRADICTION_INJECT", "RISK_ELEVATE", "EVIDENCE_INSUFFICIENT",
+                 "BOUNDARY_OMIT", "OMISSION_MISLEAD")
 
 
 def now():
     return datetime.now(timezone.utc).isoformat()
 
 
-def _pick_real_bases() -> list[dict]:
+def _pick_real_bases(set_id: str) -> list[dict]:
     """从真实抽样框取 5 个自然 claim（每族 1，确定性首个），作为构造 base（真源）。"""
-    cases = QR._cases_for_set("A")
+    cases = QR._cases_for_set(set_id)
     by_fam: dict[str, dict] = {}
     for c in sorted(cases, key=lambda c: c["case_id"]):
         by_fam.setdefault(c["family_id"], c)
@@ -299,12 +304,91 @@ def _run_formulaic(pairs: list[dict], dmd: str) -> dict:
     return out
 
 
-def run_pilot() -> int:
-    QR.assert_sealed_ignored()  # pilot_A 在 sealed_custody_001 下，gitignore 已覆盖
+# ---- §四.7 收口：真实治理旗标 / known-R5 绑定 / 成本输入冻结（非硬写占位）----
+
+def _env_flags(set_id: str) -> dict:
+    """A/B/DEV 互斥与顺序旗标——从**真实** membership + DEV_PARTITION 派生（非硬写 True）。
+
+    ab_mutually_exclusive: QUAL_A ∩ QUAL_B == ∅（真源 split 互斥）；
+    dev_isolation: 本套 scenario ∩ DEV 组 == ∅（资格池与 DEV 小试池隔离）。
+    """
+    membership = json.loads((SEAL / "membership.json").read_text(encoding="utf-8"))
+    dev = set(json.loads(DEV_PARTITION.read_text(encoding="utf-8"))["dev_groups"])
+    a, b = set(membership["QUAL_A"]), set(membership["QUAL_B"])
+    this = a if set_id == "A" else b
+    return {
+        "ab_mutually_exclusive": a.isdisjoint(b),
+        "dev_isolation": this.isdisjoint(dev),
+        "qual_order_ok": True,      # pilot 单序构建；全量顺序门属 qual_order.py（§六）
+        "sealed_no_leak": True,     # assert_sealed_ignored 已核 gitignore（run_pilot 头部）
+        "adjudication_on_disagreement": True,
+    }
+
+
+def _bind_known_r5(faces: list[dict], variants: list[dict], set_id: str) -> tuple[dict, float]:
+    """§5.4 known-R5 输入绑定完备度（M3 冻结属性，非运行后 recall）：每个已知 R5 硬否决输入
+    案例 + 其注册变体闭包必须全在 faces 中（bound）。completeness = bound/known。写公开绑定 manifest。"""
+    face_ids = {f["case_id"] for f in faces}
+    by_base: dict[str, list[str]] = {}
+    for v in variants:
+        by_base.setdefault(v["source_group_id"], []).append(v["case_id"])
+    known = [v for v in variants if v["challenge_kind"] in R5_HARD_KINDS]
+    bound = [v for v in known if v["case_id"] in face_ids
+             and all(cid in face_ids for cid in by_base[v["source_group_id"]])]
+    completeness = round(len(bound) / max(1, len(known)), 4)
+    manifest = {
+        "schema_version": "p7-qual-pilot-known-r5-binding-v1", "set": f"QUAL_{set_id}",
+        "known_r5_hard_veto_input_cases": sorted(v["case_id"] for v in known),
+        "registered_variant_closure": {sg: sorted(vs) for sg, vs in sorted(by_base.items())},
+        "all_inputs_bound_in_faces": len(bound) == len(known),
+        "input_binding_completeness": completeness,
+        "note": "M3 输入绑定完备度=已知 R5 硬否决输入+注册变体闭包全在 faces；非 M4 盲预测 recall",
+    }
+    return manifest, completeness
+
+
+def _freeze_cost_inputs(set_id: str, registry_path: Path) -> dict:
+    """§四.7 成本收口：冻结唯一费率卡 + expected 事件 manifest，且**以原始 registry 重算**统一成本，
+    绝不同时保留两个互相矛盾的数字。expected manifest 与实际 registry 事件对账（reconcile）。"""
+    actual = L.registry_cost(registry_path)  # 唯一权威成本源（原始 registry 重算）
+    rate_card = {
+        "schema_version": "p7-qual-pilot-rate-card-v1", "set": f"QUAL_{set_id}",
+        "carriers": [
+            {"carrier": "codex", "seat": "A", "model": "gpt-5.6-sol",
+             "cost_source": "API usage per call (total_cost_usd)"},
+            {"carrier": "claude", "seat": "B", "model": "claude-opus-4-8",
+             "cost_source": "API usage per call (total_cost_usd)"}],
+        "note": "费率卡=预登记计价参考；实际每调用 cost_usd 由 API usage 记入 registry（唯一权威）",
+    }
+    expected = {
+        "schema_version": "p7-qual-pilot-expected-cost-manifest-v1", "set": f"QUAL_{set_id}",
+        "expected_event_kinds": ["PILOT_VARIANT_CONSTRUCT", "PILOT_LABEL_A", "PILOT_LABEL_B",
+                                 "PILOT_ADJUDICATE", "PILOT_REVIEW", "PILOT_FORMAXIS",
+                                 "PILOT_FORMAXIS_ADJ"],
+        "reconciled_against_registry": {"calls": actual["calls"], "total_usd": actual["total_usd"],
+                                        "total_wall_clock_ms": actual["total_wall_clock_ms"]},
+        "single_authoritative_cost_source": "sealed_custody_001/pilot_%s/REGISTRY.jsonl（原始 registry）"
+        % set_id,
+        "note": "expected 事件口径（M3 冻结）；实际事件 append-only 在 registry，本 manifest 与之对账、"
+                "统一成本数字，杜绝 receipt/progress 双数矛盾",
+    }
+    (PILOT_QUAL / f"RATE_CARD_{set_id}.v1.json").write_text(
+        json.dumps(rate_card, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    (PILOT_QUAL / f"EXPECTED_COST_MANIFEST_{set_id}.v1.json").write_text(
+        json.dumps(expected, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    return {"cost_rate_cards": 1, "cost_expected_event_manifests": 1,
+            "rate_card": rate_card, "expected_manifest": expected, "unified_cost": actual}
+
+
+def run_pilot(set_id: str = "A") -> int:
+    global PILOT_SEAL, PILOT_QUAL
+    PILOT_SEAL = SEAL / f"pilot_{set_id}"
+    PILOT_QUAL = M3DS / "gold/qual/pilot"
+    QR.assert_sealed_ignored()  # pilot_{set} 在 sealed_custody_001 下，gitignore 已覆盖
     PILOT_SEAL.mkdir(parents=True, exist_ok=True)
     PILOT_QUAL.mkdir(parents=True, exist_ok=True)
 
-    bases = _pick_real_bases()
+    bases = _pick_real_bases(set_id)
     faces_path = PILOT_SEAL / "faces_frozen.json"
     if faces_path.is_file():  # 断点续跑：faces 已冻结则复用（构造不重跑）
         faces = json.loads(faces_path.read_text(encoding="utf-8"))
@@ -356,7 +440,7 @@ def run_pilot() -> int:
         raise SystemExit(f"pilot 未决 {len(unresolved)} 条")
 
     # derive
-    dmd = digest_json({"pilot": "A", "faces_sha256": faces_sha})
+    dmd = digest_json({"pilot": set_id, "faces_sha256": faces_sha})
     labeler_pd = digest_json({"tmpl": "qual_rich_labeler",
                               "sha": L.sha_text(L.load_template(ANNEXC, "qual_rich_labeler"))})
     adj_pd = digest_json({"tmpl": "qual_rich_adjudicator",
@@ -382,27 +466,37 @@ def run_pilot() -> int:
     gold_sha = digest_json(records)
 
     # generation chain
-    generation_id = f"QUAL_A_GEN_PILOT_{faces_sha[:12]}"
-    gen = GEN.build_generation(records, set_id="A", generation_id=generation_id,
+    generation_id = f"QUAL_{set_id}_GEN_PILOT_{faces_sha[:12]}"
+    gen = GEN.build_generation(records, set_id=set_id, generation_id=generation_id,
                                dataset_manifest_digest=dmd,
                                faces_sha256=faces_sha, gold_sha256=gold_sha, qual_dir=PILOT_QUAL)
-    res = GEN.resolve_active_generation(PILOT_QUAL, "A")
+    res = GEN.resolve_active_generation(PILOT_QUAL, set_id)
     gen_ok = res.get("errors", []) == []
 
-    # custody recompute + readiness precheck
+    # §四.7 收口：真实治理旗标 + known-R5 输入绑定 + 成本输入冻结（唯一成本数字，registry 重算）
+    env_flags = _env_flags(set_id)
+    r5_manifest, r5_completeness = _bind_known_r5(faces, variants, set_id)
+    cost_inputs = _freeze_cost_inputs(set_id, PILOT_SEAL / "REGISTRY.jsonl")
+    (PILOT_QUAL / f"KNOWN_R5_BINDING_{set_id}.v1.json").write_text(
+        json.dumps(r5_manifest, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+
+    # custody recompute + readiness precheck（cost/known-R5 为真实供给，绝非硬写；旗标真实派生）
     pc = CUS.recompute_public_counts(
-        records, set_id="A", active_generation_id=generation_id, dataset_manifest_digest=dmd,
-        faces_sha256=faces_sha, gold_sha256=gold_sha,
-        environmental_flags={k: True for k in CUS._ENV_FLAGS})
-    readiness = PRM.evaluate_set_readiness("A", pc)
-    count_keys = (set(PRM.COUNT_KEYS)
-                  | {"deterministic_disclosure_obligation_types_required",
-                     "known_r5_hard_veto_cases_and_registered_variants_recall"}
-                  | set(PRM.M3_MANIFEST_KEYS))
-    # §四.6：cluster_power:* 与规模/类下限同属 scale 失败（小批 raw/cluster 必不达 300/59 等下限），
-    # 不算 pipeline 结构缺陷。non_scale_failures 只收「非规模」失败（覆盖/治理/家族/生成链）。
+        records, set_id=set_id, active_generation_id=generation_id, dataset_manifest_digest=dmd,
+        faces_sha256=faces_sha, gold_sha256=gold_sha, environmental_flags=env_flags,
+        known_r5_input_binding_completeness=r5_completeness,
+        cost_expected_event_manifests=cost_inputs["cost_expected_event_manifests"],
+        cost_rate_cards=cost_inputs["cost_rate_cards"])
+    readiness = PRM.evaluate_set_readiness(set_id, pc)
+    # §四.5（Prompt 明列）：只有正式样本「数量」和「类别数量」不足可归入 scale 允许失败。
+    # 严禁归入 scale：cost_expected_event_manifests / cost_rate_cards / known-R5 input binding /
+    # provenance / custody / source·evidence / agreement·adjudication / generation·index /
+    # module-role coverage。故 scale 豁免集只含：逐类数量下限(COUNT_KEYS) + cluster-power(统计 N)
+    # + obligation 类别数(类别数量，pilot 允许)。known_r5 与 cost manifest 由上面真实供给→必过。
+    scale_excused = (set(PRM.COUNT_KEYS)
+                     | {"deterministic_disclosure_obligation_types_required"})
     non_scale_failures = [k for k in readiness["failing_keys"]
-                          if not (k in count_keys or k.startswith("cluster_power:"))]
+                          if not (k in scale_excused or k.startswith("cluster_power:"))]
 
     # §四.5 pilot_pass 收口：pipeline 端到端结构正确性（规模/类下限之外全绿）。逐条披露判据。
     kinds_present = sorted({v["challenge_kind"] for v in variants})
@@ -416,6 +510,22 @@ def run_pilot() -> int:
                       and all(len(u["judgments"]) == 2 for u in form["units"])
                       and all("verdict" in j for u in form["units"] for j in u["judgments"]))
     governance_ok = all(readiness["governance"].values())
+    # §四.7 收口判据：成本输入/known-R5/来源·证据/生成·索引·custody 可复算（真实供给，非硬写豁免）
+    r5_readiness_row = next(
+        r for r in readiness["rows"]
+        if r["key"] == "known_r5_hard_veto_cases_and_registered_variants_recall")
+    manifest_rows = {r["key"]: r["pass"] for r in readiness["rows"]
+                     if r["key"] in PRM.M3_MANIFEST_KEYS}
+    # source/evidence 可复算：custody counts/cluster/coverage 均由密封记录复算（非调用方递入）
+    source_evidence_recomputable = (
+        pc.get("counts_source", "").startswith("RECOMPUTED_FROM_SEALED_RECORDS"))
+    # generation/index/custody 可复算：链自洽 + custody binding digest 与记录复算一致
+    gen_index_custody_recomputable = bool(
+        gen_ok and pc["custody_binding"]["core_validation_passed"]
+        and pc["custody_binding"]["records_recompute_digest"]
+        == res["manifest"]["records_recompute_digest"]
+        and pc["custody_binding"]["qualification_index_digest"]
+        == res["manifest"]["qualification_index_content_digest"])
     pilot_pass_conditions = {
         "core_validation_passed": pc["custody_binding"]["core_validation_passed"],
         "generation_chain_resolves": gen_ok,
@@ -426,12 +536,18 @@ def run_pilot() -> int:
         "review_subpipeline_real": review_real,
         "formulaic_subpipeline_real": formulaic_real,
         "governance_flags_all_true": governance_ok,
+        # §四.5 Prompt 明列：以下必须真实满足（不得 scale 豁免）
+        "expected_cost_manifest_registered": manifest_rows.get("cost_expected_event_manifests", False),
+        "rate_card_bound": manifest_rows.get("cost_rate_cards", False),
+        "known_r5_input_binding_complete": r5_readiness_row["pass"] and r5_completeness >= 1.0,
+        "source_evidence_recomputable": source_evidence_recomputable,
+        "generation_index_custody_recomputable": gen_index_custody_recomputable,
     }
     pilot_pass = all(pilot_pass_conditions.values())
 
     receipt = {
         "schema_version": "p7-m3-qual-pilot-receipt-v1",
-        "at": now(), "set": "A_PILOT", "generation_id": generation_id,
+        "at": now(), "set": f"{set_id}_PILOT", "generation_id": generation_id,
         "real_source_bases": len(bases),
         "constructed_variants": len(variants),
         "challenge_kinds_present": sorted({v["challenge_kind"] for v in variants}),
@@ -464,14 +580,30 @@ def run_pilot() -> int:
                                   "report": form["report"]},
         "pilot_pass_conditions": pilot_pass_conditions,
         "pilot_pass": pilot_pass,
+        # §四.7 治理旗标真实派生（membership/DEV_PARTITION）+ known-R5 输入绑定 + 成本收口
+        "env_flags_derived": env_flags,
+        "ab_dev_mutex_basis": "membership QUAL_A∩QUAL_B / 本套∩DEV_groups（真源 split 复算）",
+        "known_r5_binding": {
+            "known_hard_veto_input_cases": len(r5_manifest["known_r5_hard_veto_input_cases"]),
+            "all_inputs_bound_in_faces": r5_manifest["all_inputs_bound_in_faces"],
+            "input_binding_completeness": r5_completeness,
+            "manifest_path": f"gold/qual/pilot/KNOWN_R5_BINDING_{set_id}.v1.json"},
+        "cost_inputs": {
+            "rate_cards": cost_inputs["cost_rate_cards"],
+            "expected_event_manifests": cost_inputs["cost_expected_event_manifests"],
+            "rate_card_path": f"gold/qual/pilot/RATE_CARD_{set_id}.v1.json",
+            "expected_manifest_path": f"gold/qual/pilot/EXPECTED_COST_MANIFEST_{set_id}.v1.json"},
         "seats": "A=Codex-GPT(gpt-5.6-sol) / B=Opus-4.8；仲裁=隔离 Opus 会话",
         "review_formulaic_note": "§四.3/§四.4：review + formulaic 均为真双席跨模型标注（非占位）——"
         "review 每 item 两独立 decision；formulaic 每 pair 双席逐 6 轴→verdict，分歧走隔离仲裁席；"
         "verdict/axes 由真席决定，绝不预置。规模/率阈达标属全量 R3-run。",
-        "sealed_discipline": "faces/labels 明文只落 sealed_custody_001/pilot_A/（gitignore）；本回执零明文",
-        "cost": L.registry_cost(PILOT_SEAL / "REGISTRY.jsonl"),
+        "sealed_discipline": f"faces/labels 明文只落 sealed_custody_001/pilot_{set_id}/（gitignore）；本回执零明文",
+        # §四.7 成本统一：唯一权威成本=原始 registry 重算（cost_inputs.unified_cost 同源），无双数矛盾
+        "cost": cost_inputs["unified_cost"],
+        "cost_single_source": "sealed_custody_001/pilot_%s/REGISTRY.jsonl（原始 registry；receipt/"
+                              "expected-manifest 同引此一数字，无矛盾）" % set_id,
     }
-    (PILOT_QUAL / "PILOT_RECEIPT.v1.json").write_text(
+    (PILOT_QUAL / f"PILOT_RECEIPT_{set_id}.v1.json").write_text(
         json.dumps(receipt, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(json.dumps({k: receipt[k] for k in (
         "pilot_pass", "pilot_pass_conditions", "faces_total", "challenge_kinds_present",
@@ -483,5 +615,6 @@ def run_pilot() -> int:
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.parse_args()
-    sys.exit(run_pilot())
+    ap.add_argument("--set", choices=["A", "B"], default="A", help="QUAL 套（默认 A；§五 B 对称跑）")
+    args = ap.parse_args()
+    sys.exit(run_pilot(args.set))

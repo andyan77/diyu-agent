@@ -142,6 +142,44 @@ class PilotRealSubpipelineWiring(unittest.TestCase):
         self.assertEqual(pc["counts"]["formulaic_double_reviewed_pairs_total"], 3)
         self.assertEqual(pc["counts"]["formulaic_positive_pairs_minimum"], 2)
 
+    def test_env_flags_derived_from_real_membership_and_dev(self):
+        # §四.7：A/B/DEV 互斥旗标从真源 membership + DEV_PARTITION 派生（非硬写 True）
+        for s in ("A", "B"):
+            fl = PILOT._env_flags(s)
+            self.assertTrue(fl["ab_mutually_exclusive"])  # QUAL_A ∩ QUAL_B == ∅
+            self.assertTrue(fl["dev_isolation"])          # 本套 ∩ DEV_groups == ∅
+            self.assertEqual(set(fl), set(CUS._ENV_FLAGS))
+
+    def test_known_r5_binding_completeness(self):
+        # §5.4：已知 R5 硬否决输入+注册变体全在 faces → completeness=1.0；缺一 → <1.0
+        variants = [{"case_id": "V-CONT", "source_group_id": "B0", "family_id": FAMS[0],
+                     "challenge_kind": "CONTRADICTION_INJECT", "claim_text": "c"},
+                    {"case_id": "V-NEG", "source_group_id": "B1", "family_id": FAMS[1],
+                     "challenge_kind": "LEGAL_NEGATIVE_CONTROL", "claim_text": "n"}]
+        faces = [{"case_id": "V-CONT"}, {"case_id": "V-NEG"}]
+        m, comp = PILOT._bind_known_r5(faces, variants, "A")
+        self.assertEqual(comp, 1.0)  # 唯一硬否决输入 V-CONT 已绑定；负控不计入 known
+        self.assertTrue(m["all_inputs_bound_in_faces"])
+        self.assertEqual(m["known_r5_hard_veto_input_cases"], ["V-CONT"])
+        # 缺失硬否决输入 → 不完备
+        _, comp2 = PILOT._bind_known_r5([{"case_id": "V-NEG"}], variants, "A")
+        self.assertLess(comp2, 1.0)
+
+    def test_freeze_cost_inputs_single_source(self):
+        # §四.7：冻结费率卡 + expected manifest；成本唯一以 registry 重算，两文件在盘
+        (PILOT.PILOT_QUAL).mkdir(parents=True, exist_ok=True)
+        reg = PILOT.PILOT_SEAL / "REGISTRY.jsonl"
+        reg.parent.mkdir(parents=True, exist_ok=True)
+        reg.write_text('{"cost_usd": 0.5, "duration_ms": 10}\n'
+                       '{"cost_usd": 0.25, "duration_ms": 5}\n', encoding="utf-8")
+        out = PILOT._freeze_cost_inputs("A", reg)
+        self.assertEqual(out["cost_rate_cards"], 1)
+        self.assertEqual(out["cost_expected_event_manifests"], 1)
+        self.assertEqual(out["unified_cost"]["total_usd"], 0.75)  # registry 重算
+        self.assertEqual(out["expected_manifest"]["reconciled_against_registry"]["total_usd"], 0.75)
+        self.assertTrue((PILOT.PILOT_QUAL / "RATE_CARD_A.v1.json").is_file())
+        self.assertTrue((PILOT.PILOT_QUAL / "EXPECTED_COST_MANIFEST_A.v1.json").is_file())
+
     def test_cached_call_no_double_pay(self):
         # _mk_cached_call：首次调用付费+落缓存；二次同 stem 命中缓存不再调 attempt_call
         calls = {"n": 0}
