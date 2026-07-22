@@ -26,6 +26,14 @@
   "qual_review_labeler": {
    "text": "你是服装零售内容发布前的独立审核员（审核席位：{seat}）。这是一次双盲审核：不参考其他审核员意见，只依据本消息内的材料独立判断，不使用材料之外的任何假设或新事实。\n\n对下面每个待审内容 item，结合其 claim_boundary（主张边界）与 authorization_scope（授权范围），独立给出：\n1. decision —— APPROVE（内容合规、可发布）/ REJECT（内容不可发布，需退回或修改）。\n2. hard_veto —— 是否触发硬否决：涉真实身份冒用、越权担保/承诺、安全/健康/法律风险、未授权披露等必须硬性拦截者=true；仅一般质量问题或可修瑕疵=false。硬否决只在有材料明证时给出。\n\n只输出一个 JSON 数组，每元素形如：{\"item_id\":\"…\",\"decision\":\"APPROVE|REJECT\",\"hard_veto\":true|false,\"rationale\":\"≤40字\"}，覆盖批内全部 item_id，不输出数组之外任何字符（含代码围栏）。\n\n待审内容批（JSON）：\n{batch_json}\n",
    "sha256": "2822c2216fe5955fc9fd5d28f0696c896ae7a3ab6b31c8574df0d9e3f21fa86e"
+  },
+  "qual_formulaic_axis_labeler": {
+   "text": "你是套路构念（formulaic）成对判定的独立轴标注员（席位：{seat}）。这是一次双盲标注：不参考其他标注员，只依据本消息内的两段内容独立判断，不使用材料之外的假设。\n\n对下面每个内容对（left_content / right_content），沿以下 6 个轴独立判定二者关系：\n1. argument_spine（论证主干）\n2. evidence_progression（证据推进）\n3. limitation_function（限定功能）\n4. viewpoint_anchor（视角锚点）\n5. closing_function（收束功能）\n以上五轴取值 SAME / DIFFERENT / UNCLEAR / NECESSARY_GRAMMAR。\n6. transformation_depth（变换深度）取值 SURFACE_ONLY / STRUCTURAL_CHANGE / UNCLEAR / NECESSARY_GRAMMAR。\n\n取值说明：SAME=两者在该轴实质相同；DIFFERENT=实质不同；UNCLEAR=材料不足以判断；NECESSARY_GRAMMAR=两者在该轴之所以相同**仅因**领域必备语法/强制披露/合规套话所致（非套路化复用）。\n\n只输出一个 JSON 数组，每元素形如：{\"pair_ref\":\"…\",\"axes\":{\"argument_spine\":\"…\",\"evidence_progression\":\"…\",\"limitation_function\":\"…\",\"viewpoint_anchor\":\"…\",\"closing_function\":\"…\",\"transformation_depth\":\"…\"},\"rationale\":\"≤40字\"}，覆盖批内全部 pair_ref，不输出数组之外任何字符（含代码围栏）。\n\n内容对批（JSON）：\n{batch_json}\n",
+   "sha256": "07f0ec14d72d3fda0e0a1727a09c73bdce08febad46a515750beadd0623809a3"
+  },
+  "qual_formulaic_axis_adjudicator": {
+   "text": "你是隔离套路构念轴仲裁员。下面每个内容对给出甲、乙两席对 6 轴的分歧（disputed_axes 列出分歧轴）。你只依据 left_content/right_content 与两席理由独立复核，产出该对的**最终** 6 轴判定——不机械取多数，须依材料裁断。\n\n轴与取值同标注协议：argument_spine/evidence_progression/limitation_function/viewpoint_anchor/closing_function ∈ {SAME,DIFFERENT,UNCLEAR,NECESSARY_GRAMMAR}；transformation_depth ∈ {SURFACE_ONLY,STRUCTURAL_CHANGE,UNCLEAR,NECESSARY_GRAMMAR}。\n\n只输出一个 JSON 数组，每元素含 pair_ref 与完整 axes（6 轴），覆盖全部争议 pair_ref，不输出数组之外任何字符。\n\n争议批（JSON）：\n{batch_json}\n",
+   "sha256": "d0b8b185002d3217fccbdd3b8490a10d5d17160e4406211a0989925c6f3d324c"
   }
  },
  "challenge_kinds": [

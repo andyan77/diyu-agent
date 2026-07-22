@@ -319,19 +319,21 @@ class TestFormulaicDerivation(unittest.TestCase):
                                 "limitation_function": "DIFFERENT", "viewpoint_anchor": "DIFFERENT",
                                 "closing_function": "DIFFERENT", "transformation_depth": "STRUCTURAL_CHANGE"}}
 
+    def _unit(self, left, right, sg, verdict, exc=None):
+        # 双席一致（同 axes/verdict）→ final=该 axes、无仲裁席（对齐 spine requires_adjudicator 口径）
+        axes = self.AX[verdict]
+        return {"left_id": left, "right_id": right, "family_id": FAMS[0], "source_group_id": sg,
+                "left_author_identity": f"AL::{sg}", "right_author_identity": f"AR::{sg}",
+                "necessary_grammar_exception_id": exc, "is_formulaic": verdict == "FORMULAIC",
+                "final_verdict": verdict, "final_axes": axes,
+                "adjudicator_identity": None, "adjudication_evidence_digest": None,
+                "judgments": [{"reviewer_id": "REVIEWER_A::codex-gpt", "axes": axes, "verdict": verdict},
+                              {"reviewer_id": "REVIEWER_B::opus-4-8", "axes": axes, "verdict": verdict}]}
+
     def _units(self):
-        return [{"left_id": "L0", "right_id": "R0", "family_id": FAMS[0], "source_group_id": "p0",
-                 "verdict": "FORMULAIC", "axes": self.AX["FORMULAIC"],
-                 "necessary_grammar_exception_id": None, "is_formulaic": True,
-                 "left_author_identity": "AL0", "right_author_identity": "AR0", "reviewers": ["R1", "R2"]},
-                {"left_id": "L1", "right_id": "R1b", "family_id": FAMS[0], "source_group_id": "p1",
-                 "verdict": "NOT_FORMULAIC", "axes": self.AX["NOT_FORMULAIC"],
-                 "necessary_grammar_exception_id": None, "is_formulaic": False,
-                 "left_author_identity": "AL1", "right_author_identity": "AR1", "reviewers": ["R1", "R2"]},
-                {"left_id": "L2", "right_id": "R2b", "family_id": FAMS[0], "source_group_id": "p2",
-                 "verdict": "NECESSARY_GRAMMAR", "axes": self.AX["NECESSARY_GRAMMAR"],
-                 "necessary_grammar_exception_id": "NG-1", "is_formulaic": False,
-                 "left_author_identity": "AL2", "right_author_identity": "AR2", "reviewers": ["R1", "R2"]}]
+        return [self._unit("L0", "R0", "p0", "FORMULAIC"),
+                self._unit("L1", "R1b", "p1", "NOT_FORMULAIC"),
+                self._unit("L2", "R2b", "p2", "NECESSARY_GRAMMAR", exc="NG-1")]
 
     def test_formulaic_records_valid_and_counted(self):
         out = GD.derive_formulaic_records(self._units(), dataset_manifest_digest=DMD,
@@ -353,10 +355,23 @@ class TestFormulaicDerivation(unittest.TestCase):
 
     def test_axes_verdict_inconsistency_rejected(self):
         u = self._units()
-        u[0]["verdict"] = "NOT_FORMULAIC"  # axes say FORMULAIC -> inconsistent
+        u[0]["final_verdict"] = "NOT_FORMULAIC"  # final_axes say FORMULAIC -> inconsistent
         with self.assertRaises(GD.DerivationError):
             GD.derive_formulaic_records(u, dataset_manifest_digest=DMD,
                                         seat_provenance_for=_sp(), batch_id="T")
+
+    def test_per_reviewer_verdict_disagreement_flows_to_judgments(self):
+        # two reviewers with DIFFERENT axes/verdict -> judgment records carry each own verdict
+        u = self._unit("LX", "RX", "px", "FORMULAIC")
+        u["judgments"][1] = {"reviewer_id": "REVIEWER_B::opus-4-8",
+                             "axes": self.AX["NOT_FORMULAIC"], "verdict": "NOT_FORMULAIC"}
+        # verdicts disagree -> must supply adjudicator identity + evidence + final
+        u["adjudicator_identity"] = "ADJ::opus-4-8-isolated"
+        u["adjudication_evidence_digest"] = digest_json({"x": 1})
+        out = GD.derive_formulaic_records([u], dataset_manifest_digest=DMD,
+                                          seat_provenance_for=_sp(), batch_id="T")
+        jverdicts = sorted(r["verdict"] for r in out["judgments"])
+        self.assertEqual(jverdicts, ["FORMULAIC", "NOT_FORMULAIC"])
 
 
 class TestFullModuleCoverageAndReadiness(unittest.TestCase):

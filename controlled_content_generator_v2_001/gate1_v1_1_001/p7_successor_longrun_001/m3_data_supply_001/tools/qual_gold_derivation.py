@@ -349,15 +349,20 @@ def derive_formulaic_records(formulaic_units: list[dict[str, Any]], *,
                              dataset_manifest_digest: str,
                              seat_provenance_for: Any,
                              batch_id: str) -> dict[str, Any]:
-    """formulaic 单元 → judgment(每 pair×2 reviewer) + adjudication(每 pair) + candidate_audit
-    + 三注册表（candidate_audit_manifest / rubric_registry / necessary_grammar_exception）。
+    """formulaic 单元 → judgment(每 pair×每 reviewer，**逐 reviewer 自有 axes+verdict**) +
+    adjudication(每 pair，**最终裁决 axes/verdict**) + candidate_audit + 三注册表。
 
-    formulaic_unit: {left_id, right_id, family_id, source_group_id, verdict, axes,
-                     necessary_grammar_exception_id|None, is_formulaic(bool),
+    §四.4：judgment 记录须带**每个 reviewer 各自的** axes+verdict（真实双席轴标注），才能让
+    spine.formulaic.agreement_metrics 度量真实跨席一致（旧版给两 reviewer 同一 verdict→一致恒 1，
+    度量落空）。adjudication 记录带**逐轴解析后的最终** axes/verdict（供 positive/negative/grammar 计数）。
+
+    formulaic_unit: {left_id, right_id, family_id, source_group_id,
                      left_author_identity, right_author_identity,
-                     reviewers: [rv1, rv2]}。
-    axes 须自洽：verdict_from_axes(axes, exc_id) == verdict（守卫，防标签矛盾）。
-    结构门（非计数门）与 qual_core_fixtures.build_formulaic_minibatch 一致。
+                     necessary_grammar_exception_id|None, is_formulaic(bool),
+                     final_verdict, final_axes,
+                     judgments: [{reviewer_id, axes, verdict[, model_revision, prompt_digest]}, ...]}。
+    守卫：每 judgment 自洽 verdict_from_axes(axes,exc)==verdict；final_axes 自洽 final_verdict；
+    reviewer_id ≠ 内容 author_identity（spine independence 门）。
     """
     judgments, adjudications, candidate_audit = [], [], []
     reviewed_pairs, cand_pairs, ng_pairs = [], [], []
@@ -366,35 +371,50 @@ def derive_formulaic_records(formulaic_units: list[dict[str, Any]], *,
         pid = canonical_pair_id(left, right)
         sg = str(unit["source_group_id"])
         fam = str(unit["family_id"])
-        verdict = unit["verdict"]
         exc_id = unit.get("necessary_grammar_exception_id")
-        axes = unit["axes"]
-        if verdict not in _FORMULAIC_VERDICTS:
-            raise DerivationError(f"formulaic {pid}: bad verdict {verdict!r}")
-        if verdict_from_axes(axes, exc_id) != verdict:
-            raise DerivationError(f"formulaic {pid}: axes/exc inconsistent with verdict {verdict}")
+        final_verdict = unit["final_verdict"]
+        final_axes = unit["final_axes"]
+        if final_verdict not in _FORMULAIC_VERDICTS:
+            raise DerivationError(f"formulaic {pid}: bad final_verdict {final_verdict!r}")
+        if verdict_from_axes(final_axes, exc_id) != final_verdict:
+            raise DerivationError(f"formulaic {pid}: final_axes inconsistent with {final_verdict}")
+        js = unit["judgments"]
+        if len(js) < 2 or len({str(j["reviewer_id"]) for j in js}) < 2:
+            raise DerivationError(f"formulaic {pid}: needs >=2 distinct reviewer judgments")
+        authors = {str(unit["left_author_identity"]), str(unit["right_author_identity"])}
         reviewed_pairs.append(pid)
         cand_pairs.append(pid)
-        if verdict == "NECESSARY_GRAMMAR":
+        if final_verdict == "NECESSARY_GRAMMAR":
             ng_pairs.append(pid)
-        for rv in unit["reviewers"]:
+        for j in js:
+            rv = str(j["reviewer_id"])
+            if rv in authors:
+                raise DerivationError(f"formulaic {pid}: reviewer {rv} collides with author")
+            jaxes, jverdict = j["axes"], j["verdict"]
+            if verdict_from_axes(jaxes, exc_id) != jverdict:
+                raise DerivationError(f"formulaic {pid}/{rv}: axes inconsistent with verdict {jverdict}")
             cid = f"form-j::{pid}::{rv}"
             judgments.append(_assemble(
                 cid, sg, "formulaic", "judgment", fam, "NATURAL",
-                {"axes": axes, "necessary_grammar_exception_id": exc_id, "verdict": verdict},
-                {"pair_id": pid, "left_id": left, "right_id": right, "reviewer_id": str(rv),
+                {"axes": jaxes, "necessary_grammar_exception_id": exc_id, "verdict": jverdict},
+                {"pair_id": pid, "left_id": left, "right_id": right, "reviewer_id": rv,
                  "left_author_identity": unit["left_author_identity"],
                  "right_author_identity": unit["right_author_identity"],
-                 "reviewer_provenance": {"reviewer_identity": str(rv), "reviewer_kind": "AI",
-                                         "model_revision": "m1",
-                                         "prompt_digest": digest_json({"r": rv, "p": pid})}},
+                 "reviewer_provenance": {"reviewer_identity": rv, "reviewer_kind": "AI",
+                                         "model_revision": j.get("model_revision", "m1"),
+                                         "prompt_digest": j.get(
+                                             "prompt_digest", digest_json({"r": rv, "p": pid}))}},
                 seat_provenance_for(cid), dataset_manifest_digest))
+        # adjudicator 身份/证据：席位判定**一致**时无需仲裁→None；判定分歧→须真实仲裁席身份+证据摘要
+        # （与 spine.qualify_formulaic_construct 的 requires_adjudicator 口径一致：由双席 verdict 是否
+        # 一致决定，非逐轴；分歧时 final 由仲裁产出且非 INDETERMINATE）。
         cid_a = f"form-a::{pid}"
         adjudications.append(_assemble(
             cid_a, sg, "formulaic", "adjudication", fam, "NATURAL",
-            {"final_verdict": verdict, "necessary_grammar_exception_id": exc_id},
-            {"pair_id": pid, "left_id": left, "right_id": right,
-             "adjudicator_identity": None, "adjudication_evidence_digest": None},
+            {"final_verdict": final_verdict, "necessary_grammar_exception_id": exc_id},
+            {"pair_id": pid, "left_id": left, "right_id": right, "final_axes": final_axes,
+             "adjudicator_identity": unit.get("adjudicator_identity"),
+             "adjudication_evidence_digest": unit.get("adjudication_evidence_digest")},
             seat_provenance_for(cid_a), dataset_manifest_digest))
         cid_c = f"form-c::{pid}"
         candidate_audit.append(_assemble(

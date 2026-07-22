@@ -119,5 +119,96 @@ class TestRealReview(unittest.TestCase):
             RF.label_review_seat(items, "A", call=call, template="{seat}|{batch_json}")
 
 
+AX = {"FORMULAIC": {"argument_spine": "SAME", "evidence_progression": "SAME",
+                    "limitation_function": "DIFFERENT", "viewpoint_anchor": "SAME",
+                    "closing_function": "DIFFERENT", "transformation_depth": "SURFACE_ONLY"},
+      "NOT_FORMULAIC": {"argument_spine": "DIFFERENT", "evidence_progression": "DIFFERENT",
+                        "limitation_function": "DIFFERENT", "viewpoint_anchor": "DIFFERENT",
+                        "closing_function": "DIFFERENT", "transformation_depth": "STRUCTURAL_CHANGE"},
+      "NECESSARY_GRAMMAR": {"argument_spine": "NECESSARY_GRAMMAR", "evidence_progression": "DIFFERENT",
+                            "limitation_function": "DIFFERENT", "viewpoint_anchor": "DIFFERENT",
+                            "closing_function": "DIFFERENT", "transformation_depth": "STRUCTURAL_CHANGE"}}
+
+
+def _pairs():
+    def pair(ref, li, ri, sg, exc=None):
+        return {"pair_ref": ref, "left_id": li, "right_id": ri, "family_id": FAMS[0],
+                "source_group_id": sg, "left_content": "L", "right_content": "R",
+                "left_author_identity": f"AUL::{sg}", "right_author_identity": f"AUR::{sg}",
+                "necessary_grammar_exception_id": exc}
+    return [pair("P0", "l0", "r0", "fsg0"), pair("P1", "l1", "r1", "fsg1"),
+            pair("P2", "l2", "r2", "fsg2", exc="NG-1"), pair("P3", "l3", "r3", "fsg3")]
+
+
+def _axis_call(table):
+    def call(prompt, ok, stem):
+        rows = [{"pair_ref": ref, "axes": axes, "rationale": "r"} for ref, axes in table.items()]
+        return rows if ok(rows) else None
+    return call
+
+
+class TestRealFormulaic(unittest.TestCase):
+    def test_full_formulaic_path_with_adjudication(self):
+        pairs = _pairs()
+        a_tab = {"P0": AX["FORMULAIC"], "P1": AX["NOT_FORMULAIC"],
+                 "P2": AX["NECESSARY_GRAMMAR"], "P3": AX["FORMULAIC"]}
+        b_tab = {"P0": AX["FORMULAIC"], "P1": AX["NOT_FORMULAIC"],
+                 "P2": AX["NECESSARY_GRAMMAR"], "P3": AX["NOT_FORMULAIC"]}  # P3 disagree
+        axes_a = RF.label_formulaic_seat(pairs, "A", call=_axis_call(a_tab), template="{seat}|{batch_json}")
+        axes_b = RF.label_formulaic_seat(pairs, "B", call=_axis_call(b_tab), template="{seat}|{batch_json}")
+        need = RF.pairs_needing_adjudication(pairs, axes_a, axes_b)
+        self.assertEqual({p["pair_ref"] for p in need}, {"P3"})
+        adj = RF.adjudicate_formulaic_axes(need, axes_a, axes_b,
+                                           call=_axis_call({"P3": AX["FORMULAIC"]}),
+                                           template="{batch_json}")
+        units = RF.assemble_formulaic_units(pairs, axes_a, axes_b, adj,
+                                            prompt_digest_a=PD_A, prompt_digest_b=PD_B)
+        by_ref = {u["left_id"]: u for u in units}
+        self.assertIsNone(by_ref["l0"]["adjudicator_identity"])       # agreed pair, no adjudicator
+        self.assertEqual(by_ref["l3"]["adjudicator_identity"], "ADJ::opus-4-8-isolated")  # disputed
+        self.assertEqual(by_ref["l3"]["final_verdict"], "FORMULAIC")
+        out = RF.formulaic_agreement_report(units, dataset_manifest_digest=DMD,
+                                            seat_provenance_for=_sp_units(), batch_id="T")
+        recs = out["derived"]["judgments"] + out["derived"]["adjudications"] + out["derived"]["candidate_audit"]
+        pc = CUS.recompute_public_counts(recs, set_id="A", active_generation_id="QUAL_A_GEN_T",
+                                         dataset_manifest_digest=DMD, faces_sha256="f" * 64,
+                                         gold_sha256="0" * 64)
+        self.assertTrue(pc["custody_binding"]["core_validation_passed"],
+                        pc["custody_binding"]["core_validation_errors"])
+        self.assertEqual(pc["counts"]["formulaic_double_reviewed_pairs_total"], 4)
+        self.assertEqual(pc["counts"]["formulaic_positive_pairs_minimum"], 2)      # P0, P3
+        self.assertEqual(pc["counts"]["formulaic_negative_pairs_minimum"], 1)      # P1
+        self.assertEqual(pc["counts"]["formulaic_necessary_grammar_pairs_minimum"], 1)  # P2
+        rep = out["report"]
+        self.assertEqual(rep["final_verdict_distribution"],
+                         {"FORMULAIC": 2, "NECESSARY_GRAMMAR": 1, "NOT_FORMULAIC": 1})
+        self.assertEqual(rep["raw_agreement"], 3 / 4)          # P0,P1,P2 agree; P3 disagree
+        self.assertEqual(rep["adjudication_rate"], 1 / 4)      # only P3
+        self.assertTrue(rep["reviewer_independence_valid"])
+        self.assertIn("formulaic_construct", rep["gate_source"])
+
+    def test_per_reviewer_verdicts_measured_not_forced_identical(self):
+        # judgment records must carry each reviewer's OWN verdict (P3 A=FORMULAIC, B=NOT_FORMULAIC)
+        pairs = [p for p in _pairs() if p["pair_ref"] == "P3"]
+        axes_a = {"P3": AX["FORMULAIC"]}
+        axes_b = {"P3": AX["NOT_FORMULAIC"]}
+        adj = {"P3": AX["FORMULAIC"]}
+        units = RF.assemble_formulaic_units(pairs, axes_a, axes_b, adj,
+                                            prompt_digest_a=PD_A, prompt_digest_b=PD_B)
+        jverdicts = sorted(j["verdict"] for j in units[0]["judgments"])
+        self.assertEqual(jverdicts, ["FORMULAIC", "NOT_FORMULAIC"])
+
+    def test_necessary_grammar_without_exception_rejected(self):
+        # NG axis on a pair with no preregistered exception -> SystemExit (post-hoc forbidden)
+        pairs = [{"pair_ref": "PX", "left_id": "lx", "right_id": "rx", "family_id": FAMS[0],
+                  "source_group_id": "sgx", "left_content": "L", "right_content": "R",
+                  "left_author_identity": "AUL", "right_author_identity": "AUR",
+                  "necessary_grammar_exception_id": None}]
+        with self.assertRaises(SystemExit):
+            RF.assemble_formulaic_units(pairs, {"PX": AX["NECESSARY_GRAMMAR"]},
+                                        {"PX": AX["NECESSARY_GRAMMAR"]}, {},
+                                        prompt_digest_a=PD_A, prompt_digest_b=PD_B)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

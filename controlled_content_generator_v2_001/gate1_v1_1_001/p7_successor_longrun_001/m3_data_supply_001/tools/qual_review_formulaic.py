@@ -132,3 +132,165 @@ def review_agreement_report(units: list[dict], *, dataset_manifest_digest: str,
         "gate_source": "measurement_qualification.v2 module_gates.review_calibration（既有门，未发明）",
     }
     return {"records": recs, "report": report}
+
+
+# ================================================================  formulaic (§四.4)
+
+_ADJ_IDENTITY = "ADJ::opus-4-8-isolated"
+
+
+def axis_rows_ok(rows: Any, expected_refs: set[str]) -> bool:
+    """formulaic 轴标注席位输出合格判据：覆盖全 pair_ref 且 6 轴齐全、值合法枚举。"""
+    if not isinstance(rows, list):
+        return False
+    if {r.get("pair_ref") for r in rows if isinstance(r, dict)} != expected_refs:
+        return False
+    for r in rows:
+        ax = r.get("axes")
+        if not isinstance(ax, dict) or set(ax) != set(AXES):
+            return False
+        if any(ax[a] not in _AX5 for a in AXES[:-1]):
+            return False
+        if ax["transformation_depth"] not in _AXTD:
+            return False
+    return True
+
+
+def _pair_slim(p: dict) -> dict:
+    return {"pair_ref": p["pair_ref"], "left_content": p["left_content"],
+            "right_content": p["right_content"],
+            "claim_boundary": p.get("claim_boundary", ""),
+            "authorization_scope": p.get("authorization_scope", "")}
+
+
+def label_formulaic_seat(pairs: list[dict], seat: str, *, call: Call,
+                         template: str) -> dict[str, dict]:
+    """一个真实席位对每个 pair 沿 6 轴独立标注（双盲，不互看）→ {pair_ref: axes}。"""
+    expected = {p["pair_ref"] for p in pairs}
+    seat_label = "A(Codex-GPT)" if seat == "A" else "B(Opus-4.8)"
+    prompt = template.replace("{seat}", seat_label).replace(
+        "{batch_json}", json.dumps([_pair_slim(p) for p in pairs],
+                                   ensure_ascii=False, indent=1))
+    rows = call(prompt, lambda r: axis_rows_ok(r, expected), f"formaxis_{seat}")
+    if rows is None:
+        raise SystemExit(f"formulaic 轴 席 {seat} 标注失败")
+    return {r["pair_ref"]: r["axes"] for r in rows}
+
+
+def _verdict(axes: dict, exc_id: str | None, where: str) -> str:
+    try:
+        return verdict_from_axes(axes, exc_id)
+    except ValueError as e:
+        raise SystemExit(f"formulaic {where}: 轴→verdict 非法（{e}）；"
+                         f"含 NECESSARY_GRAMMAR 轴须预注册 exception（post-hoc 禁止）")
+
+
+def adjudicate_formulaic_axes(pairs_needing: list[dict], axes_a: dict, axes_b: dict, *,
+                              call: Call, template: str) -> dict[str, dict]:
+    """双席 verdict 分歧的 pair → 隔离仲裁席重标 6 轴 → {pair_ref: final_axes}。无分歧则空。"""
+    if not pairs_needing:
+        return {}
+    disputes = []
+    for p in pairs_needing:
+        ref = p["pair_ref"]
+        disputes.append({"pair_ref": ref,
+                         "disputed_axes": [ax for ax in AXES
+                                           if axes_a[ref].get(ax) != axes_b[ref].get(ax)],
+                         "left_content": p["left_content"], "right_content": p["right_content"],
+                         "claim_boundary": p.get("claim_boundary", ""),
+                         "authorization_scope": p.get("authorization_scope", ""),
+                         "axes_jia": axes_a[ref], "axes_yi": axes_b[ref]})
+    expected = {d["pair_ref"] for d in disputes}
+    prompt = template.replace("{batch_json}", json.dumps(disputes, ensure_ascii=False, indent=1))
+    rows = call(prompt, lambda r: axis_rows_ok(r, expected), "formaxis_adj")
+    if rows is None:
+        raise SystemExit("formulaic 轴 仲裁失败")
+    return {r["pair_ref"]: r["axes"] for r in rows}
+
+
+def pairs_needing_adjudication(pairs: list[dict], axes_a: dict, axes_b: dict) -> list[dict]:
+    """双席 verdict 不一致（或含 INDETERMINATE）的 pair 才需仲裁（口径同 spine gate）。"""
+    out = []
+    for p in pairs:
+        ref, exc = p["pair_ref"], p.get("necessary_grammar_exception_id")
+        va = _verdict(axes_a[ref], exc, f"{ref}[A]")
+        vb = _verdict(axes_b[ref], exc, f"{ref}[B]")
+        if va != vb or "INDETERMINATE" in (va, vb):
+            out.append(p)
+    return out
+
+
+def assemble_formulaic_units(pairs: list[dict], axes_a: dict, axes_b: dict,
+                             adj_axes_map: dict[str, dict], *,
+                             reviewer_a: str = "REVIEWER_A::codex-gpt",
+                             reviewer_b: str = "REVIEWER_B::opus-4-8",
+                             prompt_digest_a: str, prompt_digest_b: str) -> list[dict]:
+    """双席逐轴标签 + 分歧仲裁 → formulaic_units（每 pair 两条 per-reviewer judgment + 最终裁决）。
+
+    双席 verdict 一致→final=席A轴，无仲裁席；分歧→final=仲裁轴，挂真实仲裁席身份+证据摘要，
+    且 final 非 INDETERMINATE（与 spine gate requires_adjudicator 口径一致）。
+    """
+    units = []
+    for p in pairs:
+        ref = p["pair_ref"]
+        exc = p.get("necessary_grammar_exception_id")
+        aa, ab = axes_a[ref], axes_b[ref]
+        va = _verdict(aa, exc, f"{ref}[A]")
+        vb = _verdict(ab, exc, f"{ref}[B]")
+        if va == vb and va != "INDETERMINATE":
+            final_axes, final_verdict = dict(aa), va
+            adj_identity = adj_evidence = None
+        else:
+            if ref not in adj_axes_map:
+                raise SystemExit(f"formulaic {ref}: verdict 分歧但缺仲裁轴")
+            final_axes = adj_axes_map[ref]
+            final_verdict = _verdict(final_axes, exc, f"{ref}[final]")
+            if final_verdict == "INDETERMINATE":
+                raise SystemExit(f"formulaic {ref}: 仲裁未能定论（final INDETERMINATE）")
+            adj_identity = _ADJ_IDENTITY
+            adj_evidence = digest_json({"pair": ref, "final_axes": final_axes})
+        units.append({
+            "left_id": p["left_id"], "right_id": p["right_id"],
+            "family_id": p["family_id"], "source_group_id": p["source_group_id"],
+            "left_author_identity": p["left_author_identity"],
+            "right_author_identity": p["right_author_identity"],
+            "necessary_grammar_exception_id": exc,
+            "is_formulaic": final_verdict == "FORMULAIC",
+            "final_verdict": final_verdict, "final_axes": final_axes,
+            "adjudicator_identity": adj_identity,
+            "adjudication_evidence_digest": adj_evidence,
+            "judgments": [
+                {"reviewer_id": reviewer_a, "axes": aa, "verdict": va,
+                 "model_revision": "gpt-5.6-sol", "prompt_digest": prompt_digest_a},
+                {"reviewer_id": reviewer_b, "axes": ab, "verdict": vb,
+                 "model_revision": "claude-opus-4-8", "prompt_digest": prompt_digest_b}]})
+    return units
+
+
+def formulaic_agreement_report(units: list[dict], *, dataset_manifest_digest: str,
+                               seat_provenance_for: Callable, batch_id: str) -> dict:
+    """derive formulaic 记录 → 跑 spine 既有 agreement_metrics（judgment 逐 reviewer verdict）。
+    返回既有门指标（raw/positive/negative 一致、cohen κ 可解释时、adjudication_rate）+ verdict 分布。"""
+    out = GD.derive_formulaic_records(units, dataset_manifest_digest=dataset_manifest_digest,
+                                      seat_provenance_for=seat_provenance_for, batch_id=batch_id)
+    judg = out["judgments"]
+    index = QD.build_qualification_record_index(judg, dataset_manifest_digest=dataset_manifest_digest)
+    m = agreement_metrics(judg, dataset_manifest_digest=dataset_manifest_digest,
+                          qualification_record_index=index)
+    dist: dict[str, int] = {}
+    for u in units:
+        dist[u["final_verdict"]] = dist.get(u["final_verdict"], 0) + 1
+    report = {
+        "pairs": len(units),
+        "final_verdict_distribution": dict(sorted(dist.items())),
+        "raw_agreement": m["raw_agreement"],
+        "positive_specific_agreement": m["positive_specific_agreement"],
+        "negative_specific_agreement": m["negative_specific_agreement"],
+        "cohen_kappa_pairwise": m["cohen_kappa_pairwise"],
+        "kappa_interpretable": m["interpretable"],
+        "adjudication_rate": m["adjudication_rate"],
+        "reviewer_independence_valid": m["reviewer_independence_valid"],
+        "review_coverage_valid": m["review_coverage_valid"],
+        "gate_source": "measurement_qualification.v2 module_gates.formulaic_construct（既有门，未发明）",
+    }
+    return {"derived": out, "metrics": m, "report": report}
