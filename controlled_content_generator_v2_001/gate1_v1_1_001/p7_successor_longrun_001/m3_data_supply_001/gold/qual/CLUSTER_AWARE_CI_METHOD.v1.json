@@ -1,0 +1,19 @@
+{
+ "schema_version": "p7-cluster-aware-ci-method-freeze-v1",
+ "frozen_before_qualification_results": true,
+ "cluster_unit": "source_group_id",
+ "confidence_level": 0.95,
+ "sidedness": "ONE_SIDED_LOWER_BOUND",
+ "effective_n_rule": "每类 effective 独立试验数 = 该类 distinct source_group cluster 数（保守：cluster 内相关性最大化，不以 record/变体 充 N）",
+ "cluster_aggregation": "一个 cluster 在某类记为 1 次试验；cluster 成功 iff 该 cluster 在该类全部记录判对（对 recall 保守）",
+ "lower_bound_method": "EXACT_CLOPPER_PEARSON_ONE_SIDED",
+ "zero_error_lower_bound_formula": "0.05 ** (1/n)  （x=n 成功、0 失败）",
+ "min_clusters_zero_error_formula": "ceil( ln(0.05) / ln(theta) )",
+ "dual_disclosure_required": [
+  "raw_case_N",
+  "distinct_source_group_cluster_N"
+ ],
+ "founder_ruling_ref": "CAPACITY_DECISION.v1.json",
+ "founder_ruling_verbatim": "M3 继续推进。每套每类原始测试案例仍须达到合同规定的 300/100 条下限；同源变体不得增加独立簇 N，但具备不同挑战机制的合法变体可以计入原始案例覆盖。资格报告同时披露 raw case N 和 distinct source-group N，并在看到资格结果前冻结 cluster-aware 单侧 95% 置信区间方法。先做一次机械功效检查；只有证明即使零错误也无法满足特定统计门时，才针对缺口家族定向扩充 Tier2 素材。当前不得 HONEST_STOP，不得直接要求发起人补 360+ 场景。",
+ "method_digest": "1f3612a8ac940001869e53f09dedbc80b97af50dbc8faefe796d7ddf4a9e23c0"
+}

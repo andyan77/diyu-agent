@@ -1,0 +1,17 @@
+{
+ "schema_version": "p7-m3-capacity-decision-v1",
+ "recovery_id": "M3_R1",
+ "decided_at_stage": "M3-R1 §四.6（收敛 Prompt）",
+ "trigger": "§四.6 真实证据独立枚举暴露：现有 120 scenario 语料按严格独立口径每套仅 161/152 distinct source-group，而合同 6 大类各需 300/套（CAPACITY_TRUTH_EVIDENCE_BASED.v1.json，commit fd29992）。旧 plan 510 FEASIBLE=伪独立虚数（4 轮再生当独立）。",
+ "founder_ruling_verbatim": "M3 继续推进。每套每类原始测试案例仍须达到合同规定的 300/100 条下限；同源变体不得增加独立簇 N，但具备不同挑战机制的合法变体可以计入原始案例覆盖。资格报告同时披露 raw case N 和 distinct source-group N，并在看到资格结果前冻结 cluster-aware 单侧 95% 置信区间方法。先做一次机械功效检查；只有证明即使零错误也无法满足特定统计门时，才针对缺口家族定向扩充 Tier2 素材。当前不得 HONEST_STOP，不得直接要求发起人补 360+ 场景。",
+ "operative_model": {
+  "raw_case_N": "覆盖分母：合同 300/100/套下限对此计。distinct (source_group, mechanism)——NATURAL + 每个『不同挑战机制』的合法变体各计 1；同机制重复变体不增覆盖。",
+  "cluster_N": "统计独立分母：distinct source_group。同源变体（含不同机制）在同一簇不增独立 N。驱动 cluster-aware CI 与功效。",
+  "dual_disclosure": "资格报告必须同时披露 raw case N 与 distinct source-group N（不得只报其一）。",
+  "ci_method": "cluster-aware 单侧 95% 置信下界，cluster=source_group，看资格结果前冻结（预注册防事后选法）。",
+  "power_gate": "先机械功效检查：各统计门（recall/precision/accuracy 阈值）在零错误下、给定每类可用 cluster N，单侧 95% 下界能否达阈。达=可行；某门即便零错误也不达=该缺口家族定向 Tier2 扩源。",
+  "tier2_condition": "仅当功效检查证明某统计门机械不可达时，才对缺口家族定向补 Tier2；不得当前 HONEST_STOP，不得笼统要 360+ scenario。"
+ },
+ "supersedes_note": "本裁决澄清 §四.6：MECHANICALLY_INSUFFICIENT 是在『300=distinct 单位』的过严读法下得出；发起人裁定 300=raw case 覆盖（不同机制变体计入），独立性由 cluster N + 冻结 cluster-aware CI + 功效检查保障。CAPACITY_TRUTH 的 distinct N 数字为真、保留披露；其 verdict 由功效检查取代。",
+ "invariants": "M3_RECOVERY_STATUS=ACTIVE；M4 fail-closed；measurement_qualification.v2 下限不降（改的是计数口径与统计方法，非降阈值）；密封明文零入 Git。"
+}

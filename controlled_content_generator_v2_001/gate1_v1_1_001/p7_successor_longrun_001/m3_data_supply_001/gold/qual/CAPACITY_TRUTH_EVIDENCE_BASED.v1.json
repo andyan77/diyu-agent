@@ -219,5 +219,12 @@
  "verdict": "MECHANICALLY_INSUFFICIENT",
  "honest_stop_candidate": true,
  "honest_stop_basis": "§九 HONEST_STOP #1（穷尽现有真源+Tier1 后 A/B 独立容量机械不足）叠加 #3（唯一出路=扩源/Tier2 需发起人授权与新素材）",
- "evaluated_at": "2026-07-22T03:31:31.709020+00:00"
+ "evaluated_at": "2026-07-22T03:31:31.709020+00:00",
+ "founder_reconciliation": {
+  "ruling_ref": "delivery_control_001/milestones/M3/recovery/CAPACITY_DECISION.v1.json",
+  "effect": "本 receipt 的 distinct source-group N（A161/B152/total414）为真、保留披露（dual disclosure）；但『MECHANICALLY_INSUFFICIENT』verdict 系『300=distinct 单位』过严读法所得，已被发起人裁决取代——300/100 按 raw case N（不同机制变体计入覆盖）；独立性由 cluster N + 冻结 cluster-aware 单侧95%CI + 机械功效检查保障。",
+  "power_check_ref": "m3_data_supply_001/gold/qual/POWER_CHECK.v1.json = POWER_FEASIBLE_PROCEED （每套161/152 cluster ≥ 各统计门零错误 n_min≤59 → 整体率门功效可行；无需 Tier2）",
+  "ci_method_frozen": "m3_data_supply_001/gold/qual/CLUSTER_AWARE_CI_METHOD.v1.json（看资格结果前冻结）",
+  "effective_verdict": "PROCEED_UNDER_DUAL_COUNT_AND_CLUSTER_AWARE_CI（非 HONEST_STOP）"
+ }
 }
