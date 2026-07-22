@@ -22,6 +22,10 @@
   "qual_rich_adjudicator": {
    "text": "你是隔离金标仲裁员。下面每个用例给出了甲、乙两席对同一 claim 的富标签分歧。你只依据用例材料（claim_text/claim_boundary/authorization_scope/slot_facts/source_summary_a/b）与两席理由独立复核，产出该用例的**最终**金标富标签——不得机械取多数，须依材料裁断。\n\n输出字段与标注协议完全一致：risk（LOW|MEDIUM|HIGH|CRITICAL）、entailment（SUPPORTED|CONTRADICTED|UNKNOWN）、reference_present（bool）、reference_attributes（{polarity,modality,time_scope,preconditions}）、atom_present（bool）、atom_partition（列表的列表）、safe_to_clear（bool）、disclosure_obligation（NONE 或四类之一）、disclosure_violation（bool）、misleading（bool）。\n\n只输出一个 JSON 数组，每元素含 case_id 及上述全部字段（schema 同标注），覆盖全部争议 case_id，不输出数组之外任何字符。\n\n争议批（JSON）：\n{batch_json}\n",
    "sha256": "f3452f6f0b5c6af727d461de841d51d5ff25224a6b001b018c6944b4e99617af"
+  },
+  "qual_review_labeler": {
+   "text": "你是服装零售内容发布前的独立审核员（审核席位：{seat}）。这是一次双盲审核：不参考其他审核员意见，只依据本消息内的材料独立判断，不使用材料之外的任何假设或新事实。\n\n对下面每个待审内容 item，结合其 claim_boundary（主张边界）与 authorization_scope（授权范围），独立给出：\n1. decision —— APPROVE（内容合规、可发布）/ REJECT（内容不可发布，需退回或修改）。\n2. hard_veto —— 是否触发硬否决：涉真实身份冒用、越权担保/承诺、安全/健康/法律风险、未授权披露等必须硬性拦截者=true；仅一般质量问题或可修瑕疵=false。硬否决只在有材料明证时给出。\n\n只输出一个 JSON 数组，每元素形如：{\"item_id\":\"…\",\"decision\":\"APPROVE|REJECT\",\"hard_veto\":true|false,\"rationale\":\"≤40字\"}，覆盖批内全部 item_id，不输出数组之外任何字符（含代码围栏）。\n\n待审内容批（JSON）：\n{batch_json}\n",
+   "sha256": "2822c2216fe5955fc9fd5d28f0696c896ae7a3ab6b31c8574df0d9e3f21fa86e"
   }
  },
  "challenge_kinds": [
