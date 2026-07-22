@@ -211,5 +211,10 @@ A/B pilot 全部通过后，不等待发起人或新的 Codex 审核。直接启
 ---
 <!-- 磁盘续跑指针（本块为 canonical Prompt 的执行辅助，不改变上文合同）：
 运维真值：席A(codex)/本地 commit/push 须沙箱外（dangerouslyDisableSandbox；沙箱内 gitdir/app-server 只读 FS）；git 读沙箱内可跑。席B(claude)/富标注/仲裁走 claude -p --model claude-opus-4-8；富标注分块（CHUNK=4）更稳。密封明文只落 sealed_custody_001/**（gitignore）；Git 仅代码/测试/config/回执聚合/sealed=HIDDEN index。
-机读进度：M3_RECOVERY_PROGRESS.v3.json。骨架复用勿重建：qual_gold_derivation / qual_runner / qual_pilot / qual_core_fixtures / qual_generation / qual_custody_recompute / qual_capacity_precheck / pre_m0_readiness。
+机读进度：M3_RECOVERY_PROGRESS.v3.json。骨架复用勿重建：qual_gold_derivation / qual_runner / qual_pilot / qual_core_fixtures / qual_generation / qual_custody_recompute / qual_capacity_precheck / pre_m0_readiness / qual_review_formulaic。
+
+session7 断点（remote HEAD=e0cc352）：§四.1-§四.7 全完成；§五 A/B pilots BOTH PASS 14/14（真付费；QUAL_A_GEN_PILOT 3ea40c0 / QUAL_B 3c3eb6da503d cfce249）；§六 gap 表 R3RUN_GAP_TABLE.v1.json + 发起人授权 R3RUN_AUTHORIZATION.v1.json(GRANTED_FULL_RUN)。§六 build 已做：build-1 cmd_finalize 读 v2(be41dee)；build-2 capacity precheck 非门(不动)；build-5/6 qual_runner 加 cmd_review+cmd_formulaic 真子管线生产命令(e0cc352，写 sealed qual_{set}/review_units.json+formulaic_units.json，goldfreeze 消费；miner A/B 各 340 对≥300；test_qual_runner_subpipelines 过)。
+§六 待续：**build-3（关键）**—cmd_faces `_build_variant_tasks` 逐类瞄准弱且 contradicted 只 CONTRADICTION_INJECT 一机制→mechanism=challenge_kind 粒度下 max 161/152<300；按发起人「distinct 挑战机制变体计入 raw 覆盖」须造 distinct contradiction **子机制**(~2/簇→≥300)：改 annexC qual_variant_constructor 加子机制参数+mechanism 字段细化(genuinely 不同挑战策略非改措辞，防 §六B 伪独立)+_build_variant_tasks 逐类逐簇分配；查 fact_chain_high_risk_unsafe/high_risk_unknown 是否也瓶颈；细分仍不足→Prompt §六 auto Tier1 top-up(补 B/F5/低供给不询问)。build-4 disclosure 确定性覆盖(100+4 义务类型强制构造)。build-7 极小 dry-run 全链贯通。然后 RUN 全量付费(~$655 多日 resumable)→R4→R5→R6→M4 --dry-run。
+全量 runner 流水：split→faces→label(--seat A/B)→labelfreeze→adjudicate→review→formulaic→goldfreeze→finalize（review/formulaic 为 session7 新增子命令）。
 -->
+
