@@ -56,8 +56,11 @@ def _full_public_counts(set_id: str, *, failing: bool = False,
     counts = {k: mins[k] + 5 for k in prm.COUNT_KEYS}
     if failing:
         counts["risk_classification_high_risk_cases"] = 0
+    # §四.6 cluster-power：各统计率门分母类 cluster N 略超冻结 n_min → cluster-power PASS。
+    cp_req = prm.cluster_power_requirements()["per_class_min_clusters"]
+    cluster_counts = {k: cp_req[k] + 5 for k in cp_req}
     return {
-        "set": set_id, "counts": counts,
+        "set": set_id, "counts": counts, "cluster_counts": cluster_counts,
         "deterministic_disclosure_obligation_types_present": 4,
         "known_r5_input_binding_completeness": 1.0,
         "cost_expected_event_manifests": 1, "cost_rate_cards": 1,

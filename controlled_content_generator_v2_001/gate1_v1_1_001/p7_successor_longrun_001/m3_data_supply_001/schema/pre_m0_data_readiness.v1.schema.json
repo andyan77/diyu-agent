@@ -6,7 +6,8 @@
   "additionalProperties": false,
   "required": ["schema_version", "set", "contract_id",
                "reads_public_aggregates_only", "main_session_plaintext_contact",
-               "rows", "module_gold_field_coverage", "family_coverage_ok",
+               "rows", "cluster_power_rows", "cluster_power",
+               "module_gold_field_coverage", "family_coverage_ok",
                "governance", "failing_keys", "verdict", "record_digest"],
   "properties": {
     "schema_version": {"const": "p7-pre-m0-data-readiness-v1"},
@@ -27,8 +28,39 @@
           "delta": {"type": "number"},
           "pass": {"type": "boolean"},
           "reuse_allowed": {"type": "boolean"},
-          "statistic": {"type": "string"}
+          "statistic": {"type": "string"},
+          "cluster_n": {"type": "integer", "minimum": 0}
         }
+      }
+    },
+    "cluster_power_rows": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["key", "module", "min_clusters_zero_error", "cluster_n",
+                     "raw_case_n", "delta", "pass"],
+        "properties": {
+          "key": {"type": "string"},
+          "module": {"type": "string"},
+          "min_clusters_zero_error": {"type": "integer", "minimum": 1},
+          "cluster_n": {"type": "integer", "minimum": 0},
+          "raw_case_n": {"type": "integer", "minimum": 0},
+          "delta": {"type": "integer"},
+          "pass": {"type": "boolean"}
+        }
+      }
+    },
+    "cluster_power": {
+      "type": "object",
+      "required": ["gate", "ci_method_digest", "power_check_verdict",
+                   "frozen_before_qualification_results", "dual_disclosure"],
+      "properties": {
+        "gate": {"type": "string"},
+        "ci_method_digest": {"type": ["string", "null"]},
+        "power_check_verdict": {"type": ["string", "null"]},
+        "frozen_before_qualification_results": {"type": "boolean"},
+        "dual_disclosure": {"type": "string"}
       }
     },
     "module_gold_field_coverage": {

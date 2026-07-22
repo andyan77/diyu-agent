@@ -44,8 +44,12 @@ def _full_counts(set_id: str) -> dict:
     for key in prm.COUNT_KEYS:
         counts[key] = mins[key] + 5  # 略超要求
     coverage = {m: list(prm.MODULE_GOLD_FIELDS[m]) for m in prm.REQUIRED_MODULES}
+    # §四.6 cluster-power：各统计率门分母类 distinct source-group cluster N 略超冻结 n_min
+    # （≤ raw case N；两者均达标 → cluster-power PASS）。
+    cp_req = prm.cluster_power_requirements()["per_class_min_clusters"]
+    cluster_counts = {k: cp_req[k] + 5 for k in cp_req}
     return {
-        "set": set_id, "counts": counts,
+        "set": set_id, "counts": counts, "cluster_counts": cluster_counts,
         "deterministic_disclosure_obligation_types_present": 4,
         "known_r5_input_binding_completeness": 1.0,
         "cost_expected_event_manifests": 1, "cost_rate_cards": 1,
@@ -225,6 +229,58 @@ class PreM0Readiness(unittest.TestCase):
         row = next(x for x in r["rows"]
                    if x["key"] == "known_r5_hard_veto_cases_and_registered_variants_recall")
         self.assertEqual(row["statistic"], "input_binding_completeness")
+
+    # --- §四.6 cluster-power 门（发起人裁决：raw case N 管覆盖，cluster N 管统计功效）---
+    def test_cluster_power_requirements_from_frozen_power_check(self) -> None:
+        # n_min 来自冻结 POWER_CHECK.v1.json；每类取该类各统计率门 n_min 的最大值
+        cp = prm.cluster_power_requirements()
+        req = cp["per_class_min_clusters"]
+        self.assertTrue(cp["frozen_before_qualification_results"])
+        self.assertEqual(cp["power_check_verdict"], "POWER_FEASIBLE_PROCEED")
+        # reference_extraction_positive_cases 有 0.95 门 → n_min=59（最严）
+        self.assertEqual(req["reference_extraction_positive_cases"], 59)
+        # formulaic_positive_pairs_minimum 仅 0.8 门 → n_min=14
+        self.assertEqual(req["formulaic_positive_pairs_minimum"], 14)
+
+    def test_full_fixture_has_cluster_power_rows_and_dual_disclosure(self) -> None:
+        r = prm.evaluate_set_readiness("A", _full_counts("A"))
+        self.assertTrue(r["cluster_power_rows"])
+        for row in r["cluster_power_rows"]:
+            self.assertTrue(row["pass"], row["key"])
+            self.assertGreaterEqual(row["cluster_n"], row["min_clusters_zero_error"])
+            self.assertIn("raw_case_n", row)  # 双披露：同时给 raw + cluster
+        # 统计率门分母类的主 count 行也带 cluster_n（双披露）
+        ref = next(x for x in r["rows"]
+                   if x["key"] == "reference_extraction_positive_cases")
+        self.assertIn("cluster_n", ref)
+
+    def test_cluster_below_nmin_fails_even_if_raw_meets_coverage(self) -> None:
+        # 关键：raw case N 达 300/100 覆盖，但某类 cluster N < n_min → cluster-power FAIL
+        pc = _full_counts("A")
+        pc["cluster_counts"]["reference_extraction_positive_cases"] = 58  # < 59
+        r = prm.evaluate_set_readiness("A", pc)
+        self.assertEqual(r["verdict"], "FAIL")
+        self.assertIn("cluster_power:reference_extraction_positive_cases",
+                      r["failing_keys"])
+        # raw 覆盖行仍 pass（证明两门口径独立）
+        ref_row = next(x for x in r["rows"]
+                       if x["key"] == "reference_extraction_positive_cases")
+        self.assertTrue(ref_row["pass"])
+
+    def test_missing_cluster_counts_fail_closed(self) -> None:
+        # 缺 cluster_counts（旧 public_counts）→ 各类 0 → cluster-power fail-closed
+        pc = _full_counts("A")
+        del pc["cluster_counts"]
+        r = prm.evaluate_set_readiness("A", pc)
+        self.assertEqual(r["verdict"], "FAIL")
+        self.assertTrue(any(k.startswith("cluster_power:") for k in r["failing_keys"]))
+
+    def test_recompute_fail_closed_when_cluster_power_rows_stripped(self) -> None:
+        # 抹掉 cluster_power_rows 后重算必 FAIL（防旧版本/被删门静默放绿）
+        r = prm.evaluate_set_readiness("A", _full_counts("A"))
+        self.assertEqual(prm.recompute_verdict(r), "PASS")
+        r.pop("cluster_power_rows")
+        self.assertEqual(prm.recompute_verdict(r), "FAIL")
 
 
 if __name__ == "__main__":

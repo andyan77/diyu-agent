@@ -704,7 +704,12 @@ def cmd_goldfreeze(set_id: str) -> int:
         "adjudicated_faces": adjudicated_faces,
         "agreement_granularity": "PER_FIELD (§四.1；逐模块 ADJ provenance)",
         "review_records": review_count, "formulaic_records": formulaic_count,
+        # §四.6 发起人裁决双披露：raw case N（不同机制变体计入覆盖，管 300/100）
+        # 与 distinct source-group cluster N（同源变体不增，管统计独立/CI 功效）并列。
         "class_counts_recomputed": pc["counts"],
+        "cluster_class_counts_recomputed": pc["cluster_counts"],
+        "dual_count_disclosure": "counts=raw case N（覆盖门）; cluster_counts=distinct "
+                                 "source-group N（cluster-aware 单侧95%CI 功效门）",
         "module_gold_field_coverage": pc["module_gold_field_coverage"],
         "obligation_types_present": pc["deterministic_disclosure_obligation_types_present"],
         "per_family": dict(sorted(Counter(

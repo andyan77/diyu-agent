@@ -454,10 +454,14 @@ class TestFullModuleCoverageAndReadiness(unittest.TestCase):
         self.assertTrue(all(c["present"] for c in r["module_gold_field_coverage"].values()))
         self.assertTrue(all(r["governance"].values()))
         # every failing key is a count/class-minimum key (not coverage/governance/family)
+        # §四.6：cluster_power:* 亦属 scale 失败（cluster N 不足），非 coverage/governance/family。
         count_keys = set(PRM.COUNT_KEYS) | {
             "deterministic_disclosure_obligation_types_required",
             "known_r5_hard_veto_cases_and_registered_variants_recall"} | set(PRM.M3_MANIFEST_KEYS)
         for k in r["failing_keys"]:
+            if k.startswith("cluster_power:"):
+                self.assertIn(k.split(":", 1)[1], count_keys, k)
+                continue
             self.assertIn(k, count_keys, f"unexpected non-scale failing key: {k}")
 
 

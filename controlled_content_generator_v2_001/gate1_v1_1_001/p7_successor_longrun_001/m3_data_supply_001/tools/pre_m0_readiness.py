@@ -30,6 +30,8 @@ import receipts  # noqa: E402
 
 CONTRACT = P7 / "eval_audit_spine_001/contract/measurement_qualification.v2.json"
 QUAL_DIR = P7 / "m3_data_supply_001/gold/qual"
+# §四.6（发起人裁决）：cluster-power 门读**冻结**的功效检查回执（看资格结果前冻结，预注册防事后选法）。
+POWER_CHECK = QUAL_DIR / "POWER_CHECK.v1.json"
 
 REQUIRED_MODULES = (
     "reference_extraction", "claim_atomization", "risk_classification",
@@ -104,11 +106,39 @@ def load_minimums() -> dict:
     return json.loads(CONTRACT.read_text(encoding="utf-8"))["qualification_set_minimums"]
 
 
+def cluster_power_requirements(power_check: dict | None = None) -> dict:
+    """从**冻结**的 POWER_CHECK.v1.json 派生每类所需最小 distinct source-group cluster 数。
+
+    发起人裁决（CAPACITY_DECISION.v1.json）：300/100 下限按 **raw case N**（不同挑战机制变体计入
+    覆盖）——由本文件 COUNT_KEYS 的 counts 门强制；统计独立/CI 功效由 **distinct source-group
+    cluster N** 保障——每类 cluster N 须 ≥ 该类各统计率门零错误 n_min 的最大值（cluster-aware
+    单侧 95% Clopper-Pearson 下界即便零错误也达阈的最小 cluster 数）。读冻结回执而非重算 →
+    尊重「看资格结果前冻结」的预注册完整性，n_min 不因资格结果事后漂移。
+    """
+    pc = power_check or json.loads(POWER_CHECK.read_text(encoding="utf-8"))
+    req: dict[str, int] = {}
+    for row in pc.get("gate_power_rows", []):
+        cls = row["denominator_class"]
+        req[cls] = max(req.get(cls, 0), int(row["n_min_zero_error"]))
+    return {
+        "per_class_min_clusters": req,
+        "ci_method_digest": pc.get("ci_method", {}).get("method_digest"),
+        "power_check_verdict": pc.get("verdict"),
+        "frozen_before_qualification_results":
+            bool(pc.get("ci_method", {}).get("frozen_before_qualification_results")),
+    }
+
+
 def evaluate_set_readiness(set_id: str, public_counts: dict,
                            mins: dict | None = None) -> dict:
     """对单套（A 或 B）以公开聚合计数评估就绪。返回未 close 的回执（调用方补 record_digest）。"""
     mins = mins or load_minimums()
+    # §四.6 双计数：counts=raw case N（300/100 覆盖门，不同机制变体计入）；
+    # cluster_counts=distinct source-group cluster N（统计独立/CI 功效门，同源变体不增）。
     counts = public_counts.get("counts", {})
+    cluster_counts = public_counts.get("cluster_counts", {})
+    cp = cluster_power_requirements()
+    cp_req = cp["per_class_min_clusters"]
     rows = []
     all_pass = True
 
@@ -118,9 +148,13 @@ def evaluate_set_readiness(set_id: str, public_counts: dict,
         ok = actual >= req
         all_pass &= ok
         module, caliber, reuse, stat, stage = KEY_MAP[key]
-        rows.append({"key": key, "module": module, "required": req,
-                     "actual": actual, "delta": actual - req, "pass": ok,
-                     "reuse_allowed": reuse, "statistic": stat})
+        row = {"key": key, "module": module, "required": req,
+               "actual": actual, "delta": actual - req, "pass": ok,
+               "reuse_allowed": reuse, "statistic": stat}
+        # 双披露：统计率门的分母类同时给出 raw case N 与 distinct source-group cluster N。
+        if key in cp_req:
+            row["cluster_n"] = int(cluster_counts.get(key, 0))
+        rows.append(row)
 
     # §5.4：M3 冻结成本输入 manifest 门（expected 事件 manifest + 费率卡；顶层聚合，非 counts）。
     # 不检 cost_source_event_manifests / cost_events（M4 运行产物，STAGE=M4 已从此集排除）。
@@ -155,6 +189,22 @@ def evaluate_set_readiness(set_id: str, public_counts: dict,
                  "delta": round(r5_actual - r5_req, 4), "pass": r5_ok,
                  "reuse_allowed": False, "statistic": "input_binding_completeness"})
 
+    # §四.6（发起人裁决）cluster-power 门：每类 distinct source-group cluster N ≥ 该类统计率门
+    # 零错误 n_min（从冻结 POWER_CHECK.v1.json 派生）——保证 cluster-aware 单侧 95% Clopper-Pearson
+    # 下界即便零错误也达阈。raw case N 由上面 counts 门管 300/100 覆盖；此门管统计独立/CI 功效。
+    # cluster_counts 缺项 → 该类 0 → 门 fail-closed（绝不因缺 cluster 计数而静默放绿）。
+    cluster_power_rows = []
+    for key in sorted(cp_req):
+        need = cp_req[key]
+        have = int(cluster_counts.get(key, 0))
+        raw = int(counts.get(key, 0))
+        ok = have >= need
+        all_pass &= ok
+        cluster_power_rows.append({
+            "key": key, "module": KEY_MAP[key][0],
+            "min_clusters_zero_error": need, "cluster_n": have,
+            "raw_case_n": raw, "delta": have - need, "pass": ok})
+
     # 模块 gold 字段覆盖（9 模块全部 gold 字段须在场）
     coverage = public_counts.get("module_gold_field_coverage", {})
     module_cov = {}
@@ -187,6 +237,7 @@ def evaluate_set_readiness(set_id: str, public_counts: dict,
     all_pass &= gov_ok
 
     failing = [r["key"] for r in rows if not r["pass"]]
+    failing += [f"cluster_power:{r['key']}" for r in cluster_power_rows if not r["pass"]]
     failing += [m for m, c in module_cov.items() if not c["present"]]
     if not fam_ok:
         failing.append("required_content_families")
@@ -199,6 +250,16 @@ def evaluate_set_readiness(set_id: str, public_counts: dict,
         "reads_public_aggregates_only": True,
         "main_session_plaintext_contact": "NONE",
         "rows": rows,
+        "cluster_power_rows": cluster_power_rows,
+        "cluster_power": {
+            "gate": "每类 distinct source-group cluster N ≥ 该类统计率门零错误 n_min",
+            "ci_method_digest": cp["ci_method_digest"],
+            "power_check_verdict": cp["power_check_verdict"],
+            "frozen_before_qualification_results":
+                cp["frozen_before_qualification_results"],
+            "dual_disclosure": "counts=raw case N（覆盖门）; cluster_counts=distinct "
+                               "source-group N（独立/CI 功效门）",
+        },
         "module_gold_field_coverage": module_cov,
         "family_coverage_ok": fam_ok,
         "family_present": sorted(fam_present),
@@ -213,12 +274,15 @@ def evaluate_set_readiness(set_id: str, public_counts: dict,
 
 
 def recompute_verdict(receipt: dict) -> str:
-    """从 rows/coverage/governance 重算 verdict —— 防手改 verdict:PASS 而 rows 有失败项。"""
+    """从 rows/cluster_power/coverage/governance 重算 verdict —— 防手改 verdict:PASS 而有失败项。"""
     ok = all(r.get("pass") for r in receipt.get("rows", []))
     ok &= all(c.get("present") for c in
               receipt.get("module_gold_field_coverage", {}).values())
     ok &= bool(receipt.get("family_coverage_ok"))
     ok &= all(receipt.get("governance", {}).values())
+    # §四.6 cluster-power 门：缺 cluster_power_rows（旧工具版本/被抹掉）或任一类不达 n_min → fail-closed。
+    cp_rows = receipt.get("cluster_power_rows", [])
+    ok &= bool(cp_rows) and all(r.get("pass") for r in cp_rows)
     return "PASS" if ok else "FAIL"
 
 
