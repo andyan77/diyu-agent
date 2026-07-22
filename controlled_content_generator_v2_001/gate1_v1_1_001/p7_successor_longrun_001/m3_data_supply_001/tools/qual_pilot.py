@@ -465,8 +465,9 @@ def run_pilot(set_id: str = "A") -> int:
         json.dumps(records, ensure_ascii=False, indent=1), encoding="utf-8")
     gold_sha = digest_json(records)
 
-    # generation chain
-    generation_id = f"QUAL_{set_id}_GEN_PILOT_{faces_sha[:12]}"
+    # generation chain —— generation_id 由 **gold_sha** 定（records-bound）：faces 复用但 records
+    # 因接入真 review/formulaic 而变时，自动 mint 新 generation（superseding），旧 pilot 生成件不被覆盖。
+    generation_id = f"QUAL_{set_id}_GEN_PILOT_{gold_sha[:12]}"
     gen = GEN.build_generation(records, set_id=set_id, generation_id=generation_id,
                                dataset_manifest_digest=dmd,
                                faces_sha256=faces_sha, gold_sha256=gold_sha, qual_dir=PILOT_QUAL)
