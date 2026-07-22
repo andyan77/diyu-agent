@@ -192,6 +192,38 @@ class TestPerClaimDerivation(unittest.TestCase):
             recs, set_id="A", active_generation_id="QUAL_A_GEN_T",
             dataset_manifest_digest=DMD, faces_sha256="f" * 64, gold_sha256="0" * 64)
         self.assertEqual(pc["counts"]["risk_classification_high_risk_cases"], 4)
+        self.assertEqual(pc["cluster_counts"]["risk_classification_high_risk_cases"], 4)
+
+    def test_dual_count_distinct_mechanism_raw_gt_cluster(self):
+        # §四.6 发起人裁决：同 source_group 两个**不同挑战机制**变体 → raw case N=2（各计覆盖），
+        # cluster N=1（同源不增独立簇）。资格报告双披露。
+        faces = [{"case_id": "V-a", "case_kind": "CHALLENGE_VARIANT", "family_id": FAMS[0],
+                  "source_group_id": "sg0", "challenge_kind": "CONTRADICTION_INJECT"},
+                 {"case_id": "V-b", "case_kind": "CHALLENGE_VARIANT", "family_id": FAMS[0],
+                  "source_group_id": "sg0", "challenge_kind": "RISK_ELEVATE"}]
+        labels = {f["case_id"]: _rich(risk="HIGH", ent="CONTRADICTED") for f in faces}
+        recs = self._derive(faces, labels)["records"]
+        pc = CUS.recompute_public_counts(
+            recs, set_id="A", active_generation_id="QUAL_A_GEN_T",
+            dataset_manifest_digest=DMD, faces_sha256="f" * 64, gold_sha256="0" * 64)
+        self.assertEqual(pc["counts"]["risk_classification_high_risk_cases"], 2)          # raw
+        self.assertEqual(pc["cluster_counts"]["risk_classification_high_risk_cases"], 1)  # cluster
+        self.assertEqual(pc["counts"]["high_risk_contradicted_cases"], 2)
+        self.assertEqual(pc["cluster_counts"]["high_risk_contradicted_cases"], 1)
+
+    def test_same_mechanism_variants_no_raw_inflation(self):
+        # 同 source_group 同机制的两个变体 → raw N=1（同机制不增覆盖）、cluster N=1
+        faces = [{"case_id": "V-a", "case_kind": "CHALLENGE_VARIANT", "family_id": FAMS[0],
+                  "source_group_id": "sg0", "challenge_kind": "RISK_ELEVATE"},
+                 {"case_id": "V-b", "case_kind": "CHALLENGE_VARIANT", "family_id": FAMS[0],
+                  "source_group_id": "sg0", "challenge_kind": "RISK_ELEVATE"}]
+        labels = {f["case_id"]: _rich(risk="HIGH", ent="CONTRADICTED") for f in faces}
+        recs = self._derive(faces, labels)["records"]
+        pc = CUS.recompute_public_counts(
+            recs, set_id="A", active_generation_id="QUAL_A_GEN_T",
+            dataset_manifest_digest=DMD, faces_sha256="f" * 64, gold_sha256="0" * 64)
+        self.assertEqual(pc["counts"]["risk_classification_high_risk_cases"], 1)
+        self.assertEqual(pc["cluster_counts"]["risk_classification_high_risk_cases"], 1)
 
 
 class TestFieldLevelAgreement(unittest.TestCase):

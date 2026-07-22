@@ -149,6 +149,19 @@ def _count_class(records: list[dict], predicate: Callable[[dict], bool],
     return len({str(r.get("case_id")) for r in matched})
 
 
+def _count_raw_class(records: list[dict], predicate: Callable[[dict], bool],
+                     count_mode: str) -> int:
+    """§四.6 发起人裁决：raw case 覆盖数（300/100 下限对此计）。source_group 类的 raw 单位 =
+    distinct (source_group_id, mechanism)——NATURAL + 每个不同挑战机制的合法变体各计 1，同机制不增
+    覆盖。非 source_group 类（formulaic pair / review item）无机制变体维度，raw == cluster。"""
+    if count_mode == "source_group":
+        matched = [r for r in records if predicate(r)]
+        # raw 单位在 cluster 独立键（_independent_key：默认 source_group，显式 independent_evidence_unit
+        # 时细化到 EV 单位）之上再叠加 mechanism 维度（不同挑战机制的合法变体各计 1）。
+        return len({(_independent_key(r), str(r.get("mechanism") or "NATURAL")) for r in matched})
+    return _count_class(records, predicate, count_mode)
+
+
 def _module_gold_field_coverage(records: list[dict]) -> dict[str, list[str]]:
     cov: dict[str, set[str]] = {}
     for r in records:
@@ -216,9 +229,13 @@ def recompute_public_counts(records: list[dict], *, set_id: str,
     validation = {"passed": val_passed, "errors": sorted(set(val_errors)),
                   "unique_case_count": total_unique}
 
+    # §四.6 双计数：counts=raw case N（300/100 覆盖门）；cluster_counts=distinct source-group N
+    #（统计独立分母，驱动 cluster-aware CI/功效；同源变体不增 cluster N）。资格报告须双披露。
     counts = {}
+    cluster_counts = {}
     for key, (predicate, count_mode) in CLASS_PREDICATES.items():
-        counts[key] = _count_class(records, predicate, count_mode)
+        counts[key] = _count_raw_class(records, predicate, count_mode)
+        cluster_counts[key] = _count_class(records, predicate, count_mode)
 
     obligation_types = sorted({r.get("obligation_type") for r in records
                                if r.get("module") == "disclosure"
@@ -233,6 +250,9 @@ def recompute_public_counts(records: list[dict], *, set_id: str,
         "schema_version": "p7-qual-custody-public-counts-v1",
         "set": set_id,
         "counts": counts,
+        # §四.6 双披露：cluster_counts = distinct source-group 独立单位数（同源变体不增）；
+        # 供 cluster-aware CI/功效与资格报告披露。counts(raw) ≥ 下限门；cluster ≥ 功效 n_min 门。
+        "cluster_counts": cluster_counts,
         "deterministic_disclosure_obligation_types_present": len(obligation_types),
         "obligation_types": obligation_types,
         # §5.4 边界：known-R5 在 M3 只证「输入案例+注册变体绑定完备」（input binding），
@@ -305,6 +325,8 @@ def verify_binding(public_counts: dict, records: list[dict]) -> list[str]:
             fresh["custody_binding"]["core_validation_errors"][:5]))
     if public_counts.get("counts") != fresh["counts"]:
         errors.append("counts_mismatch_vs_recompute")
+    if public_counts.get("cluster_counts") != fresh["cluster_counts"]:
+        errors.append("cluster_counts_mismatch_vs_recompute")
     if (public_counts.get("module_gold_field_coverage")
             != fresh["module_gold_field_coverage"]):
         errors.append("module_coverage_mismatch_vs_recompute")

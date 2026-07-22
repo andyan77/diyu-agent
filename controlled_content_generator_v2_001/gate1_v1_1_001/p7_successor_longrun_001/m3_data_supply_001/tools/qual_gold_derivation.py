@@ -216,6 +216,10 @@ def derive_records_for_face(face: dict[str, Any], label: dict[str, Any], *,
     sg = str(face["source_group_id"])
     fam = str(face["family_id"])
     origin = "NATURAL" if face.get("case_kind") == "NATURAL" else "CHALLENGE"
+    # §四.6 发起人裁决：raw case 覆盖单位 = (source_group, mechanism)。mechanism = NATURAL 或该变体的
+    # challenge_kind（不同机制变体计入 raw 覆盖；同机制不增覆盖）。cluster 独立单位仍 = source_group。
+    mechanism = "NATURAL" if origin == "NATURAL" else str(
+        face.get("challenge_kind") or "CHALLENGE_UNSPECIFIED")
     validate_rich_label(label, where=cid)
     risk = label["risk"]
     attrs = {k: label["reference_attributes"][k] for k in _ATTR_KEYS}
@@ -226,7 +230,8 @@ def derive_records_for_face(face: dict[str, Any], label: dict[str, Any], *,
         used_adj = bool(mod_adj) and adj_seat_provenance is not None
         sp = list(base_seat_provenance) + ([adj_seat_provenance] if used_adj else [])
         agree: dict[str, Any] = {
-            "agreement_status": "FIELD_ADJUDICATED" if used_adj else "CROSS_MODEL_AGREED"}
+            "agreement_status": "FIELD_ADJUDICATED" if used_adj else "CROSS_MODEL_AGREED",
+            "mechanism": mechanism}
         if used_adj:
             agree["adjudicated_fields"] = mod_adj
         return _assemble(f"{cid}::{mod}", sg, _MODULE_ALIAS.get(mod, mod), role,
