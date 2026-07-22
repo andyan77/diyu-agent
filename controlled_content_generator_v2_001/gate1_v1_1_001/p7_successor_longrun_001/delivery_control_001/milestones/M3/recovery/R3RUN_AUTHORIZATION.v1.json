@@ -1,0 +1,20 @@
+{
+ "schema_version": "p7-m3-r3run-authorization-v1",
+ "milestone": "M3-R1 §六 formal R3-run full build",
+ "authorization": "GRANTED_FULL_RUN",
+ "founder_choice_verbatim": "直接全量 R3-run（照 Prompt 原文）",
+ "context": "§五 两套 pilot 均 PASS(14/14, non_scale_failures=[])；§六 缺口表估 ~750 面/套、~1516 付费调用、~$655、多小时至多日 resumable。",
+ "conflict_resolved": {
+  "prompt_clause": "§六：pilot 通过后立即启动 R3-run，不等待发起人",
+  "global_rule": "重活/大额外部付费须人类显式授权 + 指令冲突必先停先问",
+  "resolution": "发起人经 AskUserQuestion 显式选择『直接全量 R3-run』→ 冲突以人类显式授权收口，满足全局『重活须授权』；据此启动全量付费建库。"
+ },
+ "gap_table_ref": "m3_data_supply_001/gold/qual/R3RUN_GAP_TABLE.v1.json",
+ "cost_ceiling_note": "估 ~$655（pilot B 外推）；成本非停工门（发起人裁决）；实际以 registry 唯一重算。",
+ "pilots_passed": {
+  "A": "QUAL_A_GEN_PILOT (3ea40c0)",
+  "B": "QUAL_B_GEN_PILOT (cfce249)"
+ },
+ "authorized_at_utc": "2026-07-22",
+ "authorized_by": "founder (Faye) via AskUserQuestion"
+}
