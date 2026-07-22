@@ -174,33 +174,37 @@ class VariantConstructionFix(unittest.TestCase):
         cls.plan = json.loads(PLAN.read_text(encoding="utf-8"))
 
     def _synthetic_by_fam(self) -> dict:
+        # 发起人证据身份裁决：face 带证据锚 source_group_id（每 2 claim 共 1 锚 → 测锚去重）。
         def claim(fam, i):
-            return {"case_id": f"{fam}-{i}", "family_id": fam, "claim_text": "t",
+            return {"case_id": f"{fam}-{i}", "family_id": fam, "claim_text": f"t{i}",
+                    "source_group_id": f"anchor-{fam}-{i // 2}", "scenario_id": f"scn-{fam}",
                     "claim_boundary": "b", "authorization_scope": "s",
-                    "slot_facts": {}, "source_summary_a": "sa", "source_summary_b": "sb"}
+                    "slot_facts": {}, "source_summary_a": "sa", "source_summary_b": "sb",
+                    "source_ids": [f"src-{fam}-{i // 2}"], "fact_ids": [f"fac-{fam}-{i // 2}"],
+                    "authorization_ids": [f"auth-{fam}-{i // 2}"]}
         return {"F1_PEOPLE_AND_REAL_SCENE":
                 [claim("F1_PEOPLE_AND_REAL_SCENE", i) for i in range(200)],
                 "F5_ENTERPRISE_LONG_TERM_TRUST":
                 [claim("F5_ENTERPRISE_LONG_TERM_TRUST", i) for i in range(20)]}
 
-    def test_k_ge_2_per_perturbed_claim(self) -> None:
+    def test_breadth_first_every_anchor_gets_high_risk(self) -> None:
+        # 发起人裁决 breadth-first：**每个** distinct evidence anchor 各先产 1 条高风险
+        # CONTRADICTION_INJECT（cluster N=全锚数≥门），不在部分锚堆两条冒充独立簇。
         by_fam = self._synthetic_by_fam()
         tasks = self.qr._build_variant_tasks(by_fam, "framedigest", self.plan)
-        from collections import Counter
-        per_claim = Counter(t["base_case_id"] for t in tasks)
-        k = self.plan["variant_construction"]["k_variants_per_claim"]
-        for cid, n in per_claim.items():
-            self.assertEqual(n, k, cid)
+        all_anchors = {f["source_group_id"] for fs in by_fam.values() for f in fs}
+        contra_anchors = {t["base_source_group_id"] for t in tasks
+                          if t["variant_kind"] == "CONTRADICTION_INJECT"}
+        self.assertEqual(contra_anchors, all_anchors)  # 全锚各得矛盾（breadth）
 
-    def test_not_fixed_ratio_and_f5_floor(self) -> None:
+    def test_distinct_anchor_mechanism_no_raw_inflation(self) -> None:
+        # raw = distinct (anchor, mechanism)：同锚同 mechanism 绝不重复（不虚增 raw 覆盖）。
         by_fam = self._synthetic_by_fam()
         tasks = self.qr._build_variant_tasks(by_fam, "framedigest", self.plan)
-        f5_claims = {t["base_case_id"] for t in tasks if t["family_id"] == "F5_ENTERPRISE_LONG_TERM_TRUST"}
-        # F5 保底 8：即便供给少也至少扰动 8（旧 0.4 只会取 8=0.4*20，但机制不再是比例）
-        self.assertGreaterEqual(len(f5_claims), 8)
-        # 变体 id 唯一
+        pairs = [(t["base_source_group_id"], t["mechanism"]) for t in tasks]
+        self.assertEqual(len(pairs), len(set(pairs)))  # 无重复 (anchor,mechanism)
         ids = [t["variant_id"] for t in tasks]
-        self.assertEqual(len(ids), len(set(ids)))
+        self.assertEqual(len(ids), len(set(ids)))       # 变体 id 唯一
 
     def test_deterministic(self) -> None:
         by_fam = self._synthetic_by_fam()

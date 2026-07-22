@@ -79,7 +79,9 @@ def _rich(risk="HIGH", ent="CONTRADICTED", ref_present=True, atom_present=True,
 
 
 def _face(cid, sg, fam=FAMS[0], kind="CHALLENGE_VARIANT"):
-    return {"case_id": cid, "case_kind": kind, "family_id": fam, "source_group_id": sg}
+    # claim_text=cid 给每张 face 互异的冻结输入题面摘要（真实变体正文各异；同源同机制仍 raw 折叠）。
+    return {"case_id": cid, "case_kind": kind, "family_id": fam, "source_group_id": sg,
+            "claim_text": cid}
 
 
 class TestRichLabelValidation(unittest.TestCase):
@@ -224,6 +226,35 @@ class TestPerClaimDerivation(unittest.TestCase):
             dataset_manifest_digest=DMD, faces_sha256="f" * 64, gold_sha256="0" * 64)
         self.assertEqual(pc["counts"]["risk_classification_high_risk_cases"], 1)
         self.assertEqual(pc["cluster_counts"]["risk_classification_high_risk_cases"], 1)
+
+
+    def test_raw_natural_distinct_wordings_same_anchor(self):
+        # 发起人裁决：raw NATURAL = distinct 冻结输入题面摘要。同证据锚两条**不同题面**的自然输入
+        # → raw 计 2（各是模型须分别处理的不同输入）；cluster（证据锚）仍 1（统计独立不虚增）。
+        def nat(cid, sg, text):
+            return {"case_id": cid, "case_kind": "NATURAL", "family_id": FAMS[0],
+                    "source_group_id": sg, "claim_text": text}
+        faces = [nat("N0", "anchorX", "自然题面甲"), nat("N1", "anchorX", "自然题面乙")]
+        labels = {f["case_id"]: _rich(risk="LOW", ent="SUPPORTED", safe=True) for f in faces}
+        recs = self._derive(faces, labels)["records"]
+        pc = CUS.recompute_public_counts(
+            recs, set_id="A", active_generation_id="QUAL_A_GEN_T",
+            dataset_manifest_digest=DMD, faces_sha256="f" * 64, gold_sha256="0" * 64)
+        self.assertTrue(pc["custody_binding"]["core_validation_passed"],
+                        pc["custody_binding"]["core_validation_errors"])
+        self.assertEqual(pc["counts"]["natural_legal_supported_cases"], 2)          # raw=2 题面
+        self.assertEqual(pc["cluster_counts"]["natural_legal_supported_cases"], 1)  # cluster=1 锚
+
+    def test_frozen_face_digest_folds_identical_separates_distinct(self):
+        # 冻结题面摘要：内容相同（规范化后相同）→ 同摘要（折叠）；claim_text 不同 → 异摘要（各计）。
+        base = {"scenario_id": "s", "claim_text": "x", "claim_boundary": "b",
+                "authorization_scope": "a", "slot_facts": {"k": "v"},
+                "source_summary_a": "sa", "source_summary_b": "sb",
+                "source_ids": ["s1"], "fact_ids": ["f1"], "authorization_ids": ["a1"]}
+        same = dict(base)  # 不同 case_id 不入摘要 → 同题面折叠
+        diff = dict(base, claim_text="y")
+        self.assertEqual(GD.frozen_input_face_digest(base), GD.frozen_input_face_digest(same))
+        self.assertNotEqual(GD.frozen_input_face_digest(base), GD.frozen_input_face_digest(diff))
 
 
 class TestFieldLevelAgreement(unittest.TestCase):

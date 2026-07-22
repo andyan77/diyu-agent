@@ -191,6 +191,7 @@ def _cases_for_set(set_id: str) -> list[dict]:
     frame = json.loads((M3DS / "SAMPLING_FRAME.v1.json").read_text(encoding="utf-8"))
     fam = {g["scenario_id"]: g["family_id"] for g in frame["groups"]}
     cases = []
+    seen_faces: set[str] = set()  # 发起人裁决：跨轮折叠规范化后相同的 NATURAL 题面（各锚仅留真不同题面）
     for rname, (req_rel, out_rel) in ROUND_FILES.items():
         reqs = {r["request_id"]: r for r in jl(PK / req_rel)}
         for o in jl(PK / out_rel):
@@ -199,12 +200,16 @@ def _cases_for_set(set_id: str) -> list[dict]:
                 continue
             s = scen[sid]
             for c in o.get("claims", []):
-                cases.append({
+                # 发起人证据身份裁决：source_group_id = 证据锚 digest(scenario_id + source/fact/auth ids)
+                # ——非 round-bearing、非 (scenario,claim_id)。同 (scenario,claim) 跨轮再生 = 同锚（不增
+                # cluster N）；同 scenario 内引不同 source/fact/auth 的不同 claim = 真不同证据（各成独立锚）。
+                anchor = GD.evidence_anchor_digest(
+                    sid, c.get("source_ids"), c.get("fact_ids"), c.get("authorization_ids"))
+                face = {
+                    # case_id 保留 round（区分不同 raw 输入实例）；source_group_id 走证据锚。
                     "case_id": f"Q{set_id}-{rname}-{c['claim_id']}",
                     "case_kind": "NATURAL",
-                    # §四.2 统计独立单位：source_group = claim 级（此自然 claim 自身）；
-                    # 其挑战变体继承本 source_group（cmd_faces），同源变体不增有效 N（§六B）。
-                    "source_group_id": f"Q{set_id}-{rname}-{c['claim_id']}",
+                    "source_group_id": anchor,
                     "scenario_id": sid, "family_id": fam[sid], "round": rname,
                     "item_title": o.get("title", ""),
                     "claim_text": c["claim_text"],
@@ -213,48 +218,109 @@ def _cases_for_set(set_id: str) -> list[dict]:
                     "slot_facts": s.get("slot_facts", {}),
                     "source_summary_a": s.get("source_summary_a", ""),
                     "source_summary_b": s.get("source_summary_b", ""),
-                })
+                    "source_ids": list(c.get("source_ids", [])),
+                    "fact_ids": list(c.get("fact_ids", [])),
+                    "authorization_ids": list(c.get("authorization_ids", [])),
+                }
+                ffd = GD.frozen_input_face_digest(face)
+                if ffd in seen_faces:  # 规范化后相同题面折叠（raw NATURAL 不重复计）
+                    continue
+                seen_faces.add(ffd)
+                face["frozen_input_face_digest"] = ffd
+                cases.append(face)
     return cases
 
 
-def _build_variant_tasks(by_fam: dict, frame_digest: str, plan: dict) -> list:
-    """密封变体任务构造：per-class-target-driven, k>=2 变体/claim, 高风险偏置。
+# 发起人裁决：CONTRADICTION_INJECT 四个真不同矛盾轴（子机制），令 ~301 锚上 contradicted 达 300+margin
+# （raw = distinct (evidence anchor, mechanism)；同锚不同子机制各计 1 覆盖，同子机制不增）。
+# 其余 kind 下限 ≤115 ≤ 锚数，单机制即足；mechanism = kind（无子机制）。
+_CONTRA_SUBS = ("POLARITY", "MAGNITUDE", "TEMPORAL_STATE", "ATTRIBUTION")
 
-    替代 M3 v1 的 `take = max(10, int(0.4 * len(ranked)))` 固定 40% 比例缺陷
-    （as-built ~206/199 变体、注释谎称 ~400、每 claim 单 kind）。改由
-    CAPACITY_AND_CONSTRUCTION_PLAN 的 per-class 目标驱动数量、k>=2、按族供给分摊 +
-    F5 保底。确定性（sha 序），零 0.4。R3 须同步对齐 annexC 构造模板以支持扩展 kinds。"""
+
+def _variant_task(f: dict, kind: str, sub: str | None, slot: int) -> dict:
+    # variant_id 唯一键 = (证据锚, mechanism)——place() 保证同锚同 mechanism 不重复 → id 唯一。
+    mech = f"{kind}:{sub}" if sub else kind
+    return {"variant_id": f"V-{f['source_group_id']}-{mech}",
+            "base_case_id": f["case_id"],
+            # 变体继承 base 的证据锚（cluster 身份）+ 真 scenario + 证据 id 列表（供锚/题面摘要复算）。
+            "base_source_group_id": f["source_group_id"],
+            "base_scenario_id": f["scenario_id"],
+            "variant_kind": kind, "mechanism": mech, "sub_mechanism": sub,
+            "base_claim_text": f["claim_text"],
+            "claim_boundary": f["claim_boundary"],
+            "authorization_scope": f["authorization_scope"],
+            "slot_facts": f["slot_facts"],
+            "source_summary_a": f["source_summary_a"],
+            "source_summary_b": f["source_summary_b"],
+            "source_ids": list(f.get("source_ids", [])),
+            "fact_ids": list(f.get("fact_ids", [])),
+            "authorization_ids": list(f.get("authorization_ids", [])),
+            "family_id": f["family_id"]}
+
+
+def _build_variant_tasks(by_fam: dict, frame_digest: str, plan: dict) -> list:
+    """发起人裁决 breadth-first 变体构造（证据锚为 cluster 单位）。
+
+    Pass 1（breadth）：**每个** distinct evidence anchor 各产 1 条主 CONTRADICTION_INJECT 高风险变体
+      → risk_high/contradicted/unsafe 的 cluster N ≈ 全锚数（≥299，满足 <1% 门 n_min=299）。
+      **不**在约150锚堆两条冒充299独立簇（发起人红线）——先全锚各1。
+    Pass 2（depth）：按 plan 目标（含 build margin）给锚追加**不同 mechanism** 的第二/三挑战：
+      contradicted margin 用 contradiction 子机制（真不同矛盾轴）；unknown/omission/控制类用相应 kind。
+      raw = distinct (anchor, mechanism) 由此达标；同锚同 mechanism 绝不重复（不虚增 raw）。"""
     vc = plan["variant_construction"]
     if not vc.get("no_fixed_ratio"):
         raise SystemExit("variant_construction.no_fixed_ratio!=true；拒绝回退固定比例")
-    k = int(vc["k_variants_per_claim"])
-    if k < 2:
-        raise SystemExit("k_variants_per_claim 必须 >=2（每 claim 至少两变体）")
-    kinds = list(vc["kinds"])
-    et = plan["per_set_module_targets"]["entailment"]
-    hi_target = (et["high_risk_contradicted"]["target"]
-                 + et["high_risk_unknown"]["target"])
-    total = sum(len(v) for v in by_fam.values()) or 1
-    tasks = []
-    for famname in sorted(by_fam):
-        ranked = sorted(by_fam[famname],
-                        key=lambda c: L.sha_text(frame_digest + "QV" + c["case_id"]))
-        share = len(ranked) / total
-        claims_to_perturb = min(len(ranked),
-                                max(8, -(-int(hi_target * share) // k)))  # F5 保底 8
-        for c in ranked[:claims_to_perturb]:
-            for kk in range(k):
-                h = int(L.sha_text(frame_digest + c["case_id"] + str(kk))[:8], 16)
-                kind = kinds[h % len(kinds)]
-                tasks.append({"variant_id": f"V-{c['case_id']}-{kind[:4]}-{kk}",
-                              "base_case_id": c["case_id"], "variant_kind": kind,
-                              "base_claim_text": c["claim_text"],
-                              "claim_boundary": c["claim_boundary"],
-                              "authorization_scope": c["authorization_scope"],
-                              "slot_facts": c["slot_facts"],
-                              "source_summary_a": c["source_summary_a"],
-                              "source_summary_b": c["source_summary_b"],
-                              "family_id": c["family_id"]})
+    if int(vc["k_variants_per_claim"]) < 2:
+        raise SystemExit("k_variants_per_claim 必须 >=2（每 anchor 至少两变体）")
+    t = plan["per_set_module_targets"]
+    # 去重到 distinct evidence anchor（每锚取一确定性代表 face），跨家族全收；确定性排序。
+    anchors: dict[str, dict] = {}
+    for fam in sorted(by_fam):
+        for f in sorted(by_fam[fam], key=lambda x: L.sha_text(frame_digest + "AF" + x["case_id"])):
+            anchors.setdefault(f["source_group_id"], f)
+    ordered = sorted(anchors.values(),
+                     key=lambda f: L.sha_text(frame_digest + "QV" + f["source_group_id"]))
+    n = len(ordered) or 1
+    used: dict[str, set] = {f["source_group_id"]: set() for f in ordered}
+    tasks: list[dict] = []
+
+    def place(kind: str, sub: str | None) -> bool:
+        """把一条 (kind,sub) 放到下一个尚未用过该 mechanism 的锚（round-robin 起点错开）。"""
+        mech = f"{kind}:{sub}" if sub else kind
+        start = int(L.sha_text(frame_digest + "START" + mech)[:8], 16) % n
+        for j in range(n):
+            f = ordered[(start + j) % n]
+            sg = f["source_group_id"]
+            if mech not in used[sg]:
+                used[sg].add(mech)
+                tasks.append(_variant_task(f, kind, sub, len(used[sg])))
+                return True
+        return False  # 全锚已用尽该 mechanism
+
+    # Pass 1 breadth：全锚各一条主矛盾（POLARITY，最普适矛盾轴）。
+    for f in ordered:
+        used[f["source_group_id"]].add(f"CONTRADICTION_INJECT:{_CONTRA_SUBS[0]}")
+        tasks.append(_variant_task(f, "CONTRADICTION_INJECT", _CONTRA_SUBS[0], 1))
+
+    # Pass 2 depth：按 plan 目标（含 margin）逐 (kind,sub) 配额补足；每次 place 落到一个未用该
+    # mechanism 的锚（round-robin）。同锚同 mechanism 绝不重复 → 不虚增 raw。
+    en = t["entailment"]
+    quotas: list[tuple[str, str | None]] = []
+    # contradicted margin：POLARITY 已铺满 n 条，剩余用 MAGNITUDE/TEMPORAL_STATE/ATTRIBUTION 轮转补差。
+    extra_contra = max(0, en["high_risk_contradicted"]["target"] - n)
+    for i in range(extra_contra):
+        quotas.append(("CONTRADICTION_INJECT", _CONTRA_SUBS[1 + (i % (len(_CONTRA_SUBS) - 1))]))
+    # unknown：EVIDENCE_INSUFFICIENT（≤n，单机制足）
+    quotas += [("EVIDENCE_INSUFFICIENT", None)] * en["high_risk_unknown"]["target"]
+    # omission_misleading
+    quotas += [("OMISSION_MISLEAD", None)] * t["omission"]["misleading_high_risk"]["target"]
+    # unsafe margin（若 target>n）：RISK_ELEVATE 补差（contradiction 已覆盖 n 条 unsafe 意图）
+    quotas += [("RISK_ELEVATE", None)] * max(0, t["fact_chain"]["high_risk_unsafe"]["target"] - n)
+    # 负控 + 6-kind 覆盖：BOUNDARY_OMIT / LEGAL_NEGATIVE_CONTROL
+    quotas += [("BOUNDARY_OMIT", None)] * t["reference_extraction"]["negative_control"]["target"]
+    quotas += [("LEGAL_NEGATIVE_CONTROL", None)] * t["claim_atomization"]["negative_control"]["target"]
+    for kind, sub in quotas:
+        place(kind, sub)
     return tasks
 
 
@@ -324,22 +390,29 @@ def cmd_faces(set_id: str, max_batches: int) -> int:
     for p in sorted(cdir.glob("qvb_[0-9][0-9][0-9].json")):
         for r in json.loads(p.read_text(encoding="utf-8")):
             t = next(t for t in tasks if t["variant_id"] == r["variant_id"])
-            variants_faces.append({
+            face = {
                 "case_id": r["variant_id"], "case_kind": "CHALLENGE_VARIANT",
-                # §四.1：把 challenge kind 钉在题面（经 normalize_kind 对齐 6-kind 家族），
-                # 供 pilot/审计核「六种 kind 各至少运行一次」（真源仍在 variant_intents_goldside）。
+                # §四.1：challenge_kind 钉题面（6-kind 家族，供审计「六种各≥1」）；
+                # mechanism（含 contradiction 子机制）驱动 raw = distinct (anchor, mechanism)。
                 "challenge_kind": normalize_kind(r.get("variant_kind", t["variant_kind"])),
-                # §四.2 统计独立单位：变体继承 base claim 的 source_group（同源变体不增有效 N，§六B）。
-                "source_group_id": t["base_case_id"],
-                "scenario_id": t["base_case_id"], "family_id": t["family_id"],
+                "mechanism": t.get("mechanism") or normalize_kind(t["variant_kind"]),
+                # 发起人裁决：变体继承 base 的证据锚（cluster 身份）+ 真 scenario + 证据 id 列表。
+                "source_group_id": t["base_source_group_id"],
+                "scenario_id": t["base_scenario_id"], "family_id": t["family_id"],
                 "item_title": "", "claim_text": r["variant_claim_text"],
                 "claim_boundary": t["claim_boundary"],
                 "authorization_scope": t["authorization_scope"],
                 "slot_facts": t["slot_facts"],
                 "source_summary_a": t["source_summary_a"],
-                "source_summary_b": t["source_summary_b"]})
+                "source_summary_b": t["source_summary_b"],
+                "source_ids": list(t.get("source_ids", [])),
+                "fact_ids": list(t.get("fact_ids", [])),
+                "authorization_ids": list(t.get("authorization_ids", []))}
+            face["frozen_input_face_digest"] = GD.frozen_input_face_digest(face)
+            variants_faces.append(face)
             variant_intents.append({"variant_id": r["variant_id"],
                                     "variant_kind": r.get("variant_kind", t["variant_kind"]),
+                                    "mechanism": t.get("mechanism"),
                                     "intended_risk": r.get("intended_risk"),
                                     "intended_entailment": r.get("intended_entailment"),
                                     "construction_note": r.get("construction_note", "")})

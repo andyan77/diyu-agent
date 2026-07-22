@@ -75,11 +75,20 @@ def _construct_variants(bases: list[dict]) -> list[dict]:
     tasks = []
     for bi, kind in plan:
         b = bases[bi % len(bases)]
+        sub = "POLARITY" if kind == "CONTRADICTION_INJECT" else None
+        mech = f"{kind}:{sub}" if sub else kind
         tasks.append({"variant_id": f"PILOT-V-{b['case_id']}-{kind[:4]}",
                       "base_case_id": b["case_id"], "variant_kind": kind,
+                      "mechanism": mech, "sub_mechanism": sub,
+                      # 发起人裁决：变体继承 base 证据锚（cluster 身份）+ 真 scenario + 证据 id 列表。
+                      "base_source_group_id": b["source_group_id"],
+                      "base_scenario_id": b.get("scenario_id", ""),
                       "base_claim_text": b["claim_text"], "claim_boundary": b["claim_boundary"],
                       "authorization_scope": b["authorization_scope"], "slot_facts": b["slot_facts"],
                       "source_summary_a": b["source_summary_a"], "source_summary_b": b["source_summary_b"],
+                      "source_ids": list(b.get("source_ids", [])),
+                      "fact_ids": list(b.get("fact_ids", [])),
+                      "authorization_ids": list(b.get("authorization_ids", [])),
                       "family_id": b["family_id"]})
     expected = {t["variant_id"] for t in tasks}
 
@@ -101,13 +110,21 @@ def _construct_variants(bases: list[dict]) -> list[dict]:
     variants = []
     for r in rows:
         t = task_by_id[r["variant_id"]]
-        variants.append({"case_id": r["variant_id"], "case_kind": "CHALLENGE_VARIANT",
-                         "challenge_kind": QR.normalize_kind(t["variant_kind"]),
-                         "source_group_id": t["base_case_id"], "family_id": t["family_id"],
-                         "claim_text": r["variant_claim_text"], "claim_boundary": t["claim_boundary"],
-                         "authorization_scope": t["authorization_scope"], "slot_facts": t["slot_facts"],
-                         "source_summary_a": t["source_summary_a"], "source_summary_b": t["source_summary_b"],
-                         "item_title": ""})
+        face = {"case_id": r["variant_id"], "case_kind": "CHALLENGE_VARIANT",
+                "challenge_kind": QR.normalize_kind(t["variant_kind"]),
+                "mechanism": t["mechanism"],
+                # 变体继承 base 证据锚（非 base_case_id）+ 真 scenario + 证据 id 列表。
+                "source_group_id": t["base_source_group_id"],
+                "scenario_id": t.get("base_scenario_id", ""), "family_id": t["family_id"],
+                "claim_text": r["variant_claim_text"], "claim_boundary": t["claim_boundary"],
+                "authorization_scope": t["authorization_scope"], "slot_facts": t["slot_facts"],
+                "source_summary_a": t["source_summary_a"], "source_summary_b": t["source_summary_b"],
+                "source_ids": list(t.get("source_ids", [])),
+                "fact_ids": list(t.get("fact_ids", [])),
+                "authorization_ids": list(t.get("authorization_ids", [])),
+                "item_title": ""}
+        face["frozen_input_face_digest"] = GD.frozen_input_face_digest(face)
+        variants.append(face)
     return variants
 
 
@@ -554,10 +571,10 @@ def run_pilot(set_id: str = "A") -> int:
         "challenge_kinds_present": sorted({v["challenge_kind"] for v in variants}),
         "faces_total": len(faces),
         "same_source_group_demo": {
-            "note": "base0 承载 2 变体，同 source_group → raw 变体计 2 而独立单位仍 1",
-            "base0_source_group": bases[0]["case_id"],
+            "note": "base0 承载 2 变体（不同机制），同证据锚 source_group → raw 计 2 而 cluster 仍 1",
+            "base0_source_group": bases[0]["source_group_id"],
             "variants_on_base0": sum(1 for v in variants
-                                     if v["source_group_id"] == bases[0]["case_id"])},
+                                     if v["source_group_id"] == bases[0]["source_group_id"])},
         "labeled_both_seats": len(set(a) & set(b)),
         "cross_model_disputes": disputes_before, "adjudicated": len(adj),
         "gold_record_count": len(records),

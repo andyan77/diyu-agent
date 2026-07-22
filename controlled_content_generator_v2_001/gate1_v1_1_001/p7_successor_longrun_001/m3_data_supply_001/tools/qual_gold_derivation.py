@@ -41,6 +41,46 @@ import qual_record_assembly as asm  # noqa: E402
 RISK_LEVELS = ("LOW", "MEDIUM", "HIGH", "CRITICAL")
 HIGH = {"HIGH", "CRITICAL"}
 ENTAILMENT_LABELS = ("SUPPORTED", "CONTRADICTED", "UNKNOWN")
+
+# --- 发起人证据身份裁决（CAPACITY_DECISION 后续，evidence-key-fix）-------------------
+# 证据锚（cluster 身份）= digest(scenario_id + 排序 source_ids + fact_ids + authorization_ids)。
+# 取代旧 (scenario_id, claim_id) / round 写入 source_group_id 的错误口径（把不同证据折叠成 161/152）。
+# 同一 (scenario,claim) 跨 4 轮再生 = 同一锚（不增 cluster N）；同 scenario 内引不同 source/fact/auth
+# 的不同 claim = 真不同证据（各成独立锚）。source_group_id 与 source_evidence_digest 皆取此锚。
+_ID_FIELDS = ("source_ids", "fact_ids", "authorization_ids")
+
+
+def _sorted_ids(value: Any) -> list[str]:
+    return sorted(str(x) for x in (value or []))
+
+
+def evidence_anchor_digest(scenario_id: Any, source_ids: Any, fact_ids: Any,
+                           authorization_ids: Any) -> str:
+    """证据锚摘要 = cluster 身份 = source_group_id = source_evidence_digest（发起人裁决）。"""
+    return digest_json({"scenario_id": str(scenario_id),
+                        "source_ids": _sorted_ids(source_ids),
+                        "fact_ids": _sorted_ids(fact_ids),
+                        "authorization_ids": _sorted_ids(authorization_ids)})
+
+
+# raw NATURAL 覆盖单位 = distinct 冻结输入题面摘要（不含 round-bearing case_id）：
+# 4 轮里题面**确实不同**的 NATURAL 输入各计 1；相同/规范化后相同的题面折叠。
+# CHALLENGE 变体亦带此摘要以区分不同变体正文（并解 case_payload_digest 唯一性 collision）。
+_FACE_DIGEST_FIELDS = ("scenario_id", "claim_text", "claim_boundary",
+                       "authorization_scope", "slot_facts",
+                       "source_summary_a", "source_summary_b")
+
+
+def frozen_input_face_digest(face: dict[str, Any]) -> str:
+    """冻结输入题面摘要（规范化）：区分真不同题面、折叠规范化后相同者。排除 round-bearing case_id。
+
+    含 challenge_kind → 同一证据锚上不同挑战机制/自然题面互异；同锚同机制同正文才折叠（=真重复）。
+    """
+    payload: dict[str, Any] = {k: face.get(k, "") for k in _FACE_DIGEST_FIELDS}
+    for k in _ID_FIELDS:
+        payload[k] = _sorted_ids(face.get(k))
+    payload["challenge_kind"] = face.get("challenge_kind")  # NATURAL 面为 None
+    return digest_json(payload)
 OBLIGATION_TYPES = ("SYNTHETIC_IDENTITY_DISCLOSURE",
                     "PROHIBITED_REAL_IDENTITY_IMPERSONATION",
                     "EXPLICIT_AUTHORIZATION_BOUNDARY",
@@ -180,13 +220,20 @@ def _assemble(case_id: str, source_group_id: str, module: str, record_role: str,
               family_id: str, case_origin: str, gold_fields: dict[str, Any],
               extra_payload: dict[str, Any],
               seat_provenance: list[dict[str, Any]],
-              dataset_manifest_digest: str) -> dict[str, Any]:
+              dataset_manifest_digest: str,
+              frozen_face_digest: str | None = None) -> dict[str, Any]:
     payload = {"module": module, "record_role": record_role,
                "family_id": family_id, "case_origin": case_origin}
     payload.update(extra_payload)
+    # 发起人裁决：source_evidence_digest 不得再由 case_id 派生。取证据身份（source_group_id=
+    # 证据锚）的稳定 64-hex 摘要——去掉 case_id 项即断绝 case_id 派生；计数/独立性一律走 source_group_id。
+    if frozen_face_digest is not None:
+        # raw NATURAL 覆盖单位摘要落 payload：区分真不同题面并解 case_payload_digest 唯一性 collision
+        # （同锚同机制同 gold 的两条 face 靠此摘要互异，不再 byte 相同触发 duplicate_case_payload_digest）。
+        payload["frozen_input_face_digest"] = frozen_face_digest
     return asm.assemble_gold_record(
         case_id=case_id, source_group_id=source_group_id,
-        source_evidence_digest=digest_json({"src": source_group_id, "cid": case_id}),
+        source_evidence_digest=digest_json({"src": source_group_id}),
         dataset_manifest_digest=dataset_manifest_digest,
         gold_fields=gold_fields, payload_fields=payload,
         reviews_meta=_seat_reviews(case_id, source_group_id, seat_provenance))
@@ -218,8 +265,13 @@ def derive_records_for_face(face: dict[str, Any], label: dict[str, Any], *,
     origin = "NATURAL" if face.get("case_kind") == "NATURAL" else "CHALLENGE"
     # §四.6 发起人裁决：raw case 覆盖单位 = (source_group, mechanism)。mechanism = NATURAL 或该变体的
     # challenge_kind（不同机制变体计入 raw 覆盖；同机制不增覆盖）。cluster 独立单位仍 = source_group。
+    # mechanism 驱动 raw CHALLENGE = distinct (evidence anchor, mechanism)。优先取面上细粒度 mechanism
+    # （含 contradiction 子机制，如 CONTRADICTION_INJECT:POLARITY），回退 challenge_kind（6-kind）。
     mechanism = "NATURAL" if origin == "NATURAL" else str(
-        face.get("challenge_kind") or "CHALLENGE_UNSPECIFIED")
+        face.get("mechanism") or face.get("challenge_kind") or "CHALLENGE_UNSPECIFIED")
+    # raw NATURAL 覆盖单位 = distinct 冻结输入题面摘要（区分真不同题面/折叠规范同题面）；亦入 payload
+    # 解 case_payload_digest 唯一性 collision。面若已带则复用，否则由题面内容复算（fixture 稳健）。
+    ffd = str(face.get("frozen_input_face_digest") or frozen_input_face_digest(face))
     validate_rich_label(label, where=cid)
     risk = label["risk"]
     attrs = {k: label["reference_attributes"][k] for k in _ATTR_KEYS}
@@ -236,7 +288,7 @@ def derive_records_for_face(face: dict[str, Any], label: dict[str, Any], *,
             agree["adjudicated_fields"] = mod_adj
         return _assemble(f"{cid}::{mod}", sg, _MODULE_ALIAS.get(mod, mod), role,
                          fam, origin, gold, {**extra, **agree}, sp,
-                         dataset_manifest_digest)
+                         dataset_manifest_digest, frozen_face_digest=ffd)
 
     records = [
         # reference_assertion_extraction —— present/negative-control + 属性正确性

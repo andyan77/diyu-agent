@@ -151,14 +151,23 @@ def _count_class(records: list[dict], predicate: Callable[[dict], bool],
 
 def _count_raw_class(records: list[dict], predicate: Callable[[dict], bool],
                      count_mode: str) -> int:
-    """§四.6 发起人裁决：raw case 覆盖数（300/100 下限对此计）。source_group 类的 raw 单位 =
-    distinct (source_group_id, mechanism)——NATURAL + 每个不同挑战机制的合法变体各计 1，同机制不增
-    覆盖。非 source_group 类（formulaic pair / review item）无机制变体维度，raw == cluster。"""
+    """发起人证据身份裁决：raw case 覆盖数（300/100 下限对此计）。source_group 类分 origin 计：
+      - raw NATURAL   = distinct 冻结输入题面摘要（frozen_input_face_digest）——4 轮里题面确实不同的
+                        NATURAL 输入各计 1，规范化后相同者折叠；缺摘要回退 case_id（同类模块固定→
+                        distinct case_id == distinct face）。
+      - raw CHALLENGE = distinct (evidence cluster anchor, challenge mechanism)——不同挑战机制变体
+                        各计 1，同机制重复变体不增覆盖。
+    cluster N（_count_class）恒 = distinct evidence_anchor（source_group_id）。同源变体不增 cluster N。
+    非 source_group 类（formulaic pair / review item）无机制/题面维度，raw == cluster。"""
     if count_mode == "source_group":
         matched = [r for r in records if predicate(r)]
-        # raw 单位在 cluster 独立键（_independent_key：默认 source_group，显式 independent_evidence_unit
-        # 时细化到 EV 单位）之上再叠加 mechanism 维度（不同挑战机制的合法变体各计 1）。
-        return len({(_independent_key(r), str(r.get("mechanism") or "NATURAL")) for r in matched})
+        keys = set()
+        for r in matched:
+            if r.get("case_origin") == "NATURAL":
+                keys.add(("NAT", str(r.get("frozen_input_face_digest") or r.get("case_id"))))
+            else:
+                keys.add(("CHA", _independent_key(r), str(r.get("mechanism") or "NATURAL")))
+        return len(keys)
     return _count_class(records, predicate, count_mode)
 
 
