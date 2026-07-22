@@ -243,6 +243,44 @@ class VariantConstructionFix(unittest.TestCase):
         self.assertGreaterEqual(len(faces), 100)
         self.assertEqual(len({f["source_group_id"] for f in faces}), len(faces))  # 全独立锚
 
+    def test_disclosure_per_type_one_symmetry_verbatim(self) -> None:
+        # pilot 对称锁：per_type=1 逐字段 == _DISCLOSURE_TEMPLATES 首场景 verbatim、无渠道后缀。
+        # 保已提交 A/B pilot 回执可复现（多样性增强不得漂移 pilot 输入面）。
+        faces = self.qr.build_disclosure_faces("A", per_type=1)
+        self.assertEqual(len(faces), 4)
+        for f, (obl, c0, b0, s0) in zip(faces, self.qr._DISCLOSURE_TEMPLATES):
+            self.assertEqual(f["claim_text"], c0)          # 无 “（该内容…）” 渠道后缀
+            self.assertEqual(f["claim_boundary"], b0)
+            self.assertEqual(f["slot_facts"], list(s0))
+
+    def test_disclosure_formal_variety_unique_and_no_leak(self) -> None:
+        # 正式尺度内容多样性（防 R5 判模板化低质 gold）：每义务类型 ≥6 个语义不同 base 场景、
+        # 28 条 claim_text 全唯一；全 112 face claim+slot+boundary 零 obligation-enum 泄漏。
+        gd = _load(P7 / "m3_data_supply_001/tools/qual_gold_derivation.py",
+                   "qual_gold_derivation")
+        faces = self.qr.build_disclosure_faces("B", per_type=self.qr.DISCLOSURE_PER_TYPE)
+        by_obl_claims: dict[str, list[str]] = {}
+        by_obl_base: dict[str, set[str]] = {}
+        for f in faces:
+            obl = f["case_id"].split("-DISC-")[1][:6]
+            by_obl_claims.setdefault(obl, []).append(f["claim_text"])
+            base = f["claim_text"].split("（该内容", 1)[0]  # 剥离真实发布载体后缀取语义 base
+            by_obl_base.setdefault(obl, set()).add(base)
+            blob = f["claim_text"] + "".join(f["slot_facts"]) + f["claim_boundary"]
+            for enum in gd.OBLIGATION_TYPES:
+                self.assertNotIn(enum, blob)               # 全场景零 enum 泄漏
+        self.assertEqual(len(by_obl_claims), 4)
+        for obl, claims in by_obl_claims.items():
+            self.assertEqual(len(claims), self.qr.DISCLOSURE_PER_TYPE)
+            self.assertEqual(len(set(claims)), len(claims), f"{obl} claim 重复")  # 逐类唯一
+            self.assertGreaterEqual(len(by_obl_base[obl]), 6, f"{obl} base 场景不足")
+
+    def test_batch_bounded_for_opus_timeout(self) -> None:
+        # opus 慢速超时防护：pilot 实测慢期单 face 标注/单争议仲裁 ~195s；run_headless 超时 1500s。
+        # BATCH 须使最慢批 < 超时且留重试余量（195s×BATCH ≤ ~0.85×1500）。BATCH≤7 满足；取 6。
+        self.assertLessEqual(self.qr.BATCH * 195, 1500 * 0.85)
+        self.assertLessEqual(self.qr.BATCH, 7)
+
 
 class CapacityPrecheckMechanical(unittest.TestCase):
     """§五：从**真实**抽样框机械复算每套供给，逐类/逐族与合同下限比较（非只读 plan 静态数）。"""
