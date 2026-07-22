@@ -32,6 +32,7 @@ import qual_gold_derivation as GD       # noqa: E402
 import qual_generation as GEN           # noqa: E402
 import qual_custody_recompute as CUS    # noqa: E402
 import pre_m0_readiness as PRM          # noqa: E402
+import qual_review_formulaic as RF      # noqa: E402  §四.3/§四.4 真 review+formulaic 子管线
 from spine.canonical import digest_json  # noqa: E402
 
 ANNEXC = M3DS / "annotation/annotation_protocol_annexC_qual.v1.json"
@@ -197,34 +198,105 @@ def _adjudicate(faces: dict[str, dict], a: dict, b: dict) -> dict[str, dict]:
     return adj
 
 
-# ---- review + formulaic 覆盖用最小单元（确定性；真 formulaic/review 建标属全量 R3-run）----
-def _coverage_units():
-    review_units = [{"item_id": "PILOT-I0", "family_id": FAMS[0],
-                     "source_group_id": "pilot-rev-I0", "author_identity": "PILOT-AUTHOR",
-                     "judgments": [{"reviewer_id": "PILOT-RV1", "decision": "APPROVE", "hard_veto": False},
-                                   {"reviewer_id": "PILOT-RV2", "decision": "REJECT", "hard_veto": True}]}]
-    AX = {"FORMULAIC": {"argument_spine": "SAME", "evidence_progression": "SAME",
-                        "limitation_function": "DIFFERENT", "viewpoint_anchor": "SAME",
-                        "closing_function": "DIFFERENT", "transformation_depth": "SURFACE_ONLY"},
-          "NOT_FORMULAIC": {"argument_spine": "DIFFERENT", "evidence_progression": "DIFFERENT",
-                            "limitation_function": "DIFFERENT", "viewpoint_anchor": "DIFFERENT",
-                            "closing_function": "DIFFERENT", "transformation_depth": "STRUCTURAL_CHANGE"},
-          "NECESSARY_GRAMMAR": {"argument_spine": "NECESSARY_GRAMMAR", "evidence_progression": "DIFFERENT",
-                                "limitation_function": "DIFFERENT", "viewpoint_anchor": "DIFFERENT",
-                                "closing_function": "DIFFERENT", "transformation_depth": "STRUCTURAL_CHANGE"}}
-    fu = [{"left_id": "PL0", "right_id": "PR0", "family_id": FAMS[0], "source_group_id": "pilot-p0",
-           "verdict": "FORMULAIC", "axes": AX["FORMULAIC"], "necessary_grammar_exception_id": None,
-           "is_formulaic": True, "left_author_identity": "PAL0", "right_author_identity": "PAR0",
-           "reviewers": ["PFR1", "PFR2"]},
-          {"left_id": "PL1", "right_id": "PR1", "family_id": FAMS[0], "source_group_id": "pilot-p1",
-           "verdict": "NOT_FORMULAIC", "axes": AX["NOT_FORMULAIC"], "necessary_grammar_exception_id": None,
-           "is_formulaic": False, "left_author_identity": "PAL1", "right_author_identity": "PAR1",
-           "reviewers": ["PFR1", "PFR2"]},
-          {"left_id": "PL2", "right_id": "PR2", "family_id": FAMS[0], "source_group_id": "pilot-p2",
-           "verdict": "NECESSARY_GRAMMAR", "axes": AX["NECESSARY_GRAMMAR"],
-           "necessary_grammar_exception_id": "NG-1", "is_formulaic": False,
-           "left_author_identity": "PAL2", "right_author_identity": "PAR2", "reviewers": ["PFR1", "PFR2"]}]
-    return review_units, fu
+# ---- review + formulaic 真实子管线（§四.3/§四.4；取代确定性占位）----
+# 内容素材取自真源 base/variant（真实可评审内容 / 真实可比对内容对）；标签由真双席（A=Codex/
+# B=Opus）独立产出，分歧走既有仲裁路径。verdict/axes 由真席标注决定，绝不预置。
+
+def _mk_cached_call(carrier: str, subdir: str, count: int):
+    """seat 调用适配器：绑定真 L.attempt_call + 密封 registry；按 stem 落缓存，重跑不重复付费。"""
+    d = PILOT_SEAL / subdir
+    d.mkdir(parents=True, exist_ok=True)
+
+    def call(prompt, ok, stem):
+        cache = d / f"{stem}.rows.json"
+        if cache.is_file():
+            rows = json.loads(cache.read_text(encoding="utf-8"))
+            if ok(rows):
+                print(f"[pilot] {subdir}/{stem}: reused cached")
+                return rows
+        rows = L.attempt_call(prompt, ok, d, stem, PILOT_SEAL / "REGISTRY.jsonl",
+                              {"kind": f"PILOT_{subdir.upper()}", "seat": stem.rsplit("_", 1)[-1],
+                               "batch": stem, "visible_material_count": count,
+                               "retention": "标签明文留存 pilot 保全区"}, carrier=carrier)
+        if rows is not None:
+            cache.write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
+        return rows
+    return call
+
+
+def _build_review_items(bases: list[dict]) -> list[dict]:
+    """真实可评审内容单元（每族 1，取真源 base 内容）。author_identity ≠ 审核席（role_collision_absent）。"""
+    return [{"item_id": f"PILOT-REV-{b['case_id']}", "family_id": b["family_id"],
+             "source_group_id": f"pilot-rev-{b['source_group_id']}",
+             "author_identity": f"PILOT_GEN_AUTHOR::{b['case_id']}",
+             "content": b["claim_text"], "claim_boundary": b["claim_boundary"],
+             "authorization_scope": b["authorization_scope"],
+             "source_summary_a": b["source_summary_a"], "source_summary_b": b["source_summary_b"]}
+            for b in bases]
+
+
+def _mkpair(ref: str, lv: dict, rv: dict, sg: str) -> dict:
+    return {"pair_ref": ref, "left_id": lv["case_id"], "right_id": rv["case_id"],
+            "family_id": lv["family_id"], "source_group_id": sg,
+            "left_content": lv["claim_text"], "right_content": rv["claim_text"],
+            "left_author_identity": f"PILOT_AUTHOR_L::{lv['case_id']}",
+            "right_author_identity": f"PILOT_AUTHOR_R::{rv['case_id']}",
+            "necessary_grammar_exception_id": None}
+
+
+def _build_formulaic_pairs(variants: list[dict]) -> list[dict]:
+    """真实可比对内容对：同 source_group 变体成 1 对（结构相关），其余跨 base 变体两两配。"""
+    by_sg: dict[str, list[dict]] = {}
+    for v in sorted(variants, key=lambda v: v["case_id"]):
+        by_sg.setdefault(v["source_group_id"], []).append(v)
+    pairs, idx = [], 0
+    for sg in sorted(sg for sg, vs in by_sg.items() if len(vs) >= 2):
+        vs = by_sg[sg]
+        pairs.append(_mkpair(f"PILOT-P{idx}", vs[0], vs[1], sg))
+        idx += 1
+    singles = [vs[0] for sg, vs in sorted(by_sg.items()) if len(vs) == 1]
+    for i in range(0, len(singles) - 1, 2):
+        pairs.append(_mkpair(f"PILOT-P{idx}", singles[i], singles[i + 1], f"pilot-fpair-{idx}"))
+        idx += 1
+    return pairs
+
+
+def _run_review(items: list[dict], dmd: str) -> dict:
+    """真双席 review 标注 → assemble → derive + spine 一致门（§四.3）。"""
+    tmpl = L.load_template(ANNEXC, "qual_review_labeler")
+    pd = digest_json({"tmpl": "qual_review_labeler", "sha": L.sha_text(tmpl)})
+    dec_a = RF.label_review_seat(items, "A", template=tmpl,
+                                 call=_mk_cached_call("codex", "review", len(items)))
+    dec_b = RF.label_review_seat(items, "B", template=tmpl,
+                                 call=_mk_cached_call("claude", "review", len(items)))
+    units = RF.assemble_review_units(items, dec_a, dec_b, prompt_digest_a=pd, prompt_digest_b=pd)
+    out = RF.review_agreement_report(units, dataset_manifest_digest=dmd,
+                                     seat_provenance_for=lambda _c: QR._base_seat_provenance(pd))
+    out["units"] = units
+    return out
+
+
+def _run_formulaic(pairs: list[dict], dmd: str) -> dict:
+    """真双席逐轴 formulaic 标注 → verdict 分歧仲裁 → assemble → derive + spine 一致门（§四.4）。"""
+    tmpl = L.load_template(ANNEXC, "qual_formulaic_axis_labeler")
+    adj_tmpl = L.load_template(ANNEXC, "qual_formulaic_axis_adjudicator")
+    pd = digest_json({"tmpl": "qual_formulaic_axis_labeler", "sha": L.sha_text(tmpl)})
+    axes_a = RF.label_formulaic_seat(pairs, "A", template=tmpl,
+                                     call=_mk_cached_call("codex", "formaxis", len(pairs)))
+    axes_b = RF.label_formulaic_seat(pairs, "B", template=tmpl,
+                                     call=_mk_cached_call("claude", "formaxis", len(pairs)))
+    need = RF.pairs_needing_adjudication(pairs, axes_a, axes_b)
+    adj_axes = RF.adjudicate_formulaic_axes(
+        need, axes_a, axes_b, template=adj_tmpl,
+        call=_mk_cached_call("claude", "formaxis_adj", len(need)))
+    units = RF.assemble_formulaic_units(pairs, axes_a, axes_b, adj_axes,
+                                        prompt_digest_a=pd, prompt_digest_b=pd)
+    out = RF.formulaic_agreement_report(units, dataset_manifest_digest=dmd,
+                                        seat_provenance_for=lambda _c: QR._base_seat_provenance(pd),
+                                        batch_id="PILOT")
+    out["adjudicated_pairs"] = len(need)
+    out["units"] = units
+    return out
 
 
 def run_pilot() -> int:
@@ -292,19 +364,19 @@ def run_pilot() -> int:
     base_sp = QR._base_seat_provenance(labeler_pd)
     adj_sp = QR._adj_seat_provenance(adj_pd)
 
-    def sp_units(_rec_cid):
-        return QR._base_seat_provenance(labeler_pd)
-
     der = GD.derive_perclaim_records(faces, resolutions, dataset_manifest_digest=dmd,
                                      base_seat_provenance=base_sp, adj_seat_provenance=adj_sp)
     records = list(der["records"])
-    review_units, formulaic_units = _coverage_units()
-    records += GD.derive_review_records(review_units, dataset_manifest_digest=dmd,
-                                        seat_provenance_for=sp_units)
-    formu = GD.derive_formulaic_records(formulaic_units, dataset_manifest_digest=dmd,
-                                        seat_provenance_for=sp_units, batch_id="PILOT")
+    # §四.3/§四.4 真 review + formulaic 子管线（真双席标注 → assemble → derive；取代占位）
+    review_items = _build_review_items(bases)
+    formulaic_pairs = _build_formulaic_pairs(variants)
+    rev = _run_review(review_items, dmd)
+    records += rev["records"]
+    form = _run_formulaic(formulaic_pairs, dmd)
     for k in ("judgments", "adjudications", "candidate_audit"):
-        records += formu[k]
+        records += form["derived"][k]
+    print(f"[pilot] real review units: {len(rev['units'])}; formulaic pairs: {len(form['units'])} "
+          f"(adjudicated {form['adjudicated_pairs']})")
     (PILOT_SEAL / "gold_records.json").write_text(
         json.dumps(records, ensure_ascii=False, indent=1), encoding="utf-8")
     gold_sha = digest_json(records)
@@ -327,7 +399,35 @@ def run_pilot() -> int:
                   | {"deterministic_disclosure_obligation_types_required",
                      "known_r5_hard_veto_cases_and_registered_variants_recall"}
                   | set(PRM.M3_MANIFEST_KEYS))
-    non_scale_failures = [k for k in readiness["failing_keys"] if k not in count_keys]
+    # §四.6：cluster_power:* 与规模/类下限同属 scale 失败（小批 raw/cluster 必不达 300/59 等下限），
+    # 不算 pipeline 结构缺陷。non_scale_failures 只收「非规模」失败（覆盖/治理/家族/生成链）。
+    non_scale_failures = [k for k in readiness["failing_keys"]
+                          if not (k in count_keys or k.startswith("cluster_power:"))]
+
+    # §四.5 pilot_pass 收口：pipeline 端到端结构正确性（规模/类下限之外全绿）。逐条披露判据。
+    kinds_present = sorted({v["challenge_kind"] for v in variants})
+    ab_complete = (len(set(a) & set(b)) == len(faces)) and not unresolved
+    nine_modules_covered = all(c["present"]
+                               for c in readiness["module_gold_field_coverage"].values())
+    review_real = (len(rev["units"]) > 0
+                   and all(len(u["judgments"]) == 2 for u in rev["units"]))
+    # formulaic 真实性：每 pair 两条 per-reviewer judgment 且各带自身 verdict（≠ 旧单 verdict 占位）
+    formulaic_real = (len(form["units"]) > 0
+                      and all(len(u["judgments"]) == 2 for u in form["units"])
+                      and all("verdict" in j for u in form["units"] for j in u["judgments"]))
+    governance_ok = all(readiness["governance"].values())
+    pilot_pass_conditions = {
+        "core_validation_passed": pc["custody_binding"]["core_validation_passed"],
+        "generation_chain_resolves": gen_ok,
+        "no_non_scale_failures": not non_scale_failures,
+        "six_challenge_kinds": len(kinds_present) == 6,
+        "ab_seats_complete_and_resolved": ab_complete,
+        "nine_modules_covered": nine_modules_covered,
+        "review_subpipeline_real": review_real,
+        "formulaic_subpipeline_real": formulaic_real,
+        "governance_flags_all_true": governance_ok,
+    }
+    pilot_pass = all(pilot_pass_conditions.values())
 
     receipt = {
         "schema_version": "p7-m3-qual-pilot-receipt-v1",
@@ -346,7 +446,9 @@ def run_pilot() -> int:
         "gold_record_count": len(records),
         "core_validation_passed": pc["custody_binding"]["core_validation_passed"],
         "core_validation_errors": pc["custody_binding"]["core_validation_errors"][:10],
+        # §四.6 双计数双披露：raw case N（覆盖门）+ distinct source-group cluster N（CI 功效门）
         "counts_recomputed": pc["counts"],
+        "cluster_counts_recomputed": pc["cluster_counts"],
         "module_gold_field_coverage_present": {
             m: c["present"] for m, c in readiness["module_gold_field_coverage"].items()},
         "families_present": pc["family_coverage"],
@@ -355,20 +457,25 @@ def run_pilot() -> int:
         "readiness_verdict": readiness["verdict"],
         "readiness_failing_keys": readiness["failing_keys"],
         "non_scale_failures": non_scale_failures,
-        "pilot_pass": (pc["custody_binding"]["core_validation_passed"] and gen_ok
-                       and not non_scale_failures
-                       and len({v["challenge_kind"] for v in variants}) == 6),
+        # §四.3/§四.4 真子管线报表（既有 spine 一致门指标；结构门 pilot 查，率阈达标属正式规模）
+        "review_subpipeline": {"items": len(rev["units"]), "report": rev["report"]},
+        "formulaic_subpipeline": {"pairs": len(form["units"]),
+                                  "adjudicated_pairs": form["adjudicated_pairs"],
+                                  "report": form["report"]},
+        "pilot_pass_conditions": pilot_pass_conditions,
+        "pilot_pass": pilot_pass,
         "seats": "A=Codex-GPT(gpt-5.6-sol) / B=Opus-4.8；仲裁=隔离 Opus 会话",
-        "review_formulaic_note": "review 1item×2judgment + formulaic 三元为覆盖用最小单元（确定性）；"
-        "真 review/formulaic 跨模型建标属全量 R3-run。6 kind 富标注为真跨模型双盲。",
+        "review_formulaic_note": "§四.3/§四.4：review + formulaic 均为真双席跨模型标注（非占位）——"
+        "review 每 item 两独立 decision；formulaic 每 pair 双席逐 6 轴→verdict，分歧走隔离仲裁席；"
+        "verdict/axes 由真席决定，绝不预置。规模/率阈达标属全量 R3-run。",
         "sealed_discipline": "faces/labels 明文只落 sealed_custody_001/pilot_A/（gitignore）；本回执零明文",
         "cost": L.registry_cost(PILOT_SEAL / "REGISTRY.jsonl"),
     }
     (PILOT_QUAL / "PILOT_RECEIPT.v1.json").write_text(
         json.dumps(receipt, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print(json.dumps({k: receipt[k] for k in (
-        "pilot_pass", "faces_total", "challenge_kinds_present", "labeled_both_seats",
-        "cross_model_disputes", "adjudicated", "core_validation_passed",
+        "pilot_pass", "pilot_pass_conditions", "faces_total", "challenge_kinds_present",
+        "labeled_both_seats", "cross_model_disputes", "adjudicated", "core_validation_passed",
         "generation_chain_resolves", "readiness_verdict", "non_scale_failures",
         "counts_recomputed")}, ensure_ascii=False, indent=1))
     return 0 if receipt["pilot_pass"] else 1
