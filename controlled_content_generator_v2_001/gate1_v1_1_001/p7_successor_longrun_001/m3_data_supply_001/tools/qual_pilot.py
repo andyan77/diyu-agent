@@ -135,6 +135,7 @@ def _slim(face: dict) -> dict:
 
 
 CHUNK = 4  # 小批（富标签输出大，分块更快更稳，逐块缓存断点续跑）
+ADJ_BATCH = 4  # 仲裁分批：单次只送少量分歧，避免 opus 深权衡大批超 1500s 超时
 
 
 def _label_seat(faces: list[dict], seat: str) -> dict[str, dict]:
@@ -197,30 +198,47 @@ def _adjudicate(faces: dict[str, dict], a: dict, b: dict) -> dict[str, dict]:
     if not disputes:
         return {}
     expected = {d["case_id"] for d in disputes}
+    adir = PILOT_SEAL / "adjudication"
+    adir.mkdir(parents=True, exist_ok=True)
     # 续跑复用仅当缓存覆盖当前全部 disputes（防 faces 变化后新 dispute 漏仲裁 → resolve 未决）。
-    cached = PILOT_SEAL / "adjudication" / "adj.json"
+    cached = adir / "adj.json"
     if cached.is_file():
-        adj = json.loads(cached.read_text(encoding="utf-8"))
-        if expected.issubset(set(adj)):
-            print(f"[pilot] adjudication: reused cached ({len(adj)})")
-            return adj
+        adj0 = json.loads(cached.read_text(encoding="utf-8"))
+        if expected.issubset(set(adj0)):
+            print(f"[pilot] adjudication: reused cached ({len(adj0)})")
+            return adj0
     tmpl = L.load_template(ANNEXC, "qual_rich_adjudicator")
+    # 分批仲裁（镜像正式 cmd_adjudicate）：单次调用只送 ADJ_BATCH 条分歧，避免 opus 慢时
+    # 大批深权衡超 1500s 超时；逐批缓存 rows → 断点续跑不重复付费。
+    adj: dict[str, dict] = {}
+    batches = [disputes[i:i + ADJ_BATCH] for i in range(0, len(disputes), ADJ_BATCH)]
+    for bi, batch in enumerate(batches):
+        stem = f"adj_{bi:03d}"
+        part = adir / f"{stem}.rows.json"
+        exp_b = {d["case_id"] for d in batch}
+        if part.is_file():
+            rows = json.loads(part.read_text(encoding="utf-8"))
+            if exp_b.issubset({r.get("case_id") for r in rows}):
+                for r in rows:
+                    adj[r["case_id"]] = r
+                print(f"[pilot] adjudication {stem}: reused ({len(rows)})")
+                continue
 
-    def ok(rows):
-        return QR._rich_rows_ok(rows, expected)
+        def ok(rows, _exp=exp_b):
+            return QR._rich_rows_ok(rows, _exp)
 
-    prompt = tmpl.replace("{batch_json}", json.dumps(disputes, ensure_ascii=False, indent=1))
-    rows = L.attempt_call(prompt, ok, PILOT_SEAL / "adjudication", "adj_000",
-                          PILOT_SEAL / "REGISTRY.jsonl",
-                          {"kind": "PILOT_ADJUDICATE", "batch": "adj_000",
-                           "visible_material_count": len(expected),
-                           "retention": "明文留存 pilot 保全区"}, carrier="claude")
-    if rows is None:
-        raise SystemExit("pilot 仲裁失败")
-    adj = {r["case_id"]: r for r in rows}
-    (PILOT_SEAL / "adjudication").mkdir(parents=True, exist_ok=True)
-    (PILOT_SEAL / "adjudication" / "adj.json").write_text(
-        json.dumps(adj, ensure_ascii=False, indent=1), encoding="utf-8")
+        prompt = tmpl.replace("{batch_json}", json.dumps(batch, ensure_ascii=False, indent=1))
+        rows = L.attempt_call(prompt, ok, adir, stem, PILOT_SEAL / "REGISTRY.jsonl",
+                              {"kind": "PILOT_ADJUDICATE", "batch": stem,
+                               "visible_material_count": len(exp_b),
+                               "retention": "明文留存 pilot 保全区"}, carrier="claude")
+        if rows is None:
+            raise SystemExit(f"pilot 仲裁失败 batch {stem}")
+        part.write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
+        for r in rows:
+            adj[r["case_id"]] = r
+        print(f"[pilot] adjudication {stem}: OK ({len(rows)})")
+    cached.write_text(json.dumps(adj, ensure_ascii=False, indent=1), encoding="utf-8")
     return adj
 
 

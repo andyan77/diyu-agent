@@ -1,26 +1,26 @@
 {
  "schema_version": "p7-m3-r3run-gap-table-v1",
  "purpose": "§六 执行前最小批次缺口表（仅避免过量生成，非治理框架）",
- "capacity_model": "发起人裁决：300/100 按 raw case N（不同机制变体计入覆盖）；统计独立由 distinct source-group cluster N + 冻结 cluster-aware 单侧95%CI 保障",
+ "capacity_model": "发起人证据身份裁决（build-3 evidence-key-fix）：raw case N=distinct (evidence_anchor, mechanism) 覆盖门；统计独立由 distinct evidence_anchor cluster N（=digest(scenario_id+source/fact/authorization ids)）+ 冻结 cluster-aware 单侧95%CI 保障。旧 (scenario,claim) 口径 161/152 系错误折叠，作废。",
  "current_formal_generation": "NONE（pilot 为独立小批，正式 R3-run 从 0 起）",
  "per_set_cluster_supply": {
-  "A": 161,
-  "B": 152
+  "A": 301,
+  "B": 302
  },
  "per_family_cluster_supply": {
   "A": {
-   "F1_PEOPLE_AND_REAL_SCENE": 49,
-   "F2_PROFESSIONAL_AND_SEARCH": 39,
-   "F3_PRODUCT_RELATION_AND_AESTHETIC": 31,
-   "F4_STORE_LOCAL_AND_RETAIL": 29,
-   "F5_ENTERPRISE_LONG_TERM_TRUST": 13
+   "F1_PEOPLE_AND_REAL_SCENE": 83,
+   "F2_PROFESSIONAL_AND_SEARCH": 73,
+   "F3_PRODUCT_RELATION_AND_AESTHETIC": 58,
+   "F4_STORE_LOCAL_AND_RETAIL": 59,
+   "F5_ENTERPRISE_LONG_TERM_TRUST": 28
   },
   "B": {
-   "F1_PEOPLE_AND_REAL_SCENE": 47,
-   "F2_PROFESSIONAL_AND_SEARCH": 35,
-   "F3_PRODUCT_RELATION_AND_AESTHETIC": 29,
-   "F4_STORE_LOCAL_AND_RETAIL": 28,
-   "F5_ENTERPRISE_LONG_TERM_TRUST": 13
+   "F1_PEOPLE_AND_REAL_SCENE": 83,
+   "F2_PROFESSIONAL_AND_SEARCH": 75,
+   "F3_PRODUCT_RELATION_AND_AESTHETIC": 58,
+   "F4_STORE_LOCAL_AND_RETAIL": 58,
+   "F5_ENTERPRISE_LONG_TERM_TRUST": 28
   }
  },
  "class_gap_rows": [
@@ -66,7 +66,7 @@
    "contract_min_raw_case_N": 300,
    "current_formal_effective_N": 0,
    "remaining_raw": 300,
-   "cluster_power_n_min": 59,
+   "cluster_power_n_min": 299,
    "face_driven": true
   },
   {
@@ -84,7 +84,7 @@
    "contract_min_raw_case_N": 300,
    "current_formal_effective_N": 0,
    "remaining_raw": 300,
-   "cluster_power_n_min": 59,
+   "cluster_power_n_min": 299,
    "face_driven": true
   },
   {
@@ -111,7 +111,7 @@
    "contract_min_raw_case_N": 300,
    "current_formal_effective_N": 0,
    "remaining_raw": 300,
-   "cluster_power_n_min": null,
+   "cluster_power_n_min": 299,
    "face_driven": true
   },
   {
@@ -166,7 +166,8 @@
    "current_formal_effective_N": 0,
    "remaining_raw": 100,
    "cluster_power_n_min": null,
-   "face_driven": true
+   "face_driven": true,
+   "note": "build-4 确定性构造 4 义务类型×28=112/套（≥100 下限）；disclosure_only 只产 disclosure 记录不膨胀他模块"
   },
   {
    "class": "omission_misleading_high_risk_cases",
@@ -209,18 +210,26 @@
  "feasibility": {
   "raw_case_N_feasible": true,
   "cluster_power_feasible": true,
-  "basis": "raw case N 靠 distinct-mechanism 变体达 300；cluster N 161/152 ≥ 各门 n_min≤59（POWER_CHECK PASS）"
+  "basis": "cluster N 301/302（证据锚）≥ 最严 <1% 门 n_min=299（POWER_CHECK.v1 POWER_FEASIBLE_PROCEED）；raw case N 靠 distinct (anchor,mechanism) 变体 breadth-first 达 300/100",
+  "per_family_ci_gap_families": [
+   "F3_PRODUCT_RELATION_AND_AESTHETIC",
+   "F4_STORE_LOCAL_AND_RETAIL",
+   "F5_ENTERPRISE_LONG_TERM_TRUST"
+  ],
+  "per_family_gap_note": "F3/F4/F5 per-family CI 较窄属 uncertainty_reporting 披露级（合同率门为整体，非 per-family 硬门）→ 不触发 Tier2"
  },
  "estimate": {
-  "faces_per_set_approx": 750,
-  "rich_label_calls_per_set": 376,
+  "faces_per_set_approx": 862,
+  "rich_label_calls_per_set": 432,
   "formulaic_calls_per_set": 190,
-  "adjudication_calls_per_set": 188,
+  "adjudication_calls_per_set": 216,
   "review_calls_per_set": 4,
-  "total_paid_calls_both_sets_approx": 1516,
-  "est_usd_both_sets_approx": 655.0,
-  "cost_basis": "pilot B 11面全量 13 call = $5.61 → ~$0.43/call（Claude 计费/Codex 免费）",
-  "wall_clock_note": "当前 runner 逐批顺序；按 pilot ~30min/11面线性外推为多小时至多日；INTERRUPTED_RESUMABLE 可断点续跑"
+  "total_paid_calls_both_sets_approx": 1684,
+  "est_usd_both_sets_approx": 727.6,
+  "cost_basis": "pilot A 15面全量(含4 disclosure) clean ~$6/13call≈$0.46/call（Claude计费/Codex免费）；disclosure_only 使 disclosure face 只产 1 记录",
+  "wall_clock_note": "当前 runner 逐批顺序；按 pilot ~30min/11面线性外推为多小时至多日；INTERRUPTED_RESUMABLE 可断点续跑",
+  "deterministic_disclosure_faces_per_set": 112
  },
- "note": "该表仅供避免过量生成与成本预判；不建立新治理框架、不改验收门"
+ "note": "该表仅供避免过量生成与成本预判；不建立新治理框架、不改验收门",
+ "evidence_key_fix_refresh": "2026-07-22 按 build-3 证据锚 + build-4 disclosure 重刷：cluster 161/152→301/302；<1% 类 n_min 59→299；加 disclosure 112/套。仅 planning，不改验收门。"
 }
