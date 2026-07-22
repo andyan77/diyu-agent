@@ -1,0 +1,19 @@
+{
+ "schema_version": "p7-qual-pilot-rate-card-v1",
+ "set": "QUAL_A",
+ "carriers": [
+  {
+   "carrier": "codex",
+   "seat": "A",
+   "model": "gpt-5.6-sol",
+   "cost_source": "API usage per call (total_cost_usd)"
+  },
+  {
+   "carrier": "claude",
+   "seat": "B",
+   "model": "claude-opus-4-8",
+   "cost_source": "API usage per call (total_cost_usd)"
+  }
+ ],
+ "note": "费率卡=预登记计价参考；实际每调用 cost_usd 由 API usage 记入 registry（唯一权威）"
+}

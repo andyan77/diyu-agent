@@ -1,0 +1,32 @@
+{
+ "schema_version": "p7-qual-pilot-known-r5-binding-v1",
+ "set": "QUAL_A",
+ "known_r5_hard_veto_input_cases": [
+  "PILOT-V-QA-round1_top-G3-POS-CP01-004-CLAIM-01-CONT",
+  "PILOT-V-QA-round1_top-G3-POS-CP01-004-CLAIM-01-RISK",
+  "PILOT-V-QA-round1_top-G3-POS-CP06-006-CLAIM-01-EVID",
+  "PILOT-V-QA-round1_top-G3-POS-CP11-001-CLAIM-01-BOUN",
+  "PILOT-V-QA-round1_top-G3-POS-CP15-001-CLAIM-01-OMIS"
+ ],
+ "registered_variant_closure": {
+  "QA-round1_top-G3-POS-CP01-004-CLAIM-01": [
+   "PILOT-V-QA-round1_top-G3-POS-CP01-004-CLAIM-01-CONT",
+   "PILOT-V-QA-round1_top-G3-POS-CP01-004-CLAIM-01-RISK"
+  ],
+  "QA-round1_top-G3-POS-CP06-006-CLAIM-01": [
+   "PILOT-V-QA-round1_top-G3-POS-CP06-006-CLAIM-01-EVID"
+  ],
+  "QA-round1_top-G3-POS-CP11-001-CLAIM-01": [
+   "PILOT-V-QA-round1_top-G3-POS-CP11-001-CLAIM-01-BOUN"
+  ],
+  "QA-round1_top-G3-POS-CP15-001-CLAIM-01": [
+   "PILOT-V-QA-round1_top-G3-POS-CP15-001-CLAIM-01-OMIS"
+  ],
+  "QA-round1_top-G3-POS-CP19-001-CLAIM-01": [
+   "PILOT-V-QA-round1_top-G3-POS-CP19-001-CLAIM-01-LEGA"
+  ]
+ },
+ "all_inputs_bound_in_faces": true,
+ "input_binding_completeness": 1.0,
+ "note": "M3 输入绑定完备度=已知 R5 硬否决输入+注册变体闭包全在 faces；非 M4 盲预测 recall"
+}
