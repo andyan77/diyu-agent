@@ -749,14 +749,16 @@ def cmd_finalize() -> int:
     scan = subprocess.run([sys.executable, str(DCC / "tools/sealed_scan.py")],
                           capture_output=True, text=True)
     scan_out = scan.stdout.strip().splitlines()[-1] if scan.stdout.strip() else ""
-    ra = json.loads((QOPEN / "QUAL_A_GOLD_FROZEN_RECEIPT.v1.json").read_text())
-    rb = json.loads((QOPEN / "QUAL_B_GOLD_FROZEN_RECEIPT.v1.json").read_text())
+    # cmd_goldfreeze 写 v2 回执（gold_record_count / class_counts_recomputed）；finalize 同读 v2。
+    ra = json.loads((QOPEN / "QUAL_A_GOLD_FROZEN_RECEIPT.v2.json").read_text())
+    rb = json.loads((QOPEN / "QUAL_B_GOLD_FROZEN_RECEIPT.v2.json").read_text())
     # qualification_manifest 物化
     mpath = SPINE / "calibration/qualification_manifest.v1.json"
     manifest = json.loads(mpath.read_text(encoding="utf-8"))
     manifest["content_status"] = "MATERIALIZED"
-    manifest["case_count"] = ra["gold_count"] + rb["gold_count"]
-    manifest["class_counts"] = {"QUAL_A": ra["class_counts"], "QUAL_B": rb["class_counts"]}
+    manifest["case_count"] = ra["gold_record_count"] + rb["gold_record_count"]
+    manifest["class_counts"] = {"QUAL_A": ra["class_counts_recomputed"],
+                                "QUAL_B": rb["class_counts_recomputed"]}
     manifest["dataset_manifest_digest"] = digest_json(
         {"A_faces": ra["faces_sha256"], "B_faces": rb["faces_sha256"]})
     manifest["source_manifest_digest"] = json.loads(
@@ -785,8 +787,8 @@ def cmd_finalize() -> int:
         "at": now(),
         "qual_order_verdict": verdict,
         "sealed_scan_tail": scan_out,
-        "sets": {"QUAL_A": {"gold": ra["gold_count"], "gold_sha256": ra["gold_sha256"]},
-                 "QUAL_B": {"gold": rb["gold_count"], "gold_sha256": rb["gold_sha256"]}},
+        "sets": {"QUAL_A": {"gold": ra["gold_record_count"], "gold_sha256": ra["gold_sha256"]},
+                 "QUAL_B": {"gold": rb["gold_record_count"], "gold_sha256": rb["gold_sha256"]}},
         "custodian_discipline": "编排会话全程只见数量/摘要/回执（registry visible_material_count 零内容清单）；明文承载区 gitignore + denylist 撞库；接触明文的 headless 会话逐叫登记（thread/session id + ephemeral/无记忆）",
         "cost": L.registry_cost(REG),
     }
