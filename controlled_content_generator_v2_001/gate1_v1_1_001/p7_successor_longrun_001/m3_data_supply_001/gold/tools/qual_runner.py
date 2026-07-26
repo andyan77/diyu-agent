@@ -291,6 +291,53 @@ def _batch_ready(p: Path) -> bool:
     return isinstance(data, list) and len(data) > 0
 
 
+# ------------------------------------------------------- 严格缓存判定 + 确定性分片（提速补丁）
+# 旧判据（裸 exists() / expected.issubset(...)）会把「批组成已变」「有重复 case」「schema 已不合法」
+# 的陈旧输出当作已完成而永久跳过 → 静默带病过 goldfreeze。新判据五条同时成立才复用；任一不成立
+# 即重跑该批（只重跑该批，不重建整套）。
+
+def load_cached_rows(p: Path) -> list | None:
+    """读缓存批：必须完整可解析为非空 JSON 数组，否则视为未完成（返回 None）。"""
+    if not p.exists():
+        return None
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, ValueError, OSError):
+        return None
+    return data if isinstance(data, list) and data else None
+
+
+def cached_batch_valid(p: Path, expected: set, *, key: str = "case_id",
+                       validate_row=None) -> bool:
+    """合格缓存 = ① 完整可解析 ② key 集合与本批 expected **精确相等**（非 issubset）
+    ③ 无重复 key ④ 每条通过当前 schema 校验 ⑤ 绑定的批次输入未变（expected 由当批输入现算，
+    故批组成一变 → ② 立刻不成立 → 重跑）。"""
+    rows = load_cached_rows(p)
+    if rows is None:
+        return False
+    keys = [r.get(key) for r in rows if isinstance(r, dict)]
+    if len(keys) != len(rows) or len(set(keys)) != len(keys):
+        return False                      # 非 dict 行 / 重复 key
+    if set(keys) != expected:
+        return False                      # 精确相等，缺一条或多一条都不复用
+    if validate_row is not None:
+        for r in rows:
+            try:
+                if validate_row(r) is False:
+                    return False
+            except Exception:
+                return False
+    return True
+
+
+def shard_filter(items: list, shard_index: int, shard_count: int) -> list[tuple[int, object]]:
+    """确定性分片：返回 [(全局序号, item)]，仅保留 ordinal % shard_count == shard_index。
+    分片互斥且穷尽（每个全局序号恰属一个 shard）→ 每个 (set,seat,batch) 始终只有一个写者。"""
+    if shard_count < 1 or not (0 <= shard_index < shard_count):
+        raise SystemExit(f"非法分片 --shard-index {shard_index} / --shard-count {shard_count}")
+    return [(i, it) for i, it in enumerate(items) if i % shard_count == shard_index]
+
+
 def assert_sealed_ignored() -> None:
     r = subprocess.run(["git", "-C", str(P7.parents[2]), "check-ignore",
                         str(SEAL / "probe")], capture_output=True, text=True)
@@ -785,7 +832,20 @@ def _rich_rows_ok(rows: list, expected: set) -> bool:
     return True
 
 
-def cmd_label(set_id: str, seat: str, max_batches: int) -> int:
+def _label_batch_expected(bpath: Path) -> set:
+    return {c["case_id"] for c in json.loads(bpath.read_text(encoding="utf-8"))}
+
+
+def _label_cache_ok(out_path: Path, expected: set) -> bool:
+    """建标批合格缓存：严格五条 + 每条经真 GD.validate_rich_label（九模块 schema）。"""
+    def _v(r):
+        GD.validate_rich_label(r, where=str(r.get("case_id")))
+        return True
+    return cached_batch_valid(out_path, expected, validate_row=_v)
+
+
+def cmd_label(set_id: str, seat: str, max_batches: int,
+              shard_index: int = 0, shard_count: int = 1) -> int:
     assert_sealed_ignored()
     carrier = "codex" if seat == "A" else "claude"
     # §四.1：富标签路径——九模块金标字段（旧二字段 labeler 保留供已冻结 G2，不在新 generation 用）。
@@ -794,15 +854,16 @@ def cmd_label(set_id: str, seat: str, max_batches: int) -> int:
     out_dir = sdir / f"labels_{seat}"
     done = 0
     batch_files = sorted((sdir / "face_batches").glob("fb_*.json"))
-    for bpath in batch_files:
+    # 确定性分片：本 worker 只处理 ordinal % shard_count == shard_index 的批；
+    # 批文件名即输出名（fb_NNN.labels.json）→ 不同 shard 天然不撞写者。max_batches 只计本 shard。
+    for _ordinal, bpath in shard_filter(batch_files, shard_index, shard_count):
         if done >= max_batches:
             break
         out_path = out_dir / (bpath.stem + ".labels.json")
         cases = json.loads(bpath.read_text(encoding="utf-8"))
         expected = {c["case_id"] for c in cases}
-        # 续跑复用仅当输出覆盖本批全部 case（防批组成变化后旧标签漏标 disclosure 等新增 face）。
-        if _batch_ready(out_path) and expected.issubset(
-                {r.get("case_id") for r in json.loads(out_path.read_text(encoding="utf-8"))}):
+        # 严格缓存判定：只有完整/精确/无重复/过 schema 的旧输出才跳过；残缺或已不合法的重跑。
+        if _label_cache_ok(out_path, expected):
             continue
         slim = [{k: c[k] for k in ("case_id", "claim_text", "claim_boundary",
                                    "authorization_scope", "slot_facts",
@@ -820,19 +881,25 @@ def cmd_label(set_id: str, seat: str, max_batches: int) -> int:
                               {"kind": f"QUAL{set_id}_LABEL", "seat": seat,
                                "batch": bpath.stem,
                                "visible_material_count": len(expected),
+                               "shard": f"{shard_index}/{shard_count}",
                                "retention": "标签明文留存保全区；registry 零内容"},
                               carrier=carrier)
         if rows is None:
-            (out_dir / (bpath.stem + ".FAILED")).write_text("", encoding="utf-8")
             print(f"FAILED {set_id}/{seat} {bpath.stem}")
             continue
-        out_path.write_text(json.dumps(rows, ensure_ascii=False, indent=1),
-                            encoding="utf-8")
+        L.atomic_write_json(out_path, rows)   # 原子替换：中断不破坏已成功缓存
         done += 1
         print(f"OK {set_id}/{seat} {bpath.stem}")
+    # remaining 报**全局**未完成批数（按严格判据），与分片无关，便于总进度判定。
     remaining = sum(1 for p in batch_files
-                    if not (out_dir / (p.stem + ".labels.json")).exists())
-    print(json.dumps({"set": set_id, "seat": seat, "remaining": remaining}))
+                    if not _label_cache_ok(out_dir / (p.stem + ".labels.json"),
+                                           _label_batch_expected(p)))
+    shard_remaining = sum(1 for _o, p in shard_filter(batch_files, shard_index, shard_count)
+                          if not _label_cache_ok(out_dir / (p.stem + ".labels.json"),
+                                                 _label_batch_expected(p)))
+    print(json.dumps({"set": set_id, "seat": seat, "remaining": remaining,
+                      "shard": f"{shard_index}/{shard_count}",
+                      "shard_remaining": shard_remaining}))
     return 0
 
 
@@ -962,31 +1029,70 @@ def _review_items_for_set(set_id: str, target: int = REVIEW_TARGET) -> list[dict
             for c in picked]
 
 
-def cmd_review(set_id: str, max_batches: int) -> int:
+def _seat_cache_rows(cache_dir: Path, batch_stem: str, ok) -> list | None:
+    """只读缓存（assemble 阶段用）：缓存合格才返回，否则 None → 由调用方 fail-closed。"""
+    cache = cache_dir / f"{batch_stem}.rows.json"
+    rows = load_cached_rows(cache)
+    if rows is not None and ok(rows):
+        return rows
+    return None
+
+
+# §六 分席调度：Seat A 只写 Codex 缓存、Seat B 只写 Opus 缓存，双席不互看；
+# assemble 只读双席缓存做确定性装配（不占 Opus 槽），任一席未齐即 fail-closed。
+REVIEW_PHASES = ("all", "seat-a", "seat-b", "assemble")
+FORMULAIC_PHASES = ("all", "seat-a", "seat-b", "adjudicate", "assemble")
+
+
+def _review_seat_decisions(set_id: str, seat: str, batches: list, tmpl: str,
+                           *, run: bool, max_batches: int) -> dict[str, dict]:
+    """run=True：真实调用该席（只写自己的缓存）；run=False：只读缓存装配，缺批即 None 触发 fail-closed。"""
+    sdir = SEAL / f"qual_{set_id}"
+    carrier = "codex" if seat == "A" else "claude"
+    dec: dict[str, dict] = {}
+    done = 0
+    for bi, batch in enumerate(batches):
+        stem = f"rb_{bi:03d}_{seat}"
+        cdir = sdir / f"review_{seat}"
+        if not run:
+            rows = _seat_cache_rows(cdir, stem, lambda r: RF.review_rows_ok(
+                r, {it["item_id"] for it in batch}))
+            if rows is None:
+                raise SystemExit(f"review assemble 拒绝：席 {seat} 批 {stem} 未完成（fail-closed）")
+            dec.update({r["item_id"]: {"decision": r["decision"],
+                                       "hard_veto": bool(r["hard_veto"]),
+                                       "rationale": r.get("rationale", "")} for r in rows})
+            continue
+        if done >= max_batches:
+            break
+        call = _seat_call(carrier, cdir, stem, f"QUAL{set_id}_REVIEW", len(batch))
+        dec.update(RF.label_review_seat(batch, seat, call=call, template=tmpl))
+        done += 1
+    return dec
+
+
+def cmd_review(set_id: str, max_batches: int, phase: str = "all") -> int:
     assert_sealed_ignored()
     sdir = SEAL / f"qual_{set_id}"
     sdir.mkdir(parents=True, exist_ok=True)
     items = _review_items_for_set(set_id)
-    (sdir / "review_items.json").write_text(
-        json.dumps(items, ensure_ascii=False, indent=1), encoding="utf-8")
+    L.atomic_write_json(sdir / "review_items.json", items)
     tmpl = L.load_template(ANNEXC, "qual_review_labeler")
     pd = digest_json({"tmpl": "qual_review_labeler", "sha": L.sha_text(tmpl)})
     batches = [items[i:i + REVIEW_CHUNK] for i in range(0, len(items), REVIEW_CHUNK)]
-    dec: dict[str, dict] = {"A": {}, "B": {}}
-    for seat, carrier in (("A", "codex"), ("B", "claude")):
-        done = 0  # per-seat：max_batches 不得让某席空缺（否则 assemble 失败）
-        for bi, batch in enumerate(batches):
-            if done >= max_batches:
-                break
-            call = _seat_call(carrier, sdir / f"review_{seat}", f"rb_{bi:03d}_{seat}",
-                              f"QUAL{set_id}_REVIEW", len(batch))
-            d = RF.label_review_seat(batch, seat, call=call, template=tmpl)
-            dec[seat].update(d)
-            done += 1
+    if phase in ("seat-a", "seat-b"):
+        seat = "A" if phase == "seat-a" else "B"
+        d = _review_seat_decisions(set_id, seat, batches, tmpl, run=True,
+                                   max_batches=max_batches)
+        print(json.dumps({"set": set_id, "phase": phase, "seat": seat,
+                          "decided": len(d), "items": len(items)}, ensure_ascii=False))
+        return 0
+    run_seats = (phase == "all")
+    dec = {s: _review_seat_decisions(set_id, s, batches, tmpl, run=run_seats,
+                                     max_batches=max_batches) for s in ("A", "B")}
     units = RF.assemble_review_units(items, dec["A"], dec["B"],
                                      prompt_digest_a=pd, prompt_digest_b=pd)
-    (sdir / "review_units.json").write_text(
-        json.dumps(units, ensure_ascii=False, indent=1), encoding="utf-8")
+    L.atomic_write_json(sdir / "review_units.json", units)
     disagree = sum(1 for u in units
                    if u["judgments"][0]["decision"] != u["judgments"][1]["decision"])
     print(json.dumps({"set": set_id, "review_items": len(items),
@@ -1096,40 +1202,76 @@ def _formulaic_pairs_for_set(set_id: str) -> list[dict]:
     return pairs
 
 
-def cmd_formulaic(set_id: str, max_batches: int) -> int:
+def _formulaic_seat_axes(set_id: str, seat: str, batches: list, tmpl: str,
+                         *, run: bool, max_batches: int) -> dict[str, dict]:
+    """run=True：真跑该席（只写自己缓存）；run=False：只读缓存，缺批即 fail-closed。"""
+    sdir = SEAL / f"qual_{set_id}"
+    carrier = "codex" if seat == "A" else "claude"
+    axes: dict[str, dict] = {}
+    done = 0
+    for bi, batch in enumerate(batches):
+        stem = f"fb_{bi:03d}_{seat}"
+        cdir = sdir / f"formaxis_{seat}"
+        if not run:
+            rows = _seat_cache_rows(cdir, stem, lambda r: RF.axis_rows_ok(
+                r, {p["pair_ref"] for p in batch}))
+            if rows is None:
+                raise SystemExit(
+                    f"formulaic assemble 拒绝：席 {seat} 批 {stem} 未完成（fail-closed）")
+            axes.update({r["pair_ref"]: r["axes"] for r in rows})
+            continue
+        if done >= max_batches:
+            break
+        call = _seat_call(carrier, cdir, stem, f"QUAL{set_id}_FORMAXIS", len(batch))
+        axes.update(RF.label_formulaic_seat(batch, seat, call=call, template=tmpl))
+        done += 1
+    return axes
+
+
+def cmd_formulaic(set_id: str, max_batches: int, phase: str = "all") -> int:
     assert_sealed_ignored()
     sdir = SEAL / f"qual_{set_id}"
     sdir.mkdir(parents=True, exist_ok=True)
     pairs = _formulaic_pairs_for_set(set_id)
-    (sdir / "formulaic_pairs.json").write_text(
-        json.dumps(pairs, ensure_ascii=False, indent=1), encoding="utf-8")
+    L.atomic_write_json(sdir / "formulaic_pairs.json", pairs)
     tmpl = L.load_template(ANNEXC, "qual_formulaic_axis_labeler")
     adj_tmpl = L.load_template(ANNEXC, "qual_formulaic_axis_adjudicator")
     pd = digest_json({"tmpl": "qual_formulaic_axis_labeler", "sha": L.sha_text(tmpl)})
     batches = [pairs[i:i + FORMULAIC_CHUNK] for i in range(0, len(pairs), FORMULAIC_CHUNK)]
-    axes: dict[str, dict] = {"A": {}, "B": {}}
-    for seat, carrier in (("A", "codex"), ("B", "claude")):
-        done = 0
-        for bi, batch in enumerate(batches):
-            if done >= max_batches:
-                break
-            call = _seat_call(carrier, sdir / f"formaxis_{seat}", f"fb_{bi:03d}_{seat}",
-                              f"QUAL{set_id}_FORMAXIS", len(batch))
-            a = RF.label_formulaic_seat(batch, seat, call=call, template=tmpl)
-            axes[seat].update(a)
-            done += 1
+    if phase in ("seat-a", "seat-b"):
+        seat = "A" if phase == "seat-a" else "B"
+        ax = _formulaic_seat_axes(set_id, seat, batches, tmpl, run=True,
+                                  max_batches=max_batches)
+        print(json.dumps({"set": set_id, "phase": phase, "seat": seat,
+                          "axes_labeled": len(ax), "pairs": len(pairs)}, ensure_ascii=False))
+        return 0
+    run_seats = (phase == "all")
+    axes = {s: _formulaic_seat_axes(set_id, s, batches, tmpl, run=run_seats,
+                                    max_batches=max_batches) for s in ("A", "B")}
+    # 只有**真实轴分歧**的 pair 进 Opus 仲裁（无分歧者零调用）。
     need = RF.pairs_needing_adjudication(pairs, axes["A"], axes["B"])
     adj_axes: dict[str, dict] = {}
     adj_batches = [need[i:i + FORMULAIC_CHUNK] for i in range(0, len(need), FORMULAIC_CHUNK)]
     for bi, batch in enumerate(adj_batches):
-        call = _seat_call("claude", sdir / "formaxis_adj", f"fadj_{bi:03d}",
-                          f"QUAL{set_id}_FORMADJ", len(batch))
+        stem = f"fadj_{bi:03d}"
+        cdir = sdir / "formaxis_adj"
+        if phase == "assemble":
+            rows = _seat_cache_rows(cdir, stem, lambda r: RF.axis_rows_ok(
+                r, {p["pair_ref"] for p in batch}))
+            if rows is None:
+                raise SystemExit(f"formulaic assemble 拒绝：轴仲裁批 {stem} 未完成（fail-closed）")
+            adj_axes.update({r["pair_ref"]: r["axes"] for r in rows})
+            continue
+        call = _seat_call("claude", cdir, stem, f"QUAL{set_id}_FORMADJ", len(batch))
         adj_axes.update(RF.adjudicate_formulaic_axes(batch, axes["A"], axes["B"],
                                                      call=call, template=adj_tmpl))
+    if phase == "adjudicate":
+        print(json.dumps({"set": set_id, "phase": phase, "needing_adjudication": len(need),
+                          "adjudicated": len(adj_axes)}, ensure_ascii=False))
+        return 0
     units = RF.assemble_formulaic_units(pairs, axes["A"], axes["B"], adj_axes,
                                         prompt_digest_a=pd, prompt_digest_b=pd)
-    (sdir / "formulaic_units.json").write_text(
-        json.dumps(units, ensure_ascii=False, indent=1), encoding="utf-8")
+    L.atomic_write_json(sdir / "formulaic_units.json", units)
     dist: dict[str, int] = {}
     for u in units:
         dist[u["final_verdict"]] = dist.get(u["final_verdict"], 0) + 1
@@ -1140,61 +1282,142 @@ def cmd_formulaic(set_id: str, max_batches: int) -> int:
     return 0
 
 
-def cmd_adjudicate(set_id: str, max_batches: int) -> int:
+# ---------------------------------------------------------------- 字段级仲裁（field-only）
+# 旧路径把两席**全部十个字段**送裁并要求返回完整 rich label：分歧通常只有 1–2 个字段，其余
+# 八九个字段陪跑一遍——既贵又慢，还让仲裁席有机会改写「本来一致」的字段（§四.1 规则2 明禁）。
+# 新路径：入只带必要题面上下文 + disputed_fields + 两席对**这些字段**的值与理由；
+#         出只含 case_id + 该 case 真实分歧字段（缺一个/多一个/枚举非法 → 拒收重跑）。
+# 一致字段由 GD.resolve_label_fields 确定性合并原样保留；合并后再过完整 rich-label schema 校验。
+# 逐模块 ADJ provenance 仍由 GD.derive_perclaim_records 按「模块是否消费被仲裁字段」决定。
+ADJ_BATCH = 10
+_ADJ_DEGRADE = (10, 8, 6)      # 真实失败率 >10% 时自动降批，不停工、不重构
+
+
+def _adj_context_fields(face: dict) -> dict:
+    return {k: face[k] for k in ("claim_text", "claim_boundary", "authorization_scope",
+                                 "slot_facts", "source_summary_a", "source_summary_b")}
+
+
+def compute_field_disputes(set_id: str, a: dict, b: dict) -> dict[str, list[str]]:
+    """{case_id: 规范化后仍分歧的字段列表}（一致字段不入表 → 绝不进裁）。"""
+    out: dict[str, list[str]] = {}
+    for cid in sorted(set(a) & set(b)):
+        df = GD.field_disputes(a[cid], b[cid])
+        if df:
+            out[cid] = df
+    return out
+
+
+def field_adj_row_valid(row, disputed_map: dict[str, list[str]], label_a: dict) -> bool:
+    """field-only 仲裁输出合格判据（严格）：
+       ① 是 dict 且 case_id 属本次争议集；
+       ② 键集合（除 case_id）与该 case 的 disputed_fields **精确相等**——不得缺分歧字段，
+          不得夹带未分歧字段；
+       ③ 把仲裁值覆盖到甲席标签上，整条必须通过真 GD.validate_rich_label（非法枚举/结构即拒）。"""
+    if not isinstance(row, dict):
+        return False
+    cid = row.get("case_id")
+    if cid not in disputed_map or cid not in label_a:
+        return False
+    df = set(disputed_map[cid])
+    if (set(row) - {"case_id"}) != df:
+        return False
+    merged = {**label_a[cid], **{f: row[f] for f in df}}
+    try:
+        GD.validate_rich_label(merged, where=str(cid))
+    except GD.DerivationError:
+        return False
+    return True
+
+
+def _collect_valid_adjudications(adir: Path, disputed_map: dict[str, list[str]],
+                                 label_a: dict) -> dict[str, dict]:
+    """扫已有仲裁缓存，逐条按严格判据校验；只认合格条目（残缺/过期/非法的当作未裁 → 重跑）。"""
+    done: dict[str, dict] = {}
+    if not adir.is_dir():
+        return done
+    for p in sorted(adir.glob("adj_*.labels.json")):
+        rows = load_cached_rows(p)
+        if rows is None:
+            continue
+        for r in rows:
+            if field_adj_row_valid(r, disputed_map, label_a):
+                done[r["case_id"]] = r
+    return done
+
+
+def cmd_adjudicate(set_id: str, max_batches: int,
+                   shard_index: int = 0, shard_count: int = 1) -> int:
     assert_sealed_ignored()
-    # §四.1 富标签裁决：隔离仲裁席对九模块字段分歧裁断（旧二字段 adjudicator 保留供 G2）。
-    tmpl = L.load_template(ANNEXC, "qual_rich_adjudicator")
+    tmpl = L.load_template(ANNEXC, "qual_field_adjudicator")
     sdir = SEAL / f"qual_{set_id}"
     faces = {c["case_id"]: c for c in json.loads(
         (sdir / "faces_frozen.json").read_text(encoding="utf-8"))}
     a, b = _seal_collect(set_id, "labels_A"), _seal_collect(set_id, "labels_B")
-    # §四.1：仅把「规范化后仍分歧的字段」送裁；一致字段绝不进裁（不因它字段分歧被改写）。
-    disputes = []
-    for cid in sorted(set(a) & set(b)):
-        df = GD.field_disputes(a[cid], b[cid])
-        if df:
-            c = faces[cid]
-            disputes.append({"case_id": cid,
-                             "disputed_fields": df,
-                             **{k: c[k] for k in ("claim_text", "claim_boundary",
-                                                  "authorization_scope", "slot_facts",
-                                                  "source_summary_a", "source_summary_b")},
-                             "label_jia": {k: a[cid].get(k) for k in _RICH_FIELDS},
-                             "label_yi": {k: b[cid].get(k) for k in _RICH_FIELDS}})
+    disputed_map = compute_field_disputes(set_id, a, b)
     adir = sdir / "adjudication"
-    adir.mkdir(exist_ok=True)
-    (adir / "disputes.json").write_text(
-        json.dumps(disputes, ensure_ascii=False, indent=1), encoding="utf-8")
-    batches = [disputes[i:i + BATCH] for i in range(0, len(disputes), BATCH)]
-    done = 0
-    for i, batch in enumerate(batches):
-        if done >= max_batches:
-            break
-        out_path = adir / f"adj_{i:03d}.labels.json"
-        if out_path.exists():
-            continue
-        expected = {c["case_id"] for c in batch}
+    adir.mkdir(parents=True, exist_ok=True)
+    L.atomic_write_json(adir / "disputes.json",
+                        [{"case_id": cid, "disputed_fields": df}
+                         for cid, df in sorted(disputed_map.items())])
+    already = _collect_valid_adjudications(adir, disputed_map, a)
+    # 案级确定性分片：对**待裁**争议按全局序号取模 → 各 worker 案集互斥且穷尽；
+    # 批文件按内容摘要命名 → 批大小自适应变化也绝不覆盖他批、绝不产生双写者。
+    pending_all = [cid for cid in sorted(disputed_map) if cid not in already]
+    mine = [cid for _o, cid in shard_filter(pending_all, shard_index, shard_count)]
+    size_i, done, attempts, failures = 0, 0, 0, 0
+    queue = list(mine)
+    while queue and done < max_batches:
+        size = _ADJ_DEGRADE[size_i]
+        chunk, queue = queue[:size], queue[size:]
+        batch = [{"case_id": cid, "disputed_fields": disputed_map[cid],
+                  **_adj_context_fields(faces[cid]),
+                  # 只送两席对**分歧字段**的取值与理由（未分歧字段不进裁，省调用亦防改写）
+                  "seat_jia_values": {f: a[cid].get(f) for f in disputed_map[cid]},
+                  "seat_yi_values": {f: b[cid].get(f) for f in disputed_map[cid]},
+                  "seat_jia_rationale": a[cid].get("rationale", ""),
+                  "seat_yi_rationale": b[cid].get("rationale", "")} for cid in chunk]
+        expected = set(chunk)
+        stem = "adj_" + digest_json(sorted(chunk))[:12]
 
         def ok(rows: list) -> bool:
-            return _rich_rows_ok(rows, expected)
+            if not isinstance(rows, list):
+                return False
+            if {r.get("case_id") for r in rows if isinstance(r, dict)} != expected:
+                return False
+            return all(field_adj_row_valid(r, disputed_map, a) for r in rows)
 
         prompt = tmpl.replace("{batch_json}",
                               json.dumps(batch, ensure_ascii=False, indent=1))
-        rows = L.attempt_call(prompt, ok, adir, f"adj_{i:03d}", REG,
-                              {"kind": f"QUAL{set_id}_ADJUDICATE", "batch": f"adj_{i:03d}",
+        attempts += 1
+        rows = L.attempt_call(prompt, ok, adir, stem, REG,
+                              {"kind": f"QUAL{set_id}_FIELD_ADJUDICATE", "batch": stem,
                                "visible_material_count": len(expected),
+                               "disputed_field_count": sum(len(disputed_map[c]) for c in chunk),
+                               "shard": f"{shard_index}/{shard_count}",
                                "retention": "明文留存保全区"})
         if rows is None:
-            print(f"FAILED {set_id} adj_{i:03d}")
+            failures += 1
+            queue = chunk + queue          # 退回队列，按更小批再试
+            print(f"FAILED {set_id} {stem}")
+            # 真实失败率 >10% → 自动降批（10→8→6）继续，不停工
+            if failures / max(1, attempts) > 0.10 and size_i < len(_ADJ_DEGRADE) - 1:
+                size_i += 1
+                print(f"ADJ_BATCH degrade → {_ADJ_DEGRADE[size_i]} "
+                      f"(failures {failures}/{attempts})")
+            elif failures >= 3 and size_i == len(_ADJ_DEGRADE) - 1:
+                break                      # 已至最小批仍连败：交由上层重驱/退避
             continue
-        out_path.write_text(json.dumps(rows, ensure_ascii=False, indent=1),
-                            encoding="utf-8")
+        L.atomic_write_json(adir / f"{stem}.labels.json", rows)
         done += 1
-        print(f"OK {set_id} adj_{i:03d}")
-    remaining = sum(1 for i in range(len(batches))
-                    if not (adir / f"adj_{i:03d}.labels.json").exists())
-    print(json.dumps({"set": set_id, "disputes": len(disputes),
-                      "adj_remaining": remaining}))
+        print(f"OK {set_id} {stem} (+{len(rows)} cases)")
+    still = _collect_valid_adjudications(adir, disputed_map, a)
+    remaining = sum(1 for cid in disputed_map if cid not in still)
+    print(json.dumps({"set": set_id, "disputes": len(disputed_map),
+                      "disputed_field_total": sum(len(v) for v in disputed_map.values()),
+                      "adjudicated": len(still), "adj_remaining": remaining,
+                      "shard": f"{shard_index}/{shard_count}",
+                      "adj_batch_size": _ADJ_DEGRADE[size_i]}, ensure_ascii=False))
     return 0
 
 
@@ -1260,8 +1483,9 @@ def cmd_goldfreeze(set_id: str) -> int:
                        "generation": generation_id})
     labeler_pd = digest_json({"tmpl": "qual_rich_labeler",
                               "sha": L.sha_text(L.load_template(ANNEXC, "qual_rich_labeler"))})
-    adj_pd = digest_json({"tmpl": "qual_rich_adjudicator",
-                          "sha": L.sha_text(L.load_template(ANNEXC, "qual_rich_adjudicator"))})
+    # prompt_digest 必须绑**实际产出该仲裁的模板**：新正式集走 field-only 仲裁。
+    adj_pd = digest_json({"tmpl": "qual_field_adjudicator",
+                          "sha": L.sha_text(L.load_template(ANNEXC, "qual_field_adjudicator"))})
     base_sp = _base_seat_provenance(labeler_pd)
     adj_sp = _adj_seat_provenance(adj_pd)
 
@@ -1438,17 +1662,24 @@ def main() -> int:
         p.add_argument("--set", choices=["A", "B"], required=True)
         if name == "faces":
             p.add_argument("--max-batches", type=int, default=99)
+    # 确定性分片（向后兼容默认 0/1 = 单工人，行为与补丁前一致）
     lp = sub.add_parser("label")
     lp.add_argument("--set", choices=["A", "B"], required=True)
     lp.add_argument("--seat", choices=["A", "B"], required=True)
     lp.add_argument("--max-batches", type=int, default=99)
+    lp.add_argument("--shard-index", type=int, default=0)
+    lp.add_argument("--shard-count", type=int, default=1)
     adp = sub.add_parser("adjudicate")
     adp.add_argument("--set", choices=["A", "B"], required=True)
     adp.add_argument("--max-batches", type=int, default=99)
+    adp.add_argument("--shard-index", type=int, default=0)
+    adp.add_argument("--shard-count", type=int, default=1)
     for name in ("review", "formulaic"):  # §六 review/formulaic 真子管线（全量生产）
         rp = sub.add_parser(name)
         rp.add_argument("--set", choices=["A", "B"], required=True)
         rp.add_argument("--max-batches", type=int, default=99)
+        rp.add_argument("--phase", default="all",
+                        choices=(REVIEW_PHASES if name == "review" else FORMULAIC_PHASES))
     sub.add_parser("finalize")
     args = ap.parse_args()
     if args.cmd == "split":
@@ -1458,15 +1689,17 @@ def main() -> int:
     if args.cmd == "faces":
         return cmd_faces(args.set, args.max_batches)
     if args.cmd == "label":
-        return cmd_label(args.set, args.seat, args.max_batches)
+        return cmd_label(args.set, args.seat, args.max_batches,
+                         args.shard_index, args.shard_count)
     if args.cmd == "labelfreeze":
         return cmd_labelfreeze(args.set)
     if args.cmd == "adjudicate":
-        return cmd_adjudicate(args.set, args.max_batches)
+        return cmd_adjudicate(args.set, args.max_batches,
+                              args.shard_index, args.shard_count)
     if args.cmd == "review":
-        return cmd_review(args.set, args.max_batches)
+        return cmd_review(args.set, args.max_batches, args.phase)
     if args.cmd == "formulaic":
-        return cmd_formulaic(args.set, args.max_batches)
+        return cmd_formulaic(args.set, args.max_batches, args.phase)
     if args.cmd == "goldfreeze":
         return cmd_goldfreeze(args.set)
     if args.cmd == "finalize":

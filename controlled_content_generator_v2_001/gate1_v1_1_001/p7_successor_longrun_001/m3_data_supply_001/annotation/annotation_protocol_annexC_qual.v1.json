@@ -34,6 +34,11 @@
   "qual_formulaic_axis_adjudicator": {
    "text": "你是隔离套路构念轴仲裁员。下面每个内容对给出甲、乙两席对 6 轴的分歧（disputed_axes 列出分歧轴）。你只依据 left_content/right_content 与两席理由独立复核，产出该对的**最终** 6 轴判定——不机械取多数，须依材料裁断。\n\n轴与取值同标注协议：argument_spine/evidence_progression/limitation_function/viewpoint_anchor/closing_function ∈ {SAME,DIFFERENT,UNCLEAR,NECESSARY_GRAMMAR}；transformation_depth ∈ {SURFACE_ONLY,STRUCTURAL_CHANGE,UNCLEAR,NECESSARY_GRAMMAR}。\n\n只输出一个 JSON 数组，每元素含 pair_ref 与完整 axes（6 轴），覆盖全部争议 pair_ref，不输出数组之外任何字符。\n\n争议批（JSON）：\n{batch_json}\n",
    "sha256": "d0b8b185002d3217fccbdd3b8490a10d5d17160e4406211a0989925c6f3d324c"
+  },
+  "qual_field_adjudicator": {
+   "text": "你是隔离金标仲裁员。下面每个用例只给出甲、乙两席**存在分歧的字段**（disputed_fields）及两席对这些字段的取值与理由，另附该用例的题面材料（claim_text/claim_boundary/authorization_scope/slot_facts/source_summary_a/b）。\n\n你只依据题面材料与两席理由独立复核，对**每个分歧字段**裁断出最终金标取值——不得机械取多数，须依材料裁断。两席已一致的字段不在本次范围内，你既看不到也不得输出。\n\n字段取值域与标注协议完全一致：risk（LOW|MEDIUM|HIGH|CRITICAL）、entailment（SUPPORTED|CONTRADICTED|UNKNOWN）、reference_present（bool）、reference_attributes（{polarity,modality,time_scope,preconditions} 四键齐全）、atom_present（bool）、atom_partition（非空的「列表的列表」）、safe_to_clear（bool）、disclosure_obligation（NONE 或四类之一）、disclosure_violation（bool）、misleading（bool）。\n\n输出硬要求（违反任一即整批作废重来）：\n1. 只输出一个 JSON 数组，数组之外不得有任何字符；\n2. 每个元素只含两部分：case_id，以及该 case 的 disputed_fields 列出的**全部字段**；\n3. 不得缺少任何一个分歧字段；\n4. 不得夹带任何未分歧字段（含 rationale、说明文字、额外键）；\n5. 覆盖全部争议 case_id，不多不少。\n\n争议批（JSON）：\n{batch_json}\n",
+   "sha256": "0a939623f33b83fd2ada6382fa394a867be2b5e559c9a9900c8621ab0275aad3",
+   "note": "提速补丁·字段级仲裁：入只带 disputed_fields 与两席对该字段的值/理由，出只含 case_id+该 case 分歧字段；一致字段由 resolve_label_fields 确定性合并保留，合并后再过完整 rich-label schema。qual_rich_adjudicator 原件保留不动（历史 G2/已冻结产物溯源）。"
   }
  },
  "challenge_kinds": [
