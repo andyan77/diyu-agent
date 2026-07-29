@@ -849,7 +849,10 @@ def cmd_label(set_id: str, seat: str, max_batches: int,
     assert_sealed_ignored()
     carrier = "codex" if seat == "A" else "claude"
     # §四.1：富标签路径——九模块金标字段（旧二字段 labeler 保留供已冻结 G2，不在新 generation 用）。
-    tmpl = L.load_template(ANNEXC, "qual_rich_labeler")
+    # v2（消歧 rubric）：v1 实测双席 98.6% 至少一字段分歧，探针（48 例同 case 对照）证 v2 降至 72.9%，
+    # 其中 disclosure_obligation/disclosure_violation/safe_to_clear/misleading 四字段直接归零。
+    # v1 原件与 sha 保留于 annexC 供已冻结产物溯源。
+    tmpl = L.load_template(ANNEXC, "qual_rich_labeler_v2")
     sdir = SEAL / f"qual_{set_id}"
     out_dir = sdir / f"labels_{seat}"
     done = 0
@@ -980,22 +983,28 @@ _RICH_FIELDS = GD.RICH_LABEL_FIELDS + ("rationale",)
 # assemble → 写 sealed_custody_001/qual_{set}/review_units.json（cmd_goldfreeze 消费）。
 # 复用 RF 真子管线 + cmd_label 的 batched/resume/registry 纪律；主会话零明文。
 
-def _seat_call(carrier: str, cache_dir: Path, batch_stem: str, kind: str, count: int):
-    """RF 席位调用适配器：绑定真 L.attempt_call + 密封 REG；按 batch_stem 落缓存，重跑不重复付费。"""
+def _seat_call(carrier: str, cache_dir: Path, batch_stem: str, kind: str, count: int,
+               extra_ok=None):
+    """RF 席位调用适配器：绑定真 L.attempt_call + 密封 REG；按 batch_stem 落缓存，重跑不重复付费。
+
+    extra_ok：在 RF 自带结构判据之外再叠加的合格判据（如 NG 预注册资格），与之取「与」。
+    截断/不可解析缓存视为未完成（load_cached_rows），绝不把半截文件当已完成跳过。
+    """
     cache_dir.mkdir(parents=True, exist_ok=True)
 
     def call(prompt, ok, _rf_stem):
+        def full_ok(rows):
+            return bool(ok(rows)) and (extra_ok is None or bool(extra_ok(rows)))
         cache = cache_dir / f"{batch_stem}.rows.json"
-        if cache.is_file():
-            rows = json.loads(cache.read_text(encoding="utf-8"))
-            if ok(rows):
-                return rows
-        rows = L.attempt_call(prompt, ok, cache_dir, batch_stem, REG,
+        cached = load_cached_rows(cache)
+        if cached is not None and full_ok(cached):
+            return cached
+        rows = L.attempt_call(prompt, full_ok, cache_dir, batch_stem, REG,
                               {"kind": kind, "seat": batch_stem.rsplit("_", 1)[-1],
                                "batch": batch_stem, "visible_material_count": count,
                                "retention": "标签明文留存保全区；registry 零内容"}, carrier=carrier)
         if rows is not None:
-            cache.write_text(json.dumps(rows, ensure_ascii=False, indent=1), encoding="utf-8")
+            L.atomic_write_json(cache, rows)
         return rows
     return call
 
@@ -1004,22 +1013,49 @@ REVIEW_TARGET = 50   # 合同 review_double_reviewed_items=40；建 50 留裕度
 REVIEW_CHUNK = 10
 
 
+# review 校准语料的分层构成（确定性）。合同 review_calibration 要求 class_specific_agreement
+# 与 deterministic_hard_gate_agreement=1.0：**一个不含硬否决样本的校准集在物理上无法测量硬否决
+# 一致率**，一个只含合规内容的校准集也算不出 negative-specific 一致率。实测旧路径（只取自然
+# claim）正是如此失守：QUAL-A hard_veto_cases_present=false、QUAL-B negative_specific=0.0。
+# 故按构造让语料覆盖判定空间三层——注意这只保证**可测量**，两席仍各自独立判定，绝不预置答案。
+REVIEW_STRATA = (("NATURAL", 30), ("CHALLENGE_VARIANT", 10), ("DISCLOSURE", 10))
+
+
 def _review_items_for_set(set_id: str, target: int = REVIEW_TARGET) -> list[dict]:
-    """从真源自然 claim 装配可评审内容单元（五家族均衡，确定性排序取前 target）。
-    author_identity ≠ 审核席身份（满足 role_collision_absent）。"""
-    cases = _cases_for_set(set_id)
-    by_fam: dict[str, list[dict]] = {}
-    for c in sorted(cases, key=lambda c: c["case_id"]):
-        by_fam.setdefault(c["family_id"], []).append(c)
-    fams = sorted(by_fam)
+    """从密封冻结题面装配可评审内容单元：合规自然内容 + 挑战变体 + 确定性披露违规，
+    五家族均衡、确定性排序。author_identity ≠ 审核席身份（满足 role_collision_absent）。"""
+    faces = json.loads((SEAL / f"qual_{set_id}" / "faces_frozen.json").read_text(encoding="utf-8"))
+    pools: dict[str, list[dict]] = {k: [] for k, _ in REVIEW_STRATA}
+    for f in sorted(faces, key=lambda c: c["case_id"]):
+        if f.get("disclosure_only") is True:
+            pools["DISCLOSURE"].append(f)
+        elif f.get("case_kind") == "CHALLENGE_VARIANT":
+            pools["CHALLENGE_VARIANT"].append(f)
+        elif f.get("case_kind") == "NATURAL":
+            pools["NATURAL"].append(f)
+
+    def take(pool: list[dict], n: int, spread_key) -> list[dict]:
+        """按 spread_key 轮转取 n 条（家族/义务类型均衡，确定性）。"""
+        by: dict[str, list[dict]] = {}
+        for c in pool:
+            by.setdefault(spread_key(c), []).append(c)
+        keys, out, idx = sorted(by), [], 0
+        while len(out) < n and any(idx < len(by[k]) for k in keys):
+            for k in keys:
+                if idx < len(by[k]) and len(out) < n:
+                    out.append(by[k][idx])
+            idx += 1
+        return out
+
     picked: list[dict] = []
-    idx = 0
-    # 轮转五家族取，均衡覆盖，直到 target
-    while len(picked) < target and any(idx < len(by_fam[f]) for f in fams):
-        for f in fams:
-            if idx < len(by_fam[f]) and len(picked) < target:
-                picked.append(by_fam[f][idx])
-        idx += 1
+    scale = target / sum(n for _, n in REVIEW_STRATA)
+    for stratum, n in REVIEW_STRATA:
+        want = max(1, round(n * scale))
+        # 披露层按义务类型（case_id 前缀）均衡，其余按家族均衡
+        key = ((lambda c: c["case_id"].split("-")[2]) if stratum == "DISCLOSURE"
+               else (lambda c: c["family_id"]))
+        picked += take(pools[stratum], want, key)
+    picked = picked[:target]
     return [{"item_id": f"QUAL{set_id}-REV-{c['case_id']}", "family_id": c["family_id"],
              "source_group_id": f"rev-{c['source_group_id']}",
              "author_identity": f"GEN_AUTHOR::{c['case_id']}",
@@ -1202,6 +1238,24 @@ def _formulaic_pairs_for_set(set_id: str) -> list[dict]:
     return pairs
 
 
+def _axis_rows_ng_legal(rows, batch: list) -> bool:
+    """轴标注批合格判据 = RF 结构判据 + NG 预注册资格。
+
+    必要语法例外须事先注册（spine.verdict_from_axes 硬约束）：只有携带
+    necessary_grammar_exception_id 的对才可取 NECESSARY_GRAMMAR。席位经 _pair_slim 看不到
+    注册状态（pair_ref 已编码 -SS-/-CP- 类别，模板据此告知），此处再做 fail-closed 兜底：
+    在无注册例外的对上取 NG 一律拒收重跑，绝不让非法轴流进 verdict 计算炸掉整条流。"""
+    if not RF.axis_rows_ok(rows, {p["pair_ref"] for p in batch}):
+        return False
+    exc_by_ref = {p["pair_ref"]: p.get("necessary_grammar_exception_id") for p in batch}
+    for r in rows:
+        if str(exc_by_ref.get(r["pair_ref"]) or "").strip():
+            continue                       # 已注册例外 → NG 合法
+        if "NECESSARY_GRAMMAR" in r["axes"].values():
+            return False
+    return True
+
+
 def _formulaic_seat_axes(set_id: str, seat: str, batches: list, tmpl: str,
                          *, run: bool, max_batches: int) -> dict[str, dict]:
     """run=True：真跑该席（只写自己缓存）；run=False：只读缓存，缺批即 fail-closed。"""
@@ -1213,8 +1267,7 @@ def _formulaic_seat_axes(set_id: str, seat: str, batches: list, tmpl: str,
         stem = f"fb_{bi:03d}_{seat}"
         cdir = sdir / f"formaxis_{seat}"
         if not run:
-            rows = _seat_cache_rows(cdir, stem, lambda r: RF.axis_rows_ok(
-                r, {p["pair_ref"] for p in batch}))
+            rows = _seat_cache_rows(cdir, stem, lambda r: _axis_rows_ng_legal(r, batch))
             if rows is None:
                 raise SystemExit(
                     f"formulaic assemble 拒绝：席 {seat} 批 {stem} 未完成（fail-closed）")
@@ -1222,7 +1275,8 @@ def _formulaic_seat_axes(set_id: str, seat: str, batches: list, tmpl: str,
             continue
         if done >= max_batches:
             break
-        call = _seat_call(carrier, cdir, stem, f"QUAL{set_id}_FORMAXIS", len(batch))
+        call = _seat_call(carrier, cdir, stem, f"QUAL{set_id}_FORMAXIS", len(batch),
+                          extra_ok=lambda r: _axis_rows_ng_legal(r, batch))
         axes.update(RF.label_formulaic_seat(batch, seat, call=call, template=tmpl))
         done += 1
     return axes
@@ -1481,8 +1535,9 @@ def cmd_goldfreeze(set_id: str) -> int:
     generation_id = f"QUAL_{set_id}_GEN_{faces_sha[:16]}"
     dmd = digest_json({"set": set_id, "faces_sha256": faces_sha,
                        "generation": generation_id})
-    labeler_pd = digest_json({"tmpl": "qual_rich_labeler",
-                              "sha": L.sha_text(L.load_template(ANNEXC, "qual_rich_labeler"))})
+    # prompt_digest 必须绑**实际产出这批标签的模板**（新正式集走 v2 消歧 rubric）。
+    labeler_pd = digest_json({"tmpl": "qual_rich_labeler_v2",
+                              "sha": L.sha_text(L.load_template(ANNEXC, "qual_rich_labeler_v2"))})
     # prompt_digest 必须绑**实际产出该仲裁的模板**：新正式集走 field-only 仲裁。
     adj_pd = digest_json({"tmpl": "qual_field_adjudicator",
                           "sha": L.sha_text(L.load_template(ANNEXC, "qual_field_adjudicator"))})

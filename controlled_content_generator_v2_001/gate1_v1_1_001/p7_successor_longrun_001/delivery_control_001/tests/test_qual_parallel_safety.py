@@ -254,5 +254,53 @@ class SeatPhaseFailClosed(unittest.TestCase):
                          "单席阶段不得装配 units（须等双席齐）")
 
 
+class NecessaryGrammarEligibility(unittest.TestCase):
+    """NG 必要语法例外须**事先注册**：无 exception id 的对上取 NECESSARY_GRAMMAR 一律拒收。
+
+    实战教训：席位经 _pair_slim 看不到注册状态，曾在 CP 对上标 NG，致 verdict_from_axes 抛
+    『necessary grammar requires a preregistered exception』并阻断整条 formulaic 流。
+    """
+    AX_OK = {"argument_spine": "SAME", "evidence_progression": "DIFFERENT",
+             "limitation_function": "DIFFERENT", "viewpoint_anchor": "SAME",
+             "closing_function": "DIFFERENT", "transformation_depth": "STRUCTURAL_CHANGE"}
+
+    def _batch(self):
+        return [{"pair_ref": "QUALA-FP-SS-0001", "necessary_grammar_exception_id": "NG-1"},
+                {"pair_ref": "QUALA-FP-CP-0002", "necessary_grammar_exception_id": None}]
+
+    def test_ng_rejected_only_where_unregistered(self):
+        batch = self._batch()
+        ok_rows = [{"pair_ref": p["pair_ref"], "axes": dict(self.AX_OK)} for p in batch]
+        self.assertTrue(QR._axis_rows_ng_legal(ok_rows, batch))
+        # 已注册例外的 SS 对可取 NG
+        ss_ng = [dict(r) for r in ok_rows]
+        ss_ng[0]["axes"] = {**self.AX_OK, "argument_spine": "NECESSARY_GRAMMAR"}
+        self.assertTrue(QR._axis_rows_ng_legal(ss_ng, batch))
+        # 未注册例外的 CP 对取 NG 必须拒收（任何轴都不行）
+        for axis in ("argument_spine", "transformation_depth"):
+            cp_ng = [dict(r) for r in ok_rows]
+            cp_ng[1] = {"pair_ref": "QUALA-FP-CP-0002",
+                        "axes": {**self.AX_OK, axis: "NECESSARY_GRAMMAR"}}
+            self.assertFalse(QR._axis_rows_ng_legal(cp_ng, batch),
+                             f"CP 对在 {axis} 轴取 NG 未被拒收")
+        # 结构不合格（缺 pair_ref 覆盖）同样拒收
+        self.assertFalse(QR._axis_rows_ng_legal(ok_rows[:1], batch))
+
+
+class ReviewCorpusSpansDecisionSpace(unittest.TestCase):
+    """review 校准语料须按构造覆盖判定空间。
+
+    实战教训：旧路径只取自然 claim，导致 hard_veto_cases_present=false、
+    negative_specific_agreement=0.0——**不含硬否决样本的校准集在物理上无法测量硬否决一致率**，
+    这不是调 rubric 能过的门。
+    """
+    def test_strata_cover_natural_variant_and_disclosure(self):
+        self.assertEqual(sum(n for _, n in QR.REVIEW_STRATA), 50)
+        kinds = {k for k, _ in QR.REVIEW_STRATA}
+        self.assertEqual(kinds, {"NATURAL", "CHALLENGE_VARIANT", "DISCLOSURE"})
+        for _, n in QR.REVIEW_STRATA:
+            self.assertGreater(n, 0, "任一层数量为 0 则该层无法参与一致率测量")
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
